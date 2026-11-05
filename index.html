@@ -264,15 +264,23 @@
       /* Ride weapon switch (v1.17): while you ride you can swap between
          revolver, shotgun and rifle at any time — the bar rides low and
          centre, clear of the RELOAD button and the Next button. */
-      #rideSwitch{ display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:calc(106px + env(safe-area-inset-bottom)); z-index:6; text-align:center; }
+      #rideSwitch{ display:none; position:fixed; left:50%; transform:translateX(-50%); bottom:calc(106px + env(safe-area-inset-bottom)); z-index:6; text-align:center; box-sizing:border-box; }
       #rideSwitch.on{ display:block; }
-      #rideWpnName{ display:inline-block; background:var(--plate); border:1px solid var(--plate-line); color:#ffe9bd; font-family:'Special Elite',monospace; font-size:11.5px; letter-spacing:.14em; padding:6px 12px; margin-bottom:7px; max-width:94vw; }
+      #rideWpnName{ display:inline-block; background:var(--plate); border:1px solid var(--plate-line); color:#ffe9bd; font-family:'Special Elite',monospace; font-size:11.5px; letter-spacing:.14em; padding:6px 12px; margin-bottom:7px; max-width:100%; box-sizing:border-box; }
       #rideSwitch .rideRow{ display:flex; gap:7px; }
-      #rideSwitch button{ flex:1; cursor:pointer; padding:11px 12px; background:rgba(20,11,5,.85); border:1px solid var(--plate-line); color:#c8ab77; font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.1em; white-space:nowrap; box-shadow:0 3px 12px rgba(0,0,0,.5); }
+      #rideSwitch button{ flex:1; min-width:0; cursor:pointer; padding:11px 12px; background:rgba(20,11,5,.85); border:1px solid var(--plate-line); color:#c8ab77; font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.1em; white-space:nowrap; box-shadow:0 3px 12px rgba(0,0,0,.5); }
       #rideSwitch button.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); }
       #rideSwitch button.locked{ opacity:.55; }
       #rideSwitch button:active{ transform:scale(.96); }
-      @media (max-width:520px){ #rideSwitch{ width:94vw; } #rideSwitch button{ font-size:11px; padding:10px 4px; } }
+      /* Bottom bar fit (v1.31): on phone-width screens the bar gets a
+         definite width inside the screen — 12px of air on each side —
+         and the buttons may shrink to their third of it (min-width:0
+         above) with their labels wrapping inside their own button, so
+         "2 · SHOTGUN · NOT OWNED" can no longer push the row past the
+         right edge and cut the rifle button off. The IN HAND plate is
+         capped by the bar itself (max-width:100% above), so it sits
+         inside the same margins. */
+      @media (max-width:640px){ #rideSwitch{ width:calc(100vw - 24px); } #rideSwitch button{ font-size:10.5px; letter-spacing:.04em; padding:10px 3px; white-space:normal; line-height:1.35; } #rideWpnName{ font-size:10.5px; letter-spacing:.1em; padding:6px 8px; } }
       /* Ride HUD clarity (v1.20): on the trail, nothing covers the words
          or the gear. The HUD plates ride ABOVE the rifle scope's dark
          surround (that overlay is z-index 6), the weapon switch bar
@@ -645,7 +653,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v1.30 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v1.31 ★</div>
     </div>
     <script>
       /* v1.30 — no double-tap zoom, anywhere, ever: not on the splash,
@@ -757,7 +765,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v1.30</div>
+        <div class="ver">SHOWDOWN 1881 · v1.31</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -820,7 +828,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -835,7 +843,7 @@
         <button class="bigbtn flybtn" id="btnPracticeFlying" type="button">Flying Bottles</button>
         <p class="small">Bottles tossed across the sky — shoot them out of the air.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -855,7 +863,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -889,7 +897,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -921,7 +929,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -948,7 +956,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -983,7 +991,7 @@
         <div class="invSec">Stagecoach</div>
         <div class="statRow"><span class="k">Longest Survive · Endless</span><span class="v" id="stBestEndless">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1015,7 +1023,7 @@
         <p class="small">Low is the classic look. Medium renders sharper, with soft shadows that follow every move. High goes all out — the finest detail your device can draw, deep golden light, soft live shadows and dust hanging in the air.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1044,7 +1052,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1058,6 +1066,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v1.31</b> — <b>The gun bar fits the screen.</b> The weapon switch bar at the bottom of a duel — the IN HAND plate and the 1 · 2 · 3 revolver, shotgun and rifle buttons — now sits inside the screen with a margin on both sides, so nothing runs off the edge or gets cut off on phones. Nothing else changed.</p>
           <p><b>v1.30</b> — <b>No double-tap zoom.</b> Double-tapping never zooms the screen now — not on the splash, in the menus, in a duel, on the ride or in practice. And the stagecoach record moved to where it belongs: your <b>longest Endless survive</b> now sits in <b>Stats</b> with the rest of your career records, out of Settings.</p>
           <p><b>v1.29</b> — <b>Made for copy-and-paste.</b> The whole game fits in one small page, well under GitHub's copy limit, with Tap to Ride In wired in right at the top — so the button works even if a copy loses its tail, and the theme music loads from the game's own hosted copies when no music file sits beside the page. Nothing else changed.</p>
           <p><b>v1.28</b> — <b>Light enough for GitHub.</b> The page itself stays small, with the theme music riding as its own file in the assets folder beside it instead of being baked into the page — so the game and its music upload together without hitting GitHub's size wall. Same game, same music, nothing else changed.</p>
@@ -1102,7 +1111,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 1.30</div>
+        <div class="ver">VERSION 1.31</div>
       </div>
     </div>
 
@@ -1113,7 +1122,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 1.30 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 1.31 · TAP FOR UPDATES</div>
       </div>
     </div>
 
