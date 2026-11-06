@@ -860,6 +860,42 @@
       @media (prefers-reduced-motion: reduce){
         #steady.on{ animation:none; opacity:.85; }
       }
+      /* ---------- v2.2: night storm, slow-mo replay, fan toggle,
+         bounty & daily cards. One home per feature, nothing stacked
+         on an existing control: the replay tag rides the empty centre
+         strip under the clock plate, FAN sits under the TITLE button
+         in the free top-right column, and the night veil and lightning
+         flash are pointer-blind overlays under every plate. ---------- */
+      #nightVeil{ position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0; transition:opacity .8s ease;
+        background:linear-gradient(180deg, rgba(7,12,30,.46), rgba(5,9,22,.30) 52%, rgba(3,5,14,.5)); }
+      body.night #nightVeil{ opacity:1; }
+      #boltFx{ position:fixed; inset:0; z-index:4; pointer-events:none; opacity:0;
+        background:radial-gradient(ellipse at 50% 0%, rgba(214,226,255,.95), rgba(160,180,240,.45) 55%, rgba(120,140,220,0) 82%); }
+      #replayTag{ position:fixed; left:50%; transform:translateX(-50%); top:calc(88px + env(safe-area-inset-top)); z-index:7;
+        pointer-events:none; opacity:0; transition:opacity .25s; white-space:nowrap;
+        font-family:'Special Elite',monospace; letter-spacing:.3em; text-transform:uppercase; }
+      #replayTag.on{ opacity:1; }
+      #btnFan{ display:none; pointer-events:auto; position:fixed; z-index:9; right:16px; top:calc(158px + env(safe-area-inset-top));
+        cursor:pointer; touch-action:none; background:var(--plate); border:1px solid var(--plate-line); color:#d8c096;
+        font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.14em; padding:8px 10px; min-width:104px; }
+      #btnFan.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); }
+      #btnFan.locked{ opacity:.72; border-style:dashed; color:#b49b74; }
+      #btnFan:active{ transform:scale(.96); }
+      body.scoped #btnFan{ display:none !important; }
+      #bountyCard,#dailyCard{ display:none; }
+      #bountyCard h1,#dailyCard h1{ font-size:clamp(24px,5.6vw,34px); }
+      .wantedBox{ margin:12px 0 4px; padding:16px 14px 13px; color:#2a1a08; text-align:center;
+        background:linear-gradient(180deg,#ecd9ab,#dcc48d); border:2px solid #6b4a22; outline:1px solid rgba(42,26,8,.55); outline-offset:-6px;
+        box-shadow:0 6px 22px rgba(0,0,0,.5); }
+      .wantedBox .wHead{ font-family:'Rye',Georgia,serif; font-size:30px; letter-spacing:.28em; margin:0; color:#3a2410; }
+      .wantedBox .wName{ font-family:'Rye',Georgia,serif; font-size:clamp(21px,5vw,27px); line-height:1.15; margin:8px 0 2px; color:#571d10; }
+      .wantedBox .wCrime{ font-family:'Special Elite',monospace; font-size:12.5px; letter-spacing:.06em; line-height:1.5; margin:0; }
+      .wantedBox .wReward{ font-family:'Special Elite',monospace; font-size:17px; letter-spacing:.12em; margin-top:9px; color:#3a2410; }
+      .wantedBox .wReward b{ font-size:21px; }
+      #storeDaily,#storeFan{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.1em; color:#ffe9bd; text-align:center;
+        border:1px solid var(--plate-line); background:rgba(217,164,65,.12); padding:8px 10px; margin-top:8px; line-height:1.5; border-radius:5px; }
+      .streakPips{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.14em; color:#ffd98f; margin:6px 0 0; }
+      @media (max-height:740px){ #titleCard .bigbtn{ padding:9px 16px; } #titleCard .menuRow .bigbtn{ padding:10px 4px; } }
     </style>
   </head>
   <body>
@@ -873,7 +909,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.1 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.4 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36):
          the real 3D revolver over open plains and a bright blue sky,
@@ -981,6 +1017,8 @@
     <div id="scene"></div>
     <div id="grade"></div>
     <div id="vig"></div>
+    <div id="nightVeil"></div>
+    <div id="boltFx"></div>
     <div class="cineBar" id="cineTop"></div>
     <div class="cineBar" id="cineBot"></div>
 
@@ -998,7 +1036,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.1</div>
+        <div class="ver">SHOWDOWN 1881 · v2.4</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1007,9 +1045,11 @@
         <div id="scopeChip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v6M12 16.5v6M1.5 12h6M16.5 12h6"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>RIFLE SCOPE · 2×</div>
       </div>
       <div class="plate" id="adsTag">Aiming Down Sights</div>
+      <div class="plate" id="replayTag">★ Slow-Mo Replay ★</div>
     </div>
     <button id="btnReload" type="button" aria-label="Reload">RELOAD<small>PRESS · R</small></button>
     <button id="btnQuit" type="button">✕&nbsp;TITLE</button>
+    <button id="btnFan" type="button" aria-label="Toggle fanning the hammer">FAN · OFF</button>
     <!-- Exit Scope (v1.19): appears only while the rifle scope is up.
          Drops the scope and the 2x zoom back to normal view, no shot. -->
     <button id="btnExitScope" type="button" aria-label="Exit scope">✕&nbsp;Exit Scope</button>
@@ -1048,11 +1088,16 @@
         <div class="segRow">
           <button class="segBtn on" id="btnLocStreet" type="button">Main Street</button>
           <button class="segBtn" id="btnLocSaloon" type="button">The Saloon</button>
+          <button class="segBtn" id="btnLocNight" type="button">Night Storm</button>
         </div>
         <button class="bigbtn" id="btnStart" type="button">★ Start Duels</button>
         <button class="bigbtn ridebtn" id="btnRide" type="button">★ Ride · Stagecoach Chase</button>
         <button class="bigbtn altbtn" id="btnPractice" type="button">★ Practice</button>
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
+        <div class="menuRow">
+          <button class="bigbtn ridebtn" id="btnBounty" type="button">★ Bounty Hunt</button>
+          <button class="bigbtn altbtn" id="btnDaily" type="button">★ Daily Duel</button>
+        </div>
         <div class="menuRow">
           <button class="bigbtn learnbtn" id="btnStore" type="button">Store</button>
           <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
@@ -1061,7 +1106,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1076,7 +1121,7 @@
         <button class="bigbtn flybtn" id="btnPracticeFlying" type="button">Flying Bottles</button>
         <p class="small">Bottles tossed across the sky — shoot them out of the air.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1096,7 +1141,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1130,7 +1175,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1143,6 +1188,8 @@
         <button class="bigbtn backTop" id="btnBackStoreTop" type="button">← Back to Menu</button>
         <div id="storeWallet">WALLET · $0</div>
         <div id="storeEquipped">IN HAND · Trail Iron</div>
+        <div id="storeDaily">DAILY STREAK · 0 DAYS</div>
+        <div id="storeFan">FANNING · —</div>
         <div class="storeNav">
           <button type="button" data-filter="all">All Gear</button>
           <button type="button" data-filter="revolvers">Revolvers</button>
@@ -1162,7 +1209,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1189,7 +1236,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1218,7 +1265,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1252,8 +1299,12 @@
         <div class="statRow"><span class="k">Practice Totals</span><span class="v" id="stPracticeLine">0 BOTTLES · 0 SHOTS</span></div>
         <div class="invSec">Stagecoach</div>
         <div class="statRow"><span class="k">Longest Survive · Endless</span><span class="v" id="stBestEndless">—</span></div>
+        <div class="invSec">Bounty &amp; Daily</div>
+        <div class="statRow"><span class="k">Daily Streak</span><span class="v" id="stDailyStreak">0 DAYS · BEST 0</span></div>
+        <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
+        <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1285,7 +1336,7 @@
         <p class="small">Low is the classic look. Medium renders sharper, with soft shadows that follow every move. High goes all out — the finest detail your device can draw, deep golden light, soft live shadows and dust hanging in the air.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1299,7 +1350,7 @@
           <p><b>DRAW</b> — The instant it rings, <b>press and HOLD on the street</b> (hold your touch / mouse, or hold Space) — just hold, like the scope button in a mobile shooter. No sliding, no swiping, and no on-screen fire button: holding alone snaps your revolver straight up out of the leather into <b>aim-down-sights</b>, and the view tightens as the sights come up.</p>
           <p><b>AIM</b> — <b>Aim with the iron itself.</b> Keep holding to stay aimed in, and move or drag to swing the whole gun until its sights sit on a gunman. Revolvers and shotguns aim down their own sights — a <b>crosshair dot</b> rides your aim point, lifted clear of your finger on touch, and the shot goes where the dot points. Rifles look through their <b>2× scope</b> instead.</p>
           <p><b>SHOOT</b> — <b>RELEASE to fire</b> once your sights are on him. Let go before the sights finish rising and it sprays wild from the hip. Head or heart kills outright, other hits wound — and the iron stays up in ADS for follow-up shots, no re-holstering till the duel is done.</p>
-          <p><b>RELOAD</b> — Reloading is in your hands only: the iron <b>never reloads itself</b>. When you're low or empty, tap the <b>round RELOAD button</b> (bottom right) or press <b>R</b> any time the iron isn't full — even after a duel. Low guns load fast to make up for holding so little: a <b>double barrel speed-loads both shells at once</b>, in one hand motion, and a <b>single-shot drops its one round straight in</b> — while six-guns and lever rifles still feed <b>one round at a time</b>, so the big magazines take the longest to fill.</p>
+          <p><b>RELOAD</b> — Run an iron dry and it <b>reloads itself</b>, all on its own — no button press. You can still top off early any time with the <b>round RELOAD button</b> (bottom right) or <b>R</b>, whenever the iron isn't full — even after a duel. And a reload belongs to the gun: <b>switch guns mid-reload</b> and the one you draw is ready to fire at once, while the first keeps loading in the scabbard — come back to it loaded, or that much further along. Low guns load fast to make up for holding so little: a <b>double barrel speed-loads both shells at once</b>, in one hand motion, and a <b>single-shot drops its one round straight in</b> — while six-guns and lever rifles still feed <b>one round at a time</b>, so the big magazines take the longest to fill.</p>
           <p><b>OUTNUMBERED</b> — From Duel 4 on, they come in company: <b>two gunmen at once</b> in Duels 4 and 5, and <b>three at once</b> in the final duel. Every one of them draws and shoots on his own — drop them all to clear the street.</p>
           <p><b>RANGE</b> — Every duel is fought at a longer distance than the last, from 7 paces out to a 19-pace rifle shot.</p>
           <p><b>SWITCH GUNS</b> — In a duel you can <b>switch guns at any time</b>, same as on the ride: tap the <b>1 · REVOLVER / 2 · SHOTGUN / 3 · RIFLE</b> buttons or press <b>1, 2, 3</b>. Only guns you own can be drawn, and every gun keeps its own loads, draw speed, recoil, sway, aim zoom and range — so when a duel stretches out past a shotgun's reach, switch to your rifle or revolver and finish it.</p>
@@ -1311,10 +1362,15 @@
           <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, its aim point sits <b>above your fingertip</b>, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
           <p><b>THE RIDE</b> — Saddle up off the main menu and <b>run down a stagecoach</b> on the open trail. Your horse gallops under you and the long coach bounces and swerves ahead on its team, and the <b>six outlaws riding it — driver and messenger on the bench, two on the roof and two on the rear platform — shoot back</b>. A man you drop <b>ragdolls down</b> off the coach and into the road behind it. Hold to aim, release to fire, same as a duel, and the coach body honestly blocks any shot that hits it instead of a man. <b>Switch guns at any time</b>: tap the REVOLVER / SHOTGUN / RIFLE buttons or press <b>1, 2, 3</b> — every gun keeps its own loads, and a gun you don't own can't be drawn, so buy shotguns and rifles in the Store first. Drop all six outlaws to take the coach and its <b>$150 strongbox</b>. Shooting a team horse slows the coach down; let it pull <b>30 paces</b> ahead and it's gone — and their lead costs you a fifth of your hide a hit. Or pick <b>ENDLESS</b> when you ride: the coaches keep coming, each one different and harder — more outlaws, a faster coach, return fire that lands harder and truer — and the run only ends when your hide does. Your <b>longest survive</b> is kept in Stats.</p>
           <p><b>SETTINGS</b> — From the main menu, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. Low is the classic look; Medium renders sharper with soft shadows that follow the action; High renders the street at its finest, with rich golden light and dust hanging in the air. The game runs at the rate you pick, and your choices are kept between visits.</p>
+          <p><b>NIGHT STORM</b> — Pick <b>Night Storm</b> beside the duel location and the same duels play after dark: lantern light on the street, rain hammering down, lightning over the rooftops. It's harder to see, and the storm wind pushes your aim around — sway runs half again as wild.</p>
+          <p><b>FAN THE HAMMER</b> — Fanning takes <b>two of the same iron</b>, one in each hand — so first buy a second copy of your revolver with <b>BUY DOUBLE</b> in the Store (it costs what the gun costs). Until then the <b>FAN</b> toggle (top right, under TITLE) reads <b>NEEDS DOUBLE</b> and stays locked. Own the double and FAN opens up: a second iron comes out, and every release fans off a fast burst of three — the <b>first shot flies true</b> and the next two land <b>close behind it</b>, grouped around where the gun points. Tap FAN off to go back to one slow, careful shot.</p>
+          <p><b>BOUNTY HUNT</b> — Off the main menu: the wanted poster names one outlaw. You get <b>90 seconds</b> to catch him — he starts on Main Street with a henchman, and if you wound him or run the street clock he bolts for the Saloon. The faster the capture, the bigger the payout.</p>
+          <p><b>DAILY DUEL</b> — One special fast gunslinger a day, off the main menu. Beat him for <b>$75</b> and keep your <b>streak</b> alive; every third day of a streak pays a bonus through the Store. Lose or skip a day and the streak resets.</p>
+          <p><b>REPLAY</b> — Drop the last gunman in any duel and the killing shot plays back in <b>slow motion</b> — no menu, no button, just the moment.</p>
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1328,6 +1384,9 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.4</b> — <b>Empty guns reload themselves.</b> Run an iron dry and it <b>starts reloading on its own</b> — no button press. And a reload belongs to the gun now: <b>switch guns mid-reload</b> and the one you draw is ready to fire at once, while the first keeps loading in the scabbard — come back to it loaded, or that much further along. Manual RELOAD still works for topping off early. And <b>fanning holds its pair proper</b>: one iron in each hand, riding apart on their own sides through the whole burst — never meeting and overlapping in the middle.</p>
+          <p><b>v2.3</b> — <b>Fanning, done proper.</b> The second iron is real now: <b>BUY DOUBLE</b> in the Store buys a second copy of your revolver, and <b>FAN stays locked</b> — reading NEEDS DOUBLE — until you own it. And the burst itself is <b>accurate</b>: still three fast shots, but the first flies true and the other two group tight around your aim instead of spraying wild.</p>
+          <p><b>v2.2</b> — <b>Five new ways to draw.</b> <b>Night Storm</b> duels under lanterns, rain and lightning. A <b>slow-mo replay</b> of every killing shot. <b>Bounty Hunt</b>: catch a wanted outlaw across Main Street and the Saloon against a 90-second clock. <b>Fan the hammer</b>: a second revolver — fast, wild bursts against one true aimed shot. And the <b>Daily Duel</b>: one fast gun a day, a streak to keep, and a bonus waiting in the Store.</p>
           <p><b>v2.1</b> — <b>ADS, minus the wait.</b> Aiming down the sights is <b>snappier</b> on every gun — the iron comes up faster, the view starts tightening almost the moment you hold, and the aim tracks your finger with less lag: revolver, shotgun and the rifle's 2× scope alike. Nothing else changed.</p>
           <p><b>v2.0</b> — <b>Every gun aims down its sights.</b> Revolvers and shotguns now ADS like the rifle — hold to aim and the view tightens over their own iron sights: <b>1.4×</b> on the revolver, <b>1.25×</b> on the shotgun, no scope. A <b>crosshair dot</b> rides the aim point, lifted clear of your finger on touch, and the shot goes exactly where the dot points — in duels, practice, the stagecoach ride and LAN. The rifle keeps its 2× scope. And the <b>main menu</b> is dressed like a game again — richer colour and a golden-hour glow, <b>crimson</b> Start Duels, <b>amber</b> Ride, <b>teal</b> Practice and LAN — same buttons, same words. Nothing else changed.</p>
           <p><b>v1.45</b> — <b>The menu, dressed properly.</b> The main menu is polished like a real game's: a finer brass frame, <b>one button style</b> in deep bronze throughout — no more different colour for every button — letterspaced poster type, a proper <b>location switch</b>, quieter Store, Inventory, Stats and Settings, and the wordmark carved clean instead of stacked shadows. Same buttons, same words, same fit on the screen. Nothing else changed.</p>
@@ -1388,7 +1447,52 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.1</div>
+        <div class="ver">VERSION 2.4</div>
+      </div>
+    </div>
+
+    <!-- Bounty Hunt (v2.2): the wanted poster names one outlaw. The
+         hunt runs 90 seconds across Main Street and the Saloon — he
+         starts on the street with a henchman, and a wounded or
+         cornered man bolts for the Saloon. Faster capture, bigger pay. -->
+    <div class="card" id="bountyCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ BOUNTY HUNT ★</p>
+        <h1>The Wanted Poster</h1>
+        <div class="rule"></div>
+        <div class="wantedBox">
+          <p class="wHead">WANTED</p>
+          <div class="wName" id="bountyName">—</div>
+          <p class="wCrime" id="bountyCrime">—</p>
+          <div class="wReward" id="bountyReward">REWARD · $120</div>
+        </div>
+        <p class="small">Ninety seconds on the hunt clock. He starts on Main Street with a henchman covering him — wound him, or run the street clock down, and he bolts for the Saloon. Every second left pays $2 more, and dropping him before he ever leaves Main Street pays a $40 bonus.</p>
+        <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
+        <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
+        <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Daily Duel (v2.2): one special fast gunslinger a day, picked by
+         the date itself. Beat him for $75 and keep the streak alive —
+         every third day of a streak pays a bonus through the Store. -->
+    <div class="card" id="dailyCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ DAILY DUEL ★</p>
+        <h1>Today's Gunslinger</h1>
+        <div class="rule"></div>
+        <p class="small">One special fast gun a day. Beat him to keep your streak alive — lose, or let the day pass, and the streak resets. $75 for the win, and every third day of a streak pays a bonus.</p>
+        <div class="wantedBox">
+          <p class="wHead" style="font-size:22px;">TODAY</p>
+          <div class="wName" id="dailyName">—</div>
+          <p class="wCrime" id="dailySub">—</p>
+          <div class="wReward">REWARD · <b>$75</b></div>
+        </div>
+        <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
+        <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
+        <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1399,7 +1503,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -6492,6 +6596,40 @@ three/build/three.module.js:
     faceLight.position.set(2.5, 3.5, 10);
     scene.add(faceLight);
 
+    /* Night storm rig (v2.2): two lanterns on Main Street and one in
+       the Saloon — real point lights with no shadows, so they cost
+       almost nothing — plus one pooled sheet of 650 rain points that
+       only updates while the storm is on. Everything stays dark and
+       hidden until Night Storm is picked on the menu; applyNightLights
+       (below, beside applyLocation) runs the whole rig. */
+    function makeLantern(x, y, z){
+      var g = new THREE.Group();
+      var glass = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 8),
+        new THREE.MeshBasicMaterial({ color: 0xffc873 }));
+      g.add(glass);
+      g.add(new THREE.PointLight(0xffa64d, 1.15, 10, 1.6));
+      g.position.set(x, y, z);
+      g.visible = false;
+      scene.add(g);
+      return g;
+    }
+    var lanternStreetA = makeLantern(-3.6, 2.7, -2.5);
+    var lanternStreetB = makeLantern(3.6, 2.7, -10.5);
+    var lanternSaloon = makeLantern(0, 2.9, -8);
+    var rainGeo = new THREE.BufferGeometry();
+    var rainArr = new Float32Array(650 * 3);
+    for (var raini = 0; raini < 650; raini++){
+      rainArr[raini * 3] = -14 + Math.random() * 28;
+      rainArr[raini * 3 + 1] = Math.random() * 16;
+      rainArr[raini * 3 + 2] = -24 + Math.random() * 32;
+    }
+    rainGeo.setAttribute('position', new THREE.BufferAttribute(rainArr, 3));
+    var rainPos = rainGeo.attributes.position;
+    var rainPts = new THREE.Points(rainGeo, new THREE.PointsMaterial({ color: 0xaec6e8, size: 0.075, transparent: true, opacity: 0.55, depthWrite: false }));
+    rainPts.visible = false;
+    rainPts.frustumCulled = false;
+    scene.add(rainPts);
+
     /* ============================== GRAPHICS QUALITY (v1.11) ==============================
        What shipped before v1.11 IS Low: capped resolution, one baked
        1024px shadow map that only re-renders when something moves,
@@ -7235,7 +7373,18 @@ three/build/three.module.js:
       /* Gun Locker (v1.33): finishes you own, and the finish riding on
          each gun (item id -> skin id). Missing on an old save means
          factory finishes everywhere — nothing already earned changes. */
-      skins: ['factory'], gunSkin: {} };
+      skins: ['factory'], gunSkin: {},
+      /* v2.2: the night preference, the daily-duel streak (dates kept
+         as local day strings), and the bounty record — bounties caught
+         and the fastest capture in whole seconds, null until the
+         first outlaw is brought in. */
+      night: false, dailyStreak: 0, dailyBest: 0, dailyLastWin: '', dailyWins: 0,
+      bountyWins: 0, bountyBest: null,
+      /* v2.3: second copies of your revolvers, bought with BUY DOUBLE
+         in the Store (one entry per gun id). Fanning the hammer needs
+         two of the same iron, so FAN stays locked until the equipped
+         revolver's id rides in this list. */
+      doubles: [] };
     try {
       var rawSave = localStorage.getItem('wwd-save-v1');
       if (rawSave){
@@ -7270,6 +7419,7 @@ three/build/three.module.js:
         if (parsedSave && typeof parsedSave.practiceBottles === 'number' && parsedSave.practiceBottles >= 0) SAVE.practiceBottles = Math.floor(parsedSave.practiceBottles);
         if (parsedSave && typeof parsedSave.bestEndless === 'number' && parsedSave.bestEndless > 0) SAVE.bestEndless = parsedSave.bestEndless;
         if (parsedSave && Array.isArray(parsedSave.skins)) parsedSave.skins.forEach(function(id){ if (skinById(id).id === id && SAVE.skins.indexOf(id) < 0) SAVE.skins.push(id); });
+        if (parsedSave && Array.isArray(parsedSave.doubles)) parsedSave.doubles.forEach(function(id){ if (gearById(GUNS, id).id === id && SAVE.doubles.indexOf(id) < 0) SAVE.doubles.push(id); });
         if (parsedSave && parsedSave.gunSkin && typeof parsedSave.gunSkin === 'object') Object.keys(parsedSave.gunSkin).forEach(function(itemId){
           var sk = parsedSave.gunSkin[itemId];
           var itemOk = gearById(GUNS, itemId).id === itemId || gearById(LONGGUNS, itemId).id === itemId;
@@ -7277,6 +7427,13 @@ three/build/three.module.js:
         });
       }
     } catch (e) {}
+        if (parsedSave && typeof parsedSave.night === 'boolean') SAVE.night = parsedSave.night;
+        if (parsedSave && typeof parsedSave.dailyStreak === 'number' && parsedSave.dailyStreak >= 0) SAVE.dailyStreak = Math.floor(parsedSave.dailyStreak);
+        if (parsedSave && typeof parsedSave.dailyBest === 'number' && parsedSave.dailyBest >= 0) SAVE.dailyBest = Math.floor(parsedSave.dailyBest);
+        if (parsedSave && typeof parsedSave.dailyLastWin === 'string') SAVE.dailyLastWin = parsedSave.dailyLastWin;
+        if (parsedSave && typeof parsedSave.dailyWins === 'number' && parsedSave.dailyWins >= 0) SAVE.dailyWins = Math.floor(parsedSave.dailyWins);
+        if (parsedSave && typeof parsedSave.bountyWins === 'number' && parsedSave.bountyWins >= 0) SAVE.bountyWins = Math.floor(parsedSave.bountyWins);
+        if (parsedSave && typeof parsedSave.bountyBest === 'number' && parsedSave.bountyBest > 0) SAVE.bountyBest = Math.floor(parsedSave.bountyBest);
     PREFS.music = SAVE.music; PREFS.fps = SAVE.fps; PREFS.gfx = SAVE.gfx;
     function persistSave(){ try { localStorage.setItem('wwd-save-v1', JSON.stringify(SAVE)); } catch (e) {} }
     function refreshSettingsUI(){
@@ -7302,6 +7459,13 @@ three/build/three.module.js:
       return m + ':' + (r < 10 ? '0' : '') + r;
     }
     function equippedGun(){ return gearById(GUNS, SAVE.gun); }
+    /* Fanning the hammer (v2.3): it takes TWO of the same iron — one
+       in each hand. A second copy costs what the gun itself costs
+       (the Trail Iron you start with is free, so its double runs
+       $250 at the gunsmith's counter). */
+    function doublePrice(item){ return item.price > 0 ? item.price : 250; }
+    function ownsDouble(id){ return SAVE.doubles.indexOf(id) >= 0; }
+    function fanUnlocked(){ return ownsDouble(SAVE.gun); }
     function equippedOutfit(){ return gearById(OUTFITS, SAVE.outfit); }
     function equippedLongGun(){ return SAVE.longgun ? gearById(LONGGUNS, SAVE.longgun) : null; }
     function equippedHat(){ return gearById(HATS, SAVE.hat); }
@@ -8653,6 +8817,17 @@ three/build/three.module.js:
       rideEndless: false, rideCoachN: 0, rideCoachesStopped: 0, rideCoachDone: false,
       rideHitCh: 0.20, rideHitChD: 0.16, rideFireMul: 1, rideDmg: 20, rideSpeedBonus: 0
     };
+    /* ============================== v2.2 STATE ==============================
+       Night storm, the slow-mo replay, fanning, the bounty hunt and
+       the daily duel keep their bookkeeping here — one place per
+       feature, nothing tangled into the ladder's own numbers. The
+       per-hunt clock and the cinematic name ride on G like the rest
+       of the round state. */
+    var nightOn = false;
+    var specialKind = null; // null | 'bounty' | 'daily'
+    var fanOn = false;
+    var replayUntil = 0, replayTarget = null, lastKillOpp = null;
+    var bountyTargetOpp = null, bountyFled = false, bountyDrawT0 = 0;
     function applyLocation(loc){
       G.location = loc;
       streetGroup.visible = loc === 'street';
@@ -8674,6 +8849,35 @@ three/build/three.module.js:
       var bs = document.getElementById('btnLocStreet'), ba = document.getElementById('btnLocSaloon');
       if (bs) bs.className = 'segBtn' + (loc === 'street' ? ' on' : '');
       if (ba) ba.className = 'segBtn' + (loc === 'saloon' ? ' on' : '');
+      applyNightLights();
+      shadowDirty = true;
+    }
+    /* Night Storm (v2.2): called at the end of every applyLocation,
+       so day values are always laid down first and the storm simply
+       overrides them — moonlight for the sun, a deep blue fog, the
+       lanterns lit on whichever map is up, rain on the street only.
+       Turning Night off restores the lamp colours applyLocation
+       never touches, and the day intensities it just set stand. */
+    function applyNightLights(){
+      var bn = document.getElementById('btnLocNight');
+      if (bn) bn.className = 'segBtn' + (nightOn ? ' on' : '');
+      document.body.classList.toggle('night', nightOn);
+      lanternStreetA.visible = lanternStreetB.visible = nightOn && G.location === 'street';
+      lanternSaloon.visible = nightOn && G.location === 'saloon';
+      rainPts.visible = nightOn && G.location === 'street';
+      if (!nightOn){
+        hemi.color.setHex(0xffd9a3); sun.color.setHex(0xffb066);
+        return;
+      }
+      var lm2 = gfxNow.lightMul;
+      hemi.color.setHex(0x2e3d5c); sun.color.setHex(0x93a7cc);
+      if (G.location === 'saloon'){
+        hemi.intensity = 0.15 * lm2; sun.intensity = 0.04 * lm2; fill.intensity = 0.03 * lm2; faceLight.intensity = 0.3 * lm2;
+        scene.fog.color.setHex(0x120b06); scene.fog.near = 11; scene.fog.far = 42;
+      } else {
+        hemi.intensity = 0.13 * lm2; sun.intensity = 0.1 * lm2; fill.intensity = 0.04 * lm2; faceLight.intensity = 0.2 * lm2;
+        scene.fog.color.setHex(0x0a1220); scene.fog.near = 9; scene.fog.far = 52;
+      }
       shadowDirty = true;
     }
     var opps = [];
@@ -8691,6 +8895,7 @@ three/build/three.module.js:
     var bannerEl = $('banner'), toastEl = $('toast'), steadyEl = $('steady'), btnNext = $('btnNext'), adsTagEl = $('adsTag');
     var scopeViewEl = $('scopeView'), scopeLensEl = $('scopeLens'), scopeChipEl = $('scopeChip');
     var btnExitScopeEl = $('btnExitScope');
+    var btnFanEl = $('btnFan'), replayTagEl = $('replayTag'), boltFxEl = $('boltFx');
     // Exit Scope latch (v1.19): true once the player taps EXIT SCOPE —
     // the lens and the 2x zoom stay down until the next fresh hold to aim.
     var scopeOut = false;
@@ -8727,6 +8932,10 @@ three/build/three.module.js:
       var w = $('walletLine'); if (w) w.textContent = 'WALLET · $' + SAVE.money;
       var sw = $('storeWallet'); if (sw) sw.textContent = 'WALLET · $' + SAVE.money;
       var iw = $('invWallet'); if (iw) iw.textContent = 'WALLET · $' + SAVE.money;
+      var sd = $('storeDaily'); if (sd) sd.textContent = 'DAILY STREAK · ' + SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS') + ' — win today\'s Daily Duel for $75; every 3rd day of a streak pays a bonus.';
+      var sf = $('storeFan'); if (sf) sf.textContent = fanUnlocked()
+        ? 'FANNING · READY — you own two × ' + equippedGun().name + ', one for each hand. FAN is unlocked.'
+        : 'FANNING · LOCKED — fanning takes two of the same iron. Buy a second ' + equippedGun().name + ' below with BUY DOUBLE · $' + doublePrice(equippedGun()) + ' to unlock FAN.';
     }
     /* ============================== STORE ============================== */
     var storeFilter = 'all';
@@ -8850,6 +9059,15 @@ three/build/three.module.js:
           var st = document.createElement('div'); st.className = 'state';
           st.textContent = isEq ? '★ EQUIPPED NOW' : isOwned ? 'OWNED — READY TO EQUIP' : canAfford ? 'IN YOUR PRICE RANGE' : ('NEEDS $' + (item.price - SAVE.money) + ' MORE');
           info.appendChild(nm); info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
+          if (kind === 'gun'){
+            // Fanning (v2.3): the row says plainly where this iron stands
+            // — one copy is a sidearm, two copies are a fanning pair.
+            var fst = document.createElement('div'); fst.className = 'state';
+            fst.textContent = !isOwned ? 'BUY IT, THEN BUY DOUBLE TO FAN WITH IT'
+              : ownsDouble(item.id) ? '×2 OWNED — FANNING UNLOCKED FOR THIS IRON'
+              : 'OWN ONE — BUY DOUBLE BELOW TO FAN WITH IT';
+            info.appendChild(fst);
+          }
           var buyBox = document.createElement('div'); buyBox.className = 'buyBox';
           var pr = document.createElement('div'); pr.className = 'price';
           pr.textContent = isOwned ? 'YOURS' : (item.price === 0 ? 'FREE' : '$' + item.price);
@@ -8875,6 +9093,23 @@ three/build/three.module.js:
             var lkBtn = document.createElement('button'); lkBtn.type = 'button'; lkBtn.className = 'act lock'; lkBtn.textContent = 'LOCKER';
             lkBtn.addEventListener('click', function(){ initAudio(); sndClick(); openLocker(item, kind, 'store'); });
             buyBox.appendChild(lkBtn);
+          }
+          if (kind === 'gun' && isOwned){
+            // Buy Double (v2.3): a second copy of this same revolver.
+            // Owning the double is what unlocks FAN for this iron, and
+            // it is kept in the save like any other gear.
+            var dblBtn = document.createElement('button'); dblBtn.type = 'button'; dblBtn.className = 'act dbl';
+            if (ownsDouble(item.id)){ dblBtn.textContent = 'DOUBLE ×2 ✓'; dblBtn.disabled = true; }
+            else if (SAVE.money >= doublePrice(item)){ dblBtn.textContent = 'BUY DOUBLE · $' + doublePrice(item); }
+            else { dblBtn.textContent = 'DOUBLE · $' + doublePrice(item); dblBtn.disabled = true; }
+            dblBtn.addEventListener('click', function(){
+              initAudio();
+              if (ownsDouble(item.id) || SAVE.money < doublePrice(item)) return;
+              SAVE.money -= doublePrice(item); SAVE.doubles.push(item.id); sndBell();
+              persistSave(); renderStore(); updateFanBtn();
+              toast('Two ' + item.name + 's ride on your hips now — FAN is unlocked for this iron. Fast burst, first shot true, the rest grouped close.', true);
+            });
+            buyBox.appendChild(dblBtn);
           }
           row.appendChild(art); row.appendChild(info); row.appendChild(buyBox);
           box.appendChild(row);
@@ -10206,6 +10441,10 @@ three/build/three.module.js:
       /* v1.30: the stagecoach record lives here in Stats now, not in
          Settings — the longest Endless survive, kept between visits. */
       $('stBestEndless').textContent = fmtSurvive(SAVE.bestEndless);
+      /* v2.2 records: the daily streak and the bounty book. */
+      $('stDailyStreak').textContent = SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS') + ' · BEST ' + SAVE.dailyBest;
+      $('stBountyWins').textContent = SAVE.bountyWins;
+      $('stFastCapture').textContent = SAVE.bountyBest !== null ? SAVE.bountyBest + 's' : '—';
     }
     function updateChambers(){
       var cap = weaponCapacity();
@@ -10325,7 +10564,7 @@ three/build/three.module.js:
       G.mode = 'practice'; G.state = 'practice';
       G.practiceKind = kind === 'flying' ? 'flying' : 'standing';
       applyLocation(G.location);
-      G.hp = 100; G.bullets = weaponCapacity(); G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
+      G.hp = 100; G.bullets = weaponCapacity(); G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; clearGunReloads();
       G.practiceHit = 0; G.practiceShots = 0; G.practiceDone = false;
       G.practiceT0 = 0; G.practiceTime = null;
       G.flySpawned = 0; G.flyMissed = 0; G.flyNextAt = 0;
@@ -10591,7 +10830,7 @@ three/build/three.module.js:
       drumTarget -= Math.PI / 3;
       if (G.reloading){ sndClick(); return; }
       if (now < (G.cycleUntil || 0)) { sndClick(); return; }
-      if (G.bullets <= 0){ sndClick(); toast('Empty! The iron never reloads itself — press the round RELOAD button (or R).', true); return; }
+      if (G.bullets <= 0){ sndClick(); autoReloadOnEmpty(); return; }
       if (!G.practiceT0 && !G.practiceDone) G.practiceT0 = now; // the clock starts on the first real shot
       G.bullets--; G.practiceShots++; SAVE.practiceShots++; updateChambers(); refreshCylinder(G.bullets);
       var cycKindP = currentWeapon().kind;
@@ -10705,7 +10944,7 @@ three/build/three.module.js:
         }
       }
       persistSave(); // practice totals ride the same save (v1.12)
-      if (G.bullets <= 0) toast('Out of rounds — press the round RELOAD button (or R) to reload.', true);
+      if (G.bullets <= 0) autoReloadOnEmpty();
     }
 
     /* ============================== RIDE: STAGECOACH CHASE (v1.17) ==============================
@@ -10750,6 +10989,12 @@ three/build/three.module.js:
        through the duel, and duelFam is the family in hand. */
     var duelAmmo = { revolver: 6, shotgun: 2, rifle: 10 };
     var duelFam = 'revolver';
+    /* Background reloads (v2.4): a gun that starts reloading keeps
+       reloading while it rides in the scabbard. One record per
+       family — the reload's own end time, pace and starting load —
+       so swapping guns never cancels it, and swapping back finds
+       the iron finished or that much further along. */
+    var gunReloads = { revolver: null, shotgun: null, rifle: null };
     var RIDE_REWARD = 150;
 
     /* ---- a horse, built to move: every leg is a two-joint chain on a
@@ -11088,26 +11333,30 @@ three/build/three.module.js:
       }
     }
     /* ---- the switch itself: the old gun rides in the scabbard with
-       its loads still in it, the new one comes up in your hands with
-       ITS loads — nothing is shared, nothing is free ---- */
+       its loads still in it — and its reload still running, if it
+       had one going (v2.4) — and the new one comes up in your hands
+       with ITS loads, ready to fire at once — nothing is shared,
+       nothing is free ---- */
     function switchRideWeapon(fam){
       if (G.mode !== 'ride') return;
       var item = rideItemFor(fam);
       if (!item){ sndClick(); toast('No ' + fam + ' in your saddlebags — win duels, then buy one in the Store.', true); return; }
       if (fam === rideFam){ sndClick(); return; }
+      stashReload(rideFam); // a reload in flight keeps running in the scabbard (v2.4)
       rideAmmo[rideFam] = G.bullets;
       if (fam === 'revolver'){ SAVE.weapon = 'revolver'; }
       else { SAVE.weapon = 'long'; SAVE.longgun = item.id; }
       rideFam = fam;
-      G.reloading = false;
       rebuildPlayerGun();
       G.bullets = rideAmmo[fam]; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
-      updateChambers(); refreshCylinder(G.bullets);
+      attachReload(fam); // the new gun's own reload (if any) rides in hand again
+      rideAmmo[fam] = G.bullets;
+      updateChambers(); refreshCylinder(G.reloading ? G.reloadShown : G.bullets);
       gunDrawn = true; gunV = Math.min(gunV, 0.3); // the new gun comes up fresh in your hands
       persistSave();
       updateRideSwitchUI();
       sndClick();
-      toast(item.name + ' in hand — ' + G.bullets + ' loaded.', true);
+      toast(item.name + ' in hand — ' + G.bullets + ' loaded' + (G.reloading ? ', still reloading' : '') + '.', true);
     }
     /* ---- Duel gun switching (v1.23): the ride's switch, word for
        word, on the street. The same bar, the same owned-gun rule (the
@@ -11136,17 +11385,20 @@ three/build/three.module.js:
       if (!item){ sndClick(); toast('No ' + fam + ' in your saddlebags — win duels, then buy one in the Store.'); return; }
       if (fam === duelFam){ sndClick(); return; }
       var wasDrawn = gunDrawn;
+      stashReload(duelFam); // a reload in flight keeps running in the scabbard (v2.4)
       duelAmmo[duelFam] = G.bullets;
       if (fam === 'revolver'){ SAVE.weapon = 'revolver'; }
       else { SAVE.weapon = 'long'; SAVE.longgun = item.id; }
       duelFam = fam;
-      G.reloading = false; G.cycleUntil = 0;
+      G.cycleUntil = 0;
       rebuildPlayerGun();
       // the cinematic's first-person iron and holster stay hidden
       // until the standoff, exactly as startCinematic left them
       if (G.state === 'cinematic'){ pgun.visible = false; hipHolster.visible = false; }
       G.bullets = duelAmmo[fam]; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
-      updateChambers(); refreshCylinder(G.bullets);
+      attachReload(fam); // the new gun's own reload (if any) rides in hand again
+      duelAmmo[fam] = G.bullets;
+      updateChambers(); refreshCylinder(G.reloading ? G.reloadShown : G.bullets);
       // The new gun comes up fresh, on its own draw time: before the
       // bell it is still undrawn, so its first raise costs its full
       // drawFirst; mid-draw it re-raises at drawNext. And a rifle
@@ -11162,7 +11414,7 @@ three/build/three.module.js:
       // the new gun, name and all
       lanSendWeapon();
       sndClick();
-      toast(item.name + ' in hand — ' + G.bullets + ' loaded.');
+      toast(item.name + ' in hand — ' + G.bullets + ' loaded' + (G.reloading ? ', still reloading' : '') + '.');
     }
     function updateRideHUD(){
       var aliveN = 0;
@@ -11233,7 +11485,7 @@ three/build/three.module.js:
       // the run's own state: fresh hide, and each gun family carrying
       // its own full load into the ride. In Endless your hide and your
       // loads carry from coach to coach — only a new run resets them.
-      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0;
+      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads();
       rideFam = currentWeapon().kind;
       rideAmmo = {
         revolver: 6,
@@ -11495,7 +11747,7 @@ three/build/three.module.js:
       drumTarget -= Math.PI / 3;
       if (G.reloading){ sndClick(); return; }
       if (now < (G.cycleUntil || 0)) { sndClick(); return; }
-      if (G.bullets <= 0){ sndClick(); toast('Empty! The iron never reloads itself — press the round RELOAD button (or R).', true); return; }
+      if (G.bullets <= 0){ sndClick(); autoReloadOnEmpty(); return; }
       G.bullets--; updateChambers(); refreshCylinder(G.bullets);
       var wpn = currentWeapon();
       G.cycleUntil = now + (wpn.kind === 'rifle' ? 300 : wpn.kind === 'shotgun' ? 400 : 0);
@@ -11570,7 +11822,7 @@ three/build/three.module.js:
         toast('Missed — the coach is bouncing hard. Lead your shot!', true);
       }
       updateRideSwitchUI();
-      if (G.bullets <= 0 && G.state === 'ride') toast('Out of rounds — press the round RELOAD button (or R) to reload.', true);
+      if (G.bullets <= 0 && G.state === 'ride') autoReloadOnEmpty();
     }
     /* The ride itself, advanced every frame from the main loop: speeds
        and distance, the scrolling world, both gallops, the coach's
@@ -11788,6 +12040,7 @@ three/build/three.module.js:
     function startDuel(idx){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'duel'; G.lan = false; // a ladder duel is never a LAN duel (v1.25)
+      specialKind = null; fanOn = false; G.cineName = null; G.cineDist = null; updateFanBtn();
       applyLocation(G.location);
       G.duel = idx;
       // Duel gun switching (v1.23): every family rides into the duel
@@ -11799,7 +12052,7 @@ three/build/three.module.js:
         shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null;
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var cfgs = [OPPONENTS[idx]].concat(EXTRA_OPPONENTS[idx]);
       var xs = ENEMY_X[cfgs.length] || ENEMY_X[1];
@@ -11869,9 +12122,9 @@ three/build/three.module.js:
       G.cineT0 = performance.now();
       G.cineDur = REDUCED ? 1600 : 4000;
       pgun.visible = false; offHand.visible = false; hipHolster.visible = false;
-      banner(OPPONENTS[idx].name.toUpperCase(), 'pop');
+      banner((G.cineName || OPPONENTS[idx].name).toUpperCase(), 'pop');
       toast('You — ' + equippedOutfit().name + ' coat, ' + equippedHat().name + ', ' + weaponName() + ' in hand — against ' +
-        (n > 1 ? n + ' gunmen' : OPPONENTS[idx].name) + ', ' + DISTANCES[idx] + ' paces out. Tap to skip.', true);
+        (n > 1 ? n + ' gunmen' : (G.cineName || OPPONENTS[idx].name)) + ', ' + (G.cineDist || DISTANCES[idx]) + ' paces out. Tap to skip.', true);
     }
     function endCinematic(){
       if (G.state !== 'cinematic') return;
@@ -11885,6 +12138,7 @@ three/build/three.module.js:
     }
     function beginStandoff(now){
       G.state = 'standoff';
+      if (specialKind === 'bounty' && !G.bountyEnd) G.bountyEnd = now + 90000; // the 90-second hunt starts with the first standoff (v2.2)
       G.drawAt = now + 1500 + Math.random() * 2300;
       // LAN duel (v1.25): both phones must hear the bell together —
       // the host picks the moment and tells the guest how far off it
@@ -11913,6 +12167,7 @@ three/build/three.module.js:
         o.nextShotAt = now + effDrawMs(o) + o.slot * 380;
       });
       clockEl.textContent = '0.000s';
+      if (specialKind === 'bounty') bountyDrawT0 = now;
     }
     function effDrawMs(o){ return o.cfg.drawMs + o.extend; }
     function fastestDrawMs(){
@@ -11926,6 +12181,8 @@ three/build/three.module.js:
       updateStats();
     }
     function winRound(zone, now){
+      if (specialKind === 'bounty'){ bountyWin(zone, now); return; }
+      if (specialKind === 'daily'){ dailyWin(zone, now); return; }
       G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
       var reward = duelReward(G.duel, opps.length);
       SAVE.money += reward; persistSave();
@@ -11934,6 +12191,7 @@ three/build/three.module.js:
       var vital = ZONES[zone].vital;
       var multi = opps.length > 1;
       var hisDraw = (fastestDrawMs() / 1000);
+      var rpWin = startReplay(); // the killing shot plays back in slow motion before the street settles (v2.2)
       setTimeout(function(){
         banner(multi ? 'STREET CLEARED' : (vital ? ZONES[zone].label : "HE'S DOWN"));
         var msg = 'Your draw: ' + (G.reaction !== null ? (G.reaction / 1000).toFixed(3) + 's' : '—') +
@@ -11942,8 +12200,9 @@ three/build/three.module.js:
         if (multi) msg += ' · All ' + opps.length + ' gunmen down';
         else if (zone === 'gunarm' || zone === 'leg') msg += ' · Finished him with a second shot';
         toast(msg, true);
-      }, 480);
-      showNext(G.duel >= OPPONENTS.length - 1 ? 'Claim the Crown' : 'Face the Next Gunslinger');
+      }, rpWin ? 2100 : 480);
+      if (rpWin) setTimeout(function(){ showNext(G.duel >= OPPONENTS.length - 1 ? 'Claim the Crown' : 'Face the Next Gunslinger'); }, 2100);
+      else showNext(G.duel >= OPPONENTS.length - 1 ? 'Claim the Crown' : 'Face the Next Gunslinger');
     }
     function loseRound(kind){
       // LAN duel (v1.25): a loss to a real rival is settled between
@@ -11954,6 +12213,8 @@ three/build/three.module.js:
         lanLose(kind);
         return;
       }
+      if (specialKind === 'bounty'){ bountyLose(kind); return; }
+      if (specialKind === 'daily'){ dailyLose(kind); return; }
       G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
       endRoundCommon();
       if (kind === 'foul'){
@@ -11968,6 +12229,7 @@ three/build/three.module.js:
     }
     function killOpp(target, zone, now){
       var opp = target;
+      lastKillOpp = opp; // the slow-mo replay (v2.2) plays this fall back
       opp.dead = true; opp.deathT = 0; opp.deathClock = 0; opp.landed = false;
       shadowDirty = true;
       opp.group.rotation.x = 0; opp.group.rotation.z = 0;
@@ -12012,6 +12274,7 @@ three/build/three.module.js:
         rest: false
       };
       var left = aliveOpps().length;
+      if (specialKind === 'bounty' && opp === bountyTargetOpp && left > 0){ bountyWin(zone, now); return; } // the hunt ends when the WANTED man drops — his henchman standing changes nothing (v2.2)
       if (left <= 0 && G.lan){
         /* v1.32: the puppet falling on THIS phone is not the verdict.
            The wound already rode the link as a 'hit', and the rival's
@@ -12044,6 +12307,38 @@ three/build/three.module.js:
     // (v0.7: the old handlers only fired mid-draw and the button's click
     // was tangled up with the hold-to-fire pointer handling, so in
     // practice the reload simply never happened.)
+    /* ---- Auto-reload and background reloads (v2.4): an emptied gun
+       starts reloading on its own — no press needed — and the reload
+       belongs to the GUN, not to your hands. Switch to another iron
+       mid-reload and that one is usable at once, while the first
+       keeps loading in the scabbard. gunReloads holds the record per
+       family; the G.reload* fields mirror the in-hand gun's record,
+       which is what the HUD chambers and the main loop read. */
+    function activeFam(){
+      if (G.mode === 'ride') return rideFam;
+      if (G.mode === 'duel') return duelFam;
+      return currentWeapon().kind;
+    }
+    function clearGunReloads(){ gunReloads = { revolver: null, shotgun: null, rifle: null }; }
+    // park the in-hand gun's reload (if any) on its family record
+    function stashReload(fam){
+      gunReloads[fam] = G.reloading ? { end: G.reloadEnd, ms: G.reloadMs, batch: G.reloadBatch, from: G.reloadFrom } : null;
+    }
+    // pick a family's reload back up after a switch: finished while
+    // it rode in the scabbard — it comes up full; still running —
+    // the G fields mirror it again and the main loop carries it on
+    function attachReload(fam){
+      var rec = gunReloads[fam];
+      if (!rec){ G.reloading = false; return; }
+      if (performance.now() >= rec.end){
+        gunReloads[fam] = null;
+        G.reloading = false;
+        G.bullets = weaponCapacity(); G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
+        return;
+      }
+      G.reloading = true; G.reloadEnd = rec.end; G.reloadMs = rec.ms; G.reloadBatch = rec.batch;
+      G.reloadFrom = rec.from; G.reloadShown = rec.from;
+    }
     function canReload(){
       return !G.reloading && G.bullets < weaponCapacity() &&
         (G.state === 'draw' || G.state === 'standoff' || G.state === 'intro' || G.state === 'over' || G.state === 'practice' || G.state === 'ride');
@@ -12052,7 +12347,15 @@ three/build/three.module.js:
       if (!canReload()) return;
       G.reloading = true; G.reloadMs = reloadMsFor(G.bullets); G.reloadBatch = reloadBatchSize(); G.reloadEnd = now + G.reloadMs;
       G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
+      gunReloads[activeFam()] = { end: G.reloadEnd, ms: G.reloadMs, batch: G.reloadBatch, from: G.reloadFrom };
       sndClick(); updateChambers();
+    }
+    // an emptied iron reloads itself (v2.4): called the moment a shot
+    // leaves the gun dry, and again if the trigger is pulled on empty
+    function autoReloadOnEmpty(){
+      if (G.bullets > 0 || G.reloading) return;
+      startReload(performance.now());
+      if (G.reloading) toast('Empty — reloading! Switch guns to keep shooting.', true);
     }
     // The shot itself — discharged on RELEASE of the fire button, once the
     // gun has been drawn by holding. Let go before the sights are up and
@@ -12068,7 +12371,7 @@ three/build/three.module.js:
       // a long gun's action needs working between shots — lever, break,
       // falling block — while a revolver is ready again at once
       if (now < (G.cycleUntil || 0)) { sndClick(); return; }
-      if (G.bullets <= 0){ sndClick(); toast('Empty! The iron never reloads itself — press the round RELOAD button (or R).', true); return; }
+      if (G.bullets <= 0){ sndClick(); autoReloadOnEmpty(); return; }
       G.bullets--; G.shots++; SAVE.careerShots++; updateChambers(); refreshCylinder(G.bullets);
       var cycKind = currentWeapon().kind;
       G.cycleUntil = now + (cycKind === 'rifle' ? 300 : cycKind === 'shotgun' ? 400 : 0);
@@ -12092,6 +12395,7 @@ three/build/three.module.js:
       var wpn = currentWeapon();
       var distNow = DISTANCES[G.duel];
       if (wpn.kind === 'shotgun') G.shake = Math.max(G.shake, 0.13);
+      // (the fan's tight follow-up spread is applied just below, once the base spread is figured)
       // hip fire: a two-handed long gun is clumsy off the shoulder, so its
       // wild spread runs wider than a revolver's — and a shotgun's pattern
       // spreads wider the farther it flies (v1.10): tight at 7 paces,
@@ -12099,6 +12403,7 @@ three/build/three.module.js:
       // at range on top of the rangeFactor damage fall-off
       var spread = (gunV >= 0.97 ? (wpn.kind === 'shotgun' ? 0.016 : 0) : 0.012 + (1 - gunV) * 0.055 * (wpn.kind === 'revolver' ? 1 : 1.7)) * wpn.spread;
       if (wpn.kind === 'shotgun') spread *= shotgunSpreadScale(distNow);
+      if (G.fanSpread && (G.fanIdx || 0) > 0) spread = 0.005 + Math.random() * 0.007; // fanning (v2.3): the first fanned shot flies true on the base spread; the follow-ups group tight around the aim point instead of spraying wild
       // Cover is tested on the same rays and compared by distance: if a
       // porch post, building, barrel or crate stands between the muzzle
       // and the man, the shot strikes the cover — visibly — instead of
@@ -12160,6 +12465,7 @@ three/build/three.module.js:
           toast(zone.label + ' on ' + target.cfg.name + ' — he\'s staggered, but still standing!', true);
         }
         if (target.hp <= 0) killOpp(target, zoneName, now);
+        else if (specialKind === 'bounty' && !bountyFled && target === bountyTargetOpp && target.hp <= 50) doBountyFlee(now); // a wounded outlaw runs for the Saloon (v2.2)
       } else {
         var far = raycaster.ray.at(30, new THREE.Vector3());
         if (far.y < 0.05) far.y = 0.05;
@@ -12168,7 +12474,7 @@ three/build/three.module.js:
         toast('Missed — keep your nerve and fire again!', true);
       }
       persistSave(); // the career counters above ride the same save (v1.12)
-      if (G.bullets <= 0 && G.state === 'draw') toast('Out of rounds — press the round RELOAD button (or R) to reload.', true);
+      if (G.bullets <= 0 && G.state === 'draw') autoReloadOnEmpty();
     }
     function oppShoot(now, shooter){
       shooter.muzzle.getWorldPosition(_v);
@@ -12252,7 +12558,23 @@ three/build/three.module.js:
       if (G.state === 'practice'){ shoot(); return; }
       if (G.state === 'ride'){ shoot(); return; }
       if (G.state !== 'draw' || !anyAlive()) return;
+      // Fanning the hammer (v2.2, tightened v2.3): with FAN on, the
+      // double owned and a revolver in hand, one release fans off the
+      // shot plus two more in quick succession. The first shot flies
+      // true; G.fanIdx marks the follow-ups so shoot() groups them
+      // tight around the aim point — fast, but they land where the
+      // iron points. One slow aimed shot is the price of turning it off.
+      G.fanSpread = fanOn && fanUnlocked() && currentWeapon().kind === 'revolver';
+      G.fanIdx = 0;
       shoot();
+      if (G.fanSpread){
+        var fanExtra = 2;
+        var fanTimer = setInterval(function(){
+          if (fanExtra <= 0 || G.state !== 'draw' || !anyAlive() || G.bullets <= 0){ clearInterval(fanTimer); G.fanSpread = false; G.fanIdx = 0; return; }
+          fanExtra--; G.fanIdx++; shoot();
+          if (fanExtra <= 0){ clearInterval(fanTimer); G.fanSpread = false; G.fanIdx = 0; }
+        }, 115);
+      }
     }
     var holdPointerId = null;
     renderer.domElement.addEventListener('pointerdown', function(e){
@@ -12294,6 +12616,11 @@ three/build/three.module.js:
     });
     $('btnLocStreet').addEventListener('click', function(){ initAudio(); sndClick(); applyLocation('street'); });
     $('btnLocSaloon').addEventListener('click', function(){ initAudio(); sndClick(); applyLocation('saloon'); });
+    $('btnLocNight').addEventListener('click', function(){
+      initAudio(); sndClick();
+      nightOn = !nightOn; SAVE.night = nightOn; persistSave();
+      applyLocation(G.location);
+    });
     $('btnStart').addEventListener('click', function(){
       initAudio();
       // the splash tap must never click through into a match (v1.0.1):
@@ -12429,7 +12756,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'learnCard', 'endCard'];
+    var CARD_IDS = ['titleCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -12525,6 +12852,7 @@ three/build/three.module.js:
       disposeOpps(); disposePractice(); cleanupRideWorld();
       applyLocation(G.location); // restores the street/saloon backdrop (and hides the trail after a ride)
       G.state = 'title'; G.mode = 'duel'; holding = false; gunDrawn = false; gunV = 0;
+      specialKind = null; fanOn = false; updateFanBtn(); // v2.2: no hunt, streak fight or fanning rides back to the title
       scopeOut = false; // back to title clears any EXIT SCOPE latch (v1.19)
       if (btnExitScopeEl){ btnExitScopeEl._shown = false; btnExitScopeEl.style.display = 'none'; }
       hideNext(); toast('');
@@ -12546,6 +12874,8 @@ three/build/three.module.js:
       // LAN duel (v1.25): after a LAN round the button walks back to
       // the room — same rival, same code, ready for a rematch
       if (G.lan){ openLanRoom(); return; }
+      if (specialKind === 'bounty'){ openBountyCard(); return; }
+      if (specialKind === 'daily'){ $('btnQuit').click(); return; }
       if (G.mode === 'ride'){ startRide(G.rideEndless); return; }
       if (G.mode === 'practice'){ startPractice(G.practiceKind); return; }
       if (G.lastWin && G.duel >= OPPONENTS.length - 1){
@@ -12573,6 +12903,336 @@ three/build/three.module.js:
       G.wins = 0; G.losses = 0; G.best = null; G.shots = 0; G.hits = 0; G.vitals = 0;
       updateStats();
       startDuel(0);
+    });
+
+    /* ============================== SLOW-MO REPLAY (v2.2) ==============================
+       No menu, no button: dropping the LAST gunman of a duel starts
+       a 1.9-second replay on the spot — the frame timescale drops to
+       0.22 (see the animate loop), the camera drifts in on the fall,
+       and the win words wait until it lands. Reduced motion and LAN
+       duels skip it entirely. */
+    function startReplay(){
+      if (REDUCED || G.lan || !lastKillOpp) return false;
+      replayUntil = performance.now() + 1900;
+      replayTarget = lastKillOpp;
+      return true;
+    }
+
+    /* ============================== FAN THE HAMMER (v2.2, v2.3) ==============================
+       A second revolver — the same equipped iron, built by the same
+       builder — rides in your left hand while FAN is on. It holds
+       the left side across from the right iron's right, the pair
+       kept apart side by side (see the animate loop; v2.4), and
+       releasing fires a fast three-shot burst: first shot true,
+       follow-ups grouped tight (see releaseFire and shoot). Since
+       v2.3 the second iron is real: FAN stays locked until the
+       player owns a double of the equipped revolver (BUY DOUBLE in
+       the Store, kept in SAVE.doubles). One place owns the toggle:
+       the FAN button under TITLE, shown only while a revolver duel
+       is live — locked, it reads NEEDS DOUBLE and says why. */
+    var fanGunRev = null, fanGunFor = null;
+    var fanSideK = 0; // v2.4: eased 0..1 split of the dual-wield pair, so toggling FAN never pops the right iron sideways
+    function ensureFanGun(){
+      if (fanGunRev && fanGunFor === SAVE.gun) return;
+      if (fanGunRev){
+        camera.remove(fanGunRev.group);
+        fanGunRev.group.traverse(function(n){ if (n.geometry) n.geometry.dispose(); });
+        fanGunRev = null;
+      }
+      fanGunRev = buildRevolver(equippedGun().grip, 1.12, equippedGun(), gunSkinFor(equippedGun().id));
+      fanGunFor = SAVE.gun;
+      fanGunRev.group.visible = false;
+      camera.add(fanGunRev.group);
+    }
+    function updateFanBtn(){
+      var b = $('btnFan');
+      if (!b) return;
+      // v2.3: no double, no fanning — and the button says so instead
+      // of sitting there looking ready.
+      if (fanOn && !fanUnlocked()) fanOn = false;
+      var locked = !fanUnlocked();
+      b.textContent = fanOn ? 'FAN · ON' : (locked ? 'FAN · NEEDS DOUBLE' : 'FAN · OFF');
+      b.className = fanOn ? 'on' : (locked ? 'locked' : '');
+    }
+    function toggleFan(){
+      if (currentWeapon().kind !== 'revolver'){ fanOn = false; updateFanBtn(); return; }
+      if (!fanUnlocked()){
+        fanOn = false; updateFanBtn(); sndClick();
+        toast('Fanning is locked — it takes TWO of the same iron, one in each hand. Buy a second ' + equippedGun().name + ' with BUY DOUBLE in the Store and FAN opens up.', true);
+        return;
+      }
+      fanOn = !fanOn;
+      if (fanOn){
+        ensureFanGun();
+        toast('Fanning the hammer — a second ' + equippedGun().name + ' in your left hand. Every release fans off three fast shots: the first flies true, the next two land close behind it. Tap FAN off for one slow, careful shot.', true);
+      }
+      updateFanBtn();
+      sndClick();
+    }
+    $('btnFan').addEventListener('pointerdown', function(e){
+      e.preventDefault(); e.stopPropagation();
+      initAudio(); toggleFan();
+    });
+
+    /* ============================== BOUNTY HUNT & DAILY DUEL (v2.2) ==============================
+       Both ride the duel engine as special duels: same bell, same
+       hold-to-ADS, same ragdolls — only the setup, the clock and the
+       settling-up differ, and winRound/loseRound branch here first. */
+    function dayStr(d){ return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+    function todayStr(){ return dayStr(new Date()); }
+    function yesterdayStr(){ var d = new Date(); d.setDate(d.getDate() - 1); return dayStr(d); }
+    var BOUNTY_POOL = [
+      { name: 'Ransome Cole', crime: 'train robbery — the Midland payroll, twice over', sub: '"Ransome" Cole · Draw: Fast', drawMs: 830, acc: 0.6,
+        coat: 0x4a3220, pants: 0x2e2620, shirt: 0xa08b6a, hat: 0x3a2a18, skin: 0xc98d54, scarf: 0x274435 },
+      { name: 'Verna Slade', crime: 'bank robbery and a jailbreak at Red Mesa', sub: 'Verna Slade · Draw: Fast', drawMs: 800, acc: 0.62,
+        coat: 0x5e2f22, pants: 0x26201c, shirt: 0xc9b189, hat: 0x2e2015, skin: 0xe0aa72, hair: 0x1f130c, band: 0xd9a441 },
+      { name: 'Tomas Reyes', crime: 'cattle rustling clear across the county line', sub: '"El Gato" Reyes · Draw: Quick', drawMs: 880, acc: 0.57,
+        coat: 0x2a2723, pants: 0x232120, shirt: 0x8a7a5c, hat: 0x191716, skin: 0xb57e4e, poncho: 0x3d2c1c, wideBrim: true },
+      { name: 'Big Harlan Pye', crime: 'stagecoach robbery — three coaches, one month', sub: 'Big Harlan Pye · Draw: Fair', drawMs: 940, acc: 0.55,
+        coat: 0x71563a, pants: 0x3a2f24, shirt: 0xb3a37f, hat: 0x54402a, skin: 0xd9a066 },
+      { name: 'Josie Flint', crime: 'robbing the express safe at Canyon Junction', sub: 'Josie Flint · Draw: Fast', drawMs: 815, acc: 0.61,
+        coat: 0x274435, pants: 0x201d1a, shirt: 0xd8c096, hat: 0x1f2a22, skin: 0xe0aa72, hair: 0x8a5a28, band: 0x6e1f16 },
+      { name: 'Silas Vane', crime: 'a saloon shooting and two stolen remounts', sub: 'Silas Vane · Draw: Quick', drawMs: 865, acc: 0.58,
+        coat: 0x3c3648, pants: 0x26222c, shirt: 0x8f867a, hat: 0x241f2a, skin: 0xc98d54 }
+    ];
+    var BOUNTY_HENCH = { name: 'Lyle Pruitt', sub: '"Lyle" Pruitt · the outlaw\'s shadow', drawMs: 990, acc: 0.5,
+      coat: 0x5c4632, pants: 0x2e2a24, shirt: 0x9a8a68, hat: 0x3a2c1c, skin: 0xb57e4e, scarf: 0x5c6e46 };
+    var DAILY_POOL = [
+      { name: 'Kid Curry', sub: '"The Kid" · Daily Duel · Draw: Blinding', drawMs: 640, acc: 0.66,
+        coat: 0x5c3a22, pants: 0x2e2620, shirt: 0xb3a37f, hat: 0x3a2a18, skin: 0xd9a066 },
+      { name: 'Sadie Voss', sub: 'Sadie Voss · Daily Duel · Draw: Blinding', drawMs: 600, acc: 0.69,
+        coat: 0x274435, pants: 0x201d1a, shirt: 0xc9b189, hat: 0x1f2a22, skin: 0xe0aa72, hair: 0x2a1a10, band: 0xd9a441 },
+      { name: 'One-Ear Boyd', sub: 'One-Ear Boyd · Daily Duel · Draw: Death Itself', drawMs: 560, acc: 0.72,
+        coat: 0x33302c, pants: 0x232120, shirt: 0x8a7a5c, hat: 0x191716, skin: 0xc98d54, patch: true },
+      { name: 'Flint Marlowe', sub: 'Flint Marlowe · Daily Duel · Draw: Blinding', drawMs: 620, acc: 0.67,
+        coat: 0x4a2e3a, pants: 0x26222c, shirt: 0xa39a88, hat: 0x2e2430, skin: 0xb57e4e, scarf: 0x7e3430 },
+      { name: 'Pearl Callahan', sub: 'Pearl Callahan · Daily Duel · Draw: Death Itself', drawMs: 580, acc: 0.71,
+        coat: 0x71563a, pants: 0x33231e, shirt: 0xd8c096, hat: 0x54402a, skin: 0xe0aa72, hair: 0x8a5a28, band: 0x6e1f16 },
+      { name: 'Graves', sub: 'Just "Graves" · Daily Duel · Draw: Death Itself', drawMs: 540, acc: 0.74,
+        coat: 0x1d1b1a, pants: 0x171615, shirt: 0x5c564e, hat: 0x121110, skin: 0xcfa06a, band: 0x3d0f0a }
+    ];
+    var bountyCfg = null, dailyCfg = null;
+    function dailyCfgForToday(){
+      var s = todayStr(), h = 0;
+      for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+      return DAILY_POOL[h % DAILY_POOL.length];
+    }
+    function rollBountyPoster(){
+      bountyCfg = BOUNTY_POOL[Math.floor(Math.random() * BOUNTY_POOL.length)];
+      $('bountyName').textContent = bountyCfg.name;
+      $('bountyCrime').textContent = 'Wanted for ' + bountyCfg.crime + '. Last seen on Main Street — cornered men run for the Saloon.';
+      $('bountyReward').innerHTML = 'REWARD · <b>$120</b> + $2 A SECOND TO SPARE';
+      $('bountyWinsLine').textContent = SAVE.bountyWins > 0
+        ? 'BOUNTIES CAUGHT · ' + SAVE.bountyWins + (SAVE.bountyBest !== null ? ' · FASTEST CAPTURE ' + SAVE.bountyBest + 's' : '')
+        : 'NO BOUNTIES CAUGHT YET';
+    }
+    function renderDailyCard(){
+      dailyCfg = dailyCfgForToday();
+      $('dailyName').textContent = dailyCfg.name;
+      $('dailySub').textContent = dailyCfg.sub + ' · 13.5 paces';
+      $('dailyStreak').textContent = 'STREAK · ' + SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS') + ' · BEST ' + SAVE.dailyBest;
+      var b = $('btnStartDaily');
+      if (SAVE.dailyLastWin === todayStr()){ b.textContent = 'Won Today — Back Tomorrow'; b.disabled = true; b.style.opacity = '.55'; }
+      else { b.textContent = '★ Face ' + dailyCfg.name; b.disabled = false; b.style.opacity = ''; }
+    }
+    function openBountyCard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      rollBountyPoster();    // …then the poster takes the menu's place
+      $('titleCard').style.display = 'none';
+      $('bountyCard').style.display = 'flex';
+    }
+    /* One setup for both special duels, mirroring startDuel: the
+       bounty opens on Main Street at Duel 3's range with a henchman
+       covering the outlaw; the daily is one fast gun at Duel 4's
+       range on whichever street you picked. */
+    function startSpecialDuel(kind){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = kind; fanOn = false; updateFanBtn();
+      var cfg = kind === 'bounty' ? bountyCfg : dailyCfg;
+      if (kind === 'bounty'){ G.bountyLoc = 'street'; bountyFled = false; G.bountyEnd = 0; bountyDrawT0 = 0; G.duel = 2; }
+      else { G.duel = 3; }
+      applyLocation(kind === 'bounty' ? 'street' : G.location);
+      duelFam = currentWeapon().kind;
+      duelAmmo = {
+        revolver: 6,
+        shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
+        rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
+      };
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var cfgs = kind === 'bounty' ? [BOUNTY_HENCH, cfg] : [cfg];
+      var xs = ENEMY_X[cfgs.length] || ENEMY_X[1];
+      bountyTargetOpp = null;
+      cfgs.forEach(function(c2, i){
+        var o = buildGunslinger(c2);
+        o.slot = i;
+        o.group.position.x = xs[i];
+        o.group.position.z = 4.6 - dist;
+        o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+        opps.push(o);
+        if (c2 === cfg) bountyTargetOpp = o;
+      });
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = cfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = kind === 'bounty' ? 'BOUNTY HUNT · ' + dist + ' PACES · MAIN STREET' : 'DAILY DUEL · ' + dist + ' PACES';
+      $('oppName').textContent = cfg.name;
+      $('oppSub').textContent = cfg.sub;
+      clockEl.textContent = '—';
+      var clbl2 = document.querySelector('#clockPlate .lbl'); if (clbl2) clbl2.textContent = kind === 'bounty' ? 'Hunt Time' : 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, cfgs.length);
+    }
+    function doBountyFlee(now){
+      if (specialKind !== 'bounty' || bountyFled || !bountyTargetOpp || bountyTargetOpp.dead) return;
+      bountyFled = true;
+      holding = false;
+      banner('HE FLED!', 'pop');
+      sndThud(0.5);
+      disposeOpps();
+      applyLocation('saloon');
+      G.bountyLoc = 'saloon';
+      var o = buildGunslinger(bountyCfg);
+      o.slot = 0; o.hp = 55;
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - DISTANCES[G.duel];
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      bountyTargetOpp = o;
+      shadowDirty = true;
+      $('duelLabel').textContent = 'BOUNTY HUNT · ' + DISTANCES[G.duel] + ' PACES · THE SALOON';
+      $('oppName').textContent = bountyCfg.name;
+      $('oppSub').textContent = bountyCfg.sub + ' · Cornered in the Saloon';
+      G.state = 'intro';
+      G.introEnd = now + 800;
+      toast('He bolted through the batwings into the Saloon — after him! The hunt clock is still running!', true);
+    }
+    function bountyWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var left = Math.max(0, Math.ceil((G.bountyEnd - now) / 1000));
+      var reward = 120 + left * 2 + (bountyFled ? 0 : 40);
+      SAVE.money += reward;
+      SAVE.bountyWins++;
+      var took = 90 - left;
+      if (SAVE.bountyBest === null || took < SAVE.bountyBest) SAVE.bountyBest = took;
+      persistSave();
+      G.lastReward = reward;
+      endRoundCommon();
+      var rpB = startReplay();
+      setTimeout(function(){
+        banner('BOUNTY CAUGHT');
+        toast(bountyCfg.name + ' is yours — $' + reward + ' paid ($120 bounty' + (bountyFled ? '' : ' + $40 never left Main Street') + ' + $' + (left * 2) + ' for ' + left + 's to spare). Wallet $' + SAVE.money, true);
+      }, rpB ? 2100 : 480);
+      if (rpB) setTimeout(function(){ showNext('Back to the Poster'); }, 2100);
+      else showNext('Back to the Poster');
+    }
+    function bountyLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('You fired before the bell — the bounty rides free while you answer for the foul.', true);
+      } else if (kind === 'escaped'){
+        banner('HE ESCAPED');
+        toast('The trail went cold — ' + (bountyCfg ? bountyCfg.name : 'the outlaw') + ' slipped away. The poster stays up.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('The bounty outgunned you this time. The poster stays up on the wall.', true);
+      }
+      showNext('Back to the Poster');
+    }
+    function dailyWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var t = todayStr();
+      var bonusNote = '';
+      if (SAVE.dailyLastWin !== t){
+        SAVE.dailyStreak = (SAVE.dailyLastWin === yesterdayStr()) ? SAVE.dailyStreak + 1 : 1;
+        SAVE.dailyLastWin = t;
+        SAVE.dailyWins++;
+        if (SAVE.dailyStreak > SAVE.dailyBest) SAVE.dailyBest = SAVE.dailyStreak;
+        SAVE.money += 75;
+        if (SAVE.dailyStreak % 3 === 0){
+          if (SAVE.skins.indexOf('worn') < 0){ SAVE.skins.push('worn'); bonusNote = ' Streak bonus: the Frontier Worn finish is yours — find it in the Gun Locker.'; }
+          else { SAVE.money += 100; bonusNote = ' Streak bonus: +$100.'; }
+        }
+      }
+      persistSave();
+      endRoundCommon();
+      var rpD = startReplay();
+      var streakNow = SAVE.dailyStreak;
+      setTimeout(function(){
+        banner('STREAK KEPT · ' + streakNow + (streakNow === 1 ? ' DAY' : ' DAYS'));
+        toast('You outdrew ' + dailyCfg.name + ' — $75 daily reward paid. Wallet $' + SAVE.money + '.' + bonusNote, true);
+      }, rpD ? 2100 : 480);
+      if (rpD) setTimeout(function(){ showNext('Back to Menu'); }, 2100);
+      else showNext('Back to Menu');
+    }
+    function dailyLose(kind){
+      if (SAVE.dailyLastWin !== todayStr()) SAVE.dailyStreak = 0; // a lost daily breaks the streak (v2.2)
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('A foul — and the streak is gone. Tomorrow brings a new gun.', true);
+      } else {
+        G.camFall = 0;
+        banner('STREAK BROKEN');
+        toast((dailyCfg ? dailyCfg.name : 'He') + ' was faster today. The streak resets — ride back tomorrow and start a new one.', true);
+      }
+      showNext('Back to Menu');
+    }
+    $('btnBounty').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      rollBountyPoster();
+      $('titleCard').style.display = 'none';
+      $('bountyCard').style.display = 'flex';
+      var bi = document.querySelector('#bountyCard .inner'); if (bi) bi.scrollTop = 0;
+    });
+    $('btnBackBounty').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('bountyCard').style.display = 'none';
+      $('titleCard').style.display = 'flex';
+    });
+    $('btnStartBounty').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('bountyCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startSpecialDuel('bounty');
+    });
+    $('btnDaily').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderDailyCard();
+      $('titleCard').style.display = 'none';
+      $('dailyCard').style.display = 'flex';
+      var di = document.querySelector('#dailyCard .inner'); if (di) di.scrollTop = 0;
+    });
+    $('btnBackDaily').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('dailyCard').style.display = 'none';
+      $('titleCard').style.display = 'flex';
+    });
+    $('btnStartDaily').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (SAVE.dailyLastWin === todayStr()) return; // already won today — the button says so
+      renderDailyCard();
+      $('dailyCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startSpecialDuel('daily');
     });
 
     /* ============================== LAN DUEL · 1V1 (v1.25) ==============================
@@ -12877,7 +13537,7 @@ three/build/three.module.js:
         shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null;
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var rw = LAN.remoteWeapon;
       var item = rw && rw.itemId ? (rw.fam === 'revolver' ? gearById(GUNS, rw.itemId) : gearById(LONGGUNS, rw.itemId)) : null;
@@ -13109,6 +13769,7 @@ three/build/three.module.js:
       try {
         var now = frameNow;
         var dt = Math.min((now - lastMs) / 1000, 0.05);
+        if (replayUntil && now < replayUntil) dt *= 0.22; // slow-mo replay (v2.2): the whole street breathes at quarter speed
         lastMs = now;
         elapsed += dt;
         var t = elapsed;
@@ -13143,6 +13804,21 @@ three/build/three.module.js:
            from the first shot until the last bottle falls ---- */
         if (G.mode === 'practice' && G.state === 'practice' && G.practiceT0 && !G.practiceDone){
           clockEl.textContent = ((now - G.practiceT0) / 1000).toFixed(2) + 's';
+        }
+
+        /* ---- bounty hunt clock (v2.2): the hunt runs 90 seconds from
+           the first standoff, counted down on the clock plate. On Main
+           Street the target bolts for the Saloon 14 seconds into the
+           draw if he's still standing; an empty clock, anywhere, and
+           he's escaped. The clock keeps running through the flight —
+           the Saloon leg is chased on the same ninety seconds. ---- */
+        if (specialKind === 'bounty' && G.bountyEnd){
+          if (G.state === 'draw' || G.state === 'standoff' || G.state === 'intro'){
+            var bLeft = Math.max(0, (G.bountyEnd - now) / 1000);
+            clockEl.textContent = Math.floor(bLeft / 60) + ':' + ('0' + Math.floor(bLeft % 60)).slice(-2);
+            if (!bountyFled && G.bountyLoc === 'street' && G.state === 'draw' && bountyDrawT0 && now - bountyDrawT0 > 14000) doBountyFlee(now);
+            else if (now >= G.bountyEnd) bountyLose('escaped');
+          }
         }
 
         /* ---- flying bottles (v1.13): launch on a cadence, fly on a
@@ -13296,6 +13972,7 @@ three/build/three.module.js:
           if (disp > G.reloadShown){ G.reloadShown = disp; updateChambers(); refreshCylinder(disp); sndClick(); }
           if (now >= G.reloadEnd){
             G.reloading = false; G.bullets = rCap; G.reloadShown = rCap;
+            gunReloads[activeFam()] = null;
             updateChambers(); refreshCylinder(rCap); sndClick();
           }
         }
@@ -13319,7 +13996,7 @@ three/build/three.module.js:
           gunV += (restV - gunV) * Math.min(dt * 12, 1);
           if (Math.abs(restV - gunV) < 0.002) gunV = restV;
         }
-        var swayA = (REDUCED ? 0.002 : (G.hp <= 50 ? 0.011 : 0.0045)) * wpnFeel.sway;
+        var swayA = (REDUCED ? 0.002 : (G.hp <= 50 ? 0.011 : 0.0045)) * wpnFeel.sway * (nightOn ? 1.55 : 1); // storm wind (v2.2): night aim wanders half again as wild
         var dip = G.reloading ? Math.sin(Math.min((G.reloadEnd - now) / (G.reloadMs || 1350), 1) * Math.PI) * 0.5 : 0;
         // One press, one motion — like a mobile FPS scope button: holding
         // FIRE raises the iron in a single smooth blend straight from the
@@ -13547,12 +14224,95 @@ three/build/three.module.js:
         camera.rotateX(aimSmY * 0.04 * duelTurnK);
         }
 
+        /* ---- slow-mo replay camera (v2.2): while the replay runs,
+           the view leaves your shoulder and drifts in slow on the
+           fallen gunman; your own iron, hand and holster step out of
+           the shot and come back the moment it ends (latched above). ---- */
+        if (replayUntil && now < replayUntil && replayTarget && replayTarget.group){
+          var rpT = replayTarget.group.position;
+          var rpK = 1 - (replayUntil - now) / 1900;
+          camera.position.set(rpT.x + 1.7 - rpK * 0.5, 1.05 - rpK * 0.25, rpT.z + 2.6 - rpK * 0.7);
+          camera.lookAt(rpT.x, 0.75, rpT.z);
+          if (!G._rpGunHidden){ G._rpGunHidden = true; pgun.visible = false; offHand.visible = false; hipHolster.visible = false; }
+        }
+
         /* ---- damage vignette & toast timers ---- */
         if (G.vig > 0){ G.vig = Math.max(G.vig - dt * 1.1, 0); }
         $('vig').style.opacity = G.vig;
         if (toastTimer !== Infinity && toastTimer > 0){
           toastTimer -= dt * 1000;
           if (toastTimer <= 0) toastEl.className = '';
+        }
+
+        /* ---- v2.2 frame work: storm rain, lightning, the replay
+           tag, the FAN button latch and the second iron's pose. All
+           pooled or latched — nothing is allocated per frame, so the
+           new features cost the loop next to nothing. ---- */
+        if (rainPts.visible){
+          var rpArr = rainPos.array;
+          for (var rpi = 0; rpi < rpArr.length; rpi += 3){
+            rpArr[rpi + 1] -= dt * 10.5;
+            rpArr[rpi] += dt * 1.6;
+            if (rpArr[rpi + 1] < 0){ rpArr[rpi + 1] = 15 + Math.random() * 2; rpArr[rpi] = -14 + Math.random() * 28; rpArr[rpi + 2] = -24 + Math.random() * 32; }
+          }
+          rainPos.needsUpdate = true;
+        }
+        if (nightOn && (G.state !== 'title')){
+          if (!G.nextBolt) G.nextBolt = now + 2200 + Math.random() * 4200;
+          if (now >= G.nextBolt){
+            G.boltAt = now; G.nextBolt = now + 2600 + Math.random() * 5200;
+            setTimeout(function(){ try { sndThud(0.55); } catch (e) {} }, 240); // thunder, a beat behind the flash
+          }
+        }
+        if (boltFxEl){
+          var boltK = G.boltAt ? Math.max(0, 0.8 - (now - G.boltAt) / 260) : 0;
+          var boltS = boltK.toFixed(3);
+          if (boltFxEl._o !== boltS){ boltFxEl._o = boltS; boltFxEl.style.opacity = boltK; }
+        }
+        var rpTagOn = !!(replayUntil && now < replayUntil);
+        if (replayTagEl && replayTagEl._on !== rpTagOn){ replayTagEl._on = rpTagOn; replayTagEl.className = rpTagOn ? 'plate on' : 'plate'; }
+        if (!rpTagOn && G._rpGunHidden){
+          G._rpGunHidden = false;
+          if (G.state !== 'cinematic'){ pgun.visible = true; hipHolster.visible = (pgunRev.kind === 'revolver'); }
+        }
+        var fanShow = (G.mode === 'duel' && !G.lan && wpnFeel.kind === 'revolver' &&
+          (G.state === 'draw' || G.state === 'standoff' || G.state === 'intro' || G.state === 'over'));
+        if (btnFanEl && btnFanEl._shown !== fanShow){ btnFanEl._shown = fanShow; btnFanEl.style.display = fanShow ? 'block' : 'none'; }
+        if (fanOn && (wpnFeel.kind !== 'revolver' || !fanUnlocked())){ fanOn = false; updateFanBtn(); }
+        if (fanGunRev){
+          var fg = fanGunRev.group;
+          var fgOn = fanOn && pgunRev.kind === 'revolver' && (holding || gunDrawn) &&
+            (G.state === 'draw' || G.state === 'practice' || G.state === 'ride');
+          if (fg.visible !== fgOn) fg.visible = fgOn;
+          /* Dual wield, held apart (v2.4): the pair ride SIDE BY SIDE
+             and stay separated through the whole fan burst — the
+             right iron holds the right side in the right hand, the
+             left iron the left side in the left, each barrel pointing
+             forward from its own side. The old pose mirrored the
+             main gun's x straight across, so the moment the right
+             iron centred up into ADS the two met in the middle and
+             overlapped. Now both irons ride the same offset out from
+             the shared aim point — the right one aim-plus-offset, the
+             left one aim-minus-offset, the offset scaled off PGX,
+             which already tracks the screen's width, and growing as
+             the sights rise — so the pair keep a constant split and
+             can never meet. */
+          fanSideK += ((fgOn ? 1 : 0) - fanSideK) * Math.min(dt * 10, 1);
+          if (!fgOn && fanSideK < 0.002) fanSideK = 0;
+          var fanOff = (PGX * 0.55 + 0.05) * fanSideK * (0.35 + 0.65 * e2);
+          if (fanSideK > 0 && pgunRev.kind === 'revolver'){
+            pgun.position.x += fanOff;
+          }
+          if (fgOn){
+            // the left iron rides the same distance out on ITS side of
+            // the aim point — aim centre minus the offset, not a mirror
+            // of wherever the right iron ended up — so the pair keep a
+            // constant shoulder-width split and track the aim together,
+            // and can never cross or meet in the middle at any aim
+            fg.position.set(pgun.position.x - fanOff * 2, pgun.position.y - 0.015, pgun.position.z);
+            fg.rotation.set(pgun.rotation.x, -pgun.rotation.y, -pgun.rotation.z);
+            if (fanGunRev.drum) fanGunRev.drum.rotation.z = drumSpin;
+          }
         }
 
         /* ---- ambient life ---- */
@@ -13609,6 +14369,8 @@ three/build/three.module.js:
     updateMoneyUI();
     refreshSettingsUI();
     applyGraphics(PREFS.gfx);
+    nightOn = !!SAVE.night; // v2.2: a picked storm is still waiting when you come back
+    applyLocation(G.location);
     animate();
     }
     // Defer the heavy 3D build a tick past DOMContentLoaded: the splash and
