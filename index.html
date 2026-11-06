@@ -896,6 +896,85 @@
         border:1px solid var(--plate-line); background:rgba(217,164,65,.12); padding:8px 10px; margin-top:8px; line-height:1.5; border-radius:5px; }
       .streakPips{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.14em; color:#ffd98f; margin:6px 0 0; }
       @media (max-height:740px){ #titleCard .bigbtn{ padding:9px 16px; } #titleCard .menuRow .bigbtn{ padding:10px 4px; } }
+      /* ---------- Declutter (v2.5): every fight screen — ladder duels,
+         Bounty Hunt, Daily Duel, LAN duels, both practices and the
+         ride — runs a clean, high-end HUD now. The bordered plates are
+         gone: what a fight actually needs floats as quiet text over
+         the street — who you're facing, the one clock that matters,
+         your hide and your loads — and everything else steps off the
+         screen. The career plate (won / lost / best / money / version)
+         no longer rides in a fight; those numbers live in Stats and
+         on the menu. The duel counter line, the opponent's nickname
+         line, every plate label ("Your Draw", "Your Hide", "Coach
+         Range"…), the scope chip, the ADS tag and the replay tag are
+         gone — the clock number, the scope lens and the slow motion
+         each say it themselves. The controls stay, smaller and
+         quieter: a plain ✕ for TITLE, a slim FAN word, a compact
+         RELOAD roundel with no sub-line, and a weapon bar that is
+         three plain words with no IN HAND plate over it. The street
+         and the man across it own the screen again. ---------- */
+      #hud .plate{ background:transparent; border:none; box-shadow:none; padding:2px 4px; }
+      #statPlate{ display:none !important; }
+      #oppPlate{ min-width:0; }
+      #oppPlate .duel{ display:none; }
+      #oppSub{ display:none; }
+      #oppName{ font-size:18px; margin-top:0; text-shadow:0 1px 3px rgba(0,0,0,.9), 0 2px 10px rgba(0,0,0,.75); }
+      #clockPlate{ min-width:0; }
+      #clockPlate .lbl{ display:none; }
+      #drawClock{ font-size:21px; text-shadow:0 1px 3px rgba(0,0,0,.9), 0 2px 10px rgba(0,0,0,.75); }
+      #selfPlate .lbl{ display:none; }
+      #scopeChip{ display:none !important; }
+      #hpBar{ width:132px; height:7px; border:none; background:rgba(0,0,0,.5); box-shadow:0 1px 5px rgba(0,0,0,.55); margin-top:0; }
+      #chambers{ margin-top:7px; gap:4px; }
+      #chambers i{ width:9px; height:9px; border-color:rgba(217,164,65,.85); box-shadow:0 1px 4px rgba(0,0,0,.6); }
+      #adsTag{ display:none !important; }
+      #replayTag{ display:none !important; }
+      #rideWpnName{ display:none !important; }
+      #rideSwitch button{ background:rgba(16,9,4,.55); border-color:rgba(217,164,65,.35); box-shadow:0 2px 8px rgba(0,0,0,.35); padding:9px 10px; font-size:11.5px; }
+      #rideSwitch button.on{ background:rgba(70,37,14,.72); }
+      #rideSwitch button.locked{ opacity:.38; }
+      #btnReload{ width:64px; height:64px; font-size:11px; border-width:1px; background:rgba(24,13,6,.62); box-shadow:0 3px 12px rgba(0,0,0,.45); }
+      #btnReload small{ display:none; }
+      #btnQuit{ top:calc(10px + env(safe-area-inset-top)); right:12px; background:transparent; border:none; box-shadow:none; padding:6px 8px; font-size:15px; color:rgba(255,233,189,.85); text-shadow:0 1px 4px rgba(0,0,0,.9); }
+      #btnFan{ top:calc(46px + env(safe-area-inset-top)); right:12px; min-width:0; background:transparent; border:none; box-shadow:none; padding:6px 8px; font-size:10.5px; color:rgba(216,192,150,.85); text-shadow:0 1px 4px rgba(0,0,0,.9); }
+      #btnFan.on{ background:transparent; color:#ffd98f; }
+      #btnFan.locked{ border:none; }
+      body.scoped #btnFan{ display:none !important; }
+      #btnNext{ padding:11px 24px; font-size:15.5px; border-width:1px; box-shadow:0 4px 14px rgba(0,0,0,.5); }
+      #btnExitScope{ padding:10px 13px; font-size:11.5px; border-width:1px; box-shadow:0 3px 12px rgba(0,0,0,.45); }
+      #toast.practice, #toast.ride{ background:transparent; border:none; box-shadow:none; }
+      @media (max-width:520px){
+        #oppName{ font-size:14.5px; }
+        #drawClock{ font-size:17px; }
+        #selfPlate{ top:calc(58px + env(safe-area-inset-top)); padding:2px 4px; }
+        #hud.ride #selfPlate{ top:calc(58px + env(safe-area-inset-top)); }
+        #hud.ride #clockPlate{ bottom:calc(168px + env(safe-area-inset-bottom)); }
+        #hud.duel #clockPlate{ bottom:calc(186px + env(safe-area-inset-bottom)); }
+        #toast.ride{ bottom:calc(224px + env(safe-area-inset-bottom)); }
+      }
+      /* ---------- Crosshair (v2.6): a small, quiet cross that rides
+         the gun's point of impact in every fight — ladder duels,
+         Bounty Hunt, Daily Duel, LAN, both practices and the ride.
+         Every shot is ray-cast through the one aim point, and
+         setPointer parks this cross on that exact point (centred
+         drag aim and all), so it sits where the gun is pointing and where
+         the shot will land, swinging with the iron as you aim — hip
+         fire, ADS and the rifle scope alike. Four short ticks and a
+         pin dot, nothing more: no plate, no ring, no label — in
+         keeping with the clean v2.5 fight screen. z-index 7 keeps
+         it above the scope overlay (z-index 6) so it stays visible
+         while scoped, centred in the lens. ---------- */
+      #cxhair{ position:fixed; left:0; top:0; width:30px; height:30px; margin:-15px 0 0 -15px;
+        pointer-events:none; z-index:7; opacity:0; visibility:hidden; transition:opacity .18s ease, visibility .18s; }
+      #cxhair.on{ opacity:.92; visibility:visible; }
+      #cxhair .cdot{ position:absolute; left:50%; top:50%; width:3px; height:3px; margin:-1.5px 0 0 -1.5px; border-radius:50%;
+        background:rgba(255,233,189,.95); box-shadow:0 0 3px rgba(0,0,0,.85), 0 0 6px rgba(0,0,0,.4); }
+      #cxhair .ct{ position:absolute; background:rgba(255,233,189,.88); box-shadow:0 0 3px rgba(0,0,0,.85); }
+      #cxhair .ct1{ left:50%; top:1px; width:2px; height:8px; margin-left:-1px; }
+      #cxhair .ct2{ left:50%; bottom:1px; width:2px; height:8px; margin-left:-1px; }
+      #cxhair .ct3{ top:50%; left:1px; height:2px; width:8px; margin-top:-1px; }
+      #cxhair .ct4{ top:50%; right:1px; height:2px; width:8px; margin-top:-1px; }
+      @media (prefers-reduced-motion: reduce){ #cxhair{ transition:none; } }
     </style>
   </head>
   <body>
@@ -909,7 +988,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.4 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.6 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36):
          the real 3D revolver over open plains and a bright blue sky,
@@ -1036,7 +1115,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.4</div>
+        <div class="ver">SHOWDOWN 1881 · v2.6</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1048,13 +1127,19 @@
       <div class="plate" id="replayTag">★ Slow-Mo Replay ★</div>
     </div>
     <button id="btnReload" type="button" aria-label="Reload">RELOAD<small>PRESS · R</small></button>
-    <button id="btnQuit" type="button">✕&nbsp;TITLE</button>
+    <button id="btnQuit" type="button" aria-label="Back to title">✕</button>
     <button id="btnFan" type="button" aria-label="Toggle fanning the hammer">FAN · OFF</button>
     <!-- Exit Scope (v1.19): appears only while the rifle scope is up.
          Drops the scope and the 2x zoom back to normal view, no shot. -->
     <button id="btnExitScope" type="button" aria-label="Exit scope">✕&nbsp;Exit Scope</button>
 
     <div id="xhair"><span class="ring"></span><span class="dot"></span><span class="tick t1"></span><span class="tick t2"></span><span class="tick t3"></span><span class="tick t4"></span></div>
+    <!-- Crosshair (v2.6): rides the gun's aim point in fights only —
+         setPointer parks it on the very point every shot is cast
+         through, so it shows where the gun is pointing and where the
+         shot will land. Toggled per frame by the animate loop;
+         aiming itself is unchanged. -->
+    <div id="cxhair"><span class="ct ct1"></span><span class="ct ct2"></span><span class="ct ct3"></span><span class="ct ct4"></span><span class="cdot"></span></div>
     <div id="hitmark"></div>
     <!-- Rifle scope (v1.18): the lens follows your aim point exactly —
          its crosshair centre IS the point every shot's ray is cast
@@ -1071,9 +1156,9 @@
     <div id="rideSwitch">
       <div id="rideWpnName">IN HAND · Trail Iron</div>
       <div class="rideRow">
-        <button type="button" data-w="revolver">1 · REVOLVER</button>
-        <button type="button" data-w="shotgun">2 · SHOTGUN</button>
-        <button type="button" data-w="rifle">3 · RIFLE</button>
+        <button type="button" data-w="revolver">REVOLVER</button>
+        <button type="button" data-w="shotgun">SHOTGUN</button>
+        <button type="button" data-w="rifle">RIFLE</button>
       </div>
     </div>
 
@@ -1106,7 +1191,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1121,7 +1206,7 @@
         <button class="bigbtn flybtn" id="btnPracticeFlying" type="button">Flying Bottles</button>
         <p class="small">Bottles tossed across the sky — shoot them out of the air.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1141,7 +1226,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1175,7 +1260,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1209,7 +1294,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1236,7 +1321,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1265,7 +1350,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1304,7 +1389,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1336,7 +1421,7 @@
         <p class="small">Low is the classic look. Medium renders sharper, with soft shadows that follow every move. High goes all out — the finest detail your device can draw, deep golden light, soft live shadows and dust hanging in the air.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1348,7 +1433,7 @@
         <div class="howto">
           <p><b>WAIT</b> — Keep your iron holstered till the bell rings and you hear <b>DRAW!</b> Grab for it early and it's a foul.</p>
           <p><b>DRAW</b> — The instant it rings, <b>press and HOLD on the street</b> (hold your touch / mouse, or hold Space) — just hold, like the scope button in a mobile shooter. No sliding, no swiping, and no on-screen fire button: holding alone snaps your revolver straight up out of the leather into <b>aim-down-sights</b>, and the view tightens as the sights come up.</p>
-          <p><b>AIM</b> — <b>Aim with the iron itself.</b> Keep holding to stay aimed in, and move or drag to swing the whole gun until its sights sit on a gunman. Revolvers and shotguns aim down their own sights — a <b>crosshair dot</b> rides your aim point, lifted clear of your finger on touch, and the shot goes where the dot points. Rifles look through their <b>2× scope</b> instead.</p>
+          <p><b>AIM</b> — <b>Aim with the iron itself.</b> Keep holding to stay aimed in, and move or drag to swing the whole gun until its sights sit on a gunman. Revolvers and shotguns aim down their own sights — a <b>crosshair dot</b> rides your aim point, and the shot goes where the dot points. Rifles look through their <b>2× scope</b> instead. And in every fight a <b>small crosshair rides your aim</b> — it sits where the gun is pointing, where the shot will land, and moves with the iron as you swing it. On touch, your aim <b>starts dead centre of the screen</b> every fight, and a drag swings it from there — your thumb rests wherever it likes; it never drags the aim down with it.</p>
           <p><b>SHOOT</b> — <b>RELEASE to fire</b> once your sights are on him. Let go before the sights finish rising and it sprays wild from the hip. Head or heart kills outright, other hits wound — and the iron stays up in ADS for follow-up shots, no re-holstering till the duel is done.</p>
           <p><b>RELOAD</b> — Run an iron dry and it <b>reloads itself</b>, all on its own — no button press. You can still top off early any time with the <b>round RELOAD button</b> (bottom right) or <b>R</b>, whenever the iron isn't full — even after a duel. And a reload belongs to the gun: <b>switch guns mid-reload</b> and the one you draw is ready to fire at once, while the first keeps loading in the scabbard — come back to it loaded, or that much further along. Low guns load fast to make up for holding so little: a <b>double barrel speed-loads both shells at once</b>, in one hand motion, and a <b>single-shot drops its one round straight in</b> — while six-guns and lever rifles still feed <b>one round at a time</b>, so the big magazines take the longest to fill.</p>
           <p><b>OUTNUMBERED</b> — From Duel 4 on, they come in company: <b>two gunmen at once</b> in Duels 4 and 5, and <b>three at once</b> in the final duel. Every one of them draws and shoots on his own — drop them all to clear the street.</p>
@@ -1359,7 +1444,7 @@
           <p><b>LONG GUNS &amp; HATS</b> — The Store also sells <b>shotguns and rifles</b>. A shotgun holds 2 shells and throws a pattern that starts tight and spreads wider the farther it flies — deadly up close, wild at range. Rifles hold more rounds and shoot straighter and harder. A long gun is carried in <b>both hands, left hand on the fore-end</b> — there is no holster for it, and its action needs working between shots. Know the balance of the street: a <b>revolver draws fastest</b> and bites hardest up close, but its lead fades at long range; a <b>rifle draws slow</b>, stays steadiest in the sights and hits harder the farther out the shot flies; a <b>shotgun is slowest to shoulder</b>, and its pattern spreads wider the farther it flies — tight and devastating up close, still heavy at mid range, and only at the longest ranges do most pellets miss and those that land land weaker. <b>Hats</b> from the Store are worn on your head in the cinematic and the duel, same as your coat. Everything you own lives in the <b>Inventory</b> — its own screen off the main menu, sorted into Guns, Hats and Clothes, with one-tap equip.</p>
           <p><b>PRACTICE</b> — No bell, no gunman. Twelve big, bright glass bottles stand on rails, barrels, crates and tables — in different spots every round, never the same layout twice — hold to aim down sights, release to shoot, and watch them shatter — and a shotgun's pattern breaks every bottle standing in its spread, not just the one you aimed at. Line a shot up dead through one bottle and the bullet carries straight on and breaks the bottle right behind it too — with any gun you hold. Your count is kept on screen — and the clock starts on your first shot, so clear them fast: your best time is saved and shown in Practice.</p>
           <p><b>FLYING BOTTLES</b> — The second practice, off the same menu: fifteen bottles are <b>launched across the sky in front of you</b>, big and close, tumbling end over end through midair on a long, slow arc at different heights and speeds — you get a good few seconds to track each one. Lead them, hold to aim, release to shoot — smash one and it bursts into flying glass with a shattering crack. A bottle that gets past you smashes on the ground and is gone. Your hits, the bottles still in the air and your shots are all counted on screen.</p>
-          <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, its aim point sits <b>above your fingertip</b>, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
+          <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, the lens sits dead on your aim point — and on touch that aim is swung by dragging, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
           <p><b>THE RIDE</b> — Saddle up off the main menu and <b>run down a stagecoach</b> on the open trail. Your horse gallops under you and the long coach bounces and swerves ahead on its team, and the <b>six outlaws riding it — driver and messenger on the bench, two on the roof and two on the rear platform — shoot back</b>. A man you drop <b>ragdolls down</b> off the coach and into the road behind it. Hold to aim, release to fire, same as a duel, and the coach body honestly blocks any shot that hits it instead of a man. <b>Switch guns at any time</b>: tap the REVOLVER / SHOTGUN / RIFLE buttons or press <b>1, 2, 3</b> — every gun keeps its own loads, and a gun you don't own can't be drawn, so buy shotguns and rifles in the Store first. Drop all six outlaws to take the coach and its <b>$150 strongbox</b>. Shooting a team horse slows the coach down; let it pull <b>30 paces</b> ahead and it's gone — and their lead costs you a fifth of your hide a hit. Or pick <b>ENDLESS</b> when you ride: the coaches keep coming, each one different and harder — more outlaws, a faster coach, return fire that lands harder and truer — and the run only ends when your hide does. Your <b>longest survive</b> is kept in Stats.</p>
           <p><b>SETTINGS</b> — From the main menu, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. Low is the classic look; Medium renders sharper with soft shadows that follow the action; High renders the street at its finest, with rich golden light and dust hanging in the air. The game runs at the rate you pick, and your choices are kept between visits.</p>
           <p><b>NIGHT STORM</b> — Pick <b>Night Storm</b> beside the duel location and the same duels play after dark: lantern light on the street, rain hammering down, lightning over the rooftops. It's harder to see, and the storm wind pushes your aim around — sway runs half again as wild.</p>
@@ -1370,7 +1455,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1384,6 +1469,8 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.6</b> — <b>A crosshair on the gun's point.</b> Every fight — duels, Bounty Hunt, Daily Duel, LAN, both practices and the ride — now carries a <b>small, quiet crosshair that rides your aim</b>: it sits exactly where the gun is pointing and <b>where the shot will land</b>, and it swings with the iron as you aim — hip fire, down the sights, and through the rifle scope alike. And on touch the aim itself is centred now: <b>every fight opens with it dead centre of the screen</b>, and drags swing it from there — no more aim sitting low under your thumb. No box, no words — just the mark, in keeping with the clean fight screen.</p>
+          <p><b>v2.5</b> — <b>A clean fight screen.</b> Every match — duels, Bounty Hunt, Daily Duel, LAN and practice — is <b>stripped back to what a fight needs</b>: the man across the street, one quiet clock, your hide and your loads, floating clean over the street with <b>no boxes, plates or counters</b> around them. The career tallies, duel counter, labels and tags are off the fight screen (your records still live in Stats). The controls stay — smaller and quieter: a plain ✕, a slim FAN, a compact RELOAD, and a weapon bar of three plain words.</p>
           <p><b>v2.4</b> — <b>Empty guns reload themselves.</b> Run an iron dry and it <b>starts reloading on its own</b> — no button press. And a reload belongs to the gun now: <b>switch guns mid-reload</b> and the one you draw is ready to fire at once, while the first keeps loading in the scabbard — come back to it loaded, or that much further along. Manual RELOAD still works for topping off early. And <b>fanning holds its pair proper</b>: one iron in each hand, riding apart on their own sides through the whole burst — never meeting and overlapping in the middle.</p>
           <p><b>v2.3</b> — <b>Fanning, done proper.</b> The second iron is real now: <b>BUY DOUBLE</b> in the Store buys a second copy of your revolver, and <b>FAN stays locked</b> — reading NEEDS DOUBLE — until you own it. And the burst itself is <b>accurate</b>: still three fast shots, but the first flies true and the other two group tight around your aim instead of spraying wild.</p>
           <p><b>v2.2</b> — <b>Five new ways to draw.</b> <b>Night Storm</b> duels under lanterns, rain and lightning. A <b>slow-mo replay</b> of every killing shot. <b>Bounty Hunt</b>: catch a wanted outlaw across Main Street and the Saloon against a 90-second clock. <b>Fan the hammer</b>: a second revolver — fast, wild bursts against one true aimed shot. And the <b>Daily Duel</b>: one fast gun a day, a streak to keep, and a bonus waiting in the Store.</p>
@@ -1447,7 +1534,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.4</div>
+        <div class="ver">VERSION 2.6</div>
       </div>
     </div>
 
@@ -1470,7 +1557,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1492,7 +1579,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1503,7 +1590,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.4 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -10562,6 +10649,7 @@ three/build/three.module.js:
     function startPractice(kind){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'practice'; G.state = 'practice';
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
       G.practiceKind = kind === 'flying' ? 'flying' : 'standing';
       applyLocation(G.location);
       G.hp = 100; G.bullets = weaponCapacity(); G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; clearGunReloads();
@@ -11329,7 +11417,7 @@ three/build/three.module.js:
       for (var i = 0; i < btns.length; i++){
         var fam = btns[i].getAttribute('data-w');
         btns[i].className = (fam === rideFam ? 'on' : '') + (rideItemFor(fam) ? '' : ' locked');
-        btns[i].textContent = (i + 1) + ' · ' + fam.toUpperCase() + (rideItemFor(fam) ? '' : ' · NOT OWNED');
+        btns[i].textContent = fam.toUpperCase(); // v2.5 declutter: plain family word — a dimmed button is the not-owned sign, and tapping it still explains
       }
     }
     /* ---- the switch itself: the old gun rides in the scabbard with
@@ -11375,7 +11463,7 @@ three/build/three.module.js:
       for (var i = 0; i < btns.length; i++){
         var fam = btns[i].getAttribute('data-w');
         btns[i].className = (fam === duelFam ? 'on' : '') + (rideItemFor(fam) ? '' : ' locked');
-        btns[i].textContent = (i + 1) + ' · ' + fam.toUpperCase() + (rideItemFor(fam) ? '' : ' · NOT OWNED');
+        btns[i].textContent = fam.toUpperCase(); // v2.5 declutter: plain family word — a dimmed button is the not-owned sign, and tapping it still explains
       }
     }
     function switchDuelWeapon(fam){
@@ -11430,6 +11518,7 @@ three/build/three.module.js:
     function startRide(endless){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'ride'; G.state = 'ride'; G.lastWin = false;
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
       // Endless Stagecoach (v1.24): a run is either the classic single
       // chase (Quick Run) or coach after coach until your hide runs
       // out (Endless) — the run-level state resets here, and each
@@ -12040,6 +12129,7 @@ three/build/three.module.js:
     function startDuel(idx){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'duel'; G.lan = false; // a ladder duel is never a LAN duel (v1.25)
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
       specialKind = null; fanOn = false; G.cineName = null; G.cineDist = null; updateFanBtn();
       applyLocation(G.location);
       G.duel = idx;
@@ -12495,31 +12585,63 @@ three/build/three.module.js:
 
     /* ============================== INPUT ============================== */
     var xhairEl = $('xhair');
-    /* Scope aim lift (v1.23): while the rifle scope is up, the aim
-       point rides ABOVE the player's fingertip instead of sitting
-       under it — a finger is wide enough to hide the very man you're
-       aiming at. The lift moves the lens AND the shot's ray together
-       (they are one point, v1.18), so the shot still goes exactly
-       where the scope points — just clear of the finger. It applies
-       in every mode the scope does (duels, both practices, the ride),
-       only on touch pointers — a mouse cursor hides nothing — and it
-       vanishes the moment the scope drops. v2.0: the iron-sight ADS
-       dot (body.aiming, revolver and shotgun) shares the very same
-       lift — dot, aim point and the shot's ray stay one point. */
+    var cxhairEl = $('cxhair'); // crosshair (v2.6): rides the aim point via setPointer, toggled in the animate loop
+    /* Centred touch aim (v2.6): on touch, the finger no longer SETS
+       the aim point — a thumb rests low on the screen, so the old
+       absolute aim (and its v1.23 92px lift, now retired) left the
+       gun's point of impact sitting down near the bottom. Now the
+       aim lives on the screen itself: it starts at the true screen
+       centre at every fight (see centreAim) and a touch drag swings
+       it by the drag's own travel, so the gun's point of impact —
+       and the crosshair riding it — reads centred, never parked
+       under the thumb. The shot's ray, the ADS dot, the scope lens
+       and the crosshair all read the one aim point (px/py), so they
+       stay one and the same point in every mode. The mouse is
+       unchanged: it points absolutely, as it always has. */
     var rawPx = px, rawPy = py, lastPtrType = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ? 'touch' : 'mouse';
-    var SCOPE_LIFT = 92;
-    function setPointer(cx, cy, ptrType){
-      rawPx = cx; rawPy = cy;
+    var TOUCH_AIM_K = 1.3; // drag travel -> aim travel on touch: a touch under full travel still sweeps the whole screen
+    function setPointer(cx, cy, ptrType, prime){
       if (ptrType) lastPtrType = ptrType;
-      var lift = (lastPtrType !== 'mouse' && (document.body.classList.contains('scoped') || document.body.classList.contains('aiming'))) ? SCOPE_LIFT : 0;
-      var ex = cx, ey = Math.max(cy - lift, 4);
-      px = ex; py = ey;
-      pointer.x = (ex / window.innerWidth) * 2 - 1;
-      pointer.y = -(ey / window.innerHeight) * 2 + 1;
-      xhairEl.style.transform = 'translate(' + ex + 'px,' + ey + 'px)';
+      if (lastPtrType !== 'mouse'){
+        // touch: rawPx/rawPy remember the last touch spot; only a
+        // drag MOVES the aim, by the drag's delta. `prime` (a fresh
+        // touch-down) re-anchors the drag without moving the aim, so
+        // putting a thumb down — low on the screen, as thumbs rest —
+        // never drags the gun's point of impact down with it.
+        var dx = cx - rawPx, dy = cy - rawPy;
+        rawPx = cx; rawPy = cy;
+        if (!prime){
+          px += dx * TOUCH_AIM_K; py += dy * TOUCH_AIM_K;
+          px = Math.max(6, Math.min(window.innerWidth - 6, px));
+          py = Math.max(6, Math.min(window.innerHeight - 6, py));
+        }
+      } else {
+        rawPx = cx; rawPy = cy;
+        px = cx; py = cy;
+      }
+      pointer.x = (px / window.innerWidth) * 2 - 1;
+      pointer.y = -(py / window.innerHeight) * 2 + 1;
+      xhairEl.style.transform = 'translate(' + px + 'px,' + py + 'px)';
+      // the v2.6 crosshair rides the very same point: it marks the
+      // gun's point of impact — where the shot's ray is cast — and
+      // swings with the aim in every mode
+      if (cxhairEl) cxhairEl.style.transform = 'translate(' + px + 'px,' + py + 'px)';
       // the rifle scope's lens rides on the very same point (v1.18):
       // its crosshair centre and the shot's ray are one and the same
-      if (scopeLensEl) scopeLensEl.style.transform = 'translate(' + ex + 'px,' + ey + 'px) translate(-50%,-50%)';
+      if (scopeLensEl) scopeLensEl.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-50%)';
+    }
+    /* Centre the aim (v2.6): every fight opens with the gun's point
+       of impact dead centre of the screen — the middle start shot —
+       for ladder, Bounty, Daily and LAN duels, both practices and
+       the ride alike. The smoothed aim recentres with it, so the
+       iron starts out pointing at the middle too. */
+    function centreAim(){
+      px = window.innerWidth / 2; py = window.innerHeight / 2;
+      pointer.x = 0; pointer.y = 0;
+      aimSmX = 0; aimSmY = 0;
+      xhairEl.style.transform = 'translate(' + px + 'px,' + py + 'px)';
+      if (cxhairEl) cxhairEl.style.transform = 'translate(' + px + 'px,' + py + 'px)';
+      if (scopeLensEl) scopeLensEl.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-50%)';
     }
     setPointer(px, py);
     window.addEventListener('pointermove', function(e){ setPointer(e.clientX, e.clientY, e.pointerType); }, { passive: true });
@@ -12578,7 +12700,7 @@ three/build/three.module.js:
     }
     var holdPointerId = null;
     renderer.domElement.addEventListener('pointerdown', function(e){
-      setPointer(e.clientX, e.clientY, e.pointerType);
+      setPointer(e.clientX, e.clientY, e.pointerType, true); // prime: a fresh touch-down anchors the drag without moving the centred aim (v2.6); a mouse-down still points absolutely
       holdPointerId = (e.pointerId !== undefined) ? e.pointerId : null;
       pressFire();
     });
@@ -13048,6 +13170,7 @@ three/build/three.module.js:
     function startSpecialDuel(kind){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'duel'; G.lan = false; specialKind = kind; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
       var cfg = kind === 'bounty' ? bountyCfg : dailyCfg;
       if (kind === 'bounty'){ G.bountyLoc = 'street'; bountyFled = false; G.bountyEnd = 0; bountyDrawT0 = 0; G.duel = 2; }
       else { G.duel = 3; }
@@ -13525,6 +13648,7 @@ three/build/three.module.js:
     function startLanDuel(distIdx, mid){
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'duel'; G.lan = true; G.duel = distIdx;
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
       /* v1.32: a fresh match takes the id the host dealt with the
          start and lifts the end latch — everything the last match
          said is dead letters from here on */
@@ -14110,17 +14234,17 @@ three/build/three.module.js:
           // and the target own the screen
           if (document.body.classList.contains('scoped') !== scopeOn){
             document.body.classList.toggle('scoped', scopeOn);
-            // the aim point lifts above the finger the moment the
-            // scope opens, and settles back onto it when it closes
+            // refresh the markers on the aim point as the scope
+            // opens and closes (a no-move setPointer: delta zero)
             setPointer(rawPx, rawPy);
           }
         }
         // Iron-sight ADS dot (v2.0): while a revolver or shotgun sits
         // up in ADS in a live mode, a plain crosshair dot rides the aim
-        // point — no lens, no ring — and body.aiming gives that point
-        // the scope's same 92px touch lift (see setPointer), so the dot
-        // never hides under the player's finger. Dot, aim point and the
-        // shot's ray are one point: the shot goes where the dot points.
+        // point — no lens, no ring. Dot, aim point and the shot's ray
+        // are one point: the shot goes where the dot points. (v2.6:
+        // on touch the aim is centred and drag-swung, so the dot no
+        // longer needs the old 92px finger lift — see setPointer.)
         var dotOn = !isRifle && adsK > 0.35 && (G.state === 'draw' || G.state === 'practice' || G.state === 'ride');
         if (xhairEl && xhairEl._dotOn !== dotOn){
           xhairEl._dotOn = dotOn;
@@ -14128,9 +14252,27 @@ three/build/three.module.js:
         }
         if (document.body.classList.contains('aiming') !== dotOn){
           document.body.classList.toggle('aiming', dotOn);
-          // the aim point lifts above the finger the moment the dot
-          // comes up, and settles back onto it when the dot drops
+          // refresh the markers on the aim point as the dot comes
+          // up and drops (a no-move setPointer: delta zero)
           setPointer(rawPx, rawPy);
+        }
+        // Crosshair (v2.6): a small cross riding the gun's point of
+        // impact through every fight — the intro and standoff before
+        // the bell and the draw itself in ladder, Bounty, Daily and
+        // LAN duels, all of both practices, and the ride. setPointer
+        // keeps it parked on the aim point — the one point every
+        // shot in every mode is ray-cast through — so it sits where
+        // the gun is pointing and where the shot will land, and it
+        // swings with the iron as you aim: hip fire, iron-sight ADS
+        // and the rifle scope alike (it stays up while scoped,
+        // riding at the centre of the lens). On touch the aim itself
+        // starts dead centre and drags swing it (see setPointer and
+        // centreAim), so the cross reads centred on the screen —
+        // never parked low under the player's thumb.
+        var crossOn = (G.state === 'intro' || G.state === 'standoff' || G.state === 'draw' || G.state === 'practice' || G.state === 'ride');
+        if (cxhairEl && cxhairEl._on !== crossOn){
+          cxhairEl._on = crossOn;
+          cxhairEl.className = crossOn ? 'on' : '';
         }
         if (scopeChipEl && scopeChipEl._shown !== isRifle){
           scopeChipEl._shown = isRifle;
