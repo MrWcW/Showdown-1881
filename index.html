@@ -122,9 +122,10 @@
       .menuRow{ display:flex; gap:8px; }
       .menuRow .bigbtn{ flex:1; }
       #walletLine{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.18em; color:#ffd98f; margin:2px 0 0; }
-      /* ---------- Practice picker (v1.21): the menu's one Practice
-         button opens this card and asks which kind — Shooting Bottles
-         or Flying Bottles — then the chosen practice starts. ---------- */
+      /* ---------- Practice picker (v1.21, third choice v2.11): the
+         menu's one Practice button opens this card and asks which
+         kind — Shooting Bottles, Flying Bottles or Pop-Up Targets —
+         then the chosen practice starts. ---------- */
       #practiceCard{ display:none; }
       #practiceCard h1{ font-size:clamp(24px,5.6vw,34px); }
       /* ---------- Ride picker (v1.24): pressing Ride asks first —
@@ -265,6 +266,9 @@
          standing-bottle practice button. The title card is tightened a
          touch overall so the menu still fits one clean screen. */
       .flybtn{ background:linear-gradient(180deg,#8a4d1c,#4a2708); margin-top:8px; font-size:17px; }
+      /* Pop-Up Targets practice (v2.11): a deep-crimson button under
+         the Flying Bottles button on the Practice picker. */
+      .popbtn{ background:linear-gradient(180deg,#8a3324,#451207); margin-top:8px; font-size:17px; }
       #titleCard .bigbtn{ margin-top:9px; padding:11px 20px; }
       #titleCard .flybtn{ margin-top:8px; }
       /* Ride mode (v1.17): the stagecoach chase gets a deep-red button
@@ -1020,7 +1024,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.10 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.11 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -1148,7 +1152,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.10</div>
+        <div class="ver">SHOWDOWN 1881 · v2.11</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1224,7 +1228,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1233,13 +1237,15 @@
         <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ PRACTICE ★</p>
         <h1>Pick Your Practice</h1>
         <div class="rule"></div>
-        <p class="small">Two ways to sharpen your eye, partner. Pick one and step out onto the range.</p>
+        <p class="small">Three ways to sharpen your eye, partner. Pick one and step out onto the range.</p>
         <button class="bigbtn altbtn" id="btnPracticeStanding" type="button">Shooting Bottles</button>
         <p class="small">Bottles lined up on the street — smash them all against the clock.</p>
         <button class="bigbtn flybtn" id="btnPracticeFlying" type="button">Flying Bottles</button>
         <p class="small">Bottles tossed across the sky — shoot them out of the air.</p>
+        <button class="bigbtn popbtn" id="btnPracticePopup" type="button">Pop-Up Targets</button>
+        <p class="small">Targets jump up one at a time, somewhere new every time — shoot each one before it drops back down.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1259,7 +1265,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1293,7 +1299,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1327,7 +1333,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1354,7 +1360,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1383,7 +1389,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1422,7 +1428,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1454,7 +1460,7 @@
         <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1477,6 +1483,7 @@
           <p><b>LONG GUNS &amp; HATS</b> — The Store also sells <b>shotguns and rifles</b>. A shotgun holds 2 shells and throws a pattern that starts tight and spreads wider the farther it flies — deadly up close, wild at range. Rifles hold more rounds and shoot straighter and harder. A long gun is carried in <b>both hands, left hand on the fore-end</b> — there is no holster for it, and its action needs working between shots. Know the balance of the street: a <b>revolver draws fastest</b> and bites hardest up close, but its lead fades at long range; a <b>rifle draws slow</b>, stays steadiest in the sights and hits harder the farther out the shot flies; a <b>shotgun is slowest to shoulder</b>, and its pattern spreads wider the farther it flies — tight and devastating up close, still heavy at mid range, and only at the longest ranges do most pellets miss and those that land land weaker. <b>Hats</b> from the Store are worn on your head in the cinematic and the duel, same as your coat. Everything you own lives in the <b>Inventory</b> — its own screen off the main menu, sorted into Guns, Hats and Clothes, with one-tap equip.</p>
           <p><b>PRACTICE</b> — No bell, no gunman. Twelve big, bright glass bottles stand on rails, barrels, crates and tables — in different spots every round, never the same layout twice — hold to aim down sights, release to shoot, and watch them shatter — and a shotgun's pattern breaks every bottle standing in its spread, not just the one you aimed at. Line a shot up dead through one bottle and the bullet carries straight on and breaks the bottle right behind it too — with any gun you hold. Your count is kept on screen — and the clock starts on your first shot, so clear them fast: your best time is saved and shown in Practice.</p>
           <p><b>FLYING BOTTLES</b> — The second practice, off the same menu: fifteen bottles are <b>launched across the sky in front of you</b>, big and close, tumbling end over end through midair on a long, slow arc at different heights and speeds — you get a good few seconds to track each one. Lead them, hold to aim, release to shoot — smash one and it bursts into flying glass with a shattering crack. A bottle that gets past you smashes on the ground and is gone. Your hits, the bottles still in the air and your shots are all counted on screen.</p>
+          <p><b>POP-UP TARGETS</b> — The third practice, off the same menu: fifteen bullseye targets <b>jump up one at a time</b> from behind the crates and barrels downrange, <b>somewhere new every time</b> — and each one only stays up a short while before it <b>drops back down and is gone</b>. Shoot it while it's up: hold to aim, release to fire, same guns, same reload. The view <b>turns to face each target</b> as it jumps up, so it always comes up fully in view near the centre of the screen. Too slow and it drops away and the next one pops up somewhere else. Your hits, the ones that got away and your shots are all counted on screen.</p>
           <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, the lens sits dead on your aim point — and on touch that aim is swung by dragging, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
           <p><b>THE RIDE</b> — Saddle up off the main menu and <b>run down a stagecoach</b> on the open trail. Your horse gallops under you and the long coach bounces and swerves ahead on its team, and the <b>six outlaws riding it — driver and messenger on the bench, two on the roof and two on the rear platform — shoot back</b>. A man you drop <b>ragdolls down</b> off the coach and into the road behind it. Hold to aim, release to fire, same as a duel, and the coach body honestly blocks any shot that hits it instead of a man. <b>Switch guns at any time</b>: tap the REVOLVER / SHOTGUN / RIFLE buttons or press <b>1, 2, 3</b> — every gun keeps its own loads, and a gun you don't own can't be drawn, so buy shotguns and rifles in the Store first. Drop all six outlaws to take the coach and its <b>$150 strongbox</b>. Shooting a team horse slows the coach down; let it pull <b>30 paces</b> ahead and it's gone — and their lead costs you a fifth of your hide a hit. Or pick <b>ENDLESS</b> when you ride: the coaches keep coming, each one different and harder — more outlaws, a faster coach, return fire that lands harder and truer — and the run only ends when your hide does. Your <b>longest survive</b> is kept in Stats.</p>
           <p><b>SETTINGS</b> — From the main menu, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. Every level was rebuilt richer in v2.7 — sharper wood and dirt, deeper light, cleaner metal — and Medium adds soft live shadows and ground detail while High renders the street at its finest, with full-size soft shadows and the full dressed street. The game runs at the rate you pick, and your choices are kept between visits.</p>
@@ -1488,7 +1495,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1502,6 +1509,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.11</b> — <b>A third practice: Pop-Up Targets.</b> The Practice picker now offers three ways to train. In the new one, fifteen bullseye targets <b>jump up one at a time</b> from behind the crates and barrels downrange — <b>somewhere new every time</b> — and each one only stays up a short while. <b>Shoot it before it drops back down</b>: too slow and it drops away, gone, and the next one pops up somewhere else. Same guns, same aiming, same reload as the other practices, and your <b>hits, misses and shots are counted on screen</b>. And the view <b>turns to face each target</b> as it pops up, so it always lands fully in view near the centre of the screen — never cut off at the edge, scope or no scope. Shooting Bottles and Flying Bottles are exactly as they were.</p>
           <p><b>v2.10</b> — <b>The drink comes early, and he never pauses.</b> In the Tap to Ride In sting the timing is tightened up: you <b>lift your bourbon and drink as he shoots the 2nd bottle</b> — three gulps you can hear while he works — and your bottle is <b>already thrown at him before he reaches the 5th</b>. And he shoots bottles <b>1, 2, 3, 4, 5 in one steady flow, no pause before any of them</b>, then turns and shoots you instead of the 6th, same as before. The slam-in credit and the extra half-second hold before the menu are unchanged.</p>
           <p><b>v2.9</b> — <b>Six bottles, a bourbon, and a slam.</b> In the Tap to Ride In sting your hand no longer holds a gun — it holds a <b>bottle of bourbon</b>, amber glass with a cream label, <b>kept small and low in the corner</b> so it never blocks your view. And the bench now holds <b>six bottles</b>: he shoots the <b>first four</b> one by one — then <b>you lift your bourbon and take a drink, three gulps you can hear</b> — and as he starts on the <b>5th</b> you <b>throw your bottle at him</b>; it smashes on his back, he flinches — and <b>hits the 5th anyway</b>. Then he turns and <b>shoots you instead of the 6th</b>, which stays standing. Last of all, the credit <b>SLAMS</b> in: <b>PRESENTED BY</b> drops with a boom and a screen shake, then <b>BULLSEYE INTERACTIVE</b> slams down the same way, and the finished title card <b>holds a half second longer</b> before the menu. Every gun in the duels, practice, the ride, LAN and the Gun Locker is exactly as it was.</p>
           <p><b>v2.8</b> — <b>A gunslinger opens the show.</b> Tap to Ride In: a man stands before you on the plains, back turned — seen <b>from far over on the left, low and looking up at him</b>, and the iron big and clear in front of you — he <b>loads his iron</b>, holds it <b>one-handed, a bit forward, out in front of him like a real gun, in view the whole time</b> — load, <b>spin the cylinder</b>, and picks off the <b>three bottles</b> on the bench one by one, a <b>boom bursting at each bottle</b> as it shatters — and <b>your own gun stays right there in view in your hand</b> the whole time he is shooting them. Then he <b>turns clean around and shoots you — his iron solved dead on your head</b>, a <b>boom at your spot</b>, and down you go as <b>Welcome to SHOWDOWN 1881</b> stamps in over him, <b>Presented by Bullseye Interactive</b> along the bottom. <b>Tap anytime to skip</b> straight to the menu.</p>
@@ -1571,7 +1579,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.10</div>
+        <div class="ver">VERSION 2.11</div>
       </div>
     </div>
 
@@ -1594,7 +1602,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1616,7 +1624,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1627,7 +1635,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -9132,6 +9140,9 @@ three/build/three.module.js:
       // Flying Bottles practice (v1.13): which practice is running, and
       // the launch bookkeeping for the airborne round
       practiceKind: 'standing', flySpawned: 0, flyMissed: 0, flyNextAt: 0,
+      // Pop-Up Targets practice (v2.11): the third practice — one
+      // target up at a time, and the pop-up round's own bookkeeping
+      popSpawned: 0, popMissed: 0, popNextAt: 0, popLastSpot: -1,
       // Ride mode (v1.17): the stagecoach chase — distance to the coach
       // in paces, gallop phase, the smoothed player/coach speeds the
       // whole world scrolls by, and the ride clock
@@ -11145,6 +11156,26 @@ three/build/three.module.js:
     // the standing layout is untouched; they share the target-bottle
     // build, the hit rays, the shard burst and the shatter sound.
     var flyBottles = [], flyHitboxes = [];
+    // Pop-Up Targets (v2.11): pop-up targets live in their own lists
+    // too — they share the hit rays and the HUD with the two bottle
+    // practices, but their own build, rise/drop motion and scoring.
+    var popTargets = [], popHitboxes = [];
+    // Pop-Up camera (v2.11 fix): the eased yaw/pitch the view turns
+    // by to face the target that is up — the far spots sit past the
+    // edge of a portrait screen (and far past it through the rifle
+    // scope), so the camera itself turns to each pop-up. See the
+    // camera block in the animate loop.
+    var popCamYaw = 0, popCamPitch = 0;
+    var POP_TOTAL = 15;      // targets that pop up in one pop-up round
+    var POP_WINDOW = 1500;   // ms a target stays up before it drops back down
+    var POP_HIDDEN = -1.32;  // how far a target sinks while it is down — board and post clean below the ground
+    // the spots a target can pop up from: spread wide across the
+    // range at different depths, never the same spot twice running
+    var POP_SPOTS = [[-2.6, -4.6], [-1.7, -6.4], [-0.85, -5.2], [0, -7.6], [0.85, -5.6], [1.7, -6.9], [2.6, -4.9]];
+    function activePopTarget(){
+      for (var i = 0; i < popTargets.length; i++) if (!popTargets[i].hit && !popTargets[i].missed) return popTargets[i];
+      return null;
+    }
     var FLY_TOTAL = 15;      // bottles launched in one flying round
     var FLY_GRAVITY = 3.9;   // well under real gravity (v1.13.1) — the throws were whipping past too fast; a bottle now hangs in the air long enough to track and lead properly
     function activeFlyCount(){
@@ -11181,6 +11212,36 @@ three/build/three.module.js:
       hbMesh.position.y = 0.37; g.add(hbMesh);
       return { group: g, hitbox: hbMesh, halo: halo };
     }
+    /* Pop-Up Targets (v2.11): the target itself — a bullseye board on
+       a wooden post. Layered cream and red discs face the player, lit
+       a touch from within so the rings read at every practice
+       distance, and the hitbox covers the board: the post is just
+       what it stands on. The group origin is the ground at the spot,
+       so sinking the group to POP_HIDDEN hides the whole target. */
+    function buildPopTarget(){
+      var g = new THREE.Group();
+      var post = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 1.02, 8), MAT.woodDark));
+      post.position.y = 0.51; g.add(post);
+      function disc(r, z, color, glow){
+        var m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 0.05, 24),
+          new THREE.MeshStandardMaterial({ color: color, roughness: 0.55, emissive: color, emissiveIntensity: glow }));
+        m.rotation.x = Math.PI / 2; m.position.set(0, 1.18, z); g.add(m);
+        return m;
+      }
+      var back = disc(0.38, -0.02, 0x6e4a26, 0);       // wooden back board
+      back.material.emissiveIntensity = 0;
+      disc(0.35, 0.015, 0xf3e3bb, 0.22);               // cream outer ring
+      disc(0.26, 0.04, 0xc23b2a, 0.3);                 // red ring
+      disc(0.17, 0.065, 0xf3e3bb, 0.22);               // cream ring
+      disc(0.085, 0.09, 0xc23b2a, 0.45);               // the bullseye
+      var halo = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: radialSprite('rgba(255,240,200,0.9)', 'rgba(255,240,200,0)'),
+        transparent: true, opacity: 0.4, depthWrite: false }));
+      halo.scale.set(1.05, 1.05, 1); halo.position.set(0, 1.18, -0.08); g.add(halo);
+      var hbMesh = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.36), hitMat);
+      hbMesh.position.y = 1.18; g.add(hbMesh);
+      return { group: g, hitbox: hbMesh, halo: halo };
+    }
     function disposePractice(){
       if (practiceGroup){
         scene.remove(practiceGroup);
@@ -11189,6 +11250,7 @@ three/build/three.module.js:
       }
       bottles = []; bottleHitboxes = [];
       flyBottles = []; flyHitboxes = [];
+      popTargets = []; popHitboxes = [];
       for (var i = practiceShards.length - 1; i >= 0; i--) scene.remove(practiceShards[i].mesh);
       practiceShards = [];
     }
@@ -11202,7 +11264,15 @@ three/build/three.module.js:
     }
     function fmtBottleTime(sec){ return (sec === null || sec === undefined) ? '—' : sec.toFixed(2) + 's'; }
     function updatePracticeHUD(){
-      var lbl = document.querySelector('#clockPlate .lbl'); if (lbl) lbl.textContent = 'Bottle Time';
+      var lbl = document.querySelector('#clockPlate .lbl'); if (lbl) lbl.textContent = G.practiceKind === 'popup' ? 'Target Time' : 'Bottle Time';
+      if (G.practiceKind === 'popup'){
+        $('duelLabel').textContent = 'POP-UP TARGETS · ' + (G.location === 'saloon' ? 'THE SALOON' : 'MAIN STREET');
+        $('oppName').textContent = 'Pop-Up Targets';
+        $('oppSub').textContent = 'Targets down: ' + G.practiceHit + ' of ' + G.practiceTotal +
+          ' · Dropped away: ' + G.popMissed + ' · Shots: ' + G.practiceShots;
+        if (G.practiceDone && G.practiceTime !== null) clockEl.textContent = G.practiceTime.toFixed(2) + 's';
+        return;
+      }
       if (G.practiceKind === 'flying'){
         $('duelLabel').textContent = 'FLYING BOTTLES · ' + (G.location === 'saloon' ? 'THE SALOON' : 'MAIN STREET');
         $('oppName').textContent = 'Flying Bottles';
@@ -11223,12 +11293,14 @@ three/build/three.module.js:
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'practice'; G.state = 'practice';
       centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
-      G.practiceKind = kind === 'flying' ? 'flying' : 'standing';
+      G.practiceKind = kind === 'flying' ? 'flying' : kind === 'popup' ? 'popup' : 'standing';
       applyLocation(G.location);
       G.hp = 100; G.bullets = weaponCapacity(); G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; clearGunReloads();
       G.practiceHit = 0; G.practiceShots = 0; G.practiceDone = false;
       G.practiceT0 = 0; G.practiceTime = null;
       G.flySpawned = 0; G.flyMissed = 0; G.flyNextAt = 0;
+      G.popSpawned = 0; G.popMissed = 0; G.popNextAt = 0; G.popLastSpot = -1;
+      popCamYaw = 0; popCamPitch = 0; // the pop-up camera turn starts centred every round
       G.camFall = -1; G.shake = 0;
       holding = false; gunDrawn = false; gunV = 0;
       if (adsTagEl) adsTagEl.className = 'plate';
@@ -11241,6 +11313,25 @@ three/build/three.module.js:
         G.practiceTotal = FLY_TOTAL;
         G.practiceT0 = performance.now();
         G.flyNextAt = G.practiceT0 + 600;
+      } else if (G.practiceKind === 'popup'){
+        // Pop-up round (v2.11): no standing layout — a low crate or
+        // barrel stands at every spot a target can pop up from, and
+        // the targets themselves arrive one at a time from behind
+        // them (see spawnPopTarget and the animate loop). Like the
+        // flying round, the clock runs from the start: these targets
+        // will not wait for a first shot either.
+        G.practiceTotal = POP_TOTAL;
+        G.practiceT0 = performance.now();
+        G.popNextAt = G.practiceT0 + 600;
+        POP_SPOTS.forEach(function(sp, idx){
+          if (idx % 2 === 0){
+            var crateC = shadowed(new THREE.Mesh(new THREE.BoxGeometry(0.98, 0.56, 0.52), MAT.woodMid));
+            crateC.position.set(sp[0], 0.28, sp[1] + 0.55); practiceGroup.add(crateC);
+          } else {
+            var barrelC = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.31, 0.31, 0.6, 12), MAT.woodMid));
+            barrelC.position.set(sp[0], 0.3, sp[1] + 0.55); practiceGroup.add(barrelC);
+          }
+        });
       } else {
       // Random bottle layout (v1.6): each location offers MORE standing
       // spots than the 12 bottles a round needs. The props are built as
@@ -11326,6 +11417,8 @@ three/build/three.module.js:
       // bottles stand clear to aim at from the first moment.
       if (G.practiceKind === 'flying'){
         toast(FLY_TOTAL + ' bottles will fly — hold to aim, release to shoot, and smash them midair before they land!');
+      } else if (G.practiceKind === 'popup'){
+        toast(POP_TOTAL + ' targets will pop up one at a time — hold to aim, release to shoot, and drop each one before it drops back down!');
       } else {
         toast(G.practiceTotal + ' bottles up — hold to aim, release to shoot. Clock starts on your first shot!' +
           (SAVE.bestBottle !== null ? ' Best: ' + SAVE.bestBottle.toFixed(2) + 's — beat it!' : ''));
@@ -11364,6 +11457,7 @@ three/build/three.module.js:
     }
     function shatterBottle(obj){
       if (obj.flying){ shatterFlyBottle(obj); return; }
+      if (obj.popup){ hitPopTarget(obj); return; }
       obj.hit = true;
       obj.group.visible = false;
       var idx = bottleHitboxes.indexOf(obj.hitbox);
@@ -11485,6 +11579,77 @@ three/build/three.module.js:
         (G.practiceHit >= G.practiceTotal ? ' Not one got away, partner!' : ' ' + G.flyMissed + ' got past you.'), true);
       showNext('Launch More Bottles');
     }
+    /* ============================== PRACTICE: POP-UP TARGETS (v2.11) ==============================
+       The third practice: bullseye targets on posts JUMP UP one at a
+       time from behind the crates and barrels downrange — somewhere
+       new every time, never the same spot twice running — and each
+       one stays up only a short while (POP_WINDOW) before it lowers
+       back down and is gone. Shoot it while it is up and it counts;
+       let it drop and it is a miss, and the next one pops up
+       somewhere else. Fifteen targets a round; the round ends when
+       the last one is down or dropped away. The rise, the wait and
+       the drop are all run by the animate loop, like the flying
+       bottles' arcs — this section only spawns, scores and finishes. */
+    function spawnPopTarget(now){
+      if (!practiceGroup) return;
+      var si = G.popLastSpot;
+      while (si === G.popLastSpot) si = Math.floor(Math.random() * POP_SPOTS.length);
+      G.popLastSpot = si;
+      var sp = POP_SPOTS[si];
+      var b = buildPopTarget();
+      b.group.position.set(sp[0], POP_HIDDEN, sp[1]);
+      practiceGroup.add(b.group);
+      var obj = { group: b.group, hitbox: b.hitbox, halo: b.halo, hit: false, missed: false, popup: true,
+        color: 0xc23b2a, x: sp[0], y: POP_HIDDEN + 0.81, z: sp[1],
+        born: now, phase: 'rising', downAt: 0 };
+      b.hitbox.userData.bottleObj = obj;
+      popTargets.push(obj); popHitboxes.push(b.hitbox);
+      G.popSpawned++;
+      shadowDirty = true;
+    }
+    function hitPopTarget(obj){
+      obj.hit = true;
+      obj.group.visible = false;
+      var idx = popHitboxes.indexOf(obj.hitbox);
+      if (idx >= 0) popHitboxes.splice(idx, 1);
+      // a knocked-down target throws a few chips of its own board and
+      // a puff of range dust where it stood
+      spawnShards(obj.x, obj.group.position.y + 1.18, obj.z, obj.color, { count: 9, power: 0.8, life: 0.9 });
+      spawnPuff(dustPool, new THREE.Vector3(obj.x, obj.group.position.y + 1.1, obj.z), new THREE.Vector3(0, 0.25, 0.3), 0.25, 0.45);
+      sndThud(0.5);
+      G.practiceHit++;
+      // the next target pops up a beat later, somewhere else
+      G.popNextAt = performance.now() + 420 + Math.random() * 420;
+      updatePracticeHUD();
+      if (G.practiceHit >= G.practiceTotal){
+        toast('Every pop-up target down — not one got away!', true);
+      } else {
+        toast('Hit! ' + G.practiceHit + ' of ' + G.practiceTotal + ' targets down.', true);
+      }
+    }
+    function missPopTarget(obj, now){
+      obj.missed = true;
+      obj.group.visible = false;
+      var idx = popHitboxes.indexOf(obj.hitbox);
+      if (idx >= 0) popHitboxes.splice(idx, 1);
+      G.popMissed++;
+      G.popNextAt = now + 380 + Math.random() * 380;
+      updatePracticeHUD();
+      if (G.popSpawned < G.practiceTotal || activePopTarget())
+        toast('Too slow — it dropped away! The next one pops up somewhere else.', true);
+    }
+    function finishPopRound(){
+      if (G.practiceDone) return;
+      G.practiceDone = true;
+      G.practiceTime = G.practiceT0 ? (performance.now() - G.practiceT0) / 1000 : 0;
+      persistSave();
+      updatePracticeHUD();
+      banner(G.practiceHit >= G.practiceTotal ? 'EVERY TARGET DOWN!' : 'ROUND OVER');
+      toast('You dropped ' + G.practiceHit + ' of ' + G.practiceTotal + ' pop-up targets in ' +
+        G.practiceTime.toFixed(2) + 's and ' + G.practiceShots + ' shots.' +
+        (G.practiceHit >= G.practiceTotal ? ' Not one got away, partner!' : ' ' + G.popMissed + ' dropped away from you.'), true);
+      showNext('Set Up More Targets');
+    }
     function shootPractice(){
       var now = performance.now();
       gunDrawn = true;
@@ -11509,7 +11674,7 @@ three/build/three.module.js:
         // a tight pattern and the far rail gets a wide one
         _aim.set(pointer.x, pointer.y);
         raycaster.setFromCamera(_aim, camera);
-        var centreP = raycaster.intersectObjects(bottleHitboxes.concat(flyHitboxes, coverMeshes), false);
+        var centreP = raycaster.intersectObjects(bottleHitboxes.concat(flyHitboxes, popHitboxes, coverMeshes), false);
         var distP = centreP.length ? centreP[0].distance : 10.5;
         spreadP *= shotgunSpreadScale(distP);
       }
@@ -11521,12 +11686,15 @@ three/build/three.module.js:
         _aim.set(pointer.x + (Math.random() * 2 - 1) * spreadP,
                  pointer.y + (Math.random() * 2 - 1) * spreadP * 0.7);
         raycaster.setFromCamera(_aim, camera);
-        var phP = raycaster.intersectObjects(bottleHitboxes.concat(flyHitboxes), false);
+        var phP = raycaster.intersectObjects(bottleHitboxes.concat(flyHitboxes, popHitboxes), false);
         var pcP = raycaster.intersectObjects(coverMeshes, false);
         if (pcP.length && (!phP.length || pcP[0].distance < phP[0].distance - 0.03)){
           if (!blockedHitP) blockedHitP = pcP[0];
         } else if (phP.length){
           var bo = phP[0].object.userData.bottleObj;
+          // a pop-up target still sunk most of the way down is not a
+          // fair hit — the board has to be properly up to count (v2.11)
+          if (bo && bo.popup && bo.group.position.y < -0.45) bo = null;
           if (bo && !bo.hit && hitObjs.indexOf(bo) < 0){ hitObjs.push(bo); if (!firstPoint) firstPoint = phP[0].point; }
           // Collateral (v1.15): glass does not stop a bullet — a shot
           // that punches through one bottle keeps flying, and any
@@ -11543,6 +11711,7 @@ three/build/three.module.js:
             if (pcP.length && pcP[0].distance > phP[0].distance && pcP[0].distance < behindP.distance - 0.03) break;
             var boB = behindP.object.userData.bottleObj;
             if (!boB || boB.hit || boB.missed || hitObjs.indexOf(boB) >= 0) continue;
+            if (boB.popup && boB.group.position.y < -0.45) continue; // a sunk pop-up target takes no collateral (v2.11)
             var centreB = new THREE.Vector3();
             behindP.object.getWorldPosition(centreB);
             if (raycaster.ray.distanceToPoint(centreB) > 0.13) continue;
@@ -11561,8 +11730,9 @@ three/build/three.module.js:
         // checked here is exactly the area the pellets fill.
         var tanH = Math.tan(camera.fov * Math.PI / 360);
         var bv = new THREE.Vector3();
-        bottles.concat(flyBottles).forEach(function(bo){
+        bottles.concat(flyBottles, popTargets).forEach(function(bo){
           if (bo.hit || bo.missed || hitObjs.indexOf(bo) >= 0) return;
+          if (bo.popup && bo.group.position.y < -0.45) return; // a sunk pop-up target is out of the pattern (v2.11)
           bv.set(bo.x, bo.y + 0.37, bo.z);
           var bDist = camera.position.distanceTo(bv);
           bv.project(camera);
@@ -11600,6 +11770,9 @@ three/build/three.module.js:
         if (Math.random() < 0.4) setTimeout(sndRico, 70);
         if (G.practiceKind === 'flying'){
           toast('Missed — ' + (G.practiceTotal - G.practiceHit - G.flyMissed) + ' bottles still to come.', true);
+        } else if (G.practiceKind === 'popup'){
+          toast(activePopTarget() ? 'Missed — it is still up! Drop it before it drops!' :
+            'Missed — ' + (G.practiceTotal - G.practiceHit - G.popMissed) + ' targets still to come.', true);
         } else {
           toast('Missed — ' + (G.practiceTotal - G.practiceHit) + ' bottles still standing.', true);
         }
@@ -13328,10 +13501,11 @@ three/build/three.module.js:
       $('btnQuit').style.display = 'block';
       startDuel(0);
     });
-    /* Practice picker (v1.21): the menu's one Practice button asks
-       which kind first — Shooting Bottles or Flying Bottles — on its
-       own card; the pick then starts that practice with the same
-       hide-the-menu, show-the-HUD pattern the two old buttons used. */
+    /* Practice picker (v1.21, third choice v2.11): the menu's one
+       Practice button asks which kind first — Shooting Bottles,
+       Flying Bottles or Pop-Up Targets — on its own card; the pick
+       then starts that practice with the same hide-the-menu,
+       show-the-HUD pattern the old buttons used. */
     $('btnPractice').addEventListener('click', function(){
       initAudio(); sndClick();
       if (performance.now() - splashDismissedAt < 800) return;
@@ -13348,6 +13522,7 @@ three/build/three.module.js:
     }
     $('btnPracticeStanding').addEventListener('click', function(){ beginPractice('standing'); });
     $('btnPracticeFlying').addEventListener('click', function(){ beginPractice('flying'); });
+    $('btnPracticePopup').addEventListener('click', function(){ beginPractice('popup'); });
     $('btnBackPractice').addEventListener('click', function(){
       initAudio(); sndClick();
       $('practiceCard').style.display = 'none';
@@ -14545,6 +14720,39 @@ three/build/three.module.js:
           if (!G.practiceDone && G.flySpawned >= G.practiceTotal && activeFlyCount() === 0) finishFlyRound();
         }
 
+        /* ---- pop-up targets (v2.11): one target at a time pops up
+           somewhere new — a fast rise, a short wait while it can be
+           shot, then it lowers back down and is gone. A target shot
+           while up (or on its way down) counts in hitPopTarget; one
+           that finishes lowering unshot is a miss. When the last of
+           the fifteen is resolved, the round is over. ---- */
+        if (G.mode === 'practice' && G.practiceKind === 'popup' && G.state === 'practice'){
+          if (!G.practiceDone && G.popSpawned < G.practiceTotal && now >= G.popNextAt && !activePopTarget()){
+            spawnPopTarget(now);
+            updatePracticeHUD();
+          }
+          var popWindow = REDUCED ? 2100 : POP_WINDOW; // reduced motion: targets stay up gentler, longer
+          for (var pti = 0; pti < popTargets.length; pti++){
+            var pto = popTargets[pti];
+            if (pto.hit || pto.missed) continue;
+            if (pto.phase === 'rising'){
+              var prk = Math.min((now - pto.born) / 170, 1);
+              var pre = 1 - Math.pow(1 - prk, 3); // jumps up fast, settles the last inch
+              pto.group.position.y = POP_HIDDEN + (0 - POP_HIDDEN) * pre;
+              if (prk >= 1) pto.phase = 'up';
+            } else if (pto.phase === 'up'){
+              if (now - pto.born >= popWindow){ pto.phase = 'lowering'; pto.downAt = now; }
+            } else if (pto.phase === 'lowering'){
+              var plk = Math.min((now - pto.downAt) / 240, 1);
+              pto.group.position.y = POP_HIDDEN * plk * plk; // sinks away, quicker as it goes
+              if (plk >= 1) missPopTarget(pto, now);
+            }
+            pto.y = pto.group.position.y + 0.81; // keep the shotgun-pattern centre on the board
+            if (pto.halo) pto.halo.material.opacity = 0.4 + Math.sin(t * 3 + pti * 0.9) * 0.14;
+          }
+          if (!G.practiceDone && G.popSpawned >= G.practiceTotal && !activePopTarget()) finishPopRound();
+        }
+
         /* ---- the ride (v1.17): gallop, coach, outlaws and the whole
            scrolling trail live in updateRide ---- */
         if (G.mode === 'ride') updateRide(dt, now, t);
@@ -14937,6 +15145,33 @@ three/build/three.module.js:
         var duelTurnK = 0.35 + 0.65 * e2;
         camera.rotateY(-aimSmX * 0.055 * duelTurnK);
         camera.rotateX(aimSmY * 0.04 * duelTurnK);
+        // Pop-Up Targets camera (v2.11 fix): the far pop-up spots sit
+        // past the edge of a portrait screen — and far past it through
+        // the rifle scope's 2x zoom — so a target out there was left
+        // cut off at the screen's edge. Now, while a target is up, the
+        // view itself turns toward it: the yaw and pitch that would
+        // centre the target's board (relative to the range's straight-
+        // ahead look) are eased in over a few frames, so each pop-up
+        // swings fully into view near the centre, visible and
+        // shootable. The gun rides on the camera and every shot is
+        // cast through the same pointer, so the sights stay true
+        // while the view turns. When no target is up — between pops,
+        // and in every other mode — the turn eases back to nothing
+        // and the view settles on the middle of the range again.
+        var popYawWant = 0, popPitchWant = 0;
+        if (G.mode === 'practice' && G.practiceKind === 'popup' && G.state === 'practice' && !G.practiceDone){
+          var popAct = activePopTarget();
+          if (popAct){
+            var pdx = popAct.x - camera.position.x, pdz = popAct.z - camera.position.z;
+            var baseYawP = Math.atan2(-(CAM_LOOK.x - CAM_BASE.x), -(CAM_LOOK.z - CAM_BASE.z));
+            var basePitchP = Math.atan2(CAM_LOOK.y - CAM_BASE.y, Math.sqrt(Math.pow(CAM_LOOK.x - CAM_BASE.x, 2) + Math.pow(CAM_LOOK.z - CAM_BASE.z, 2)));
+            popYawWant = Math.atan2(-pdx, -pdz) - baseYawP;
+            popPitchWant = Math.atan2((popAct.group.position.y + 1.18) - camera.position.y, Math.sqrt(pdx * pdx + pdz * pdz)) - basePitchP;
+          }
+        }
+        popCamYaw += (popYawWant - popCamYaw) * Math.min(dt * 10, 1);
+        popCamPitch += (popPitchWant - popCamPitch) * Math.min(dt * 10, 1);
+        if (popCamYaw || popCamPitch){ camera.rotateY(popCamYaw); camera.rotateX(popCamPitch); }
         }
 
         /* ---- slow-mo replay camera (v2.2): while the replay runs,
