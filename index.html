@@ -133,6 +133,10 @@
          coach until your hide runs out) ---------- */
       #rideCard{ display:none; }
       #rideCard h1{ font-size:clamp(24px,5.6vw,34px); }
+      /* ---------- Duel modes picker (v2.12): Quick & Endless Duels
+         asks first, same as the Ride and Practice pickers ---------- */
+      #duelModesCard{ display:none; }
+      #duelModesCard h1{ font-size:clamp(24px,5.6vw,34px); }
       /* ---------- LAN duel (v1.25): the 1v1 room card — create a room
          and share its 6-digit code, or join with a rival's code, pick
          the duel range together (v1.26), then face off head-to-head. ---------- */
@@ -269,6 +273,8 @@
       /* Pop-Up Targets practice (v2.11): a deep-crimson button under
          the Flying Bottles button on the Practice picker. */
       .popbtn{ background:linear-gradient(180deg,#8a3324,#451207); margin-top:8px; font-size:17px; }
+      /* Quick & Endless Duels (v2.12): a deep slate-blue button under the Ride button on the title card. */
+      .bigbtn.duelbtn{ background:linear-gradient(180deg,#3d5a80,#1d2f45); border-color:rgba(160,200,240,.55); color:#dcebf7; box-shadow:inset 0 1px 0 rgba(210,235,255,.25), inset 0 -8px 14px rgba(0,0,0,.35), 0 4px 14px rgba(0,0,0,.4); }
       #titleCard .bigbtn{ margin-top:9px; padding:11px 20px; }
       #titleCard .flybtn{ margin-top:8px; }
       /* Ride mode (v1.17): the stagecoach chase gets a deep-red button
@@ -1024,7 +1030,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.11 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.12 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -1152,7 +1158,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.11</div>
+        <div class="ver">SHOWDOWN 1881 · v2.12</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1214,6 +1220,7 @@
         </div>
         <button class="bigbtn" id="btnStart" type="button">★ Start Duels</button>
         <button class="bigbtn ridebtn" id="btnRide" type="button">★ Ride · Stagecoach Chase</button>
+        <button class="bigbtn duelbtn" id="btnDuelModes" type="button">★ Quick &amp; Endless Duels</button>
         <button class="bigbtn altbtn" id="btnPractice" type="button">★ Practice</button>
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <div class="menuRow">
@@ -1228,7 +1235,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1245,7 +1252,7 @@
         <button class="bigbtn popbtn" id="btnPracticePopup" type="button">Pop-Up Targets</button>
         <p class="small">Targets jump up one at a time, somewhere new every time — shoot each one before it drops back down.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1265,7 +1272,28 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Duel modes picker (v2.12): the menu's Quick & Endless Duels
+         button asks which fight first — Quick Duel, one fast duel and
+         done, or Endless Duel, wave after wave of goons until your
+         hide runs out — same pattern as the Ride and Practice
+         pickers. The best Endless Duel run rides on this card and in
+         Stats. -->
+    <div class="card" id="duelModesCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ QUICK &amp; ENDLESS ★</p>
+        <h1>Pick Your Duel</h1>
+        <div class="rule"></div>
+        <p class="small">Two ways to draw outside the ladder, partner. Pick one and step out.</p>
+        <button class="bigbtn" id="btnQuickDuel" type="button">Quick Duel · One Fast Fight</button>
+        <p class="small">One gunslinger, one street, over in a flash — a random hand at a random range. Drop him for <b>$40</b> and you're done.</p>
+        <button class="bigbtn duelbtn" id="btnEndlessDuel" type="button">Endless Duel · Wave After Wave</button>
+        <p class="small">Goons keep coming, wave after wave — never more than <b>two in the open</b> at once. The rest wait behind the <b>hay bales</b>: shoot two down and another pops out. Their draws get quicker every wave, up to a fair limit, and between waves you catch your breath — a bit of hide back and a free reload. Every goon dropped pays <b>$10</b>. Best run: <b id="endlessDuelBestLine">no run yet</b></p>
+        <button class="bigbtn" id="btnBackDuelModes" type="button">← Back to Menu</button>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1299,7 +1327,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1333,7 +1361,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1360,7 +1388,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1389,7 +1417,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1423,12 +1451,13 @@
         <div class="statRow"><span class="k">Practice Totals</span><span class="v" id="stPracticeLine">0 BOTTLES · 0 SHOTS</span></div>
         <div class="invSec">Stagecoach</div>
         <div class="statRow"><span class="k">Longest Survive · Endless</span><span class="v" id="stBestEndless">—</span></div>
+        <div class="statRow"><span class="k">Best Endless Duel</span><span class="v" id="stBestEndlessDuel">—</span></div>
         <div class="invSec">Bounty &amp; Daily</div>
         <div class="statRow"><span class="k">Daily Streak</span><span class="v" id="stDailyStreak">0 DAYS · BEST 0</span></div>
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1460,7 +1489,7 @@
         <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1491,11 +1520,13 @@
           <p><b>FAN THE HAMMER</b> — Fanning takes <b>two of the same iron</b>, one in each hand — so first buy a second copy of your revolver with <b>BUY DOUBLE</b> in the Store (it costs what the gun costs). Until then the <b>FAN</b> toggle (top right, under TITLE) reads <b>NEEDS DOUBLE</b> and stays locked. Own the double and FAN opens up: a second iron comes out, and every release fans off a fast burst of three — the <b>first shot flies true</b> and the next two land <b>close behind it</b>, grouped around where the gun points. Tap FAN off to go back to one slow, careful shot.</p>
           <p><b>BOUNTY HUNT</b> — Off the main menu: the wanted poster names one outlaw. You get <b>90 seconds</b> to catch him — he starts on Main Street with a henchman, and if you wound him or run the street clock he bolts for the Saloon. The faster the capture, the bigger the payout.</p>
           <p><b>DAILY DUEL</b> — One special fast gunslinger a day, off the main menu. Beat him for <b>$75</b> and keep your <b>streak</b> alive; every third day of a streak pays a bonus through the Store. Lose or skip a day and the streak resets.</p>
+          <p><b>QUICK DUEL</b> — Off the main menu, under <b>Quick &amp; Endless Duels</b>: one fast duel, picked and done — a <b>random gunslinger</b> at a <b>random range</b>, normal rules, <b>$40</b> if you drop him. No ladder, no next man — one fight, over in a flash.</p>
+          <p><b>ENDLESS DUEL</b> — The other half of the same menu: <b>wave after wave of goons</b> on the street until your hide runs out. Never more than <b>two in the open at once</b> — the rest <b>wait behind the hay bales</b> down the street, and when you shoot two down, <b>another pops out</b> to take the open spot. Their draws are <b>staggered</b>, never a firing squad, and they get <b>a little quicker every wave — up to a fair ceiling</b>, never faster than the quickest gun on the ladder. Clear a wave and you get a <b>breather</b>: a bit of hide back and every iron <b>reloaded free</b>. Every goon dropped pays <b>$10</b>, and your <b>best run</b> — waves cleared and goons dropped — is kept on the picker card and in Stats.</p>
           <p><b>REPLAY</b> — Drop the last gunman in any duel and the killing shot plays back in <b>slow motion</b> — no menu, no button, just the moment.</p>
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1509,6 +1540,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.12</b> — <b>Two new ways to draw: Quick Duel and Endless Duel.</b> A new menu button — <b>Quick &amp; Endless Duels</b> — opens a picker, same as the stagecoach's. <b>Quick Duel</b>: one fast duel and done — a <b>random gunslinger</b> at a <b>random range</b> under the normal rules, <b>$40</b> if you drop him. <b>Endless Duel</b>: <b>wave after wave of goons</b> until your hide runs out — but never a firing squad. No more than <b>two in the open at once</b>; the rest <b>wait behind hay bales</b> down the street, and when you shoot two down, <b>another pops out</b> into the open. Their draws are <b>staggered</b> and get <b>quicker every wave, capped</b> at a fair ceiling — never faster than the ladder's quickest gun. Clear a wave and there's a <b>breather</b>: a bit of hide back and a <b>free reload</b>. Every goon pays <b>$10</b>, and your <b>best run</b> is kept on the picker card and in Stats. The ladder, the practices, Bounty, Daily, LAN and the ride are exactly as they were.</p>
           <p><b>v2.11</b> — <b>A third practice: Pop-Up Targets.</b> The Practice picker now offers three ways to train. In the new one, fifteen bullseye targets <b>jump up one at a time</b> from behind the crates and barrels downrange — <b>somewhere new every time</b> — and each one only stays up a short while. <b>Shoot it before it drops back down</b>: too slow and it drops away, gone, and the next one pops up somewhere else. Same guns, same aiming, same reload as the other practices, and your <b>hits, misses and shots are counted on screen</b>. And the view <b>turns to face each target</b> as it pops up, so it always lands fully in view near the centre of the screen — never cut off at the edge, scope or no scope. Shooting Bottles and Flying Bottles are exactly as they were.</p>
           <p><b>v2.10</b> — <b>The drink comes early, and he never pauses.</b> In the Tap to Ride In sting the timing is tightened up: you <b>lift your bourbon and drink as he shoots the 2nd bottle</b> — three gulps you can hear while he works — and your bottle is <b>already thrown at him before he reaches the 5th</b>. And he shoots bottles <b>1, 2, 3, 4, 5 in one steady flow, no pause before any of them</b>, then turns and shoots you instead of the 6th, same as before. The slam-in credit and the extra half-second hold before the menu are unchanged.</p>
           <p><b>v2.9</b> — <b>Six bottles, a bourbon, and a slam.</b> In the Tap to Ride In sting your hand no longer holds a gun — it holds a <b>bottle of bourbon</b>, amber glass with a cream label, <b>kept small and low in the corner</b> so it never blocks your view. And the bench now holds <b>six bottles</b>: he shoots the <b>first four</b> one by one — then <b>you lift your bourbon and take a drink, three gulps you can hear</b> — and as he starts on the <b>5th</b> you <b>throw your bottle at him</b>; it smashes on his back, he flinches — and <b>hits the 5th anyway</b>. Then he turns and <b>shoots you instead of the 6th</b>, which stays standing. Last of all, the credit <b>SLAMS</b> in: <b>PRESENTED BY</b> drops with a boom and a screen shake, then <b>BULLSEYE INTERACTIVE</b> slams down the same way, and the finished title card <b>holds a half second longer</b> before the menu. Every gun in the duels, practice, the ride, LAN and the Gun Locker is exactly as it was.</p>
@@ -1579,7 +1611,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.11</div>
+        <div class="ver">VERSION 2.12</div>
       </div>
     </div>
 
@@ -1602,7 +1634,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1624,7 +1656,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1635,7 +1667,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.11 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -7706,6 +7738,10 @@ three/build/three.module.js:
          seconds, across every Endless run — shown in Stats and on
          the Stagecoach picker card. */
       bestEndless: null,
+      /* Quick & Endless Duels (v2.12): the best Endless Duel run —
+         waves cleared, and goons dropped on that run — shown on the
+         duel picker card and in Stats. */
+      bestEndlessDuel: null, bestEndlessDuelKills: 0,
       /* Gun Locker (v1.33): finishes you own, and the finish riding on
          each gun (item id -> skin id). Missing on an old save means
          factory finishes everywhere — nothing already earned changes. */
@@ -7754,6 +7790,8 @@ three/build/three.module.js:
         if (parsedSave && typeof parsedSave.practiceShots === 'number' && parsedSave.practiceShots >= 0) SAVE.practiceShots = Math.floor(parsedSave.practiceShots);
         if (parsedSave && typeof parsedSave.practiceBottles === 'number' && parsedSave.practiceBottles >= 0) SAVE.practiceBottles = Math.floor(parsedSave.practiceBottles);
         if (parsedSave && typeof parsedSave.bestEndless === 'number' && parsedSave.bestEndless > 0) SAVE.bestEndless = parsedSave.bestEndless;
+        if (parsedSave && typeof parsedSave.bestEndlessDuel === 'number' && parsedSave.bestEndlessDuel >= 0) SAVE.bestEndlessDuel = Math.floor(parsedSave.bestEndlessDuel);
+        if (parsedSave && typeof parsedSave.bestEndlessDuelKills === 'number' && parsedSave.bestEndlessDuelKills >= 0) SAVE.bestEndlessDuelKills = Math.floor(parsedSave.bestEndlessDuelKills);
         if (parsedSave && Array.isArray(parsedSave.skins)) parsedSave.skins.forEach(function(id){ if (skinById(id).id === id && SAVE.skins.indexOf(id) < 0) SAVE.skins.push(id); });
         if (parsedSave && Array.isArray(parsedSave.doubles)) parsedSave.doubles.forEach(function(id){ if (gearById(GUNS, id).id === id && SAVE.doubles.indexOf(id) < 0) SAVE.doubles.push(id); });
         if (parsedSave && parsedSave.gunSkin && typeof parsedSave.gunSkin === 'object') Object.keys(parsedSave.gunSkin).forEach(function(itemId){
@@ -9163,10 +9201,19 @@ three/build/three.module.js:
        per-hunt clock and the cinematic name ride on G like the rest
        of the round state. */
     var nightOn = false;
-    var specialKind = null; // null | 'bounty' | 'daily'
+    var specialKind = null; // null | 'bounty' | 'daily' | 'quick' | 'endless'
     var fanOn = false;
     var replayUntil = 0, replayTarget = null, lastKillOpp = null;
     var bountyTargetOpp = null, bountyFled = false, bountyDrawT0 = 0;
+    /* Quick & Endless Duels (v2.12): the Endless run's bookkeeping —
+       which wave is up, goons dropped and waves cleared this run,
+       when the next waiting goon pops out from behind his hay bale,
+       when the between-wave breather ends, and the open street spots
+       freed by the fallen, which the next pop-out steps into. The
+       hay bales themselves live in a group of their own, rebuilt for
+       every wave and struck by disposeOpps like any other fighter. */
+    var END = { wave: 0, kills: 0, wavesCleared: 0, popAt: 0, waveBreakEnd: 0, freeXs: [], sincePop: 0 };
+    var endlessCoverGroup = null, endlessBales = [];
     function applyLocation(loc){
       G.location = loc;
       streetGroup.visible = loc === 'street';
@@ -9224,7 +9271,10 @@ three/build/three.module.js:
     function anyAlive(){ return opps.some(function(o){ return !o.dead; }); }
     function allHitboxes(){
       var all = [];
-      aliveOpps().forEach(function(o){ all = all.concat(o.hitboxes); });
+      aliveOpps().forEach(function(o){
+        if (o.waiting) return; // Endless Duel (v2.12): a goon still waiting behind his hay bale is behind cover — no ray reaches him until he pops out
+        all = all.concat(o.hitboxes);
+      });
       return all;
     }
     var clockEl = document.getElementById('drawClock');
@@ -11112,6 +11162,8 @@ three/build/three.module.js:
       /* v1.30: the stagecoach record lives here in Stats now, not in
          Settings — the longest Endless survive, kept between visits. */
       $('stBestEndless').textContent = fmtSurvive(SAVE.bestEndless);
+      $('stBestEndlessDuel').textContent = SAVE.bestEndlessDuel === null ? '—'
+        : (SAVE.bestEndlessDuel + (SAVE.bestEndlessDuel === 1 ? ' WAVE' : ' WAVES') + ' · ' + (SAVE.bestEndlessDuelKills || 0) + ' GOONS'); // v2.12: the best Endless Duel run rides with the stagecoach record
       /* v2.2 records: the daily streak and the bounty book. */
       $('stDailyStreak').textContent = SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS') + ' · BEST ' + SAVE.dailyBest;
       $('stBountyWins').textContent = SAVE.bountyWins;
@@ -12860,6 +12912,7 @@ three/build/three.module.js:
     var _v = new THREE.Vector3();
     function disposeOpps(){
       disposeAvatar();
+      if (endlessCoverGroup){ scene.remove(endlessCoverGroup); endlessCoverGroup = null; endlessBales = []; } // Endless Duel (v2.12): the hay bales leave with the goons
       if (G.state === 'cinematic'){ pgun.visible = true; offHand.visible = false; hipHolster.visible = (pgunRev.kind === 'revolver');
         $('cineTop').className = 'cineBar'; $('cineBot').className = 'cineBar'; }
       opps.forEach(function(o){
@@ -12998,6 +13051,9 @@ three/build/three.module.js:
       if (G.duel === 0) toast('HOLD to aim down sights — RELEASE to shoot!');
       else if (opps.length > 1) toast(opps.length + ' guns — drop them all!', true);
       opps.forEach(function(o){
+        // Endless Duel (v2.12): a goon still waiting behind his hay
+        // bale keeps his iron down — he only draws once he pops out
+        if (o.waiting){ o.raiseStart = now; o.nextShotAt = Infinity; return; }
         o.raiseStart = now;
         // wingmen draw a breath behind the leader, so it's a hard fight, not a firing squad
         o.nextShotAt = now + effDrawMs(o) + o.slot * 380;
@@ -13017,6 +13073,7 @@ three/build/three.module.js:
       updateStats();
     }
     function winRound(zone, now){
+      if (specialKind === 'quick'){ quickWin(zone, now); return; }
       if (specialKind === 'bounty'){ bountyWin(zone, now); return; }
       if (specialKind === 'daily'){ dailyWin(zone, now); return; }
       G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
@@ -13049,6 +13106,8 @@ three/build/three.module.js:
         lanLose(kind);
         return;
       }
+      if (specialKind === 'quick'){ quickLose(kind); return; }
+      if (specialKind === 'endless'){ endlessLose(kind); return; }
       if (specialKind === 'bounty'){ bountyLose(kind); return; }
       if (specialKind === 'daily'){ dailyLose(kind); return; }
       G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
@@ -13110,6 +13169,7 @@ three/build/three.module.js:
         rest: false
       };
       var left = aliveOpps().length;
+      if (specialKind === 'endless'){ endlessOnKill(opp, now); return; } // Endless Duel (v2.12): a fallen goon pays $10, frees his open spot for the next pop-out, and only an empty street clears the wave
       if (specialKind === 'bounty' && opp === bountyTargetOpp && left > 0){ bountyWin(zone, now); return; } // the hunt ends when the WANTED man drops — his henchman standing changes nothing (v2.2)
       if (left <= 0 && G.lan){
         /* v1.32: the puppet falling on THIS phone is not the verdict.
@@ -13549,6 +13609,34 @@ three/build/three.module.js:
     }
     $('btnRideQuick').addEventListener('click', function(){ beginRide(false); });
     $('btnRideEndless').addEventListener('click', function(){ beginRide(true); });
+    /* Duel modes picker (v2.12): the menu's Quick & Endless Duels
+       button asks which fight first — Quick Duel, one fast duel and
+       done, or Endless Duel, wave after wave until your hide runs
+       out — on its own card, same pattern as the Ride picker. */
+    $('btnDuelModes').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      $('endlessDuelBestLine').textContent = SAVE.bestEndlessDuel === null ? 'no run yet'
+        : (SAVE.bestEndlessDuel + (SAVE.bestEndlessDuel === 1 ? ' wave' : ' waves') + ' · ' + (SAVE.bestEndlessDuelKills || 0) + ' goons dropped');
+      $('titleCard').style.display = 'none';
+      $('duelModesCard').style.display = 'flex';
+    });
+    $('btnBackDuelModes').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('duelModesCard').style.display = 'none';
+      $('titleCard').style.display = 'flex';
+    });
+    function beginModeDuel(kind){
+      initAudio(); sndClick();
+      $('duelModesCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      if (kind === 'quick') startQuickDuel();
+      else startEndlessDuel();
+    }
+    $('btnQuickDuel').addEventListener('click', function(){ beginModeDuel('quick'); });
+    $('btnEndlessDuel').addEventListener('click', function(){ beginModeDuel('endless'); });
     $('btnBackRide').addEventListener('click', function(){
       initAudio(); sndClick();
       $('rideCard').style.display = 'none';
@@ -13626,7 +13714,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard'];
+    var CARD_IDS = ['titleCard', 'practiceCard', 'rideCard', 'duelModesCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -13719,6 +13807,15 @@ three/build/three.module.js:
       // quitting an Endless run mid-ride still banks the survive
       // time if it's your longest (v1.24) — the run is over either way
       if (G.mode === 'ride' && G.state === 'ride') recordEndlessBest();
+      // quitting an Endless Duel mid-run banks the best run too
+      // (v2.12): waves cleared and goons dropped so far count,
+      // exactly as they do when the street finally gets you
+      if (specialKind === 'endless' && typeof END !== 'undefined'){
+        if (SAVE.bestEndlessDuel === null || END.wavesCleared > SAVE.bestEndlessDuel ||
+            (END.wavesCleared === SAVE.bestEndlessDuel && END.kills > (SAVE.bestEndlessDuelKills || 0))){
+          SAVE.bestEndlessDuel = END.wavesCleared; SAVE.bestEndlessDuelKills = END.kills; persistSave();
+        }
+      }
       disposeOpps(); disposePractice(); cleanupRideWorld();
       applyLocation(G.location); // restores the street/saloon backdrop (and hides the trail after a ride)
       G.state = 'title'; G.mode = 'duel'; holding = false; gunDrawn = false; gunV = 0;
@@ -13744,6 +13841,7 @@ three/build/three.module.js:
       // LAN duel (v1.25): after a LAN round the button walks back to
       // the room — same rival, same code, ready for a rematch
       if (G.lan){ openLanRoom(); return; }
+      if (specialKind === 'quick' || specialKind === 'endless'){ $('btnQuit').click(); return; }
       if (specialKind === 'bounty'){ openBountyCard(); return; }
       if (specialKind === 'daily'){ $('btnQuit').click(); return; }
       if (G.mode === 'ride'){ startRide(G.rideEndless); return; }
@@ -13843,6 +13941,286 @@ three/build/three.module.js:
       e.preventDefault(); e.stopPropagation();
       initAudio(); toggleFan();
     });
+
+    /* ============================== QUICK DUEL & ENDLESS DUEL (v2.12) ==============================
+       Two duels outside the ladder, on the stagecoach picker's
+       pattern. QUICK DUEL: one fast duel and done — a random
+       gunslinger from the whole cast at a random range, normal
+       rules, $40 for the win. ENDLESS DUEL: wave after wave of
+       goons until your hide runs out, kept fair the way the street
+       can stay endless without turning impossible — never more than
+       TWO goons in the open at once; the rest of the wave waits
+       crouched behind hay bales down the street, out of the fight
+       and out of the line of fire, and once two open men are down
+       (or the street stands empty), another pops out into a freed
+       spot a beat later, drawing as he comes. Draws are staggered,
+       never a firing squad, and get
+       quicker wave by wave only up to a fair ceiling — 580ms,
+       exactly the fastest gun on the ladder, never faster. Clearing a
+       wave buys a breather: a bit of hide back and every iron
+       reloaded free. Every goon dropped pays $10, and the best run
+       (waves cleared, then goons) is kept in the save. */
+    var QUICK_POOL = OPPONENTS.concat(EXTRA_OPPONENTS[3], EXTRA_OPPONENTS[4], EXTRA_OPPONENTS[5]);
+    function pickFrom(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+    function freshDuelAmmo(){
+      return {
+        revolver: 6,
+        shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
+        rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
+      };
+    }
+    /* One wave goon: a face from the cast, re-dressed — his draw is
+       the wave's pace (quicker every wave, floored at the fair
+       ceiling) with a little man-to-man jitter, and his accuracy
+       creeps up slower than his draw and caps lower. */
+    function endlessGoonCfg(wave){
+      var base = pickFrom(QUICK_POOL);
+      var cfg = {};
+      for (var k in base) cfg[k] = base[k];
+      var draw = Math.max(580, 1150 - (wave - 1) * 45 + Math.round((Math.random() - 0.5) * 90));
+      cfg.drawMs = draw;
+      cfg.acc = Math.min(0.60, 0.40 + wave * 0.016 + Math.random() * 0.04);
+      cfg.sub = 'Endless Duel · Wave ' + wave + ' · Draw: ' + (draw >= 1000 ? 'Fair' : draw >= 820 ? 'Quick' : draw >= 660 ? 'Fast' : 'Blinding');
+      return cfg;
+    }
+    function startQuickDuel(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'quick'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      G.duel = 1 + Math.floor(Math.random() * 4); // a random range: 9 to 16 paces
+      applyLocation(G.location);
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var cfg = pickFrom(QUICK_POOL);
+      var dist = DISTANCES[G.duel];
+      var o = buildGunslinger(cfg);
+      o.slot = 0;
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - dist;
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = cfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = 'QUICK DUEL · ' + dist + ' PACES';
+      $('oppName').textContent = cfg.name;
+      $('oppSub').textContent = cfg.sub;
+      clockEl.textContent = '—';
+      var clblQ = document.querySelector('#clockPlate .lbl'); if (clblQ) clblQ.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 1);
+    }
+    function quickWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      SAVE.money += 40; persistSave();
+      G.lastReward = 40;
+      endRoundCommon();
+      var rpQ = startReplay(); // the killing shot plays back in slow motion, same as any duel (v2.2)
+      setTimeout(function(){
+        banner(ZONES[zone].vital ? ZONES[zone].label : "HE'S DOWN");
+        toast('Quick duel won — $40 paid, wallet $' + SAVE.money + '. Your draw: ' + (G.reaction !== null ? (G.reaction / 1000).toFixed(3) + 's' : '—') + '.', true);
+      }, rpQ ? 2100 : 480);
+      if (rpQ) setTimeout(function(){ showNext('Back to Menu'); }, 2100);
+      else showNext('Back to Menu');
+    }
+    function quickLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('You fired before the bell — that\'s a foul, partner. The quick duel is his.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('He was quicker this time. One fast duel, one fast end — ride back to the menu and draw again.', true);
+      }
+      showNext('Back to Menu');
+    }
+    /* The hay bales an Endless wave hides behind: one round bale at
+       each waiting spot, close enough to the goon behind it to take
+       any shot fired his way — the cover raycast reads them like
+       any porch post or crate on the street. */
+    function setupEndlessCover(gz){
+      endlessCoverGroup = new THREE.Group();
+      endlessBales = [];
+      [-2.75, 2.75].forEach(function(bx){
+        var bale = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 1.3, 14),
+          new THREE.MeshStandardMaterial({ color: 0xc9a24d, roughness: 0.95, metalness: 0 })));
+        bale.rotation.z = Math.PI / 2;
+        bale.position.set(bx, 0.55, gz + 0.62);
+        bale.userData.coverLabel = 'hay bale';
+        endlessCoverGroup.add(bale);
+        endlessBales.push(bale);
+      });
+      scene.add(endlessCoverGroup);
+      coverMeshes = coverMeshes.concat(endlessBales);
+      shadowDirty = true;
+    }
+    function startEndlessDuel(){
+      END.wave = 0; END.kills = 0; END.wavesCleared = 0; END.popAt = 0; END.freeXs = []; END.sincePop = 0;
+      startEndlessWave(1, true);
+    }
+    function startEndlessWave(wave, fresh){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'endless'; fanOn = false; updateFanBtn();
+      centreAim();
+      END.wave = wave; END.popAt = 0; END.freeXs = []; END.sincePop = 0;
+      // the street stretches a little every couple of waves, like the ladder
+      G.duel = Math.min(2 + Math.floor((wave - 1) / 2), 5);
+      applyLocation(G.location);
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      if (fresh) G.hp = 100; // a run starts whole; later waves keep the hide you're carrying
+      G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var gz = 4.6 - dist;
+      setupEndlessCover(gz);
+      var total = Math.min(2 + wave, 7); // wave 1 brings 3 goons; the street never sends more than 7 in a wave
+      var openXs = ENEMY_X[2];
+      for (var i = 0; i < total; i++){
+        var o = buildGunslinger(endlessGoonCfg(wave));
+        o.slot = i;
+        if (i < 2){
+          o.waiting = false;
+          o.openX = openXs[i];
+          o.group.position.x = openXs[i];
+        } else {
+          // the rest of the wave waits behind the hay bales:
+          // crouched low, iron down, out of the line of fire
+          o.waiting = true;
+          o.nextShotAt = Infinity;
+          o.group.position.x = (i % 2 === 0) ? -2.75 : 2.75;
+          o.group.position.y = -0.7;
+        }
+        o.group.position.z = gz;
+        o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+        opps.push(o);
+      }
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      $('duelLabel').textContent = 'ENDLESS DUEL · WAVE ' + wave;
+      $('oppName').textContent = 'Wave ' + wave + ' — ' + total + ' goons';
+      $('oppSub').textContent = 'Two in the open · the rest behind the hay bales';
+      clockEl.textContent = '—';
+      var clblE = document.querySelector('#clockPlate .lbl'); if (clblE) clblE.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      if (fresh){
+        G.cineName = 'Wave 1'; G.cineDist = dist;
+        startCinematic(G.duel, 2);
+      } else {
+        // later waves ride straight in — no cinematic, just the bell
+        G.cineName = null; G.cineDist = null;
+        G.state = 'intro';
+        G.introEnd = performance.now() + 700;
+        banner('WAVE ' + wave, 'pop');
+        toast('Wave ' + wave + ' — ' + total + ' goons. Two in the open, the rest behind the bales.', true);
+      }
+    }
+    /* A kill in the Endless street: $10 in your pocket, his open
+       spot freed for the next man waiting, and only a truly empty
+       street — nobody open, nobody waiting — clears the wave. */
+    function endlessOnKill(opp, now){
+      END.kills++;
+      SAVE.money += 10; persistSave(); updateStats();
+      if (!opp.waiting && opp.openX !== undefined && opp.openX !== null){ END.freeXs.push(opp.openX); END.sincePop++; }
+      var stillUp = 0, openNow = 0, waitNow = 0;
+      opps.forEach(function(x){
+        if (x.dead) return;
+        stillUp++;
+        if (x.waiting) waitNow++; else openNow++;
+      });
+      if (stillUp <= 0){ endlessWaveCleared(now); return; }
+      /* The user's rule (v2.12): a waiting goon pops out once TWO
+         open goons are down — not after the first — so the street
+         never refills faster than you clear it. The one exception
+         is an empty street (openNow 0 with men still waiting):
+         somebody has to come out or the wave could never be
+         finished, since a waiting goon can't be hit behind cover. */
+      if (waitNow > 0 && openNow < 2 && !END.popAt && (END.sincePop >= 2 || openNow === 0)){
+        END.popAt = now + 650; END.sincePop = 0; // a beat, then the next goon pops out
+      }
+      toast(opp.cfg.name + ' is down — $10 paid · ' + stillUp + (stillUp === 1 ? ' goon' : ' goons') + ' left in wave ' + END.wave + (waitNow > 0 ? ' — another one\'s coming out from behind the bales!' : '.'), true);
+    }
+    /* The breather: the wave is cleared, the street is quiet for a
+       few seconds, your hide is patched up a piece and every iron
+       is topped off free — then the next wave rides in. */
+    function endlessWaveCleared(now){
+      END.wavesCleared = END.wave;
+      G.state = 'wavebreak';
+      END.waveBreakEnd = now + 4200;
+      holding = false; gunDrawn = false;
+      var before = Math.round(G.hp);
+      G.hp = Math.min(100, G.hp + 25);
+      updateHp();
+      duelAmmo = freshDuelAmmo();
+      clearGunReloads(); G.reloading = false;
+      G.bullets = duelAmmo[duelFam]; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
+      updateChambers(); refreshCylinder(weaponCapacity());
+      endRoundCommon();
+      banner('WAVE ' + END.wave + ' CLEARED', 'pop');
+      toast('Wave ' + END.wave + ' cleared — $' + (END.kills * 10) + ' earned this run. Catch your breath: hide patched ' + before + ' → ' + Math.round(G.hp) + ', every iron reloaded free. Wave ' + (END.wave + 1) + ' rides in…', true);
+    }
+    function endlessLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++;
+      var newBest = false;
+      if (SAVE.bestEndlessDuel === null || END.wavesCleared > SAVE.bestEndlessDuel ||
+          (END.wavesCleared === SAVE.bestEndlessDuel && END.kills > (SAVE.bestEndlessDuelKills || 0))){
+        SAVE.bestEndlessDuel = END.wavesCleared; SAVE.bestEndlessDuelKills = END.kills; newBest = true;
+      }
+      persistSave();
+      endRoundCommon();
+      var runLine = 'You cleared ' + END.wavesCleared + (END.wavesCleared === 1 ? ' wave' : ' waves') + ' and dropped ' + END.kills + (END.kills === 1 ? ' goon' : ' goons') + ' — $' + (END.kills * 10) + ' earned.' +
+        (newBest ? ' A new best run!' : ' Best run: ' + (SAVE.bestEndlessDuel || 0) + (SAVE.bestEndlessDuel === 1 ? ' wave' : ' waves') + ' · ' + (SAVE.bestEndlessDuelKills || 0) + ' goons.');
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('You fired before the bell — a foul ends the run. ' + runLine, true);
+      } else {
+        G.camFall = 0;
+        banner('THE STREET WINS');
+        toast('The goons finally got you. ' + runLine, true);
+      }
+      showNext('Back to Menu');
+    }
+    /* A waiting goon pops out: he steps out from behind his hay
+       bale into a freed open spot, standing up as he comes, iron
+       rising — and the animate loop only lets him start shooting
+       once he's out in the open, a fair beat behind the bell pace. */
+    function endlessPopOut(now){
+      var openCount = 0, cand = null;
+      opps.forEach(function(x){
+        if (x.dead) return;
+        if (!x.waiting && !x.popping) openCount++;
+        else if (x.popping) openCount++;
+        if (!cand && x.waiting) cand = x;
+      });
+      if (!cand || openCount >= 2) return;
+      cand.waiting = false; cand.popping = true;
+      cand.popT0 = now;
+      cand.popFromX = cand.group.position.x;
+      cand.popFromY = cand.group.position.y;
+      cand.popToX = END.freeXs.length ? END.freeXs.shift() : (cand.popFromX < 0 ? ENEMY_X[2][0] : ENEMY_X[2][1]);
+      cand.openX = cand.popToX;
+      cand.raiseStart = now;
+      cand.nextShotAt = Infinity;
+      shadowDirty = true;
+    }
 
     /* ============================== BOUNTY HUNT & DAILY DUEL (v2.2) ==============================
        Both ride the duel engine as special duels: same bell, same
@@ -14648,6 +15026,7 @@ three/build/three.module.js:
 
         /* ---- state timing ---- */
         if (G.state === 'cinematic' && now >= G.cineT0 + G.cineDur) endCinematic();
+        if (G.state === 'wavebreak' && specialKind === 'endless' && now >= END.waveBreakEnd) startEndlessWave(END.wave + 1, false); // Endless Duel (v2.12): the breather ends and the next wave rides in
         if (G.state === 'intro' && now >= G.introEnd) beginStandoff(now);
         else if (G.state === 'standoff' && now >= G.drawAt) beginDraw(now);
 
@@ -14690,6 +15069,40 @@ three/build/three.module.js:
             clockEl.textContent = Math.floor(bLeft / 60) + ':' + ('0' + Math.floor(bLeft % 60)).slice(-2);
             if (!bountyFled && G.bountyLoc === 'street' && G.state === 'draw' && bountyDrawT0 && now - bountyDrawT0 > 14000) doBountyFlee(now);
             else if (now >= G.bountyEnd) bountyLose('escaped');
+          }
+        }
+
+        /* ---- Endless Duel (v2.12): the street between the shots.
+           A waiting goon stays crouched behind his hay bale with his
+           iron down and never draws. A goon popping out steps into a
+           freed open spot and stands up as he comes; only once he's
+           out in the open does his draw start, a fair beat on — so
+           the street never holds more than two live targets and
+           never fires a firing squad. ---- */
+        if (specialKind === 'endless' && G.mode === 'duel'){
+          if (END.popAt && G.state === 'draw' && now >= END.popAt){ END.popAt = 0; endlessPopOut(now); }
+          for (var epo = 0; epo < opps.length; epo++){
+            var eo = opps[epo];
+            if (eo.dead) continue;
+            if (eo.waiting){ eo.raiseStart = now; eo.nextShotAt = Infinity; }
+            else if (eo.popping){
+              var epp = Math.min((now - eo.popT0) / 550, 1);
+              var epe = epp * (2 - epp);
+              eo.group.position.x = eo.popFromX + (eo.popToX - eo.popFromX) * epe;
+              eo.group.position.y = eo.popFromY * (1 - epe);
+              if (epp >= 1){
+                eo.popping = false;
+                eo.group.position.y = 0;
+                shadowDirty = true;
+                /* keep raiseStart where the pop-out set it (the pop
+                   start), so his gun arm keeps rising from where the
+                   step-out left it instead of snapping back down and
+                   re-raising; his first shot still waits a fair beat
+                   after he is fully out in the open. */
+                if (G.state === 'draw'){ eo.nextShotAt = now + 350 + (eo.slot % 2) * 190; }
+                else eo.nextShotAt = Infinity;
+              }
+            }
           }
         }
 
@@ -14761,7 +15174,12 @@ three/build/three.module.js:
         opps.forEach(function(opp){
           var og = opp.group;
           if (!opp.dead){
-            og.position.y += (((opp.legHit ? -0.17 : 0)) - og.position.y) * Math.min(dt * 6, 1);
+            /* Endless Duel (v2.12 fix): a waiting goon stays crouched
+               at -0.7 behind his hay bale and a popping goon's height
+               is owned by the pop-out step above — the idle settle
+               must not drag either of them up to standing. */
+            if (opp.waiting) og.position.y += (-0.7 - og.position.y) * Math.min(dt * 6, 1);
+            else if (!opp.popping) og.position.y += (((opp.legHit ? -0.17 : 0)) - og.position.y) * Math.min(dt * 6, 1);
             var bScale = 1 + Math.sin(t * 1.7 + opp.slot * 1.3) * 0.006;
             og.scale.set(1, bScale, 1);
             // pre-fight idle (v1.0): a living man in a duellist's stance —
