@@ -705,7 +705,7 @@
          edges, laid over the 3D scene and under every plate. */
       #grade{ position:fixed; inset:0; pointer-events:none; z-index:3; opacity:0;
         transition:opacity .6s ease;
-        background:radial-gradient(ellipse at 50% 42%, rgba(255,176,92,.08) 42%, rgba(26,10,2,.52) 100%); }
+        background:radial-gradient(ellipse at 50% 42%, rgba(255,186,102,.10) 40%, rgba(58,26,6,.28) 78%, rgba(26,10,2,.52) 100%); }
       #err{
         position:fixed; left:10px; right:10px; bottom:10px; z-index:50; display:none;
         background:#3d0d06; color:#ffd9c9; border:1px solid #e2482e; padding:10px 12px;
@@ -750,23 +750,25 @@
         font-family:'Rye',Georgia,serif; font-size:15px; letter-spacing:.18em; color:#ffd98f;
         text-shadow:0 2px 0 #4a1e08, 0 4px 14px rgba(0,0,0,.85);
       }
-      /* Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36, sky title + lake v1.37, scenery-fit words v1.38, photo scenery v1.40, fixed scenery + real-iron guns v1.41, true stocks + real lake + fuller plains + brighter words v1.42, the iron laid to rest on the bench v1.43, the rested iron turning on the viewer and the viewer going down v1.44):
+      /* Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36, sky title + lake v1.37, scenery-fit words v1.38, photo scenery v1.40, fixed scenery + real-iron guns v1.41, true stocks + real lake + fuller plains + brighter words v1.42, the iron laid to rest on the bench v1.43, the rested iron turning on the viewer and the viewer going down v1.44, the gunslinger v2.8):
          a full-screen sting that plays over the lifting splash the
-         moment Tap to Ride In is tapped — the game's real 3D
-         revolver turned toward its side over open plains under a
-         bright blue sunny sky: shells loaded, cylinder shut, hammer
-         back and fire, again and again — three bottles on a bench
-         downrange, smashed one after another — and then the
-         welcome: SHOWDOWN stamped in letter by letter, one shotgun
-         blast per letter, 1881 typed in under it, and Presented by
-         Bullseye Interactive along the bottom. It never takes
-         input and removes itself when it is done. The background
-         is layered gradients only — deep blue up top melting to
-         pale at the horizon, soft white clouds, a bright sun
-         glowing in the sky, a lake shining in the background
-         behind the bench, and lively green plains below — and
-         the welcome title rides up in the sky, clear of the gun
-         and the bench. */
+         moment Tap to Ride In is tapped — a gunslinger standing in
+         front of the viewer on open plains under a bright blue
+         sunny sky, back turned: he loads his revolver, cylinder
+         shut, hammer back and fire, again and again — three
+         bottles on a bench downrange, smashed one after another —
+         then he turns clean around, raises the iron on the viewer
+         and fires, the view drops to the ground, and the welcome
+         rides over him: SHOWDOWN stamped in letter by letter, one
+         shotgun blast per letter, 1881 typed in under it, and
+         Presented by Bullseye Interactive along the bottom. A tap
+         or a key skips it straight to the menu, and it removes
+         itself when it is done. The background is layered
+         gradients only — deep blue up top melting to pale at the
+         horizon, soft white clouds, a bright sun glowing in the
+         sky, a lake shining in the background behind the bench,
+         and lively green plains below — and the welcome title
+         rides up in the sky, clear of the man and the bench. */
       #rideInFx{
         position:fixed; inset:0; z-index:65; pointer-events:none;
         opacity:0; transition:opacity .18s ease;
@@ -777,7 +779,17 @@
           radial-gradient(ellipse 20% 7% at 44% 24%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
           linear-gradient(180deg, #1b6fd0 0%, #3d8fe0 30%, #6db1ec 48%, #a5d2f7 58%, #dcefff 63%, #bcd9a8 68%, #7cb84e 76%, #5d9c3a 86%, #497f2e 100%);
       }
-      #rideInFx.on{ opacity:1; }
+      #rideInFx.on{ opacity:1; pointer-events:auto; cursor:pointer; }
+      /* the skip hint (v2.8): the sting takes the tap while it
+         plays, so it can be skipped — the hint says so, quietly,
+         in the corner, and never competes with the show */
+      #rideInSkip{
+        position:absolute; right:14px; bottom:calc(14px + env(safe-area-inset-bottom)); pointer-events:none;
+        font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.26em; text-transform:uppercase;
+        color:rgba(255,255,255,.85); text-shadow:0 1px 0 rgba(255,255,255,.4), 0 2px 6px rgba(8,40,90,.8);
+        opacity:0; transition:opacity .5s ease;
+      }
+      #rideInFx.on #rideInSkip{ opacity:.85; transition-delay:.7s; }
       #rideInFx.out{ opacity:0; transition:opacity .45s ease; }
       /* the hit (v1.44): the rested iron's shot lands on the viewer —
          a white-hot flash, a red rush at the edges of the eye, then
@@ -823,12 +835,32 @@
       }
       #rideInPresented{
         position:absolute; left:0; right:0; bottom:calc(18px + env(safe-area-inset-bottom)); text-align:center;
-        font-family:'Special Elite',monospace; font-size:clamp(12.5px,3.9vw,16px); font-weight:bold;
+        font-family:'Special Elite',monospace; font-weight:bold;
         letter-spacing:.3em; text-transform:uppercase; color:#ffffff;
         text-shadow:0 1px 0 rgba(255,255,255,.55), 0 2px 0 rgba(24,46,10,.96), 0 3px 6px rgba(24,46,10,.88), 0 8px 22px rgba(10,30,6,.72), 0 0 18px rgba(255,255,255,.45);
-        opacity:0;
       }
-      #rideInPresented.on{ opacity:1; transition:opacity .6s ease; }
+      /* the slam (v2.9): each Presented line starts big and high,
+         invisible — then SLAMS down into place with a hard overshoot
+         bounce, timed with a boom and a screen shake in the script,
+         so the credit lands like a dropped safe, not a fade-in */
+      #rideInPresented .presLine{ display:block; opacity:0; transform:translateY(-52px) scale(2.7); }
+      #presLine1{ font-size:clamp(12.5px,3.9vw,16px); }
+      #presLine2{ font-size:clamp(16px,5vw,23px); letter-spacing:.22em; margin-top:3px; }
+      #rideInPresented .presLine.slam{ animation:presSlam .38s cubic-bezier(.2,.9,.3,1) forwards; }
+      @keyframes presSlam{
+        0%{ opacity:0; transform:translateY(-52px) scale(2.7); }
+        55%{ opacity:1; transform:translateY(0) scale(1); }
+        72%{ opacity:1; transform:translateY(2px) scale(.95); }
+        100%{ opacity:1; transform:translateY(0) scale(1); }
+      }
+      /* the slam shake (v2.9): the whole scene jolts on each slam —
+         bigger and heavier than the per-letter kick */
+      #rideInFx.slamShake #rideInCv{ animation:rideSlamShake .34s ease; }
+      @keyframes rideSlamShake{
+        0%{ transform:translate(0,0); } 22%{ transform:translate(-7px,5px); }
+        45%{ transform:translate(6px,-4px); } 68%{ transform:translate(-4px,2px); }
+        100%{ transform:translate(0,0); }
+      }
       @media (max-width:520px){
         #oppName{ font-size:16px; }
         #oppPlate{ min-width:0; max-width:46vw; padding:7px 9px; }
@@ -988,13 +1020,14 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.6 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.10 ★</div>
     </div>
-    <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36):
-         the real 3D revolver over open plains and a bright blue sky,
-         then the welcome title — played by the main game script the
-         moment Tap to Ride In is tapped. -->
-    <div id="rideInFx" aria-hidden="true"><canvas id="rideInCv"></canvas><div id="rideInHit"></div><div id="rideInWelcome"><div id="rideInHi">Welcome to</div><div id="rideInWord"><span class="rl">S</span><span class="rl">H</span><span class="rl">O</span><span class="rl">W</span><span class="rl">D</span><span class="rl">O</span><span class="rl">W</span><span class="rl">N</span></div><div id="rideInYear"></div></div><div id="rideInPresented">Presented by Bullseye Interactive</div></div>
+    <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
+         the gunslinger v2.8): a gunslinger in front of you over open
+         plains and a bright blue sky loads, shoots bottles,
+         turns and shoots you, then the welcome title — played by the
+         main game script the moment Tap to Ride In is tapped. -->
+    <div id="rideInFx" aria-hidden="true"><canvas id="rideInCv"></canvas><div id="rideInHit"></div><div id="rideInSkip">Tap to skip</div><div id="rideInWelcome"><div id="rideInHi">Welcome to</div><div id="rideInWord"><span class="rl">S</span><span class="rl">H</span><span class="rl">O</span><span class="rl">W</span><span class="rl">D</span><span class="rl">O</span><span class="rl">W</span><span class="rl">N</span></div><div id="rideInYear"></div></div><div id="rideInPresented"><span class="presLine" id="presLine1">Presented by</span><span class="presLine" id="presLine2">Bullseye Interactive</span></div></div>
     <script>
       /* v1.30 — no double-tap zoom, anywhere, ever: not on the splash,
          not in the menus, not in a duel, on the ride or in practice.
@@ -1115,7 +1148,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.6</div>
+        <div class="ver">SHOWDOWN 1881 · v2.10</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1191,7 +1224,7 @@
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1206,7 +1239,7 @@
         <button class="bigbtn flybtn" id="btnPracticeFlying" type="button">Flying Bottles</button>
         <p class="small">Bottles tossed across the sky — shoot them out of the air.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1226,7 +1259,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1260,7 +1293,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1294,7 +1327,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1321,7 +1354,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1350,7 +1383,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1389,7 +1422,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1418,10 +1451,10 @@
           <button class="segBtn" id="btnGfxMed" type="button">Medium</button>
           <button class="segBtn" id="btnGfxHigh" type="button">High</button>
         </div>
-        <p class="small">Low is the classic look. Medium renders sharper, with soft shadows that follow every move. High goes all out — the finest detail your device can draw, deep golden light, soft live shadows and dust hanging in the air.</p>
+        <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1446,7 +1479,7 @@
           <p><b>FLYING BOTTLES</b> — The second practice, off the same menu: fifteen bottles are <b>launched across the sky in front of you</b>, big and close, tumbling end over end through midair on a long, slow arc at different heights and speeds — you get a good few seconds to track each one. Lead them, hold to aim, release to shoot — smash one and it bursts into flying glass with a shattering crack. A bottle that gets past you smashes on the ground and is gone. Your hits, the bottles still in the air and your shots are all counted on screen.</p>
           <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, the lens sits dead on your aim point — and on touch that aim is swung by dragging, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
           <p><b>THE RIDE</b> — Saddle up off the main menu and <b>run down a stagecoach</b> on the open trail. Your horse gallops under you and the long coach bounces and swerves ahead on its team, and the <b>six outlaws riding it — driver and messenger on the bench, two on the roof and two on the rear platform — shoot back</b>. A man you drop <b>ragdolls down</b> off the coach and into the road behind it. Hold to aim, release to fire, same as a duel, and the coach body honestly blocks any shot that hits it instead of a man. <b>Switch guns at any time</b>: tap the REVOLVER / SHOTGUN / RIFLE buttons or press <b>1, 2, 3</b> — every gun keeps its own loads, and a gun you don't own can't be drawn, so buy shotguns and rifles in the Store first. Drop all six outlaws to take the coach and its <b>$150 strongbox</b>. Shooting a team horse slows the coach down; let it pull <b>30 paces</b> ahead and it's gone — and their lead costs you a fifth of your hide a hit. Or pick <b>ENDLESS</b> when you ride: the coaches keep coming, each one different and harder — more outlaws, a faster coach, return fire that lands harder and truer — and the run only ends when your hide does. Your <b>longest survive</b> is kept in Stats.</p>
-          <p><b>SETTINGS</b> — From the main menu, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. Low is the classic look; Medium renders sharper with soft shadows that follow the action; High renders the street at its finest, with rich golden light and dust hanging in the air. The game runs at the rate you pick, and your choices are kept between visits.</p>
+          <p><b>SETTINGS</b> — From the main menu, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. Every level was rebuilt richer in v2.7 — sharper wood and dirt, deeper light, cleaner metal — and Medium adds soft live shadows and ground detail while High renders the street at its finest, with full-size soft shadows and the full dressed street. The game runs at the rate you pick, and your choices are kept between visits.</p>
           <p><b>NIGHT STORM</b> — Pick <b>Night Storm</b> beside the duel location and the same duels play after dark: lantern light on the street, rain hammering down, lightning over the rooftops. It's harder to see, and the storm wind pushes your aim around — sway runs half again as wild.</p>
           <p><b>FAN THE HAMMER</b> — Fanning takes <b>two of the same iron</b>, one in each hand — so first buy a second copy of your revolver with <b>BUY DOUBLE</b> in the Store (it costs what the gun costs). Until then the <b>FAN</b> toggle (top right, under TITLE) reads <b>NEEDS DOUBLE</b> and stays locked. Own the double and FAN opens up: a second iron comes out, and every release fans off a fast burst of three — the <b>first shot flies true</b> and the next two land <b>close behind it</b>, grouped around where the gun points. Tap FAN off to go back to one slow, careful shot.</p>
           <p><b>BOUNTY HUNT</b> — Off the main menu: the wanted poster names one outlaw. You get <b>90 seconds</b> to catch him — he starts on Main Street with a henchman, and if you wound him or run the street clock he bolts for the Saloon. The faster the capture, the bigger the payout.</p>
@@ -1455,7 +1488,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1469,6 +1502,10 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.10</b> — <b>The drink comes early, and he never pauses.</b> In the Tap to Ride In sting the timing is tightened up: you <b>lift your bourbon and drink as he shoots the 2nd bottle</b> — three gulps you can hear while he works — and your bottle is <b>already thrown at him before he reaches the 5th</b>. And he shoots bottles <b>1, 2, 3, 4, 5 in one steady flow, no pause before any of them</b>, then turns and shoots you instead of the 6th, same as before. The slam-in credit and the extra half-second hold before the menu are unchanged.</p>
+          <p><b>v2.9</b> — <b>Six bottles, a bourbon, and a slam.</b> In the Tap to Ride In sting your hand no longer holds a gun — it holds a <b>bottle of bourbon</b>, amber glass with a cream label, <b>kept small and low in the corner</b> so it never blocks your view. And the bench now holds <b>six bottles</b>: he shoots the <b>first four</b> one by one — then <b>you lift your bourbon and take a drink, three gulps you can hear</b> — and as he starts on the <b>5th</b> you <b>throw your bottle at him</b>; it smashes on his back, he flinches — and <b>hits the 5th anyway</b>. Then he turns and <b>shoots you instead of the 6th</b>, which stays standing. Last of all, the credit <b>SLAMS</b> in: <b>PRESENTED BY</b> drops with a boom and a screen shake, then <b>BULLSEYE INTERACTIVE</b> slams down the same way, and the finished title card <b>holds a half second longer</b> before the menu. Every gun in the duels, practice, the ride, LAN and the Gun Locker is exactly as it was.</p>
+          <p><b>v2.8</b> — <b>A gunslinger opens the show.</b> Tap to Ride In: a man stands before you on the plains, back turned — seen <b>from far over on the left, low and looking up at him</b>, and the iron big and clear in front of you — he <b>loads his iron</b>, holds it <b>one-handed, a bit forward, out in front of him like a real gun, in view the whole time</b> — load, <b>spin the cylinder</b>, and picks off the <b>three bottles</b> on the bench one by one, a <b>boom bursting at each bottle</b> as it shatters — and <b>your own gun stays right there in view in your hand</b> the whole time he is shooting them. Then he <b>turns clean around and shoots you — his iron solved dead on your head</b>, a <b>boom at your spot</b>, and down you go as <b>Welcome to SHOWDOWN 1881</b> stamps in over him, <b>Presented by Bullseye Interactive</b> along the bottom. <b>Tap anytime to skip</b> straight to the menu.</p>
+          <p><b>v2.7</b> — <b>Graphics, rebuilt on every level.</b> Low, Medium and High each look far richer than before: <b>wood and dirt drawn four times finer</b> — real grain, knots, pebbles and cracks, lit so the light rakes across them — a <b>warmer sky reflected in the steel and glass</b>, and less of the flat, washed-out look. <b>Medium</b> steps up with soft live shadows and a dressed street; <b>High</b> goes all out with a <b>full 4096 soft shadow map</b>, the sharpest textures and the full ground detail. And the <b>weird white things floating around on max graphics are gone</b> — the old dust motes were big, pale and thick on High; the dust is now fine, warm and faint, the way dust should look. The ride-in and the Gun Locker render at your picked level too.</p>
           <p><b>v2.6</b> — <b>A crosshair on the gun's point.</b> Every fight — duels, Bounty Hunt, Daily Duel, LAN, both practices and the ride — now carries a <b>small, quiet crosshair that rides your aim</b>: it sits exactly where the gun is pointing and <b>where the shot will land</b>, and it swings with the iron as you aim — hip fire, down the sights, and through the rifle scope alike. And on touch the aim itself is centred now: <b>every fight opens with it dead centre of the screen</b>, and drags swing it from there — no more aim sitting low under your thumb. No box, no words — just the mark, in keeping with the clean fight screen.</p>
           <p><b>v2.5</b> — <b>A clean fight screen.</b> Every match — duels, Bounty Hunt, Daily Duel, LAN and practice — is <b>stripped back to what a fight needs</b>: the man across the street, one quiet clock, your hide and your loads, floating clean over the street with <b>no boxes, plates or counters</b> around them. The career tallies, duel counter, labels and tags are off the fight screen (your records still live in Stats). The controls stay — smaller and quieter: a plain ✕, a slim FAN, a compact RELOAD, and a weapon bar of three plain words.</p>
           <p><b>v2.4</b> — <b>Empty guns reload themselves.</b> Run an iron dry and it <b>starts reloading on its own</b> — no button press. And a reload belongs to the gun now: <b>switch guns mid-reload</b> and the one you draw is ready to fire at once, while the first keeps loading in the scabbard — come back to it loaded, or that much further along. Manual RELOAD still works for topping off early. And <b>fanning holds its pair proper</b>: one iron in each hand, riding apart on their own sides through the whole burst — never meeting and overlapping in the middle.</p>
@@ -1534,7 +1571,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.6</div>
+        <div class="ver">VERSION 2.10</div>
       </div>
     </div>
 
@@ -1557,7 +1594,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1579,7 +1616,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1590,7 +1627,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.6 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.10 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -6331,26 +6368,26 @@ three/build/three.module.js:
 
     /* ============================== RIDE-IN WELCOME (v1.33) ==============================
        The moment Tap to Ride In lands, before the menu: the welcome
-       sting, rebuilt around the game's real iron. Open plains under a
-       bright blue sky sit behind the overlay (v1.36); on the canvas rides the
-       actual 3D revolver — the very buildRevolver model from the Gun
-       Locker, wearing your equipped gun and its locker finish —
-       turned a bit further toward its side (v1.35): the barrel and
-       the side of the iron in full view, running away downrange to
-       three bottles on a bench under a low sun, while the back of
-       the cylinder still faces the viewer. Shells are
-       seated in the chambers one by one, the cylinder slides shut,
-       and then three times over — hammer drawn back, the shot —
-       flash, recoil, rolling smoke, and the bottles downrange
-       shattering in glass, one, two, three in a row — and then the
+       sting, rebuilt around a gunslinger (v2.8). Open plains under a
+       bright blue sky sit behind the overlay (v1.36); on the canvas
+       a man stands in front of the viewer, back turned, your
+       equipped revolver — the very buildRevolver model from the Gun
+       Locker, wearing its locker finish — in his gun hand. He loads
+       it: shells seated in the chambers one by one out of his off
+       hand, the cylinder slides shut, and then three times over —
+       hammer drawn back, the shot — flash, recoil, rolling smoke,
+       and the bottles downrange shattering in glass, one, two,
+       three in a row — then he lowers the iron, stands easy a beat,
+       turns clean around, raises the iron on the viewer and fires:
+       the view drops to the ground, and over the downed view the
        welcome title: SHOWDOWN stamps in a letter at a time, a
        shotgun blast per letter, 1881 types in beneath it, and
-       Presented by Bullseye Interactive rides along the bottom — the spent iron is laid down to rest on its side on the bench, among the broken bottles (v1.43) — and then it rises, turns on the viewer and fires, the view drops to the ground, and the title pops over the plains you are left lying looking at (v1.44).
-       The 3D
-       half lives inside initGame (window.__wwdRideIn3D), where the
-       gun builders are; this half owns the latch, the word and the
-       fade, and on a cut-off copy with no 3D the plains sky and the word
-       still play. About eight and a half seconds, pointer-transparent, removes
+       Presented by Bullseye Interactive rides along the bottom.
+       The 3D half lives inside initGame (window.__wwdRideIn3D),
+       where the gun builders are; this half owns the latch, the
+       word, the fade and the skip, and on a cut-off copy with no
+       3D the plains sky and the word still play. About eight and a
+       half seconds, skippable with a tap or a key, removes
        itself. */
     var rideInFxPlayed = false;
     function playRideInFx(){
@@ -6365,46 +6402,88 @@ three/build/three.module.js:
       if (!fx || !cv || !word || REDUCED) return;
       fx.className = 'on';
       if (window.__wwdRideIn3D){ try { window.__wwdRideIn3D(cv); } catch (e) {} }
-      /* the turn, the shot, and the welcome title (v1.36, the
-         turn and the fall v1.44): the iron rests a beat on the
-         bench — then it turns on the viewer and fires (the 3D
-         half owns the turn; the hit lands here at 3900): the
-         flash, the red rush, and in the 3D half the view drops
-         to the ground and lies there looking forward at the
-         plains, the lake and the sky. Over that downed view the
-         title pops: "Welcome to" fades in, SHOWDOWN stamps in
-         one letter at a time — a shotgun blast for every letter,
-         with a little kick through the frame — then 1881 types
-         in digit by digit under it, and Presented by Bullseye
-         Interactive settles along the bottom. */
+      /* the man, the turn, the shot, and the welcome title (v2.8):
+         the 3D half owns the gunslinger — the loading, the five
+         bottles, the turn and the shot at the viewer; the hit
+         lands here at 3650: the flash, the red rush, and in the
+         3D half the view drops to the ground and lies there
+         looking forward at the man, the plains, the lake and the
+         sky. Over that downed view the title pops: "Welcome to"
+         fades in, SHOWDOWN stamps in one letter at a time — a
+         shotgun blast for every letter, with a little kick
+         through the frame — then 1881 types in digit by digit
+         under it, and Presented by Bullseye Interactive settles
+         along the bottom. Skippable (v2.8): a tap or click on the
+         sting, or Esc / Space / Enter, ends it at once — every
+         pending beat is cancelled, the 3D half is torn down and
+         the overlay removes itself, straight to the menu. */
+      var rideTimers = [];
+      function rideLater(fn, at){
+        var id = setTimeout(function(){
+          var ix = rideTimers.indexOf(id); if (ix >= 0) rideTimers.splice(ix, 1);
+          fn();
+        }, at);
+        rideTimers.push(id);
+        return id;
+      }
+      var rideDone = false;
+      function endRideIn(){
+        if (rideDone) return;
+        rideDone = true;
+        for (var ti = 0; ti < rideTimers.length; ti++) clearTimeout(rideTimers[ti]);
+        rideTimers.length = 0;
+        fx.removeEventListener('pointerdown', skipRideIn);
+        document.removeEventListener('keydown', rideKey, true);
+        fx.style.display = 'none';
+        if (window.__wwdRideIn3DStop){ try { window.__wwdRideIn3DStop(); } catch (e) {} }
+      }
+      function skipRideIn(){ endRideIn(); }
+      function rideKey(e){
+        if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); endRideIn(); }
+      }
+      fx.addEventListener('pointerdown', skipRideIn);
+      document.addEventListener('keydown', rideKey, true);
       var letters = word.querySelectorAll('.rl');
-      setTimeout(function(){ fx.classList.add('hit'); }, 3900);
-      setTimeout(function(){ if (hi) hi.className = 'on'; }, 5000);
+      rideLater(function(){ fx.classList.add('hit'); }, 3650);
+      rideLater(function(){ if (hi) hi.className = 'on'; }, 4750);
       for (var li = 0; li < letters.length; li++){
         (function(el, at){
-          setTimeout(function(){
+          rideLater(function(){
             el.className = 'rl hit';
             try { sndShot(false, 'shotgun'); } catch (e) {}
             fx.classList.remove('kick'); void fx.offsetWidth; fx.classList.add('kick');
           }, at);
-        })(letters[li], 5150 + li * 175);
+        })(letters[li], 4900 + li * 175);
       }
       var yearTxt = '1881';
       for (var yi = 0; yi < yearTxt.length; yi++){
         (function(ch, at){
-          setTimeout(function(){
+          rideLater(function(){
             if (year) year.textContent += ch;
             try { sndClick(); } catch (e) {}
           }, at);
-        })(yearTxt[yi], 5150 + letters.length * 175 + 260 + yi * 170);
+        })(yearTxt[yi], 4900 + letters.length * 175 + 260 + yi * 170);
       }
-      setTimeout(function(){ if (pres) pres.className = 'on'; }, 5150 + letters.length * 175 + 300);
-      setTimeout(function(){ fx.className = 'out'; }, 7900);
-      setTimeout(function(){
-        fx.style.display = 'none';
-        if (window.__wwdRideIn3DStop){ try { window.__wwdRideIn3DStop(); } catch (e) {} }
-      }, 8400);
-      setTimeout(function(){ fx.style.display = 'none'; }, 9100); // hard cleanup, whatever happens
+      /* the slam (v2.9): the credit is the FINAL beat, after the
+         bottles, the drink, the throw and the shot — 'PRESENTED BY'
+         slams down with a shotgun boom and a screen shake, then
+         'BULLSEYE INTERACTIVE' slams down the same way, and the
+         finished card then holds an extra half second before the
+         fade to the menu */
+      var presLine1 = document.getElementById('presLine1');
+      var presLine2 = document.getElementById('presLine2');
+      function slamPres(el){
+        if (!el) return;
+        el.classList.add('slam');
+        try { sndShot(false, 'shotgun'); } catch (e) {} // the boom — a shotgun blast
+        try { sndThud(0.9); } catch (e) {} // and the weight under it
+        fx.classList.remove('slamShake'); void fx.offsetWidth; fx.classList.add('slamShake');
+      }
+      rideLater(function(){ slamPres(presLine1); }, 7130);
+      rideLater(function(){ slamPres(presLine2); }, 7430);
+      rideLater(function(){ fx.className = 'out'; }, 8500);
+      rideLater(function(){ endRideIn(); }, 9000);
+      rideLater(function(){ fx.style.display = 'none'; }, 9700); // hard cleanup, whatever happens
     }
     window.__wwdRideInFx = playRideInFx;
 
@@ -6531,6 +6610,34 @@ three/build/three.module.js:
         }
       } catch (e) {}
     }
+    /* The gulp (v2.9): one swallow of bourbon, synthesized — a low
+       throat blip that rises and drops as the swallow works, with a
+       wet glug of band-passed noise bubbling under it. Called three
+       times while the bottle is at the viewer's mouth in the sting,
+       so the drink is HEARD, not just seen. */
+    function sndGulp(){
+      if (!AC) return;
+      try {
+        var t = AC.currentTime;
+        var o = AC.createOscillator(); o.type = 'sine';
+        o.frequency.setValueAtTime(150, t);
+        o.frequency.exponentialRampToValueAtTime(330, t + 0.07);
+        o.frequency.exponentialRampToValueAtTime(85, t + 0.23);
+        var g = AC.createGain();
+        g.gain.setValueAtTime(0.001, t);
+        g.gain.exponentialRampToValueAtTime(0.55, t + 0.06);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+        o.connect(g); g.connect(masterGain); o.start(t); o.stop(t + 0.27);
+        var n = AC.createBufferSource(); n.buffer = noiseBuf(0.2);
+        var bp = AC.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 6;
+        bp.frequency.setValueAtTime(720, t);
+        bp.frequency.exponentialRampToValueAtTime(230, t + 0.18);
+        var ng = AC.createGain();
+        ng.gain.setValueAtTime(0.24, t);
+        ng.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+        n.connect(bp); bp.connect(ng); ng.connect(masterGain); n.start(t); n.stop(t + 0.22);
+      } catch (e) {}
+    }
     function sndThud(vol){
       if (!AC) return;
       try {
@@ -6645,10 +6752,20 @@ three/build/three.module.js:
         var c = document.createElement('canvas'); c.width = c.height = 128;
         var g2 = c.getContext('2d');
         var gr = g2.createLinearGradient(0, 0, 0, 128);
-        if (i === 2){ gr.addColorStop(0, '#ffe9bb'); gr.addColorStop(1, '#f7c873'); }
-        else if (i === 3){ gr.addColorStop(0, '#8a5a33'); gr.addColorStop(1, '#54351b'); }
-        else { gr.addColorStop(0, '#7e9cc0'); gr.addColorStop(0.55, '#e8975a'); gr.addColorStop(1, '#caa06a'); }
+        if (i === 2){ gr.addColorStop(0, '#fff3c8'); gr.addColorStop(1, '#f7c873'); }
+        else if (i === 3){ gr.addColorStop(0, '#9a6a3d'); gr.addColorStop(0.6, '#6e4525'); gr.addColorStop(1, '#54351b'); }
+        else { gr.addColorStop(0, '#6d94c4'); gr.addColorStop(0.45, '#c99a68'); gr.addColorStop(0.72, '#e8975a'); gr.addColorStop(1, '#caa06a'); }
         g2.fillStyle = gr; g2.fillRect(0, 0, 128, 128);
+        if (i !== 2 && i !== 3){
+          // a soft sun glow low on every side face, so polished steel
+          // and window glass pick up a warm streak wherever they turn
+          var sg = g2.createRadialGradient(64, 84, 4, 64, 84, 76);
+          sg.addColorStop(0, 'rgba(255,232,170,0.55)'); sg.addColorStop(1, 'rgba(255,232,170,0)');
+          g2.fillStyle = sg; g2.fillRect(0, 0, 128, 128);
+          var gb = g2.createLinearGradient(0, 98, 0, 128);
+          gb.addColorStop(0, 'rgba(122,74,40,0)'); gb.addColorStop(1, 'rgba(122,74,40,0.5)');
+          g2.fillStyle = gb; g2.fillRect(0, 98, 128, 30);
+        }
         faces.push(c);
       }
       var envTex = new THREE.CubeTexture(faces);
@@ -6728,17 +6845,29 @@ three/build/three.module.js:
        (warmer fog, stronger sun, a grade overlay on the scene) and
        hangs more dust in the air. The pick rides in the save beside
        music and FPS, and applyGraphics() below re-tunes the live
-       renderer the moment it changes. */
+       renderer the moment it changes.
+       v2.7 rebuilt every level roughly three times richer: the wood
+       and dirt textures are drawn four times finer with grain, knots,
+       pebbles and cracks and lit by a bump pass, the sky-cube
+       environment carries a real sun glow so steel and glass read as
+       metal and glass, each level sets its own shadow softness and
+       bias, Medium dresses the street with stones and tufts and High
+       adds the rest at a full 4096px soft shadow map — and the dust
+       was rebuilt small, warm and faint after the old big pale motes
+       ballooned into white orbs floating over the street on High. */
     var GFX_LEVELS = {
-      low:  { pr: 1.5, shadow: 1024, soft: false, live: false, exposure: 1.05, env: 0.55, lightMul: 1,
-              aniso: 4,  dustOpacity: 0.4,  dustSize: 0.55, glow: 0.85, grade: 0,
-              streetFog: { color: 0xe59a58, near: 26, far: 105 } },
-      med:  { pr: 2,   shadow: 2048, soft: true,  live: true,  exposure: 1.09, env: 0.7,  lightMul: 1.08,
-              aniso: 8,  dustOpacity: 0.55, dustSize: 0.62, glow: 0.95, grade: 0.3,
-              streetFog: { color: 0xe2944f, near: 24, far: 98 } },
-      high: { pr: 3,   shadow: 2048, soft: true,  live: true,  exposure: 1.15, env: 0.9,  lightMul: 1.18,
-              aniso: 16, dustOpacity: 0.8,  dustSize: 0.75, glow: 1,    grade: 0.55,
-              streetFog: { color: 0xdd8a44, near: 21, far: 90 } }
+      low:  { pr: 1.5, shadow: 1024, soft: false, live: false, radius: 1,   bias: -0.0006,  normalBias: 0.025,
+              exposure: 1.07, env: 0.7,  lightMul: 1.02,
+              aniso: 4,  dustCount: 110, dustOpacity: 0.3,  dustSize: 0.13, glow: 0.5,  grade: 0.14, detail: 0,
+              streetFog: { color: 0xe59a58, near: 27, far: 110 } },
+      med:  { pr: 2,   shadow: 2048, soft: true,  live: true,  radius: 2.5, bias: -0.0004,  normalBias: 0.018,
+              exposure: 1.12, env: 0.9,  lightMul: 1.1,
+              aniso: 8,  dustCount: 190, dustOpacity: 0.36, dustSize: 0.15, glow: 0.62, grade: 0.34, detail: 1,
+              streetFog: { color: 0xe2944f, near: 25, far: 104 } },
+      high: { pr: 3,   shadow: 4096, soft: true,  live: true,  radius: 4,   bias: -0.00025, normalBias: 0.012,
+              exposure: 1.17, env: 1.1,  lightMul: 1.18,
+              aniso: 16, dustCount: 260, dustOpacity: 0.42, dustSize: 0.17, glow: 0.72, grade: 0.52, detail: 2,
+              streetFog: { color: 0xdd8a44, near: 22, far: 96 } }
     };
     var gfxNow = GFX_LEVELS.low;
 
@@ -6819,49 +6948,90 @@ three/build/three.module.js:
       return t;
     }
     function woodTexture(base, dark, light){
-      return canvasTex(256, 256, function(g){
-        g.fillStyle = base; g.fillRect(0, 0, 256, 256);
+      return canvasTex(512, 512, function(g){
+        g.fillStyle = base; g.fillRect(0, 0, 512, 512);
         for (var p = 0; p < 4; p++){
-          var y = p * 64;
-          g.fillStyle = 'rgba(0,0,0,0.16)'; g.fillRect(0, y, 256, 3);
-          for (var i = 0; i < 26; i++){
+          var y = p * 128;
+          g.fillStyle = (Math.random() < 0.5 ? 'rgba(255,230,190,' : 'rgba(20,10,4,') + (0.03 + Math.random() * 0.05) + ')';
+          g.fillRect(0, y, 512, 128);
+          g.fillStyle = 'rgba(255,235,200,0.20)'; g.fillRect(0, y, 512, 2);
+          g.fillStyle = 'rgba(0,0,0,0.34)'; g.fillRect(0, y + 124, 512, 4);
+          for (var i = 0; i < 52; i++){
             g.strokeStyle = Math.random() < 0.5 ? dark : light;
-            g.globalAlpha = 0.12 + Math.random() * 0.14; g.lineWidth = 1 + Math.random() * 1.6;
+            g.globalAlpha = 0.10 + Math.random() * 0.16; g.lineWidth = 0.8 + Math.random() * 2.0;
             g.beginPath();
-            var gy = y + 6 + Math.random() * 52;
+            var gy = y + 8 + Math.random() * 112;
             g.moveTo(0, gy);
-            g.bezierCurveTo(80, gy + (Math.random() * 4 - 2), 170, gy + (Math.random() * 4 - 2), 256, gy);
+            g.bezierCurveTo(150, gy + (Math.random() * 5 - 2.5), 340, gy + (Math.random() * 5 - 2.5), 512, gy);
             g.stroke();
           }
           g.globalAlpha = 1;
-          g.fillStyle = 'rgba(0,0,0,0.35)';
-          g.beginPath(); g.arc(14, y + 32, 2.4, 0, 7); g.arc(242, y + 32, 2.4, 0, 7); g.fill();
+          for (var k = 0; k < 2; k++){
+            if (Math.random() < 0.35) continue;
+            var kx = 40 + Math.random() * 430, ky = y + 24 + Math.random() * 80;
+            for (var r = 7; r > 1; r -= 2){
+              g.strokeStyle = 'rgba(30,16,6,' + (0.16 + (7 - r) * 0.05) + ')'; g.lineWidth = 1.4;
+              g.beginPath(); g.ellipse(kx, ky, r * 1.7, r, 0.3, 0, 7); g.stroke();
+            }
+            g.fillStyle = 'rgba(24,12,4,0.55)';
+            g.beginPath(); g.ellipse(kx, ky, 2.6, 1.7, 0.3, 0, 7); g.fill();
+          }
+          g.fillStyle = 'rgba(0,0,0,0.4)';
+          g.beginPath(); g.arc(22, y + 64, 3.2, 0, 7); g.arc(490, y + 64, 3.2, 0, 7); g.fill();
+          g.fillStyle = 'rgba(255,240,210,0.25)';
+          g.beginPath(); g.arc(21, y + 63, 1.2, 0, 7); g.arc(489, y + 63, 1.2, 0, 7); g.fill();
         }
       });
     }
     function dirtTexture(){
-      return canvasTex(512, 512, function(g){
-        g.fillStyle = '#bb8a54'; g.fillRect(0, 0, 512, 512);
-        for (var i = 0; i < 5200; i++){
-          var s = Math.random();
-          g.fillStyle = s < 0.45 ? 'rgba(90,58,28,0.25)' : (s < 0.8 ? 'rgba(226,180,116,0.22)' : 'rgba(70,44,20,0.3)');
-          g.fillRect(Math.random() * 512, Math.random() * 512, 1 + Math.random() * 3, 1 + Math.random() * 3);
+      return canvasTex(1024, 1024, function(g){
+        g.fillStyle = '#bb8a54'; g.fillRect(0, 0, 1024, 1024);
+        for (var j = 0; j < 60; j++){
+          g.fillStyle = 'rgba(80,52,24,' + (0.05 + Math.random() * 0.07) + ')';
+          g.beginPath(); g.ellipse(Math.random() * 1024, Math.random() * 1024, 40 + Math.random() * 130, 16 + Math.random() * 48, Math.random() * 3, 0, 7); g.fill();
         }
-        for (var j = 0; j < 26; j++){
-          g.fillStyle = 'rgba(80,52,24,0.10)';
-          g.beginPath(); g.ellipse(Math.random() * 512, Math.random() * 512, 20 + Math.random() * 60, 8 + Math.random() * 22, Math.random() * 3, 0, 7); g.fill();
+        for (var j2 = 0; j2 < 36; j2++){
+          g.fillStyle = 'rgba(232,192,128,' + (0.05 + Math.random() * 0.06) + ')';
+          g.beginPath(); g.ellipse(Math.random() * 1024, Math.random() * 1024, 30 + Math.random() * 100, 12 + Math.random() * 36, Math.random() * 3, 0, 7); g.fill();
+        }
+        for (var i = 0; i < 15000; i++){
+          var sv = Math.random();
+          g.fillStyle = sv < 0.45 ? 'rgba(90,58,28,0.25)' : (sv < 0.8 ? 'rgba(226,180,116,0.22)' : 'rgba(70,44,20,0.3)');
+          g.fillRect(Math.random() * 1024, Math.random() * 1024, 1 + Math.random() * 3, 1 + Math.random() * 3);
+        }
+        for (var pb = 0; pb < 260; pb++){
+          var px = Math.random() * 1024, py = Math.random() * 1024, pr2 = 1.5 + Math.random() * 3.5;
+          g.fillStyle = 'rgba(60,38,18,0.35)';
+          g.beginPath(); g.ellipse(px, py + pr2 * 0.55, pr2, pr2 * 0.5, 0, 0, 7); g.fill();
+          g.fillStyle = Math.random() < 0.5 ? 'rgba(141,122,99,0.8)' : 'rgba(160,138,108,0.8)';
+          g.beginPath(); g.ellipse(px, py, pr2, pr2 * 0.75, Math.random() * 3, 0, 7); g.fill();
+          g.fillStyle = 'rgba(255,240,210,0.28)';
+          g.beginPath(); g.ellipse(px - pr2 * 0.3, py - pr2 * 0.3, pr2 * 0.4, pr2 * 0.25, 0, 0, 7); g.fill();
+        }
+        g.strokeStyle = 'rgba(74,48,22,0.18)'; g.lineWidth = 1.2; g.lineCap = 'round';
+        for (var ck = 0; ck < 22; ck++){
+          var cx = Math.random() * 1024, cy = Math.random() * 1024;
+          g.beginPath(); g.moveTo(cx, cy);
+          for (var cs2 = 0; cs2 < 5; cs2++){ cx += (Math.random() - 0.5) * 46; cy += (Math.random() - 0.5) * 46; g.lineTo(cx, cy); }
+          g.stroke();
+        }
+        g.strokeStyle = 'rgba(214,178,110,0.13)'; g.lineWidth = 1.4;
+        for (var st2 = 0; st2 < 160; st2++){
+          var sx = Math.random() * 1024, sy = Math.random() * 1024, sa = Math.random() * 3;
+          g.beginPath(); g.moveTo(sx, sy); g.lineTo(sx + Math.cos(sa) * 9, sy + Math.sin(sa) * 3); g.stroke();
         }
       });
     }
     function signTexture(text, bg, fg){
-      return canvasTex(512, 128, function(g){
-        g.fillStyle = bg; g.fillRect(0, 0, 512, 128);
-        g.strokeStyle = fg; g.lineWidth = 5; g.strokeRect(10, 10, 492, 108);
+      return canvasTex(1024, 256, function(g){
+        g.fillStyle = bg; g.fillRect(0, 0, 1024, 256);
+        g.strokeStyle = fg; g.lineWidth = 9; g.strokeRect(20, 20, 984, 216);
+        g.lineWidth = 2.5; g.strokeRect(38, 38, 948, 180);
         g.fillStyle = fg; g.textAlign = 'center'; g.textBaseline = 'middle';
-        var size = 64;
+        var size = 128;
         g.font = size + 'px Rye, Georgia, serif';
-        while (g.measureText(text).width > 450 && size > 20) { size -= 4; g.font = size + 'px Rye, Georgia, serif'; }
-        g.fillText(text, 256, 68);
+        while (g.measureText(text).width > 900 && size > 40) { size -= 8; g.font = size + 'px Rye, Georgia, serif'; }
+        g.fillText(text, 512, 136);
       });
     }
     function radialSprite(inner, outer){
@@ -6878,34 +7048,34 @@ three/build/three.module.js:
     };
     (function buildGround(){
       var dt = dirtTexture(); dt.wrapS = dt.wrapT = THREE.RepeatWrapping; dt.repeat.set(10, 10);
-      MAT.dirt = new THREE.MeshStandardMaterial({ map: dt, roughness: 1, metalness: 0 });
+      MAT.dirt = new THREE.MeshStandardMaterial({ map: dt, bumpMap: dt, bumpScale: 0.5, roughness: 1, metalness: 0, envMapIntensity: 0.25 });
       var ground = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), MAT.dirt);
       ground.rotation.x = -Math.PI / 2; ground.position.z = -30; ground.receiveShadow = true;
       scene.add(ground);
       var st = dirtTexture(); st.wrapS = st.wrapT = THREE.RepeatWrapping; st.repeat.set(1.4, 14);
       var street = new THREE.Mesh(new THREE.PlaneGeometry(7.6, 76),
-        new THREE.MeshStandardMaterial({ map: st, color: 0xd8ab72, roughness: 1 }));
+        new THREE.MeshStandardMaterial({ map: st, bumpMap: st, bumpScale: 0.5, color: 0xd8ab72, roughness: 1, envMapIntensity: 0.25 }));
       street.rotation.x = -Math.PI / 2; street.position.set(0, 0.012, -14); street.receiveShadow = true;
       scene.add(street);
     })();
 
-    var skyTex = canvasTex(64, 512, function(g){
+    var skyTex = canvasTex(256, 1024, function(g){
       var gr = g.createLinearGradient(0, 0, 0, 512);
-      gr.addColorStop(0, '#4f74a8'); gr.addColorStop(0.38, '#b98a63');
+      gr.addColorStop(0, '#44679f'); gr.addColorStop(0.3, '#7d87a3'); gr.addColorStop(0.48, '#c98a5e');
       gr.addColorStop(0.62, '#f2a95c'); gr.addColorStop(0.74, '#f8cd7d'); gr.addColorStop(1, '#f8cd7d');
-      g.fillStyle = gr; g.fillRect(0, 0, 64, 512);
+      g.fillStyle = gr; g.fillRect(0, 0, 256, 1024);
     });
-    var sky = new THREE.Mesh(new THREE.SphereGeometry(180, 24, 16),
+    var sky = new THREE.Mesh(new THREE.SphereGeometry(180, 40, 24),
       new THREE.MeshBasicMaterial({ map: skyTex, side: THREE.BackSide, fog: false }));
     scene.add(sky);
     var sunSprite = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: radialSprite('rgba(255,236,180,1)', 'rgba(255,150,60,0)'), fog: false,
-      blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
-    sunSprite.position.set(-72, 27, -130); sunSprite.scale.set(70, 70, 1);
+      map: radialSprite('rgba(255,226,160,1)', 'rgba(255,150,60,0)'), color: 0xffd9a0, fog: false,
+      blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.5 }));
+    sunSprite.position.set(-72, 27, -130); sunSprite.scale.set(48, 48, 1);
     scene.add(sunSprite);
 
     function mesa(x, z, w, h, d, col){
-      var geo = new THREE.CylinderGeometry(w * 0.36, w * 0.52, h, 7);
+      var geo = new THREE.CylinderGeometry(w * 0.36, w * 0.52, h, 11);
       var m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: col, roughness: 1, flatShading: true }));
       m.position.set(x, h / 2 - 0.5, z); m.scale.z = d / w; m.rotation.y = Math.random() * 3;
       scene.add(m);
@@ -6922,11 +7092,11 @@ three/build/three.module.js:
     woodTexDark.wrapS = woodTexDark.wrapT = THREE.RepeatWrapping;
     woodTexMid.wrapS = woodTexMid.wrapT = THREE.RepeatWrapping;
     woodTexRed.wrapS = woodTexRed.wrapT = THREE.RepeatWrapping;
-    MAT.woodDark = new THREE.MeshStandardMaterial({ map: woodTexDark, roughness: 0.92 });
-    MAT.woodMid = new THREE.MeshStandardMaterial({ map: woodTexMid, roughness: 0.92 });
-    MAT.woodRed = new THREE.MeshStandardMaterial({ map: woodTexRed, roughness: 0.92 });
-    var trimMat = new THREE.MeshStandardMaterial({ color: 0x3c2716, roughness: 0.95 });
-    var darkGlass = new THREE.MeshStandardMaterial({ color: 0x1c1410, roughness: 0.4, metalness: 0.2 });
+    MAT.woodDark = new THREE.MeshStandardMaterial({ map: woodTexDark, bumpMap: woodTexDark, bumpScale: 0.3, roughness: 0.9, envMapIntensity: 0.35 });
+    MAT.woodMid = new THREE.MeshStandardMaterial({ map: woodTexMid, bumpMap: woodTexMid, bumpScale: 0.3, roughness: 0.9, envMapIntensity: 0.35 });
+    MAT.woodRed = new THREE.MeshStandardMaterial({ map: woodTexRed, bumpMap: woodTexRed, bumpScale: 0.3, roughness: 0.9, envMapIntensity: 0.35 });
+    var trimMat = new THREE.MeshStandardMaterial({ color: 0x3c2716, roughness: 0.95, envMapIntensity: 0.3 });
+    var darkGlass = new THREE.MeshStandardMaterial({ color: 0x1c1410, roughness: 0.22, metalness: 0.55, envMapIntensity: 1.3 });
     var lampGlass = new THREE.MeshStandardMaterial({ color: 0xffb84d, emissive: 0xff9a2e, emissiveIntensity: 1.4, roughness: 0.5 });
 
     function shadowed(m){ m.castShadow = true; m.receiveShadow = true; return m; }
@@ -7063,21 +7233,83 @@ three/build/three.module.js:
     }
     cactus(-9.5, -4, 1.15); cactus(10.5, -7.5, 0.9); cactus(-12, -14, 1.3); cactus(12.5, -18, 1.05); cactus(-8.6, -21, 0.8); cactus(9, -25, 1.2);
 
-    // drifting dust
+    // drifting dust — fine warm motes, never white blobs (v2.7 fix).
+    // The old motes were the weird white things floating on max
+    // graphics: 0.55–0.75 world units across, near-white at the core
+    // and up to 80% opaque on High, spawning as close as a step in
+    // front of the camera, where size attenuation ballooned them into
+    // pale orbs drifting over the street. The motes are now small,
+    // warm-tan and faint even at their centre, they spawn only out in
+    // the street (never on the lens), and each level draws only its
+    // own dustCount of them through the draw range.
+    var DUST_MAX = 260;
     var dustGeo = new THREE.BufferGeometry();
     (function(){
-      var n = 260, pos = new Float32Array(n * 3);
-      for (var i = 0; i < n; i++){
-        pos[i * 3] = (Math.random() - 0.5) * 30;
-        pos[i * 3 + 1] = 0.2 + Math.random() * 3.4;
-        pos[i * 3 + 2] = 6 - Math.random() * 36;
+      var pos = new Float32Array(DUST_MAX * 3);
+      for (var i = 0; i < DUST_MAX; i++){
+        pos[i * 3] = (Math.random() - 0.5) * 28;
+        pos[i * 3 + 1] = 0.25 + Math.random() * 2.9;
+        pos[i * 3 + 2] = 1 - Math.random() * 33;
       }
       dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     })();
     var dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
-      map: radialSprite('rgba(255,220,160,0.55)', 'rgba(255,220,160,0)'),
-      size: 0.55, transparent: true, opacity: 0.4, depthWrite: false, sizeAttenuation: true }));
+      map: radialSprite('rgba(236,202,138,0.34)', 'rgba(236,202,138,0)'), color: 0xd9b47c,
+      size: 0.13, transparent: true, opacity: 0.3, depthWrite: false, sizeAttenuation: true }));
+    dustGeo.setDrawRange(0, 110);
     scene.add(dust);
+    var detailMed = null, detailHigh = null;
+
+    /* Ground dressing that scales with the graphics level (v2.7):
+       scattered stones, dry tufts and dropped planks along the street
+       edges and out by the cacti and mesas — pure decoration, never
+       cover, kept clear of the duelling lane. Medium shows the first
+       group, High adds the second; applyGraphics flips visibility. */
+    (function buildDetail(){
+      var stoneGeo = new THREE.DodecahedronGeometry(0.09, 0);
+      var stoneMats = [0x8d7a63, 0x7c6a54, 0x9a8668].map(function(c){
+        return new THREE.MeshStandardMaterial({ color: c, roughness: 1, envMapIntensity: 0.2 });
+      });
+      var tuftGeo = new THREE.ConeGeometry(0.05, 0.3, 5);
+      var tuftMats = [0x8a7a3a, 0x77682f, 0x99854a].map(function(c){
+        return new THREE.MeshStandardMaterial({ color: c, roughness: 1 });
+      });
+      var plankGeo = new THREE.BoxGeometry(0.85, 0.045, 0.2);
+      function scatter(group, stones, tufts, planks, spread){
+        var i, m;
+        for (i = 0; i < stones; i++){
+          m = new THREE.Mesh(stoneGeo, stoneMats[i % 3]);
+          var sx = (2.6 + Math.random() * spread) * (Math.random() < 0.5 ? -1 : 1);
+          m.position.set(sx, 0.03, 4 - Math.random() * 36);
+          m.scale.set(0.6 + Math.random() * 1.5, 0.4 + Math.random() * 0.7, 0.6 + Math.random() * 1.5);
+          m.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+          m.receiveShadow = true; group.add(m);
+        }
+        for (i = 0; i < tufts; i++){
+          var tg = new THREE.Group();
+          for (var b = 0; b < 3; b++){
+            var blade = new THREE.Mesh(tuftGeo, tuftMats[(i + b) % 3]);
+            blade.position.set((Math.random() - 0.5) * 0.1, 0.13, (Math.random() - 0.5) * 0.1);
+            blade.rotation.set((Math.random() - 0.5) * 0.55, 0, (Math.random() - 0.5) * 0.55);
+            tg.add(blade);
+          }
+          var tx = (2.7 + Math.random() * spread) * (Math.random() < 0.5 ? -1 : 1);
+          tg.position.set(tx, 0, 4 - Math.random() * 36);
+          tg.scale.setScalar(0.8 + Math.random() * 0.7);
+          group.add(tg);
+        }
+        for (i = 0; i < planks; i++){
+          m = new THREE.Mesh(plankGeo, i % 2 ? MAT.woodMid : MAT.woodDark);
+          var px2 = (2.5 + Math.random() * 1.6) * (Math.random() < 0.5 ? -1 : 1);
+          m.position.set(px2, 0.025, 3 - Math.random() * 30);
+          m.rotation.y = Math.random() * 3;
+          m.receiveShadow = true; group.add(m);
+        }
+      }
+      detailMed = new THREE.Group(); scatter(detailMed, 42, 24, 5, 2.4); scene.add(detailMed);
+      detailHigh = new THREE.Group(); scatter(detailHigh, 64, 38, 6, 8.5); scene.add(detailHigh);
+      detailMed.visible = false; detailHigh.visible = false;
+    })();
 
     /* Apply a graphics quality level to the live renderer (v1.11).
        Safe to call any time after the scene exists: it re-scales the
@@ -7098,6 +7330,9 @@ three/build/three.module.js:
         sun.shadow.mapSize.set(q.shadow, q.shadow);
         if (sun.shadow.map){ sun.shadow.map.dispose(); sun.shadow.map = null; }
       }
+      sun.shadow.radius = q.radius;
+      sun.shadow.bias = q.bias;
+      if ('normalBias' in sun.shadow) sun.shadow.normalBias = q.normalBias;
       if (THREE.ACESFilmicToneMapping) renderer.toneMappingExposure = q.exposure;
       if ('environmentIntensity' in scene) scene.environmentIntensity = q.env;
       var maxAniso = Math.min(q.aniso, renderer.capabilities.getMaxAnisotropy());
@@ -7109,10 +7344,16 @@ three/build/three.module.js:
           ms[mi].needsUpdate = true; // the shadow style may have changed
           var mp = ms[mi].map;
           if (mp && seenTex.indexOf(mp) < 0){ seenTex.push(mp); mp.anisotropy = maxAniso; mp.needsUpdate = true; }
+          var bp = ms[mi].bumpMap;
+          if (bp && seenTex.indexOf(bp) < 0){ seenTex.push(bp); bp.anisotropy = maxAniso; bp.needsUpdate = true; }
         }
       });
       dust.material.opacity = q.dustOpacity; dust.material.size = q.dustSize;
+      dust.geometry.setDrawRange(0, q.dustCount);
       sunSprite.material.opacity = q.glow;
+      if (detailMed) detailMed.visible = q.detail >= 1;
+      if (detailHigh) detailHigh.visible = q.detail >= 2;
+      if (LK && LK.r) LK.r.setPixelRatio(Math.min(window.devicePixelRatio || 1, q.pr));
       var gradeEl = document.getElementById('grade');
       if (gradeEl) gradeEl.style.opacity = q.grade;
       applyLocation(G.location);
@@ -8487,9 +8728,9 @@ three/build/three.module.js:
        Your gun hand rides on the grip at all times — hovering over the
        iron while it sits in the leather, wrapped round it once drawn —
        and your off hand rests down by the holster before the draw. */
-    var pSkin = new THREE.MeshStandardMaterial({ color: 0xd9a066, roughness: 0.62 });
-    var pCoat = new THREE.MeshStandardMaterial({ color: equippedOutfit().coat, roughness: 0.9 });
-    var pShirt = new THREE.MeshStandardMaterial({ color: equippedOutfit().shirt, roughness: 0.9 });
+    var pSkin = new THREE.MeshStandardMaterial({ color: 0xd9a066, roughness: 0.58, envMapIntensity: 0.35 });
+    var pCoat = new THREE.MeshStandardMaterial({ color: equippedOutfit().coat, roughness: 0.88, envMapIntensity: 0.3 });
+    var pShirt = new THREE.MeshStandardMaterial({ color: equippedOutfit().shirt, roughness: 0.88, envMapIntensity: 0.3 });
     var pLeather = new THREE.MeshStandardMaterial({ color: 0x3a2614, roughness: 0.8 });
     // v0.6: the old shared hand carried a fat tapered coat sleeve (0.28 long,
     // wider than the revolver's frame) plus a wide cream cuff disc. On the
@@ -8674,12 +8915,12 @@ three/build/three.module.js:
     };
     function buildGunslinger(cfg, gunSkin, builtWeapon, finish){
       var g = new THREE.Group();
-      var coat = new THREE.MeshStandardMaterial({ color: cfg.coat, roughness: 0.88 });
-      var pants = new THREE.MeshStandardMaterial({ color: cfg.pants, roughness: 0.95 });
-      var skin = new THREE.MeshStandardMaterial({ color: cfg.skin, roughness: 0.62 });
-      var hatM = new THREE.MeshStandardMaterial({ color: cfg.hat, roughness: 0.85 });
+      var coat = new THREE.MeshStandardMaterial({ color: cfg.coat, roughness: 0.86, envMapIntensity: 0.3 });
+      var pants = new THREE.MeshStandardMaterial({ color: cfg.pants, roughness: 0.93, envMapIntensity: 0.25 });
+      var skin = new THREE.MeshStandardMaterial({ color: cfg.skin, roughness: 0.58, envMapIntensity: 0.35 });
+      var hatM = new THREE.MeshStandardMaterial({ color: cfg.hat, roughness: 0.83, envMapIntensity: 0.3 });
       var leather = new THREE.MeshStandardMaterial({ color: 0x3a2614, roughness: 0.8 });
-      var shirt = new THREE.MeshStandardMaterial({ color: cfg.shirt, roughness: 0.9 });
+      var shirt = new THREE.MeshStandardMaterial({ color: cfg.shirt, roughness: 0.88, envMapIntensity: 0.3 });
 
       // legs hang from hip pivots and the whole upper body rides on a waist
       // pivot, so when a man is shot he can fold and drop like a rag doll
@@ -9300,22 +9541,25 @@ three/build/three.module.js:
       fill('invHats', HATS, SAVE.hats, 'hat', 'No hats yet — buy one in the Store and it will hang here.');
       fill('invClothes', OUTFITS, SAVE.outfits, 'outfit', 'No clothes yet — buy an outfit in the Store and it will hang here.');
     }
-    /* ============================== RIDE-IN 3D (v1.33, bottles v1.35, plains v1.36, scenery fixed v1.41, real lake + fuller plains v1.42, iron rested on the bench v1.43, iron turns on the viewer v1.44) ==============================
+    /* ============================== RIDE-IN 3D (v1.33, bottles v1.35, plains v1.36, scenery fixed v1.41, real lake + fuller plains v1.42, iron rested on the bench v1.43, iron turns on the viewer v1.44, the gunslinger v2.8) ==============================
        The welcome sting's gun, built and rendered here where the gun
-       builders live: your equipped revolver — the same buildRevolver
-       the Gun Locker bench and your own hand use, with its locker
-       finish on it — turned a bit further toward its side (v1.35):
-       more side-on than v1.34's three-quarter, so the barrel and
-       the side of the revolver read even better, while the back of
-       the cylinder still faces the viewer enough to watch the
-       loading. Six shells are seated one by one, the cylinder
-       slides shut, and then the hammer is drawn back and the gun
-       fires — three times over — at three glass bottles standing
-       in a row on a bench downrange, under a bright sun parked right
-       behind them: each shot swings the iron onto the next bottle
-       and smashes it in a burst of glass, with flash, recoil,
-       rolling smoke and a tracer streak; then it disposes itself.
-       playRideInFx owns the brass word and the fade. */
+       builders live: a gunslinger (v2.8) built on the duel
+       builder's proportions, standing in front of the viewer with
+       his back turned, your equipped revolver — the same
+       buildRevolver the Gun Locker bench and your own hand use,
+       with its locker finish on it — in his gun hand. Six shells
+       are seated one by one out of his off hand, the cylinder
+       slides shut, and then the hammer is drawn back and he
+       fires — three times over — at six glass bottles standing
+       in a row on a bench downrange, under a bright sun parked
+       right behind them: each shot twists him onto the next
+       bottle and smashes it in a burst of glass, with flash,
+       recoil, rolling smoke and a tracer streak; he lowers the
+       iron, stands easy a beat, then turns clean around, raises
+       the iron on the viewer and fires straight down the lens —
+       the view drops to the ground and lies there while the
+       title pops over it; then it disposes itself.
+       playRideInFx owns the brass word, the fade and the skip. */
     var rideIn3D = null;
     window.__wwdRideIn3DStop = function(){
       if (!rideIn3D) return;
@@ -9337,7 +9581,7 @@ three/build/three.module.js:
       var r;
       try { r = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true }); }
       catch (e) { return false; }
-      r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      r.setPixelRatio(Math.min(window.devicePixelRatio || 1, gfxNow.pr)); // v2.7: the sting renders at the picked graphics level
       r.setSize(W, H, false);
       r.shadowMap.enabled = true; // v1.40: real sunlight casts real soft shadows
       if (THREE.PCFSoftShadowMap) r.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -9373,21 +9617,181 @@ three/build/three.module.js:
         mo.userData.ph = Math.random() * 6.28;
         s.add(mo); motes.push(mo);
       }
-      // the gun itself — your equipped revolver and its locker finish,
-      // centred on its own middle and yawed to aim downrange at the
-      // bench below: the camera rides further round its right side
-      // than in v1.34, so the viewer sees it more side-on — barrel
-      // and the side of the iron in full view running away to the
-      // bottles, cylinder back still open to the eye
+      /* the gunslinger (v2.8): the sting is a man now, not a
+         floating iron — a full gunslinger on the duel builder's
+         own proportions (legs on hip pivots, a waist pivot,
+         shoulder and elbow pivots, head and hat), standing on the
+         plains in front of the viewer with his back turned and
+         your equipped revolver, locker finish and all, in his gun
+         hand. He loads it, picks the bottles off the bench
+         downrange one by one, stands easy a beat — then turns
+         clean around, raises the iron on the viewer and fires,
+         and down you go as the title pops over the plains. */
+      function rideMan(cfg){
+        var g = new THREE.Group();
+        var coat = new THREE.MeshStandardMaterial({ color: cfg.coat, roughness: 0.86, envMapIntensity: 0.3 });
+        var pants = new THREE.MeshStandardMaterial({ color: cfg.pants, roughness: 0.93, envMapIntensity: 0.25 });
+        var skinM = new THREE.MeshStandardMaterial({ color: cfg.skin, roughness: 0.58, envMapIntensity: 0.35 });
+        var hatM = new THREE.MeshStandardMaterial({ color: cfg.hat, roughness: 0.83, envMapIntensity: 0.3 });
+        var leather = new THREE.MeshStandardMaterial({ color: 0x3a2614, roughness: 0.8 });
+        var shirt = new THREE.MeshStandardMaterial({ color: cfg.shirt, roughness: 0.88, envMapIntensity: 0.3 });
+        function leg(side){
+          var hip = new THREE.Group(); hip.position.set(side * 0.11, 0.98, 0);
+          var lg = new THREE.Mesh(new THREE.BoxGeometry(0.155, 0.86, 0.17), pants);
+          lg.position.y = -0.45; hip.add(lg);
+          var boot = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.1, 0.31), leather);
+          boot.position.set(0, -0.93, 0.05); hip.add(boot);
+          g.add(hip); return hip;
+        }
+        var legL = leg(1), legR = leg(-1);
+        legL.rotation.z = 0.075; legR.rotation.z = -0.075;
+        legL.rotation.x = 0.03; legR.rotation.x = -0.02;
+        var upper = new THREE.Group(); upper.position.y = 1.06; g.add(upper);
+        var hips = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.24, 0.25), pants);
+        hips.position.y = -0.04; upper.add(hips);
+        var belt = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.31, 0.08, 12), leather);
+        belt.scale.z = 0.72; belt.position.y = 0.07; upper.add(belt);
+        var buckle = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.06, 0.02),
+          new THREE.MeshStandardMaterial({ color: 0xd9a441, roughness: 0.3, metalness: 0.9 }));
+        buckle.position.set(0, 0.07, 0.225); upper.add(buckle);
+        var holster = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.3, 0.11), leather);
+        holster.position.set(-0.27, -0.08, 0.03); holster.rotation.z = 0.13; upper.add(holster);
+        var torso = new THREE.Mesh(new THREE.CylinderGeometry(0.255, 0.325, 0.66, 12), coat);
+        torso.scale.z = 0.66; torso.position.y = 0.38; upper.add(torso);
+        var chestPanel = new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.5, 0.03), shirt);
+        chestPanel.position.set(0, 0.4, 0.185); chestPanel.rotation.x = -0.05; upper.add(chestPanel);
+        function arm(side){ // side: -1 = his right (gun arm), +1 = left
+          var sh = new THREE.Group(); sh.position.set(side * 0.31, 0.6, 0);
+          var up = new THREE.Mesh(new THREE.BoxGeometry(0.115, 0.44, 0.115), coat);
+          up.position.y = -0.2; sh.add(up);
+          var el = new THREE.Group(); el.position.y = -0.42; sh.add(el);
+          var fo = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.4, 0.1), coat);
+          fo.position.y = -0.17; el.add(fo);
+          var hand = new THREE.Mesh(new THREE.SphereGeometry(0.056, 10, 8), skinM);
+          hand.position.y = -0.39; el.add(hand);
+          upper.add(sh);
+          return { sh: sh, el: el, hand: hand };
+        }
+        var armR = arm(-1), armL = arm(1);
+        armR.sh.rotation.set(0.1, 0, 0.1); armR.el.rotation.x = -0.32;
+        armL.sh.rotation.set(0.02, 0, -0.1); armL.el.rotation.x = -0.12;
+        var headG = new THREE.Group(); headG.position.y = 0.72; upper.add(headG);
+        var neck = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.12, 8), skinM);
+        headG.add(neck);
+        var skull = new THREE.Mesh(new THREE.SphereGeometry(0.155, 18, 14), skinM);
+        skull.scale.set(0.92, 1.1, 0.97); skull.position.y = 0.15; headG.add(skull);
+        var jaw = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.09, 0.15), skinM);
+        jaw.position.set(0, 0.03, 0.03); headG.add(jaw);
+        [-1, 1].forEach(function(sd){
+          var eye = new THREE.Mesh(new THREE.SphereGeometry(0.017, 8, 6),
+            new THREE.MeshStandardMaterial({ color: 0x140d08, roughness: 0.35 }));
+          eye.position.set(sd * 0.055, 0.17, 0.138); headG.add(eye);
+        });
+        var brow = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.03, 0.03),
+          new THREE.MeshStandardMaterial({ color: cfg.hat, roughness: 0.95 }));
+        brow.position.set(0, 0.215, 0.135); headG.add(brow);
+        var nose = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.06, 0.04), skinM);
+        nose.position.set(0, 0.115, 0.155); headG.add(nose);
+        var stache = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.028, 0.03),
+          new THREE.MeshStandardMaterial({ color: 0x2e2015, roughness: 1 }));
+        stache.position.set(0, 0.065, 0.148); headG.add(stache);
+        var hat = new THREE.Group(); hat.position.y = 0.27; headG.add(hat);
+        var brim = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.31, 0.028, 20), hatM);
+        brim.rotation.x = 0.045; hat.add(brim);
+        var crown = new THREE.Mesh(new THREE.CylinderGeometry(0.155, 0.185, 0.2, 14), hatM);
+        crown.position.y = 0.1; hat.add(crown);
+        var band = new THREE.Mesh(new THREE.TorusGeometry(0.178, 0.02, 6, 18),
+          new THREE.MeshStandardMaterial({ color: 0x8a2f23, roughness: 0.8 }));
+        band.rotation.x = Math.PI / 2; band.position.y = 0.025; hat.add(band);
+        g.traverse(function(n){ if (n.isMesh) n.castShadow = true; });
+        return { group: g, upper: upper, headG: headG, hat: hat, armR: armR, armL: armL, legL: legL, legR: legR };
+      }
+      var man = rideMan({ coat: 0x5c4632, pants: 0x33291f, shirt: 0xb3a37f, hat: 0x3a2a18, skin: 0xc98d54 });
+      var MAN_POS = new THREE.Vector3(0.28, 0, 0.45);
+      var MAN_YAW = -0.22; // squared on the bench, his left shoulder open to the player standing left
+      man.group.position.copy(MAN_POS);
+      man.group.rotation.y = MAN_YAW;
+      s.add(man.group);
+      // his iron — your equipped revolver and its locker finish, in
+      // his gun hand exactly as the duel builder seats it, built a
+      // touch large (v2.8) so the gun reads clearly from behind him
       var item = equippedGun();
-      var built = buildRevolver(item.grip, 1.5, item, gunSkinFor(item.id));
-      var gbox = new THREE.Box3().setFromObject(built.group);
-      var gctr = gbox.getCenter(new THREE.Vector3());
-      built.group.position.set(-gctr.x, -gctr.y, -gctr.z);
-      var pivot = new THREE.Group(); s.add(pivot); pivot.add(built.group);
-      built.group.traverse(function(n){ if (n.isMesh) n.castShadow = true; });
-      // the loading cartridge: one brass shell, flown into each chamber
-      // in turn — case, rim and a copper-jacketed bullet
+      var built = buildRevolver(item.grip, 1.22, item, gunSkinFor(item.id));
+      built.group.position.set(0, -0.44, 0.09); // seated a bit further forward in his fist, so the iron rides ahead of his hand
+      built.group.rotation.x = Math.PI / 2;
+      man.armR.el.add(built.group);
+      // his gun shoulder yaws outermost (YXZ), so a pose can swing
+      // the raised arm IN across his front — the iron held out in
+      // front of him like a real gun, not off at his side
+      man.armR.sh.rotation.order = 'YXZ';
+      man.group.updateMatrixWorld(true);
+      /* YOUR bottle of bourbon, in your own hand (v2.9): the viewer
+         is a person standing there, not a floating eye — but no
+         gun in this hand: a bottle of bourbon rides in the lower
+         frame the whole sting, amber glass with a cream label,
+         gripped low in your fist while he loads, spins and shoots
+         the bottles. Then you lift it, drink — three gulps you
+         can hear — and throw it at him; it smashes on his back
+         before he turns and shoots you. Intro only: the guns in
+         the duels, practice, the ride, LAN and the Gun Locker
+         are untouched. */
+      s.add(cam);
+      var myBottle = (function(){
+        var g = new THREE.Group();
+        var glassM = new THREE.MeshStandardMaterial({ color: 0x9a5410, roughness: 0.08, metalness: 0.05,
+          transparent: true, opacity: 0.94, envMapIntensity: 1.6, emissive: 0x381a02, emissiveIntensity: 0.45 });
+        var liquidM = new THREE.MeshStandardMaterial({ color: 0x5f2c04, roughness: 0.25, metalness: 0,
+          envMapIntensity: 0.7, emissive: 0x2a1200, emissiveIntensity: 0.5 });
+        var bBody = new THREE.Mesh(new THREE.CylinderGeometry(0.078, 0.083, 0.23, 18), glassM);
+        g.add(bBody);
+        var bLiquid = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.075, 0.2, 14), liquidM);
+        bLiquid.position.y = -0.01; g.add(bLiquid);
+        var bShoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.077, 0.055, 18), glassM);
+        bShoulder.position.y = 0.142; g.add(bShoulder);
+        var bNeck = new THREE.Mesh(new THREE.CylinderGeometry(0.027, 0.028, 0.1, 14), glassM);
+        bNeck.position.y = 0.218; g.add(bNeck);
+        var bLip = new THREE.Mesh(new THREE.CylinderGeometry(0.033, 0.033, 0.018, 14), glassM);
+        bLip.position.y = 0.272; g.add(bLip);
+        var bCork = new THREE.Mesh(new THREE.CylinderGeometry(0.023, 0.025, 0.038, 12),
+          new THREE.MeshStandardMaterial({ color: 0xb08c58, roughness: 0.9 }));
+        bCork.position.y = 0.296; g.add(bCork);
+        var bBand = new THREE.Mesh(new THREE.CylinderGeometry(0.0295, 0.0295, 0.03, 14),
+          new THREE.MeshStandardMaterial({ color: 0x6e1a12, roughness: 0.55, envMapIntensity: 0.6 }));
+        bBand.position.y = 0.245; g.add(bBand); // the red neck band under the lip
+        // the cream label, wrapped on the side facing you, with a red rule across it
+        var bLabel = new THREE.Mesh(new THREE.CylinderGeometry(0.0845, 0.0865, 0.115, 18, 1, true, -0.85, 1.7),
+          new THREE.MeshStandardMaterial({ color: 0xe8d9b0, roughness: 0.85, envMapIntensity: 0.35, side: THREE.DoubleSide }));
+        bLabel.position.y = 0.02; g.add(bLabel);
+        var bStripe = new THREE.Mesh(new THREE.CylinderGeometry(0.0855, 0.0875, 0.018, 18, 1, true, -0.85, 1.7),
+          new THREE.MeshStandardMaterial({ color: 0x7a2a18, roughness: 0.7, side: THREE.DoubleSide }));
+        bStripe.position.y = 0.055; g.add(bStripe);
+        // your hand, gripped around the low body of the bottle:
+        // fingers curled across the front, thumb up the side, and
+        // a forearm trailing down out of the bottom of the frame
+        var skinM = new THREE.MeshStandardMaterial({ color: 0xc98d54, roughness: 0.58, envMapIntensity: 0.35 });
+        [-0.055, -0.088, -0.121].forEach(function(fy){
+          var fin = new THREE.Mesh(new THREE.CylinderGeometry(0.0165, 0.0165, 0.098, 10), skinM);
+          fin.rotation.z = Math.PI / 2; fin.rotation.y = 0.18;
+          fin.position.set(-0.004, fy, 0.074); g.add(fin);
+        });
+        var thumb = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.017, 0.075, 10), skinM);
+        thumb.rotation.z = 0.55; thumb.position.set(-0.082, -0.055, 0.038); g.add(thumb);
+        var palm = new THREE.Mesh(new THREE.SphereGeometry(0.062, 12, 10), skinM);
+        palm.scale.set(1.15, 0.95, 0.72); palm.position.set(0.012, -0.145, 0.045); g.add(palm);
+        var fore = new THREE.Mesh(new THREE.CylinderGeometry(0.037, 0.046, 0.24, 12), skinM);
+        fore.position.set(0.045, -0.27, 0.105); fore.rotation.x = 0.55; fore.rotation.z = -0.15; g.add(fore);
+        var sleeve = new THREE.Mesh(new THREE.CylinderGeometry(0.056, 0.064, 0.11, 12),
+          new THREE.MeshStandardMaterial({ color: 0x5c4632, roughness: 0.86, envMapIntensity: 0.3 }));
+        sleeve.position.set(0.062, -0.335, 0.138); sleeve.rotation.x = 0.55; sleeve.rotation.z = -0.15; g.add(sleeve);
+        g.traverse(function(n){ if (n.isMesh){ n.castShadow = false; n.receiveShadow = false; } });
+        return g;
+      })();
+      myBottle.scale.setScalar(0.5); // kept small in frame (v2.9 fix): a bottle in the hand, not a billboard — it must not block the man or the bench
+      myBottle.position.set(-0.11, -0.25, -0.70); // low, left and further out — down in the corner of the frame, clear of the view of the guy and the bottles
+      myBottle.rotation.set(-0.06, 0, 0.07); // upright in the fist, tipped a touch toward you
+      cam.add(myBottle);
+      // the loading cartridge: one brass shell, flown from his off
+      // hand into each chamber in turn — case, rim and bullet
       var shell = new THREE.Group();
       var shellCase = new THREE.Mesh(new THREE.CylinderGeometry(0.0085, 0.0092, 0.03, 10),
         new THREE.MeshStandardMaterial({ color: 0xc9973f, roughness: 0.3, metalness: 1.0, envMapIntensity: 1.3 }));
@@ -9399,8 +9803,8 @@ three/build/three.module.js:
         shellCase.material);
       shellRim.rotation.x = Math.PI / 2; shellRim.position.z = -0.016; shell.add(shellRim);
       shell.visible = false; s.add(shell);
-      // every chamber starts empty — the brass rims appear one by one
-      // as each shell is seated during the loading beats below
+      // every chamber starts empty — the brass rims appear one by
+      // one as each shell is seated during the loading beats below
       if (built.chamberRims) built.chamberRims.forEach(function(rm){ rm.visible = false; });
       // muzzle flash — a lit sprite and a real light at the bore
       var flash = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -9408,7 +9812,7 @@ three/build/three.module.js:
         blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
       flash.scale.set(0.55, 0.55, 1); flash.visible = false; s.add(flash);
       var flashLi = new THREE.PointLight(0xffa050, 0, 9, 1.6); s.add(flashLi);
-      // rolling muzzle smoke, drifting away downrange
+      // rolling muzzle smoke, drifting the way the muzzle points
       var puffs = [];
       for (var pi = 0; pi < 16; pi++){
         var pf = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -9418,23 +9822,33 @@ three/build/three.module.js:
         puffs.push({ sp: pf, life: 0, vx: 0, vy: 0, vz: 0, sc: 0.1 });
       }
       var puffNext = 0;
-      /* the bench downrange (v1.35): three glass bottles in a row
-         on a wooden bench, stood square on the barrel's own line —
-         the gun rests at its base yaw first (turned a touch further
-         toward its side than v1.34), then the bench is set where the
-         bore points, and every bottle's aim is solved from its real
-         place on the plank, so the iron swings down the row bottle
-         to bottle. The bright sun is parked right behind the bench, so
-         the bottles stand in its light. */
-      var YAW0 = -0.44;
-      pivot.rotation.set(0.05, YAW0, 0.015);
-      pivot.updateMatrixWorld(true);
-      var mzW = new THREE.Vector3(); built.muzzle.getWorldPosition(mzW);
-      var fwW = new THREE.Vector3(); built.muzzle.getWorldDirection(fwW);
+      /* the BOOM bursts (v2.8, the diagram's marked spots): a hot
+         expanding burst of light that blooms where a shot lands —
+         one at each bottle as it shatters on the bench, and one
+         big one right at the viewer when the turned shot hits */
+      var booms = [];
+      for (var boi = 0; boi < 5; boi++){
+        var bs = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: radialSprite('rgba(255,248,205,1)', 'rgba(255,110,20,0)'),
+          blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
+        bs.visible = false; s.add(bs);
+        booms.push({ sp: bs, life: 0, big: 1 });
+      }
+      var boomNext = 0;
+      function boomFx(pos, big){
+        var b = booms[boomNext]; boomNext = (boomNext + 1) % booms.length;
+        b.sp.position.copy(pos); b.big = big || 1; b.life = 1;
+        b.sp.scale.set(0.22 * b.big, 0.22 * b.big, 1); b.sp.visible = true;
+      }
+      /* the bench downrange: six glass bottles in a row on a
+         wooden bench, stood square in front of the man — every
+         bottle's aim is solved from its real place on the plank,
+         and his upper body twists down the row bottle to bottle.
+         The bright sun is parked right behind the bench, so the
+         bottles stand in its light. */
       var bench = new THREE.Group();
-      bench.position.copy(mzW).addScaledVector(fwW, 2.35);
+      bench.position.set(-0.28, 1.015, 3.0);
       s.add(bench);
-      bench.lookAt(mzW.x, bench.position.y, mzW.z);
       var benchWood = new THREE.MeshStandardMaterial({ color: 0x5a3a1e, roughness: 0.9 });
       var benchWood2 = new THREE.MeshStandardMaterial({ color: 0x4a2f18, roughness: 0.92 });
       var plank = new THREE.Mesh(new THREE.BoxGeometry(0.98, 0.045, 0.24), benchWood);
@@ -9445,7 +9859,7 @@ three/build/three.module.js:
       });
       var brace = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.05, 0.03), benchWood2);
       brace.position.set(0, -0.78, 0.08); bench.add(brace);
-      // the bottles: real glass in three colours, in a row on the plank
+      // the bottles: real glass in six colours, in a row on the plank (v2.9: six stand — five fall, the 6th is still standing at the end)
       function rideBottle(color){
         var g = new THREE.Group();
         var glass = new THREE.MeshStandardMaterial({ color: color, roughness: 0.08, metalness: 0.05,
@@ -9460,9 +9874,9 @@ three/build/three.module.js:
         bLip.position.y = 0.28; g.add(bLip);
         return { group: g, glass: glass };
       }
-      var bottleCols = [0x2f8f4e, 0xd18a26, 0x8a3b22];
+      var bottleCols = [0x2f8f4e, 0xd18a26, 0x8a3b22, 0x276a7a, 0x5f2e4a, 0x7a9a2e];
       var bottles = [];
-      [-0.27, 0, 0.27].forEach(function(bx, bi2){
+      [-0.375, -0.225, -0.075, 0.075, 0.225, 0.375].forEach(function(bx, bi2){
         var rb = rideBottle(bottleCols[bi2]);
         rb.group.position.set(bx, -0.18, 0);
         bench.add(rb.group);
@@ -9473,34 +9887,14 @@ three/build/three.module.js:
       bottles.forEach(function(b){
         b.group.getWorldPosition(b.aim); b.aim.y += 0.15; // mid-body of the bottle
       });
-      // each bottle's aim, solved from where it truly stands: the yaw
-      // and pitch that put the bore on it from the gun's pivot
+      // each bottle's twist, solved from where it truly stands: how
+      // far his upper body turns from his squared stance to put
+      // himself on it
       var aimTgts = bottles.map(function(b){
-        var d = b.aim;
-        return { yaw: Math.atan2(d.x, d.z), pitch: Math.atan2(-d.y, Math.hypot(d.x, d.z)) };
+        return { twist: Math.atan2(b.aim.x - MAN_POS.x, b.aim.z - MAN_POS.z) - MAN_YAW };
       });
-      /* the iron's rest (v1.43): once the shooting is done the
-         revolver is laid down on the bench itself — on its side
-         along the plank, barrel down the row where the bottles
-         stood, settled among the broken glass instead of hanging
-         in the open air. The pose is solved here from the bench's
-         real place and the gun's real size: the gun's own local
-         axes are rolled onto the plank (barrel along the row, top
-         strap toward the light, side flat to the wood), tipped a
-         touch askew like a hand just set it down, and its middle
-         lifted by half its own thickness so the iron truly rests
-         ON the plank. */
-      var restPos = bench.localToWorld(new THREE.Vector3(0.03, -0.18, 0.03));
-      restPos.y += (gbox.max.x - gbox.min.x) / 2 + 0.001;
-      var restBasis = new THREE.Matrix4().makeBasis(
-        new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(1, 0, 0));
-      var restQuat = bench.getWorldQuaternion(new THREE.Quaternion())
-        .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), 0.38))
-        .multiply(new THREE.Quaternion().setFromRotationMatrix(restBasis));
-      var aimCur = { yaw: YAW0, pitch: 0.05 };
       // the sun hangs bright right behind the bottles
-      sunSpr.position.copy(bench.position).addScaledVector(fwW, 1.5);
-      sunSpr.position.y += 1.15;
+      sunSpr.position.set(bench.position.x + 0.4, bench.position.y + 1.15, bench.position.z + 1.5);
       sunSpr.scale.set(2.5, 2.5, 1); sunSpr.material.opacity = 0.5; // v1.41: a glow, not a white-out
       /* the scenery, fixed for real (v1.41) and filled out in v1.42: the v1.40 photographs
          are GONE. On a real phone they blew the sky out to white,
@@ -9955,44 +10349,122 @@ three/build/three.module.js:
       var _up = new THREE.Vector3(0, 1, 0), _td = new THREE.Vector3(), _hw = new THREE.Vector3();
       var aspect = W / H;
       var dist = 0.97 * (aspect < 1 ? Math.min(1.9, 1.0 / Math.max(0.46, aspect)) : 1.12);
-      /* The sequence, in milliseconds: the iron rises in with its
-         cylinder swung open; six shells are seated one by one (320–
-         1196); the cylinder slides shut (1210–1400); then, three
-         times over — hammer drawn back, hammer falls, the shot
-         (1560 / 1880 / 2200); then the iron glides down and is
-         laid to rest on its side on the bench (2420–3180) and
-         rests there a beat — until it rises off the plank and
-         turns on the viewer (3350–3850), cocks once more (3750)
-         and fires straight down the lens (3900); the view drops
-         to the ground (3950–5000) and lies there looking forward
-         at the plains while the title pops over it. */
-      var fires = [1560, 1880, 2200], firedCount = 0, lastShotT = -1e9;
-      var drumExtra = 0, drumExtraTgt = 0, shutClicked = false;
-      /* the turn on the viewer (v1.44): the rested iron's second
-         pose — lifted a touch off the plank and drawn a step
-         toward the viewer, muzzle swung round to stare straight
-         down the lens. Solved from the camera's standing place:
-         a dummy stood at the turned position and looked at the
-         lens, and its facing — barrel axis to the viewer, top
-         strap up — is the pose the pivot slerps to, with a
-         whisper of roll, like a hand just swung it round. */
-      var camStand = new THREE.Vector3(0.58 * dist, 0.30 * dist, -0.75 * dist);
-      var turnPos = restPos.clone(); turnPos.y += 0.11;
-      var _toCam = camStand.clone().sub(restPos); _toCam.y = 0;
-      if (_toCam.lengthSq() > 0.0001) turnPos.addScaledVector(_toCam.normalize(), 0.16);
-      var _dummy = new THREE.Object3D();
-      _dummy.position.copy(turnPos);
-      _dummy.lookAt(camStand);
-      var turnQuat = _dummy.quaternion.clone()
-        .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), 0.07));
-      var viewerFired = false, flashBig = 1;
-      /* lying on the ground (v1.44): where the eye ends up once
-         the turned iron's shot lands — down at grass level where
-         the viewer stood, looking forward past the bench toward
-         the lake and the sky the title rides in */
-      var downPos = new THREE.Vector3(camStand.x, groundY + 0.14, camStand.z);
-      var downLook = new THREE.Vector3(bench.position.x * 0.35, groundY + 0.85, bench.position.z + 2.2);
-      var standLook = new THREE.Vector3(0, 0.05, 0.55);
+      /* The sequence, in milliseconds (v2.8 — the gunslinger; six
+         bottles, the drink, the throw and the slam v2.9; the
+         drink-at-the-second, thrown-by-the-fifth timing v2.10):
+         the man stands in front of the viewer, back turned; his
+         cylinder swings open and six shells are seated one by one
+         (320–1196) out of his off hand; the cylinder slides shut
+         (1210–1400) and spins; SIX bottles stand in a row on the
+         bench downrange — he raises the iron and picks off the
+         first FIVE, one by one, in a steady flow with NO pause
+         before any shot (1560 / 1880 / 2200 / 2520 / 2840). As
+         he fires the SECOND (1880) YOU take a drink — the bourbon
+         bottle lifts to your mouth (1880–2180) for three audible
+         gulps (2140 / 2340 / 2520) — wind back (2560–2660) and
+         THROW it at him: it leaves your hand at 2660, BEFORE he
+         reaches the 5th bottle, and smashes on his back (3000)
+         just after the 5th shot cracks — he never pauses, he
+         fires through it; then, instead of the 6th, he turns
+         clean around (3130–3650), raises the iron on the
+         viewer, cocks once more (3500) and fires straight
+         down the lens (3650) — the 6th bottle stays standing;
+         the view drops to the ground (3700–4750) and lies
+         there while the title pops
+         over it, and the PRESENTED BY / BULLSEYE INTERACTIVE
+         lines SLAM in last, a boom and a screen shake apiece. */
+      var fires = [1560, 1880, 2200, 2520, 2840], firedCount = 0, lastShotT = -1e9; // shots 1–5 at the first five bottles, one every 320ms in a steady flow — no pause before ANY of them (v2.10) — the 6th bottle is never fired on: he shoots YOU instead
+      var drumExtra = 0, drumExtraTgt = 0, shutClicked = false, spinDone = false, spinClicks = 0;
+      var viewerFired = false, flashBig = 1, turnDust = false;
+      var gulpTimes = [2140, 2340, 2520], gulpCount = 0; // the drink (v2.10): when each swallow sounds — the drink starts with the 2nd shot
+      var thrown = false, bottleHit = false, throwT0 = 0, bottleHitT = 0; // the throw (v2.9)
+      var throwFrom = new THREE.Vector3(), throwTarget = new THREE.Vector3(MAN_POS.x, 1.42, MAN_POS.z); // his upper back, where your bottle lands
+      var _fd = new THREE.Vector3();
+      /* his poses, eased between in the loop: shoulder pitch, yaw
+         and roll and elbow for the gun arm, the off arm, and the
+         twist of his upper body. In the shooting poses (aim and
+         viewer) the gun shoulder yaws IN (shy) and the elbow all
+         but straightens with the roll centred (shz), so the iron
+         is held OUT IN FRONT of him, extended like a real gun —
+         in view the whole time he is shooting, never off at his
+         side or tucked back. The aiming pose's twist is set per
+         bottle as the shots walk the row, less the shoulder yaw,
+         so the bore still walks the bottles exactly. */
+      var poseRest   = { shx: 0.1,  elx: -0.32, lshx: 0.02,  lelx: -0.12, upy: 0, shz: 0.1,  shy: 0,    upx: 0 };
+      var poseLoad   = { shx: -0.85, elx: -0.55, lshx: -0.95, lelx: -0.7,  upy: 0, shz: 0.02, shy: 0.12, upx: 0.02 };
+      var poseAim    = { shx: -1.24, elx: 0,     lshx: 0.02,  lelx: -0.12, upy: 0, shz: 0.04, shy: 0.3,  upx: 0.07 };
+      var poseViewer = { shx: -1.38, elx: 0,     lshx: 0.02,  lelx: -0.12, upy: 0, shz: 0.03, shy: 0.26, upx: 0.05 };
+      var poseLower  = { shx: -0.5,  elx: -0.4,  lshx: 0.02,  lelx: -0.12, upy: 0, shz: 0.02, shy: 0.1,  upx: 0.02 };
+      var poseCur = { shx: 0.1, elx: -0.32, lshx: 0.02, lelx: -0.12, upy: 0, shz: 0.1, shy: 0, upx: 0 };
+      /* where the viewer stands (v2.8, side corrected, moved MUCH
+         further left, then brought forward and down): the player
+         is far over on the LEFT — well beyond the man's left
+         shoulder, never anywhere near his right — and the eye sits
+         FORWARD and LOW, at waist height, looking UP at the guy
+         from the side, so he stands tall over the viewpoint with
+         the bench and bottles still in frame beyond him. He is
+         angled across the view, so his gun arm reaches out past
+         his far side and the enlarged revolver reads big and clear
+         against the bench instead of hiding behind his back. And
+         where the eye ends up once his shot lands — down at grass
+         level where the viewer stood far on the left, looking
+         forward past the man toward the bench, the lake and the
+         sky */
+      var camStand = new THREE.Vector3(3.9, 1.05, -2.9);
+      var standLook = new THREE.Vector3(0.0, 1.3, 1.3);
+      var downPos = new THREE.Vector3(camStand.x, groundY + 0.15, camStand.z);
+      var downLook = new THREE.Vector3(-0.05, groundY + 0.8, bench.position.z + 2.2);
+      // the facing that puts him square on the viewer for the turn
+      var turnYaw = Math.atan2(camStand.x - MAN_POS.x, camStand.z - MAN_POS.z);
+      /* his aim at the viewer, solved exactly (v2.8): stand him in
+         the turned pose once, measure where the bore truly points,
+         and correct his facing and his shoulder pitch so the bore
+         line runs straight through the viewer's HEAD — the
+         camera's standing point — not near it, not past it. The
+         pitch correction is calibrated by measuring the bore at
+         two shoulder angles, so the sign is never guessed. */
+      var viewerYawOff = 0;
+      (function(){
+        var mp = new THREE.Vector3(), md = new THREE.Vector3();
+        var saveYaw = man.group.rotation.y, saveShx = man.armR.sh.rotation.x,
+            saveElx = man.armR.el.rotation.x, saveShz = man.armR.sh.rotation.z,
+            saveShy = man.armR.sh.rotation.y, saveUpy = man.upper.rotation.y,
+            saveUpx = man.upper.rotation.x;
+        man.group.rotation.y = turnYaw;
+        man.upper.rotation.y = 0;
+        man.upper.rotation.x = poseViewer.upx; // his forward lean is part of the measured aim too
+        man.armR.sh.rotation.x = poseViewer.shx;
+        man.armR.el.rotation.x = poseViewer.elx;
+        man.armR.sh.rotation.z = poseViewer.shz;
+        man.armR.sh.rotation.y = poseViewer.shy; // the front-held pose is part of the measured aim
+        man.group.updateMatrixWorld(true);
+        built.muzzle.getWorldPosition(mp);
+        built.muzzle.getWorldDirection(md);
+        var dYaw = Math.atan2(camStand.x - mp.x, camStand.z - mp.z) - Math.atan2(md.x, md.z);
+        while (dYaw > Math.PI) dYaw -= Math.PI * 2;
+        while (dYaw < -Math.PI) dYaw += Math.PI * 2;
+        viewerYawOff = dYaw; // his facing takes this correction as he turns
+        man.group.rotation.y = turnYaw + dYaw;
+        man.group.updateMatrixWorld(true);
+        built.muzzle.getWorldPosition(mp);
+        built.muzzle.getWorldDirection(md);
+        var pTgt = Math.atan2(mp.y - camStand.y, Math.hypot(camStand.x - mp.x, camStand.z - mp.z));
+        var p0 = Math.atan2(-md.y, Math.hypot(md.x, md.z));
+        man.armR.sh.rotation.x = poseViewer.shx + 0.06;
+        man.group.updateMatrixWorld(true);
+        built.muzzle.getWorldDirection(md);
+        var p1 = Math.atan2(-md.y, Math.hypot(md.x, md.z));
+        var slope = (p1 - p0) / 0.06;
+        if (Math.abs(slope) > 0.2) poseViewer.shx += (pTgt - p0) / slope;
+        man.group.rotation.y = saveYaw;
+        man.upper.rotation.y = saveUpy;
+        man.upper.rotation.x = saveUpx;
+        man.armR.sh.rotation.x = saveShx;
+        man.armR.el.rotation.x = saveElx;
+        man.armR.sh.rotation.z = saveShz;
+        man.armR.sh.rotation.y = saveShy;
+        man.group.updateMatrixWorld(true);
+      })();
       var st = { r: r, scene: s, raf: 0, env: scene.environment };
       rideIn3D = st;
       var t0 = performance.now(), lastT = t0;
@@ -10002,11 +10474,12 @@ three/build/three.module.js:
         drumExtraTgt += Math.PI / 3; // the cylinder indexes one chamber per shot
         if (AC) sndShot(false, 'revolver');
         built.muzzle.getWorldPosition(_mv);
+        built.muzzle.getWorldDirection(_fd);
         flash.position.copy(_mv); flashLi.position.copy(_mv);
         flash.material.rotation = Math.random() * 3;
         flash.visible = true;
-        // the shot streaks downrange and strikes the bottle it was
-        // aimed at a beat later — tracer now, glass on impact
+        // the shot streaks downrange and strikes the bottle he was
+        // twisted onto a beat later — tracer now, glass on impact
         var bi = Math.min(firedCount - 1, bottles.length - 1);
         _hw.copy(bottles[bi].aim);
         _td.copy(_hw).sub(_mv);
@@ -10019,11 +10492,13 @@ three/build/three.module.js:
           var p = puffs[puffNext]; puffNext = (puffNext + 1) % puffs.length;
           p.sp.material.color.setHex(0xffffff);
           p.sp.position.set(_mv.x + (Math.random() - 0.5) * 0.03, _mv.y + (Math.random() - 0.5) * 0.03, _mv.z);
-          p.vx = (Math.random() - 0.5) * 0.05; p.vy = 0.05 + Math.random() * 0.09; p.vz = 0.22 + Math.random() * 0.2;
+          p.vx = _fd.x * (0.22 + Math.random() * 0.2) + (Math.random() - 0.5) * 0.05;
+          p.vy = 0.05 + Math.random() * 0.09;
+          p.vz = _fd.z * (0.22 + Math.random() * 0.2) + (Math.random() - 0.5) * 0.05;
           p.sc = 0.05 + Math.random() * 0.05; p.life = 1; p.sp.visible = true;
         }
       }
-      /* the fourth shot (v1.44): fired from the turned pose,
+      /* the fourth shot (v2.8): fired from the turned pose,
          straight at the viewer — the flash blooms huge at a
          muzzle that is looking down the lens, the streak runs
          muzzle-to-camera and past it, and the smoke rolls
@@ -10043,11 +10518,15 @@ three/build/three.module.js:
         tracer.scale.set(1.7, vlen * 1.2, 1.7);
         tracer.quaternion.setFromUnitVectors(_up, _td.normalize());
         tracer.visible = true; tracerT = t;
+        _hw.copy(cam.position).lerp(_mv, 0.22); boomFx(_hw, 2.4); // BOOM at the viewer's marked spot — the shot lands on YOU, burst blooming just in front of your face
+        _fd.copy(cam.position).sub(_mv).normalize();
         for (var k = 0; k < 6; k++){
           var p = puffs[puffNext]; puffNext = (puffNext + 1) % puffs.length;
           p.sp.material.color.setHex(0xffffff);
           p.sp.position.copy(_mv);
-          p.vx = (Math.random() - 0.5) * 0.06; p.vy = 0.04 + Math.random() * 0.07; p.vz = -0.3 - Math.random() * 0.22;
+          p.vx = _fd.x * (0.3 + Math.random() * 0.22) + (Math.random() - 0.5) * 0.06;
+          p.vy = 0.04 + Math.random() * 0.07;
+          p.vz = _fd.z * (0.3 + Math.random() * 0.22) + (Math.random() - 0.5) * 0.06;
           p.sc = 0.05 + Math.random() * 0.05; p.life = 1; p.sp.visible = true;
         }
       }
@@ -10056,6 +10535,7 @@ three/build/three.module.js:
         b.dead = true; b.group.visible = false; // the bottle bursts
         if (AC) { try { sndGlass(0.75); } catch (e) {} }
         _hw.copy(b.aim);
+        boomFx(_hw, 0.85); // BOOM right where the bottle stood — its marked spot on the bench
         // glass shards fling off the bench in every direction
         for (var k = 0; k < 12; k++){
           var sh2 = shards[shardNext]; shardNext = (shardNext + 1) % shards.length;
@@ -10088,14 +10568,18 @@ three/build/three.module.js:
         var dt = Math.min((now - lastT) / 1000, 0.05); lastT = now;
         while (firedCount < fires.length && t >= fires[firedCount]) fireFx(t);
         while (impacts.length && t >= impacts[0].at) impactFx(impacts.shift().idx, t);
-        if (!viewerFired && t >= 3900) fireAtViewer(t);
-        // entrance: the iron rises into frame and settles in the hand
-        var intro = Math.min(Math.max(t / 340, 0), 1);
-        var ie = 1 - Math.pow(1 - intro, 3);
-        pivot.scale.setScalar(0.9 + 0.1 * ie);
+        if (!viewerFired && t >= 3650) fireAtViewer(t);
+        /* the gulps (v2.9, retimed v2.10): three swallows, heard while the bottle
+           is up at your mouth — one as it settles, one mid-drink,
+           one as the last of it goes down */
+        while (gulpCount < gulpTimes.length && t >= gulpTimes[gulpCount]){ gulpCount++; try { sndGulp(); } catch (e) {} }
+        var since = t - lastShotT;
+        var kick = since >= 0 ? Math.max(0, 1 - since / 240) : 0; kick = kick * kick;
+        // he breathes and shifts his weight like a man standing
+        var brth = Math.sin(t * 0.0016);
         /* the cylinder: swung open while the shells go in, slid shut
-           after — the drum rides a touch right and turned out, then
-           comes home with a click */
+           after — the drum rides a touch out and turned, then comes
+           home with a click */
         var openK = t < 1210 ? Math.min(Math.max((t - 150) / 200, 0), 1)
           : Math.max(0, 1 - (t - 1210) / 190);
         openK = openK * openK * (3 - 2 * openK);
@@ -10106,71 +10590,91 @@ three/build/three.module.js:
           built.drum.rotation.z = drumExtra;
         }
         if (t >= 1400 && !shutClicked){ shutClicked = true; try { sndClick(); } catch (e) {} }
-        /* loading: one shell per beat flies in from behind the gun —
-           from the shooter's own hand, over the viewer's shoulder —
-           and seats in the chamber waiting at the back of the cylinder;
-           its brass rim is what stays visible when it lands */
+        /* the spin (the diagram's beat): the cylinder is shut, he
+           gives it a spin — one full turn with a ratchet of clicks
+           — and only then raises the iron on the bottles */
+        if (!spinDone && t >= 1405){ spinDone = true; drumExtraTgt += Math.PI * 2; }
+        if (spinDone && spinClicks < 5 && t >= 1405 + spinClicks * 34){ spinClicks++; try { sndClick(); } catch (e) {} }
+        /* loading: one shell per beat flies from his off hand — up
+           by the iron while he loads — into the chamber waiting at
+           the back of the cylinder; its brass rim stays visible */
         var beat = Math.floor((t - 320) / 146);
         if (t >= 320 && beat >= 0 && beat < 6 && built.chamberRims && built.chamberRims[beat]){
           var rimObj = built.chamberRims[beat];
           var bp = Math.min(Math.max(((t - 320) / 146 - beat) / 0.72, 0), 1);
           rimObj.getWorldPosition(_mv);
-          _cd.copy(cam.position).sub(_mv).normalize();
-          shell.position.copy(_mv).addScaledVector(_cd, 0.075 * (1 - bp) + 0.004);
-          shell.lookAt(_mv.x - _cd.x, _mv.y - _cd.y, _mv.z - _cd.z);
+          man.armL.hand.getWorldPosition(_cd);
+          var be = bp * bp * (3 - 2 * bp);
+          shell.position.lerpVectors(_cd, _mv, be);
+          shell.position.y += Math.sin(bp * Math.PI) * 0.035;
+          shell.lookAt(_mv.x - (_cd.x - _mv.x), _mv.y - (_cd.y - _mv.y), _mv.z - (_cd.z - _mv.z));
           shell.visible = bp < 1;
           if (bp >= 0.98 && !rimObj.visible){ rimObj.visible = true; try { sndClick(); } catch (e) {} }
         } else shell.visible = false;
-        /* the hammer: drawn back before every shot, snapping home the
-           instant the shot cracks, resting down between times */
+        /* the hammer: drawn back before every shot, snapping home
+           the instant the shot cracks, resting down between times */
         var hamK = 0;
         for (var fi = 0; fi < fires.length; fi++){
           if (t >= fires[fi] - 140 && t < fires[fi]) hamK = Math.max(hamK, (t - (fires[fi] - 140)) / 140);
           else if (t >= fires[fi] && t < fires[fi] + 60) hamK = 0;
-          else if (t >= fires[fi] + 60 && (fi === fires.length - 1 || t < fires[fi + 1] - 140)) hamK = Math.max(hamK, 0);
         }
-        if (t >= fires[fires.length - 1] + 60) hamK = 0;
-        /* the rested iron cocks once more, for the viewer (v1.44) */
-        if (t >= 3750 && t < 3900) hamK = Math.max(hamK, (t - 3750) / 150);
-        else if (t >= 3900) hamK = 0;
+        if (t >= 3500 && t < 3650) hamK = Math.max(hamK, (t - 3500) / 150);
+        else if (t >= 3650) hamK = 0;
         if (built.hammer) built.hammer.rotation.x = -0.52 * hamK * hamK;
-        // recoil of the latest shot — the iron bucks back toward the
-        // viewer and the muzzle climbs downrange, then settles
-        var since = t - lastShotT;
-        var kick = since >= 0 ? Math.max(0, 1 - since / 240) : 0; kick = kick * kick;
-        pivot.position.set(0, -0.05 * (1 - ie) + kick * 0.012, -0.045 * kick);
-        /* the aim walks down the row: the iron eases onto the next
-           bottle standing — the one being loaded for before the
-           first shot, the next one the moment each shot lands */
-        var engaged = aimTgts[Math.min(firedCount, aimTgts.length - 1)];
-        var easeK = Math.min(1, dt * 6.5);
-        aimCur.yaw += (engaged.yaw - aimCur.yaw) * easeK;
-        aimCur.pitch += (engaged.pitch - aimCur.pitch) * easeK;
-        pivot.rotation.set(aimCur.pitch - kick * 0.09 + Math.sin(t * 0.0013) * 0.006,
-          aimCur.yaw + Math.sin(t * 0.0011) * 0.02, 0.015);
-        /* laid to rest (v1.43): from just after the third bottle
-           breaks, the iron glides down to the bench and settles
-           on its side on the plank — a small arc on the way down,
-           like a hand setting it there — and rests among the
-           broken bottles until the turn below takes it (v1.44) */
-        var restK = Math.min(Math.max((t - 2420) / 760, 0), 1);
-        if (restK > 0){
-          restK = restK * restK * (3 - 2 * restK);
-          pivot.position.lerp(restPos, restK);
-          pivot.position.y += Math.sin(restK * Math.PI) * 0.085;
-          pivot.quaternion.slerp(restQuat, restK);
+        /* his arms and his twist, by the beat of the show: at rest;
+           both hands up at the iron while he loads; gun arm up and
+           his body twisted onto the next bottle for each shot; down
+           again while he stands easy; then, after the turn, the
+           iron rises on the viewer — and lowers over him once he
+           is down and the title is popping */
+        var tg = poseRest;
+        if (t >= 150 && t < 1400) tg = poseLoad;
+        else if (t >= 1400 && t < 3130){ // up on the bottles for shots 1–5, never lowered between them — the flow never stops (v2.10)
+          tg = poseAim;
+          poseAim.upy = aimTgts[Math.min(firedCount, aimTgts.length - 1)].twist - poseAim.shy;
         }
-        /* the turn (v1.44): rested a beat, the iron rises off
-           the plank and swings round until its muzzle stares
-           straight down the lens at the viewer — and then it
-           holds there, over the downed view, while the title
-           pops above it */
-        var turnK = Math.min(Math.max((t - 3350) / 500, 0), 1);
-        if (turnK > 0){
-          turnK = turnK * turnK * (3 - 2 * turnK);
-          pivot.position.lerp(turnPos, turnK);
-          pivot.quaternion.slerp(turnQuat, turnK);
+        else if (t >= 3320 && t < 4750) tg = poseViewer;
+        else if (t >= 4750) tg = poseLower;
+        var eK = Math.min(1, dt * 7);
+        poseCur.shx += (tg.shx - poseCur.shx) * eK;
+        poseCur.elx += (tg.elx - poseCur.elx) * eK;
+        poseCur.lshx += (tg.lshx - poseCur.lshx) * eK;
+        poseCur.lelx += (tg.lelx - poseCur.lelx) * eK;
+        poseCur.upy += (tg.upy - poseCur.upy) * Math.min(1, dt * 5.5);
+        poseCur.shz += (tg.shz - poseCur.shz) * eK;
+        poseCur.shy += (tg.shy - poseCur.shy) * eK;
+        poseCur.upx += (tg.upx - poseCur.upx) * eK;
+        man.armR.sh.rotation.x = poseCur.shx - kick * 0.13;
+        man.armR.sh.rotation.z = poseCur.shz;
+        man.armR.sh.rotation.y = poseCur.shy; // the gun shoulder swings the raised arm in across his front, iron held out before him
+        man.armR.el.rotation.x = poseCur.elx;
+        man.armL.sh.rotation.x = poseCur.lshx;
+        man.armL.el.rotation.x = poseCur.lelx;
+        man.upper.rotation.y = poseCur.upy + brth * 0.006;
+        man.upper.rotation.x = poseCur.upx + brth * 0.006 - kick * 0.03; // shooting, he leans a touch into the shot — arm and iron pushed that bit further forward
+        man.upper.position.y = 1.06 + brth * 0.004;
+        /* THE TURN (v2.8): with the fifth bottle down, he
+           comes clean around — one smooth swing of the whole man
+           through his profile until he faces the viewer square,
+           boots scuffing a breath of dust as he plants */
+        var turnK = Math.min(Math.max((t - 3130) / 520, 0), 1);
+        turnK = turnK * turnK * (3 - 2 * turnK);
+        man.group.rotation.y = MAN_YAW + (turnYaw + viewerYawOff - MAN_YAW) * turnK;
+        man.group.position.y = -Math.sin(turnK * Math.PI) * 0.035;
+        if (turnK > 0.04 && turnK < 0.9 && !turnDust){
+          turnDust = true;
+          for (var dk = 0; dk < 4; dk++){
+            var dp = puffs[puffNext]; puffNext = (puffNext + 1) % puffs.length;
+            dp.sp.material.color.setHex(0xd9ba8a);
+            dp.sp.position.set(MAN_POS.x + (Math.random() - 0.5) * 0.3, groundY + 0.05, MAN_POS.z + (Math.random() - 0.5) * 0.2);
+            dp.vx = (Math.random() - 0.5) * 0.2; dp.vy = 0.03 + Math.random() * 0.06; dp.vz = (Math.random() - 0.5) * 0.2;
+            dp.sc = 0.05 + Math.random() * 0.05; dp.life = 0.8; dp.sp.visible = true;
+          }
         }
+        /* once the viewer is down he looks down at him: the head
+           tips forward over the title */
+        var lookDown = Math.min(Math.max((t - 4050) / 900, 0), 1);
+        man.headG.rotation.x = lookDown * lookDown * 0.3;
         // the flash decays in a blink, and the tracer with it
         var fa = since >= 0 ? Math.max(0, 1 - since / 130) : 0;
         flash.material.opacity = fa; flashLi.intensity = 26 * fa;
@@ -10191,7 +10695,17 @@ three/build/three.module.js:
         }
         flashBig += (1 - flashBig) * Math.min(1, dt * 2.2);
         var fs = (0.4 + (1 - fa) * 0.25) * flashBig; flash.scale.set(fs, fs, 1);
-        // smoke rolls away downrange and thins
+        // the boom bursts bloom fast and burn out in half a second
+        for (var bk = 0; bk < booms.length; bk++){
+          var bb = booms[bk];
+          if (bb.life <= 0) continue;
+          bb.life -= dt / 0.45;
+          if (bb.life <= 0){ bb.sp.visible = false; bb.sp.material.opacity = 0; continue; }
+          var bsc = (0.22 + (1 - bb.life) * 1.15) * bb.big;
+          bb.sp.scale.set(bsc, bsc, 1);
+          bb.sp.material.opacity = 0.95 * bb.life;
+        }
+        // smoke rolls off the muzzle and thins
         for (var k = 0; k < puffs.length; k++){
           var p = puffs[k];
           if (p.life <= 0) continue;
@@ -10207,16 +10721,15 @@ three/build/three.module.js:
           mo2.position.x += Math.sin(t * 0.001 + mo2.userData.ph) * dt * 0.01;
           if (mo2.position.y > 0.65) mo2.position.y = -0.65;
         }
-        // the camera rides further round the gun's right side than
-        // in v1.34 — more toward the side view, so the barrel and
-        // the side of the iron read in full and the bench of bottles
-        // stands downrange past it: a breath of sway, a jolt on
-        // every shot
+        // the camera stands where the viewer stands — far over
+        // on the LEFT, forward and low, looking up at the man
+        // from the side, his iron reaching clear of his body:
+        // a breath of sway, a jolt on every shot
         var sh = since >= 0 && since < 150 ? (1 - since / 150) * 0.006 : 0;
-        cam.position.set(0.58 * dist + Math.sin(t * 0.0009) * 0.008 + (Math.random() - 0.5) * sh,
-          0.30 * dist + (Math.random() - 0.5) * sh * 0.7, -0.75 * dist);
-        // the day stays alive while the iron works: clouds drift
-        // slow across the sky and the lake's shimmer breathes
+        cam.position.set(camStand.x + Math.sin(t * 0.0009) * 0.01 + (Math.random() - 0.5) * sh,
+          camStand.y + Math.sin(t * 0.0013) * 0.008 + (Math.random() - 0.5) * sh * 0.7, camStand.z);
+        // the day stays alive while he works: clouds drift slow
+        // across the sky and the lake's shimmer breathes
         for (var ci = 0; ci < rideClouds.length; ci++){
           var cl = rideClouds[ci];
           cl.position.x += cl.userData.sp * dt;
@@ -10240,21 +10753,81 @@ three/build/three.module.js:
           brd.wf.rotation.x = -flap; brd.wb.rotation.x = flap;
         }
         if (rideFan) rideFan.rotation.z += dt * 0.45;
-        /* down (v1.44): once the turned iron's shot lands, the
+        /* THE DRINK AND THE THROW (v2.9; retimed v2.10): as he
+           fires the SECOND bottle your bourbon bottle lifts to
+           your mouth — up, tipped back, a small working
+           bob while the three gulps sound — then winds back and
+           you THROW it at him: it leaves your hand before he
+           reaches the 5th bottle, tumbles end over end across
+           the gap and smashes on his back in a
+           burst of amber glass, and he flinches hard — he fires
+           the 5th through it all without a pause. Only then
+           does he turn on you (the turn beat above). */
+        if (!thrown){
+          var dK = 0;
+          if (t >= 1880 && t < 2180){ var dk0 = (t - 1880) / 300; dK = dk0 * dk0 * (3 - 2 * dk0); }
+          else if (t >= 2180) dK = 1;
+          var wbK = (t >= 2560 && t < 2660) ? (t - 2560) / 100 : 0; // the wind-back before the throw
+          var dBob = (dK === 1 && t < 2560) ? Math.sin(t * 0.011) * 0.006 : 0; // the bottle works a touch as you swallow
+          myBottle.position.set(-0.11 + 0.05 * dK, -0.25 + 0.17 * dK + dBob - 0.05 * wbK, -0.70 + 0.14 * dK - 0.06 * wbK);
+          myBottle.rotation.set(-0.06 + 1.65 * dK - 0.55 * wbK, 0, 0.07 - 0.05 * dK);
+          if (t >= 2660){
+            // release: the bottle leaves the camera's hand and
+            // becomes a thing in the world, flying at the man
+            thrown = true; throwT0 = t;
+            cam.updateMatrixWorld(true);
+            var _wp = new THREE.Vector3(), _wq = new THREE.Quaternion();
+            myBottle.getWorldPosition(_wp); myBottle.getWorldQuaternion(_wq);
+            s.add(myBottle);
+            myBottle.position.copy(_wp); myBottle.quaternion.copy(_wq);
+            throwFrom.copy(_wp);
+          }
+        } else if (!bottleHit){
+          var fK = Math.min((t - throwT0) / 340, 1);
+          myBottle.position.lerpVectors(throwFrom, throwTarget, fK);
+          myBottle.position.y += Math.sin(fK * Math.PI) * 0.22; // the arc of the throw
+          myBottle.rotation.x += dt * 13; myBottle.rotation.z += dt * 7; // tumbling end over end
+          if (fK >= 1){
+            bottleHit = true; bottleHitT = t;
+            myBottle.visible = false; // it smashes on him
+            if (AC) { try { sndGlass(0.85); } catch (e) {} }
+            boomFx(throwTarget, 0.7); // burst right where it lands on him
+            for (var gk = 0; gk < 12; gk++){
+              var gsh = shards[shardNext]; shardNext = (shardNext + 1) % shards.length;
+              gsh.m.material.color.setHex(gk % 3 ? 0x9a5410 : 0xe8d9b0); // amber glass, a flash of label
+              gsh.m.position.copy(throwTarget);
+              gsh.m.position.x += (Math.random() - 0.5) * 0.06;
+              gsh.m.position.y += (Math.random() - 0.5) * 0.1;
+              gsh.m.position.z += (Math.random() - 0.5) * 0.06;
+              var gang = Math.random() * Math.PI * 2, gspd = 0.25 + Math.random() * 0.55;
+              gsh.vx = Math.cos(gang) * gspd; gsh.vz = Math.sin(gang) * gspd;
+              gsh.vy = 0.3 + Math.random() * 0.55;
+              gsh.rx = (Math.random() - 0.5) * 14; gsh.ry = (Math.random() - 0.5) * 14;
+              gsh.life = 0.85; gsh.m.visible = true;
+              gsh.m.scale.setScalar(0.7 + Math.random() * 0.8);
+            }
+          }
+        }
+        if (bottleHit && t < bottleHitT + 380){ // he flinches under the smash, then turns on you mad
+          var flK = Math.sin(Math.min((t - bottleHitT) / 380, 1) * Math.PI);
+          man.upper.rotation.x += flK * 0.2;
+          man.headG.rotation.x += flK * 0.16;
+        }
+        /* down (v1.44, the man v2.8): once his shot lands, the
            view drops — the eye sinks to grass level where the
            viewer stood and stays lying there, tipped a touch,
-           looking forward at the bench, the lake and the sky
-           while the title pops over it */
-        var fallK = Math.min(Math.max((t - 3950) / 1050, 0), 1);
+           looking forward at the man standing over him, the bench,
+           the lake and the sky while the title pops over it */
+        var fallK = Math.min(Math.max((t - 3700) / 1050, 0), 1);
         if (fallK > 0){
           fallK = fallK * fallK * (3 - 2 * fallK);
           cam.position.lerp(downPos, fallK);
           _lk.lerpVectors(standLook, downLook, fallK);
           cam.lookAt(_lk);
           cam.rotateZ(-0.08 * fallK);
-        } else cam.lookAt(0, 0.05, 0.55);
+        } else cam.lookAt(standLook);
         r.render(s, cam);
-        if (t > 8450 && window.__wwdRideIn3DStop) window.__wwdRideIn3DStop();
+        if (t > 9050 && window.__wwdRideIn3DStop) window.__wwdRideIn3DStop();
       }
       st.raf = requestAnimationFrame(frame3);
       return true;
@@ -10313,7 +10886,7 @@ three/build/three.module.js:
       var r2;
       try { r2 = new THREE.WebGLRenderer({ canvas: $('lockerCanvas'), antialias: true, alpha: true }); }
       catch (e) { return; }
-      r2.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      r2.setPixelRatio(Math.min(window.devicePixelRatio || 1, gfxNow.pr)); // v2.7: the locker bench renders at the picked graphics level
       if (THREE.ACESFilmicToneMapping){ r2.toneMapping = THREE.ACESFilmicToneMapping; r2.toneMappingExposure = 1.12; }
       var s2 = new THREE.Scene();
       s2.environment = scene.environment;
