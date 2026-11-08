@@ -1017,6 +1017,150 @@
       #cxhair .ct3{ top:50%; left:1px; height:2px; width:8px; margin-top:-1px; }
       #cxhair .ct4{ top:50%; right:1px; height:2px; width:8px; margin-top:-1px; }
       @media (prefers-reduced-motion: reduce){ #cxhair{ transition:none; } }
+
+      /* ---------- v2.13: Endless retry, tidy fight words, a corner ✕
+         on every panel, and a livelier, cleaner main menu ---------- */
+      /* Corner ✕ (v2.13): every card panel carries a round close
+         button in its top corner, wired in the script to the same
+         Back button the panel already had. .inner.hasX leaves a
+         clear band across the top so the ✕ never sits on the
+         panel's heading, and the panels take softly rounded corners
+         to match the refreshed menu. */
+      .card .inner{ position:relative; border-radius:14px; }
+      .card .inner.hasX{ padding-top:40px; }
+      .cardX{
+        position:absolute; top:9px; right:9px; z-index:6;
+        width:38px; height:38px; border-radius:50%; padding:0; cursor:pointer;
+        display:flex; align-items:center; justify-content:center;
+        background:rgba(10,5,2,.55); border:1px solid rgba(217,164,65,.65); color:#ffd98f;
+        font-family:'Special Elite',monospace; font-size:15px; line-height:1;
+        box-shadow:0 2px 8px rgba(0,0,0,.4);
+      }
+      .cardX:hover{ border-color:#ffd98f; color:#fff0c4; }
+      .cardX:active{ transform:scale(.9); background:rgba(217,164,65,.28); }
+      .bigbtn{ border-radius:10px; }
+
+      /* Endless Duel RETRY (v2.13): on the fail screen a big crimson
+         RETRY rides above Back to Menu — one tap, a fresh run. It
+         hides with the other end-of-round controls while scoped. */
+      #btnRetry{
+        position:fixed; left:50%; transform:translateX(-50%); bottom:calc(92px + env(safe-area-inset-bottom)); z-index:8;
+        display:none; cursor:pointer; padding:14px 34px; border-radius:10px;
+        background:linear-gradient(180deg,#c0341d,#7e1a0c); border:2px solid #ffd98f; color:#ffeec2;
+        font-family:'Rye',Georgia,serif; font-size:18px; letter-spacing:.06em;
+        box-shadow:0 6px 22px rgba(0,0,0,.6), 0 0 20px rgba(224,84,40,.35), inset 0 1px 0 rgba(255,232,180,.4);
+      }
+      #btnRetry:active{ transform:translateX(-50%) scale(.96); }
+      body.scoped #btnRetry{ display:none !important; }
+
+      /* Tidy fight words (v2.13): in a duel the message no longer
+         spills bare across the street — it sits in its own contained
+         strip under the banner, centred, capped in width, on a quiet
+         dark plate, so lines stack neatly and never cross the banner,
+         the plates or each other. Practice and ride keep their own
+         strips, untouched. */
+      #toast.duel{
+        left:50%; right:auto; transform:translateX(-50%);
+        width:min(92vw, 540px); padding:9px 16px;
+        background:rgba(14,7,3,.78); border:1px solid rgba(217,164,65,.45); border-radius:8px;
+        box-shadow:0 4px 18px rgba(0,0,0,.5);
+        line-height:1.45;
+      }
+      body.scoped #toast.duel{ width:min(88vw, 440px); }
+
+      /* Main menu (v2.13): cleaner, warmer, more alive — same buttons,
+         same words, same order. A sunset glow breathes behind the
+         panel, embers drift up past the card, the wordmark carries a
+         slow warm glow, and every button is a rounded, clearly
+         coloured slab: crimson Start Duels with a slow sheen, amber
+         Ride, slate-blue Quick & Endless, teal Practice and LAN, and
+         the Store / Inventory / Stats / Settings rows set quiet
+         behind a hairline so the fighting buttons own the eye. All
+         labels stay cream on dark colour — nothing washes out. */
+      #titleCard{ background:radial-gradient(ellipse at 50% 26%, rgba(255,146,54,.34), rgba(30,11,3,.62) 58%, rgba(9,3,1,.88) 100%); }
+      #titleCard::before{
+        content:""; position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse 70% 42% at 50% 30%, rgba(255,170,70,.20), rgba(255,170,70,0) 70%);
+        animation:menuGlow 5.5s ease-in-out infinite alternate;
+      }
+      @keyframes menuGlow{ from{ opacity:.55; } to{ opacity:1; } }
+      .menuEmbers{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+      .menuEmbers i{
+        position:absolute; bottom:-14px; width:5px; height:5px; border-radius:50%;
+        background:radial-gradient(circle, #ffe6a8 0%, #f59b3c 55%, rgba(245,155,60,0) 78%);
+        opacity:0; animation:emberRise 8s linear infinite;
+      }
+      .menuEmbers i:nth-child(1){ left:12%; animation-delay:0s; animation-duration:9s; }
+      .menuEmbers i:nth-child(2){ left:26%; animation-delay:2.6s; animation-duration:11s; width:4px; height:4px; }
+      .menuEmbers i:nth-child(3){ left:44%; animation-delay:5.2s; animation-duration:8s; }
+      .menuEmbers i:nth-child(4){ left:63%; animation-delay:1.4s; animation-duration:10s; width:6px; height:6px; }
+      .menuEmbers i:nth-child(5){ left:78%; animation-delay:4.1s; animation-duration:9.5s; width:4px; height:4px; }
+      .menuEmbers i:nth-child(6){ left:90%; animation-delay:6.4s; animation-duration:12s; }
+      @keyframes emberRise{
+        0%{ transform:translate(0,0); opacity:0; }
+        10%{ opacity:.8; }
+        65%{ opacity:.45; }
+        100%{ transform:translate(16px,-52vh); opacity:0; }
+      }
+      #titleCard .inner{
+        border-radius:16px;
+        background:
+          radial-gradient(ellipse 130% 60% at 50% -8%, rgba(255,170,80,.30), rgba(255,170,80,0) 62%),
+          linear-gradient(180deg, #54220d, #2e1306 55%, #200d04);
+        border:1px solid rgba(240,190,100,.9);
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,.55), inset 0 0 0 3px #1a0b03, inset 0 0 0 4px rgba(240,190,100,.4),
+          inset 0 1px 0 rgba(255,226,170,.2), 0 22px 64px rgba(0,0,0,.78), 0 0 54px rgba(255,150,50,.18);
+      }
+      #titleCard h1.gameTitle{ animation:titleGlow 4.6s ease-in-out infinite alternate; }
+      @keyframes titleGlow{
+        from{ text-shadow:0 2px 0 #7a2d0c, 0 3px 0 rgba(46,20,7,.85), 0 0 18px rgba(255,170,60,.32), 0 12px 28px rgba(0,0,0,.6); }
+        to{ text-shadow:0 2px 0 #7a2d0c, 0 3px 0 rgba(46,20,7,.85), 0 0 32px rgba(255,180,70,.55), 0 12px 28px rgba(0,0,0,.6); }
+      }
+      #titleCard .bigbtn{
+        border-radius:12px; padding:13px 18px; font-size:15.5px; letter-spacing:.13em; margin-top:10px;
+        transition:filter .16s ease, border-color .16s ease;
+      }
+      #titleCard .bigbtn:hover{ filter:brightness(1.1); }
+      #titleCard #btnStart{
+        padding:15px 18px; font-size:16.5px; position:relative; overflow:hidden;
+        background:linear-gradient(180deg,#cd3a1f,#8a1e0d);
+        box-shadow:inset 0 1px 0 rgba(255,232,180,.45), inset 0 -10px 16px rgba(0,0,0,.25), 0 8px 24px rgba(0,0,0,.5), 0 0 26px rgba(230,90,40,.4);
+      }
+      #btnStart::after{
+        content:""; position:absolute; top:0; bottom:0; left:0; width:45%;
+        background:linear-gradient(100deg, transparent, rgba(255,242,205,.30), transparent);
+        transform:translateX(-160%);
+        animation:btnSheen 6s ease-in-out infinite; pointer-events:none;
+      }
+      @keyframes btnSheen{ 0%{ transform:translateX(-160%); } 16%{ transform:translateX(330%); } 100%{ transform:translateX(330%); } }
+      #titleCard .bigbtn.ridebtn{ background:linear-gradient(180deg,#b57e24,#77500f); }
+      #titleCard .bigbtn.duelbtn{
+        background:linear-gradient(180deg,#40648f,#23405f); border-color:rgba(170,210,245,.6); color:#e2effc;
+        box-shadow:inset 0 1px 0 rgba(215,238,255,.28), inset 0 -8px 14px rgba(0,0,0,.3), 0 5px 16px rgba(0,0,0,.48), 0 0 16px rgba(90,150,220,.22);
+      }
+      #titleCard .bigbtn.altbtn{ background:linear-gradient(180deg,#2a7a66,#17503f); border-color:rgba(160,235,205,.55); color:#dcf4e4; }
+      #titleCard #btnLan{ background:linear-gradient(180deg,#2f6d8a,#1a4258); border-color:rgba(160,215,240,.5); color:#d9eff8; }
+      #titleCard .menuRow{ gap:10px; margin-top:10px; }
+      #titleCard .menuRow .bigbtn{ margin-top:0; border-radius:12px; }
+      #titleCard .menuRow #btnBounty{ background:linear-gradient(180deg,#9c4a16,#63300c); border-color:rgba(255,200,120,.6); color:#ffe3ae; }
+      #titleCard .menuRow #btnDaily{ background:linear-gradient(180deg,#8a6d1f,#5d470e); border-color:rgba(255,220,130,.55); color:#ffedb5; }
+      #titleCard .menuRow.utilRow{ margin-top:14px; padding-top:12px; border-top:1px solid rgba(240,190,100,.22); }
+      #titleCard .menuRow.utilRow .bigbtn{
+        background:linear-gradient(180deg, rgba(84,50,22,.85), rgba(46,27,11,.9));
+        font-size:12.5px; padding:11px 4px;
+      }
+      #titleCard .segRow{ border-radius:12px; }
+      #titleCard .segBtn{ border-radius:9px; }
+      @media (max-height:920px){
+        #titleCard .bigbtn{ padding:9px 12px; font-size:13.5px; margin-top:7px; }
+        #titleCard #btnStart{ padding:11px 12px; font-size:14.5px; }
+        #titleCard .menuRow{ margin-top:7px; }
+        #titleCard .menuRow.utilRow{ margin-top:9px; padding-top:8px; }
+      }
+      @media (prefers-reduced-motion: reduce){
+        #titleCard::before, #titleCard h1.gameTitle, #btnStart::after{ animation:none; }
+        .menuEmbers{ display:none; }
+      }
     </style>
   </head>
   <body>
@@ -1030,7 +1174,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.12 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.13 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -1158,7 +1302,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.12</div>
+        <div class="ver">SHOWDOWN 1881 · v2.13</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -1192,6 +1336,9 @@
     <div id="toast"></div>
     <div id="steady">Steady… wait for the bell</div>
     <button id="btnNext" type="button">Next Duel</button>
+    <!-- Endless Duel RETRY (v2.13): shown only on the Endless fail
+         screen, above Back to Menu — one tap starts a fresh run. -->
+    <button id="btnRetry" type="button">RETRY — NEW RUN</button>
 
     <!-- Weapon switch (v1.17 ride · v1.23 duels): shown during the
          stagecoach chase AND in duels — swap between revolver, shotgun
@@ -1206,6 +1353,9 @@
     </div>
 
     <div class="card" id="titleCard">
+      <!-- Menu embers (v2.13): a few sparks drifting up past the card
+           while the menu is up — pure decoration, pointer-blind. -->
+      <div class="menuEmbers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="inner">
         <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ HIGH NOON ★</p>
         <h1 class="gameTitle"><span class="gtName">Showdown</span><span class="gtYear">★ 1881 ★</span></h1>
@@ -1227,15 +1377,15 @@
           <button class="bigbtn ridebtn" id="btnBounty" type="button">★ Bounty Hunt</button>
           <button class="bigbtn altbtn" id="btnDaily" type="button">★ Daily Duel</button>
         </div>
-        <div class="menuRow">
+        <div class="menuRow utilRow">
           <button class="bigbtn learnbtn" id="btnStore" type="button">Store</button>
           <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         </div>
-        <div class="menuRow">
+        <div class="menuRow utilRow">
           <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
           <button class="bigbtn learnbtn" id="btnSettings" type="button">Settings</button>
         </div>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1252,7 +1402,7 @@
         <button class="bigbtn popbtn" id="btnPracticePopup" type="button">Pop-Up Targets</button>
         <p class="small">Targets jump up one at a time, somewhere new every time — shoot each one before it drops back down.</p>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1272,7 +1422,7 @@
         <button class="bigbtn ridebtn" id="btnRideEndless" type="button">Endless · Coach After Coach</button>
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1293,7 +1443,7 @@
         <button class="bigbtn duelbtn" id="btnEndlessDuel" type="button">Endless Duel · Wave After Wave</button>
         <p class="small">Goons keep coming, wave after wave — never more than <b>two in the open</b> at once. The rest wait behind the <b>hay bales</b>: shoot two down and another pops out. Their draws get quicker every wave, up to a fair limit, and between waves you catch your breath — a bit of hide back and a free reload. Every goon dropped pays <b>$10</b>. Best run: <b id="endlessDuelBestLine">no run yet</b></p>
         <button class="bigbtn" id="btnBackDuelModes" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1327,7 +1477,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1361,7 +1511,7 @@
         <div class="storeSec" data-store-cat="hats">Hats · Worn Into Every Duel</div>
         <div id="storeHats" data-store-cat="hats"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1388,7 +1538,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1417,7 +1567,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1457,7 +1607,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1489,7 +1639,7 @@
         <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1526,7 +1676,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, off the main menu: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1540,6 +1690,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.13</b> — <b>Endless Duel gets a RETRY button</b> — fail a run and one tap starts a fresh run on the spot; your best run stays saved. <b>Fight words are tidied up</b>: messages now sit in their own strip under the banner instead of spilling across the street. <b>Every panel has an ✕</b> in its top corner to close it — What's New included. And the <b>main menu is refreshed</b>: cleaner, warmer and more colourful, with drifting embers and a little life in the buttons — same buttons, same order.</p>
           <p><b>v2.12</b> — <b>Two new ways to draw: Quick Duel and Endless Duel.</b> A new menu button — <b>Quick &amp; Endless Duels</b> — opens a picker, same as the stagecoach's. <b>Quick Duel</b>: one fast duel and done — a <b>random gunslinger</b> at a <b>random range</b> under the normal rules, <b>$40</b> if you drop him. <b>Endless Duel</b>: <b>wave after wave of goons</b> until your hide runs out — but never a firing squad. No more than <b>two in the open at once</b>; the rest <b>wait behind hay bales</b> down the street, and when you shoot two down, <b>another pops out</b> into the open. Their draws are <b>staggered</b> and get <b>quicker every wave, capped</b> at a fair ceiling — never faster than the ladder's quickest gun. Clear a wave and there's a <b>breather</b>: a bit of hide back and a <b>free reload</b>. Every goon pays <b>$10</b>, and your <b>best run</b> is kept on the picker card and in Stats. The ladder, the practices, Bounty, Daily, LAN and the ride are exactly as they were.</p>
           <p><b>v2.11</b> — <b>A third practice: Pop-Up Targets.</b> The Practice picker now offers three ways to train. In the new one, fifteen bullseye targets <b>jump up one at a time</b> from behind the crates and barrels downrange — <b>somewhere new every time</b> — and each one only stays up a short while. <b>Shoot it before it drops back down</b>: too slow and it drops away, gone, and the next one pops up somewhere else. Same guns, same aiming, same reload as the other practices, and your <b>hits, misses and shots are counted on screen</b>. And the view <b>turns to face each target</b> as it pops up, so it always lands fully in view near the centre of the screen — never cut off at the edge, scope or no scope. Shooting Bottles and Flying Bottles are exactly as they were.</p>
           <p><b>v2.10</b> — <b>The drink comes early, and he never pauses.</b> In the Tap to Ride In sting the timing is tightened up: you <b>lift your bourbon and drink as he shoots the 2nd bottle</b> — three gulps you can hear while he works — and your bottle is <b>already thrown at him before he reaches the 5th</b>. And he shoots bottles <b>1, 2, 3, 4, 5 in one steady flow, no pause before any of them</b>, then turns and shoots you instead of the 6th, same as before. The slam-in credit and the extra half-second hold before the menu are unchanged.</p>
@@ -1611,7 +1762,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.12</div>
+        <div class="ver">VERSION 2.13</div>
       </div>
     </div>
 
@@ -1634,7 +1785,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1656,7 +1807,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -1667,7 +1818,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.12 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.13 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -9300,8 +9451,11 @@ three/build/three.module.js:
       // In practice, words take the low practice strip (see #toast.practice)
       // so they never cover the bottles mid-screen. In the ride they take
       // their own plated strip too (v1.20, #toast.ride) — low, clear of
-      // the coach and every plate, never covered by anything.
-      toastEl.className = text ? ('on' + (G.mode === 'practice' ? ' practice' : G.mode === 'ride' ? ' ride' : '')) : '';
+      // the coach and every plate, never covered by anything. In a duel
+      // they take a contained strip under the banner (v2.13, #toast.duel)
+      // — capped in width and plated, so a long message stacks neatly
+      // instead of spilling bare across the street.
+      toastEl.className = text ? ('on' + (G.mode === 'practice' ? ' practice' : G.mode === 'ride' ? ' ride' : G.mode === 'duel' ? ' duel' : '')) : '';
       toastTimer = hold ? Infinity : 3600;
       // Declutter (v1.21): on the ride no message parks on screen
       // forever — five seconds and it fades — and while the rifle
@@ -11193,7 +11347,10 @@ three/build/three.module.js:
     }
     function updateHp(){ $('hpFill').style.width = Math.max(G.hp, 0) + '%'; }
     function showNext(label){ btnNext.textContent = label; btnNext.style.display = 'block'; }
-    function hideNext(){ btnNext.style.display = 'none'; }
+    /* Endless Duel RETRY (v2.13): shown only by endlessLose, hidden
+       wherever the Next button hides. */
+    function showRetry(){ var br = $('btnRetry'); if (br) br.style.display = 'block'; }
+    function hideNext(){ btnNext.style.display = 'none'; var br = $('btnRetry'); if (br) br.style.display = 'none'; }
     function hitmark(vital){
       var hm = $('hitmark');
       hm.style.transform = 'translate(' + px + 'px,' + py + 'px)';
@@ -13751,6 +13908,30 @@ three/build/three.module.js:
       initAudio(); sndClick();
       closeUpdates();
     });
+    /* Corner ✕ (v2.13): every panel gets a round ✕ in the top corner
+       of its card — What's New included — and each ✕ simply presses
+       the Back button that panel already had, so closing from the
+       corner behaves exactly like closing from the bottom. The main
+       menu itself needs none: it IS the menu. */
+    var CARD_X = [
+      ['practiceCard', 'btnBackPractice'], ['rideCard', 'btnBackRide'],
+      ['duelModesCard', 'btnBackDuelModes'], ['lanCard', 'btnBackLan'],
+      ['storeCard', 'btnBackStoreTop'], ['inventoryCard', 'btnBackInvTop'],
+      ['lockerCard', 'btnBackLocker'], ['statsCard', 'btnBackStatsTop'],
+      ['settingsCard', 'btnBackSettings'], ['learnCard', 'btnBackLearn'],
+      ['updatesCard', 'btnBackUpdates'], ['bountyCard', 'btnBackBounty'],
+      ['dailyCard', 'btnBackDaily']
+    ];
+    CARD_X.forEach(function(pair){
+      var card = $(pair[0]); if (!card) return;
+      var inner = card.querySelector('.inner'); if (!inner) return;
+      var x = document.createElement('button');
+      x.type = 'button'; x.className = 'cardX'; x.textContent = '✕';
+      x.setAttribute('aria-label', 'Close');
+      x.addEventListener('click', function(){ var b = $(pair[1]); if (b) b.click(); });
+      inner.insertBefore(x, inner.firstChild);
+      inner.classList.add('hasX');
+    });
     $('btnStore').addEventListener('click', function(){
       initAudio(); sndClick();
       renderStore();
@@ -13871,6 +14052,15 @@ three/build/three.module.js:
       G.wins = 0; G.losses = 0; G.best = null; G.shots = 0; G.hits = 0; G.vitals = 0;
       updateStats();
       startDuel(0);
+    });
+    /* Endless Duel RETRY (v2.13): the fail screen's RETRY button
+       starts a fresh Endless run immediately — wave 1, full hide —
+       while the best run stays banked (endlessLose recorded it
+       before the button ever showed). */
+    $('btnRetry').addEventListener('click', function(){
+      initAudio(); sndClick();
+      hideNext();
+      startEndlessDuel();
     });
 
     /* ============================== SLOW-MO REPLAY (v2.2) ==============================
@@ -14196,7 +14386,11 @@ three/build/three.module.js:
         banner('THE STREET WINS');
         toast('The goons finally got you. ' + runLine, true);
       }
+      // the run is over: the weapon bar steps off the street so the
+      // end buttons own the bottom of the screen (v2.13)
+      $('rideSwitch').className = '';
       showNext('Back to Menu');
+      showRetry(); // Endless Duel (v2.13): RETRY starts a fresh run on the spot
     }
     /* A waiting goon pops out: he steps out from behind his hay
        bale into a freed open spot, standing up as he comes, iron
@@ -14949,6 +15143,7 @@ three/build/three.module.js:
       else if (e.code === 'KeyR'){ startReload(performance.now()); }
       else if (e.code === 'Enter'){
         if ($('titleCard').style.display !== 'none' && G.state === 'title') $('btnStart').click();
+        else if ($('btnRetry').style.display === 'block') $('btnRetry').click();
         else if (btnNext.style.display === 'block') btnNext.click();
       }
     });
