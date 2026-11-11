@@ -1880,6 +1880,173 @@
         box-shadow:inset 0 0 0 1.5px rgba(232,195,122,.65), 0 3px 10px rgba(0,0,0,.28);
       }
       .mtab#btnPractice svg{ color:#cfe09a; }
+
+      /* ---------- Menu melted into the street (v2.30): the v2.29
+         western blend, taken further at the player's word — "more
+         blended". Same layout, same pieces, same tap targets,
+         same western gold / black / brown palette. What changes
+         is how little of them there is: every fill is worn thinner
+         still, the top bar and the tab bar DISSOLVE into the scene
+         at their inner edges instead of ending on a ruled line,
+         bezels drop to a whisper of gold or vanish, hard shadows
+         are gone — and the street's own light, dust, townsfolk,
+         coach and outlaws show through and around every control,
+         so the menu reads as lettering and light laid over one
+         living animation screen. Readability is carried the
+         honest way: a stronger backdrop blur behind the thinned
+         fills, and every label, icon and chest state keeps its
+         dark text shadow (chest states gain one, now their pill
+         is thinner too). BATTLE! stays the one solid piece —
+         green and unmistakable — with only its edge and shadow
+         softened. This block sits last in the sheet on purpose. */
+      #titleCard::before{
+        background:radial-gradient(ellipse 118% 88% at 50% 44%, rgba(0,0,0,0) 58%, rgba(16,7,2,.16) 84%, rgba(8,3,1,.34) 100%);
+      }
+      .menuTop{
+        background:linear-gradient(180deg, rgba(38,23,11,.42), rgba(24,14,6,.26) 68%, rgba(24,14,6,0));
+        border-bottom:none;
+        box-shadow:none;
+        -webkit-backdrop-filter:blur(9px) saturate(1.2); backdrop-filter:blur(9px) saturate(1.2);
+      }
+      .mtAvatar{
+        background:linear-gradient(180deg, rgba(240,195,92,.82), rgba(200,137,30,.82));
+        border:1px solid rgba(60,36,8,.5);
+        box-shadow:0 2px 7px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.45);
+      }
+      .mtName{ text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 6px rgba(0,0,0,.6); }
+      .mtLevel{
+        background:linear-gradient(180deg, rgba(122,82,32,.5), rgba(84,54,18,.5));
+        border:1px solid rgba(232,195,122,.32);
+        box-shadow:none;
+      }
+      .mtXpTrack{ background:rgba(10,5,2,.38); box-shadow:inset 0 1px 3px rgba(0,0,0,.6); }
+      .menuTop .mtChip{
+        background:rgba(16,9,4,.34); border:1px solid rgba(232,195,122,.3);
+        box-shadow:inset 0 1px 0 rgba(255,233,189,.14);
+        -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+      }
+      .mtGear{
+        background:linear-gradient(180deg, rgba(110,74,38,.5), rgba(70,44,20,.5));
+        border:1px solid rgba(232,195,122,.32);
+        box-shadow:0 2px 7px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.25);
+        -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+      }
+      #titleCard .inner{
+        background:linear-gradient(180deg, rgba(34,20,9,.27), rgba(20,11,5,.35));
+        border:1px solid rgba(232,195,122,.2); border-radius:22px;
+        box-shadow:0 6px 20px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,233,189,.12);
+        -webkit-backdrop-filter:blur(11px) saturate(1.2); backdrop-filter:blur(11px) saturate(1.2);
+      }
+      .chestSlot{
+        background:linear-gradient(180deg, rgba(146,102,52,.32), rgba(94,60,28,.38));
+        border:1px solid rgba(232,195,122,.24); border-radius:15px;
+        box-shadow:0 2px 8px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,240,200,.28);
+        -webkit-backdrop-filter:blur(5px); backdrop-filter:blur(5px);
+      }
+      .chestSlot:active{ transform:translateY(2px); box-shadow:0 1px 5px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,240,200,.24); }
+      .chestSlot svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.75)); }
+      .chestState{ background:rgba(12,6,2,.48); text-shadow:0 1px 2px rgba(0,0,0,.9); }
+      #titleCard #btnBattle{
+        background:linear-gradient(180deg, rgba(143,214,58,.94), rgba(84,173,20,.95) 55%, rgba(65,150,8,.96));
+        border:1.5px solid rgba(23,58,6,.55);
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.42), inset 0 -6px 0 rgba(20,60,4,.24), 0 5px 14px rgba(0,0,0,.3);
+      }
+      #titleCard #btnBattle:active{
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.38), inset 0 -4px 0 rgba(20,60,4,.24), 0 2px 8px rgba(0,0,0,.3);
+      }
+      .menuTabs{
+        background:linear-gradient(0deg, rgba(24,13,5,.44), rgba(30,18,8,.3) 68%, rgba(30,18,8,0));
+        border-top:none;
+        box-shadow:none;
+        -webkit-backdrop-filter:blur(9px) saturate(1.2); backdrop-filter:blur(9px) saturate(1.2);
+      }
+      .mtab svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.8)); }
+      .mtab.on, #titleCard .menuTabs .mtab#btnDuels.on{
+        background:linear-gradient(180deg, rgba(146,102,52,.42), rgba(94,60,28,.46));
+        box-shadow:inset 0 0 0 1px rgba(232,195,122,.38), 0 2px 7px rgba(0,0,0,.18);
+      }
+
+      /* ---------- Floating menu (v2.30, the player's pick — Option
+         4, Floating only): NO PANELS AT ALL. Every background,
+         border, bezel, blur and slab shadow on the main menu's
+         chrome is REMOVED — the top bar, the middle panel and the
+         bottom tab bar have no surface of their own, and the chest
+         row is gone from the menu entirely (Daily Duel, Bounty and
+         the Ride live behind their tabs and hubs, as before). What
+         remains is the content itself floating directly on the
+         living Main Street: the hat avatar, your name, level and
+         XP, the trophy and wallet figures, the settings cog, the
+         green BATTLE! button, the version line and the five tab
+         icons with their labels — all in the western gold / cream
+         on the street, carried readable by layered dark text
+         shadows and drop shadows, the picked tab marked by a
+         faint warm backing glow and brighter gold, never a box.
+         Behind it all the street stays awake (MENU LIFE runs in
+         the title state): townsfolk stroll the boardwalks, the
+         outlaw gang rides through, the stagecoach rolls down the
+         road, a tumbleweed bounces across, birds cross, chimney
+         smoke curls, the SALOON sign swings, pennants flutter,
+         dust and embers drift, and the camera sways slow. Layout,
+         spacing, tap targets and wiring are untouched — BATTLE!
+         keeps its green fill, the one solid piece, softened at
+         the edge. This block sits last in the sheet on purpose. */
+      #titleCard::before{
+        background:radial-gradient(ellipse 118% 88% at 50% 44%, rgba(0,0,0,0) 62%, rgba(16,7,2,.10) 86%, rgba(8,3,1,.22) 100%);
+      }
+      .menuTop{
+        background:none; border-bottom:none; box-shadow:none;
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+      }
+      .mtAvatar{
+        background:none; border:none; box-shadow:none; color:#ffd98f;
+      }
+      .mtAvatar svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.9)) drop-shadow(0 0 6px rgba(0,0,0,.45)); }
+      .mtName{ color:#ffe9bd; text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 10px rgba(0,0,0,.7), 0 0 4px rgba(0,0,0,.6); }
+      .mtLevel{
+        background:none; border:none; box-shadow:none; color:#ffd98f;
+        text-shadow:0 1px 3px rgba(0,0,0,.95), 0 0 6px rgba(0,0,0,.6);
+      }
+      .mtXpTrack{ background:rgba(10,5,2,.38); box-shadow:none; }
+      .mtXpFill{ box-shadow:0 0 6px rgba(255,217,143,.5); }
+      .menuTop .mtChip{
+        background:none; border:none; box-shadow:none;
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+        color:#ffe9bd; text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 8px rgba(0,0,0,.65);
+      }
+      .menuTop .mtChip svg{ filter:drop-shadow(0 1px 2px rgba(0,0,0,.9)); }
+      .menuTop .mtChip.gold{ color:#ffd94d; }
+      .mtGear{
+        background:none; border:none; box-shadow:none; color:#ffd98f;
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+      }
+      .mtGear svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.9)) drop-shadow(0 0 6px rgba(0,0,0,.45)); }
+      #titleCard .inner{
+        background:none; border:none; box-shadow:none;
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+      }
+      #titleCard #btnBattle{
+        background:linear-gradient(180deg,#8fd63a,#54ad14 55%,#419608);
+        border:1.5px solid rgba(23,58,6,.5); border-radius:18px; color:#fff;
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.42), inset 0 -6px 0 rgba(20,60,4,.24), 0 5px 16px rgba(0,0,0,.35);
+        text-shadow:0 2px 0 rgba(20,60,4,.55), 0 2px 10px rgba(0,0,0,.35);
+      }
+      #titleCard #btnBattle:active{
+        transform:translateY(2px);
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.38), inset 0 -4px 0 rgba(20,60,4,.24), 0 2px 9px rgba(0,0,0,.35);
+      }
+      #titleCard .ver{ color:#eec987; text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 8px rgba(0,0,0,.65); }
+      .menuTabs{
+        background:none; border-top:none; box-shadow:none;
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+      }
+      .mtab{ color:#e6cf9e; text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 8px rgba(0,0,0,.6); }
+      .mtab svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.9)) drop-shadow(0 0 5px rgba(0,0,0,.4)); }
+      .mtab.on, #titleCard .menuTabs .mtab#btnDuels.on{
+        background:radial-gradient(ellipse 78% 88% at 50% 46%, rgba(24,12,2,.5), rgba(24,12,2,0) 72%);
+        box-shadow:none; color:#ffd98f;
+        text-shadow:0 1px 3px rgba(0,0,0,.95), 0 0 10px rgba(255,190,90,.45);
+      }
+      .mtab.on svg{ filter:drop-shadow(0 1px 3px rgba(0,0,0,.9)) drop-shadow(0 0 7px rgba(255,190,90,.5)); }
     </style>
   </head>
   <body>
@@ -1893,7 +2060,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v2.29 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v2.30 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -2021,7 +2188,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v2.29</div>
+        <div class="ver">SHOWDOWN 1881 · v2.30</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -2111,31 +2278,12 @@
         </div>
       </div>
       <div class="inner">
-        <!-- Chest row (v2.21): four reward slots under the scene,
-             Clash Royale style — the Daily Duel chest, the streak
-             chest, the Bounty chest and the strongbox chest. Each
-             one opens the real thing; states are read from the save
-             by refreshMenuTop(). -->
-        <div class="chestRow">
-          <button class="chestSlot" id="chestDaily" type="button">
-            <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M7 19 a17 11.5 0 0 1 34 0 Z" fill="#7a4a22" stroke="#241203" stroke-width="1.6"/><rect x="7" y="19" width="34" height="13" rx="2" fill="#8a5527" stroke="#241203" stroke-width="1.6"/><rect x="21" y="12.5" width="6" height="19.5" fill="#d9a441" stroke="#241203" stroke-width="1.2"/><rect x="20" y="22.5" width="8" height="7" rx="1.6" fill="#f3cd7a" stroke="#241203" stroke-width="1.2"/></svg>
-            <span class="chestLbl">DAILY DUEL</span><span class="chestState" id="chestDailyState">READY · $75</span>
-          </button>
-          <button class="chestSlot" id="chestStreak" type="button">
-            <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M7 19 a17 11.5 0 0 1 34 0 Z" fill="#6d3a1e" stroke="#241203" stroke-width="1.6"/><rect x="7" y="19" width="34" height="13" rx="2" fill="#7d4526" stroke="#241203" stroke-width="1.6"/><rect x="21" y="12.5" width="6" height="19.5" fill="#c9973f" stroke="#241203" stroke-width="1.2"/><rect x="20" y="22.5" width="8" height="7" rx="1.6" fill="#f3cd7a" stroke="#241203" stroke-width="1.2"/></svg>
-            <span class="chestLbl">DAY STREAK</span><span class="chestState" id="chestStreakState">0 DAYS</span>
-          </button>
-          <button class="chestSlot" id="chestBounty" type="button">
-            <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M7 19 a17 11.5 0 0 1 34 0 Z" fill="#5d4632" stroke="#241203" stroke-width="1.6"/><rect x="7" y="19" width="34" height="13" rx="2" fill="#6e5540" stroke="#241203" stroke-width="1.6"/><rect x="21" y="12.5" width="6" height="19.5" fill="#b08d3e" stroke="#241203" stroke-width="1.2"/><rect x="20" y="22.5" width="8" height="7" rx="1.6" fill="#ecd28a" stroke="#241203" stroke-width="1.2"/></svg>
-            <span class="chestLbl">BOUNTY</span><span class="chestState" id="chestBountyState">$120+</span>
-          </button>
-          <button class="chestSlot" id="chestRide" type="button">
-            <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M7 19 a17 11.5 0 0 1 34 0 Z" fill="#4f3d55" stroke="#241203" stroke-width="1.6"/><rect x="7" y="19" width="34" height="13" rx="2" fill="#5f4a66" stroke="#241203" stroke-width="1.6"/><rect x="21" y="12.5" width="6" height="19.5" fill="#a8b6c4" stroke="#241203" stroke-width="1.2"/><rect x="20" y="22.5" width="8" height="7" rx="1.6" fill="#dfe8f0" stroke="#241203" stroke-width="1.2"/></svg>
-            <span class="chestLbl">STRONGBOX</span><span class="chestState" id="chestRideState">$150 BOX</span>
-          </button>
-        </div>
+        <!-- Chests removed (v2.30): no chest row on the floating menu —
+             Daily Duel lives in the DUELS hub, Bounty Hunt in PRACTICE,
+             the Ride behind its tab; refreshMenuTop() null-guards the
+             old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
       <!-- Bottom tab bar (v2.21, Clash Royale layout): five tabs,
            icon + one word each — these and the BATTLE button are the
@@ -2175,7 +2323,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2192,7 +2340,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2212,7 +2360,7 @@
         <p class="small">One wanted outlaw, loose in town — you get <b>90 seconds</b> to catch him. The faster the capture, the bigger the payout.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2233,7 +2381,7 @@
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2267,7 +2415,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2314,7 +2462,7 @@
         <div class="storeSec" data-store-cat="thrown">Throwable · Knives, Axes &amp; Dynamite — Bought Once, Carried Into Every Fight</div>
         <div id="storeThrown" data-store-cat="thrown"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2343,7 +2491,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2372,7 +2520,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2412,7 +2560,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2446,7 +2594,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2486,7 +2634,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2524,7 +2672,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2538,6 +2686,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v2.30</b> — <b>The menu floats — no panels at all.</b> The top bar, the middle panel and the tab bar lose their backgrounds, borders and bezels completely: just the <b>icons, gold lettering and tab labels floating on the living street</b> — townsfolk strolling, the coach rolling through, smoke curling, the camera swaying — readable on soft shadows alone. The <b>chest row is gone</b> too (Daily and Bounty live in their hubs). <b>BATTLE!</b> stays green.</p>
           <p><b>v2.29</b> — <b>Swap guns from round 1.</b> The weapon bar is up from the moment a duel opens — every mode, mid-reload, even scoped. The menu goes <b>western</b>: gold, leather and dark wood, see-through over the living street. No more blue.</p>
           <p><b>v2.28</b> — <b>The menu stops blocking the street.</b> The chest + <b>BATTLE!</b> panel is <b>compact and translucent</b> now — smaller chests in one tight row, a shorter BATTLE!, no more than about a third of the screen — so the <b>living Main Street fills the view</b> again, and the <b>bottom tab bar sits fully clear</b> underneath it, all five labels — BATTLE · PRACTICE · GEAR · SHOP · RIDE — uncut.</p>
           <p><b>v2.27</b> — <b>No overlaps in a fight, a BOW tile, and a throwable switcher.</b> The fight HUD is restacked into clear rows so <b>nothing sits on anything</b> — the round BOW circle that covered the <b>Face the Next Gunslinger</b> button is gone, and that button has its own row now. The bottom bar is <b>four tiles — REVOLVER · SHOTGUN · RIFLE · BOW</b> — each with its count, the one in hand lit gold. <b>Knife, Axe and Dynamite</b> get their own <b>switcher tile</b> at bottom-left: tap to take up the one it shows, tap again to switch to the next one you own — throwing uses the one picked.</p>
@@ -2626,7 +2775,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 2.29</div>
+        <div class="ver">VERSION 2.30</div>
       </div>
     </div>
 
@@ -2649,7 +2798,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2671,7 +2820,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2682,7 +2831,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 2.29 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 2.30 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -16044,14 +16193,16 @@ three/build/three.module.js:
        Store's back button can tell the two entries apart. */
     $('btnBattle').addEventListener('click', function(){ $('btnStart').click(); });
     $('btnStoreGear').addEventListener('click', function(){ $('btnStore').click(); });
-    /* Chest row (v2.21): each slot opens the real thing. Daily and
-       Bounty normally back out to their hubs; opened from a chest
-       they back straight out to the main menu instead. */
+    /* Chest row (v2.21, REMOVED in v2.30): the floating menu carries
+       no chests — Daily Duel and Bounty Hunt open from their hubs.
+       The wiring stays, null-guarded, so a chest element is only ever
+       wired if one exists; dailyReturn / bountyReturn still steer the
+       hub cards' Back buttons. */
     var dailyReturn = 'duels', bountyReturn = 'practice';
-    $('chestDaily').addEventListener('click', function(){ dailyReturn = 'menu'; $('btnDaily').click(); });
-    $('chestStreak').addEventListener('click', function(){ dailyReturn = 'menu'; $('btnDaily').click(); });
-    $('chestBounty').addEventListener('click', function(){ bountyReturn = 'menu'; $('btnBounty').click(); });
-    $('chestRide').addEventListener('click', function(){ $('btnRide').click(); });
+    var cDailyEl = $('chestDaily'); if (cDailyEl) cDailyEl.addEventListener('click', function(){ dailyReturn = 'menu'; $('btnDaily').click(); });
+    var cStreakEl = $('chestStreak'); if (cStreakEl) cStreakEl.addEventListener('click', function(){ dailyReturn = 'menu'; $('btnDaily').click(); });
+    var cBountyEl = $('chestBounty'); if (cBountyEl) cBountyEl.addEventListener('click', function(){ bountyReturn = 'menu'; $('btnBounty').click(); });
+    var cRideEl = $('chestRide'); if (cRideEl) cRideEl.addEventListener('click', function(){ $('btnRide').click(); });
     $('btnGearLocker').addEventListener('click', function(){
       initAudio(); sndClick();
       var lkItem, lkKind;
