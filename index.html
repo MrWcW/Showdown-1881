@@ -2123,10 +2123,11 @@
       .mapCard.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); box-shadow:0 0 0 1px var(--brass), 0 4px 14px rgba(0,0,0,.45); }
       .mapCard:active{ transform:scale(.97); }
 
-      /* ---------- MAPS status (v3.1): the one status line under
-         the Settings MAPS picker, wearing the dress the old
-         background status line wore — the picker cards themselves
-         are the shared .mapCard dress above, one pick everywhere. ---------- */
+      /* ---------- NEXT DUEL status (v3.1): the one status line
+         under the map picker — it lives on the menu's BACKGROUND
+         sheet since v3.3 — wearing the dress the old background
+         status line wore; the picker cards themselves are the
+         shared .mapCard dress above, one pick everywhere. ---------- */
       #mapSettingNow{ margin-top:8px; font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.18em; color:var(--brass); text-transform:uppercase; }
 
       /* ---------- BACKGROUND ANIMATION picker (v3.2): the menu
@@ -2138,6 +2139,48 @@
       .bgCard.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); box-shadow:0 0 0 1px var(--brass), 0 4px 14px rgba(0,0,0,.45); }
       .bgCard:active{ transform:scale(.97); }
       #bgAnimNow{ margin-top:8px; font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.18em; color:var(--brass); text-transform:uppercase; }
+
+      /* ---------- BACKGROUND tab & sheet (v3.3): backgrounds left
+         Settings for good. One small floating gold BACKGROUND button
+         on the menu — under the version line, clear of BATTLE! above
+         it and the tab bar below — opens ONE clean slide-up sheet
+         holding everything background: the menu scene and its
+         animation switch, the one shared hour, and the next duel's
+         map. The sheet reuses the pickers' own dresses (.bgCard /
+         .mapCard / .segBtn / .locLbl and the status lines), shrunk
+         to a five-across row so the whole sheet fits a phone screen
+         with no scrolling. Slide and fade run ~250ms both ways. --- */
+      #btnBgTab{
+        display:flex; width:fit-content; margin:10px auto 0; align-items:center; gap:8px;
+        background:none; border:none; cursor:pointer; padding:8px 12px;
+        color:#ffd98f; font-family:'Special Elite',monospace; font-size:13.5px; letter-spacing:.3em;
+        text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 8px rgba(0,0,0,.65), 0 0 10px rgba(255,190,90,.4);
+      }
+      #btnBgTab svg{ width:20px; height:20px; flex:0 0 auto; filter:drop-shadow(0 1px 3px rgba(0,0,0,.9)) drop-shadow(0 0 5px rgba(0,0,0,.4)); }
+      #btnBgTab:active{ transform:scale(.95); }
+      #bgSheet{ position:fixed; inset:0; z-index:40; visibility:hidden; transition:visibility 0s linear .27s; }
+      #bgSheet.open{ visibility:visible; transition-delay:0s; }
+      #bgSheet .bgScrim{ position:absolute; inset:0; background:rgba(6,3,1,.42); opacity:0; transition:opacity .25s ease; }
+      #bgSheet.open .bgScrim{ opacity:1; }
+      #bgSheet .bgPanel{
+        position:absolute; left:50%; bottom:0; width:100%; max-width:560px; text-align:center;
+        transform:translate(-50%,106%); transition:transform .25s ease;
+        background:linear-gradient(180deg, rgba(38,22,10,.97), rgba(20,11,5,.98));
+        border-top:2px solid var(--brass); border-radius:16px 16px 0 0;
+        box-shadow:0 -10px 34px rgba(0,0,0,.6);
+        padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+        max-height:94dvh; overflow-y:auto; touch-action:pan-y;
+      }
+      #bgSheet.open .bgPanel{ transform:translate(-50%,0); }
+      #bgSheet .bgSheetTitle{ font-family:'Rye',Georgia,serif; font-size:21px; color:#ffd98f; letter-spacing:.06em; text-shadow:0 2px 0 #4a1e08, 0 4px 12px rgba(0,0,0,.8); margin:2px 0 0; }
+      #bgSheet .locLbl{ margin-top:12px; }
+      #bgSheet .mapGrid{ grid-template-columns:repeat(5,1fr); gap:6px; margin:8px 0 2px; }
+      #bgSheet .bgCard, #bgSheet .mapCard{ padding:4px 3px 5px; }
+      #bgSheet .bgCard .mapName, #bgSheet .mapCard .mapName{ font-size:9px; letter-spacing:.02em; margin-top:3px; }
+      #bgSheet .segRow{ margin-top:8px; }
+      @media (prefers-reduced-motion: reduce){
+        #bgSheet .bgPanel, #bgSheet .bgScrim{ transition:none; }
+      }
       body.sunset #nightVeil{ opacity:.45; }
     </style>
   </head>
@@ -2152,7 +2195,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v3.2 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v3.3 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -2280,7 +2323,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v3.2</div>
+        <div class="ver">SHOWDOWN 1881 · v3.3</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -2375,7 +2418,11 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
+        <!-- BACKGROUND tab (v3.3): one small floating gold button on
+             the menu itself — backgrounds are changed HERE now, not
+             in Settings. Opens the #bgSheet slide-up sheet below. -->
+        <button id="btnBgTab" type="button" aria-label="Background — menu scene, hour and next duel map"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="17.2" cy="6.6" r="2.5" fill="currentColor"/><path d="M1.5 19.5 L8.6 9.8 L12.6 14.6 L15.4 11.4 L22.5 19.5 Z" fill="currentColor"/></svg><span>BACKGROUND</span></button>
       </div>
       <!-- Bottom tab bar (v2.21, Clash Royale layout): five tabs,
            icon + one word each — these and the BATTLE button are the
@@ -2388,6 +2435,52 @@
         <button class="mtab" id="btnStore" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5 L5.2 4.5 H18.8 L20 9.5 Q18.6 11.2 17.2 10 Q15.9 11.4 14.5 10 Q13.2 11.4 12 10.2 Q10.8 11.4 9.5 10 Q8.1 11.4 6.8 10 Q5.4 11.2 4 9.5 Z" fill="currentColor"/><path d="M5.5 13 V20 H18.5 V13 M9.8 20 V15.8 H14.2 V20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SHOP</span></button>
         <button class="mtab" id="btnRide" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><rect x="1.6" y="8" width="10.5" height="6.6" rx="1.8"/><rect x="3" y="5.4" width="7.4" height="2.6" rx="1.2"/><path d="M12.4 11 L16.2 10.4 L16.2 11.8 L12.4 12.4 Z"/><path d="M16.6 10.2 q2.2-2.6 4.6-2.2 l1.9-1.7 q.5-.4 1 .1 l.5 1 q.2.5-.3.7 l-1.5.6 q-.4 1.7-1.6 2.7 l.7 3 q.1.6-.5.6 h-1.3 l-.7-2.7 q-1.5.4-3-.1 l-.7 2.5 h-1.3 l.5-2.9 q-1.2-.5-1-1.6 Z"/></g><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="4.6" cy="17.2" r="2.1"/><circle cx="9.6" cy="17.2" r="2.1"/></g></svg><span>RIDE</span></button>
       </nav>
+    </div>
+
+    <!-- BACKGROUND sheet (v3.3): the ONE place any background is
+         changed — a clean slide-up sheet over the menu, opened by
+         the menu's BACKGROUND tab. Two short rows: MENU BACKGROUND
+         (the scene behind the menu + its animation switch) and
+         NEXT DUEL MAP (the duel rotation's next ground), sharing
+         the one TIME OF DAY row between them. Every control here is
+         the pickers' own — .bgCard, .mapCard and .timeBtn are wired
+         and synced page-wide — so a pick made here is the same pick
+         the Duels hub and Mode Settings show, and tapping a menu
+         scene changes the backdrop behind the sheet at once. -->
+    <div id="bgSheet" aria-hidden="true">
+      <div class="bgScrim" id="bgScrim"></div>
+      <div class="bgPanel">
+        <button class="cardX" id="btnBgSheetX" type="button" aria-label="Close">✕</button>
+        <div class="bgSheetTitle">★ BACKGROUND ★</div>
+        <div class="locLbl">Menu Background</div>
+        <div class="mapGrid">
+          <button class="bgCard" type="button" data-bg="street"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#7d9cc0"/><circle cx="79" cy="10" r="6" fill="#ffd98a"/><rect y="34" width="96" height="20" fill="#c99a5e"/><path d="M37 54 L45 34 L51 34 L59 54 Z" fill="#a87c48"/><rect x="1" y="15" width="19" height="19" fill="#5d4026"/><rect x="23" y="11" width="15" height="23" fill="#6e4525"/><rect x="59" y="12" width="16" height="22" fill="#7c4630"/><rect x="77" y="17" width="18" height="17" fill="#54381e"/><rect x="6" y="20" width="4" height="5" fill="#ffd98a"/><rect x="64" y="18" width="4" height="5" fill="#2c1c0e"/></svg><span class="mapName">Main Street</span></button>
+          <button class="bgCard" type="button" data-bg="saloon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#2e1c0e"/><rect y="7" width="96" height="3" fill="#54381e"/><circle cx="48" cy="18" r="8" fill="#ffb84d" opacity=".25"/><circle cx="48" cy="18" r="3.2" fill="#ffc873"/><rect x="14" y="14" width="3" height="7" fill="#2e6b34"/><rect x="19" y="13" width="3" height="8" fill="#8a5420"/><rect x="24" y="14" width="3" height="7" fill="#7fb3c8"/><rect x="69" y="14" width="3" height="7" fill="#6e1f16"/><rect x="74" y="13" width="3" height="8" fill="#9a6a24"/><rect x="8" y="32" width="38" height="15" fill="#4a2c14"/><rect x="6" y="29" width="42" height="3.5" fill="#7a5636"/><rect x="58" y="27" width="30" height="20" fill="#17100a"/><rect x="60" y="30" width="26" height="2.5" fill="#e8e0cc"/></svg><span class="mapName">The Saloon</span></button>
+          <button class="bgCard" type="button" data-bg="ghost"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#8a4a3a"/><rect y="20" width="96" height="14" fill="#d97b3f"/><circle cx="48" cy="33" r="7" fill="#ffb35e"/><rect y="34" width="96" height="20" fill="#6e4a30"/><path d="M38 54 L45 34 L51 34 L58 54 Z" fill="#59391f"/><rect x="3" y="17" width="18" height="17" fill="#4a3826"/><rect x="7" y="21" width="4" height="5" fill="#241708"/><g transform="rotate(4 68 26)"><rect x="59" y="14" width="17" height="20" fill="#3d2c1c"/></g><rect x="82" y="19" width="12" height="15" fill="#4a3826"/><path d="M28 34 L28 24 M28 27 L24 23 M28 29 L33 25" stroke="#2e1f12" stroke-width="1.8" fill="none"/></svg><span class="mapName">Ghost Town</span></button>
+          <button class="bgCard" type="button" data-bg="canyon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#a8c4de"/><circle cx="50" cy="9" r="5.5" fill="#ffe9a8"/><rect y="36" width="96" height="18" fill="#d9a05e"/><path d="M0 54 L0 8 L14 4 L22 16 L26 36 L30 54 Z" fill="#9c5130"/><path d="M96 54 L96 6 L82 3 L74 15 L70 36 L66 54 Z" fill="#a55731"/><path d="M0 24 L24 28 L25 33 L1 30 Z" fill="#b4622f" opacity=".7"/><path d="M95 22 L71 26 L70 31 L94 28 Z" fill="#8f4a2c" opacity=".7"/><path d="M34 54 L44 36 L52 36 L62 54 Z" fill="#c78f4c"/><rect x="46" y="40" width="3.5" height="9" fill="#44682f"/><rect x="42.5" y="43" width="3" height="2.6" fill="#44682f"/></svg><span class="mapName">Desert Canyon</span></button>
+          <button class="bgCard" type="button" data-bg="boothill"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#141f36"/><circle cx="76" cy="11" r="6" fill="#e8ecf4"/><circle cx="73" cy="9" r="5" fill="#141f36" opacity=".35"/><circle cx="14" cy="8" r="1.1" fill="#cdd8ee"/><circle cx="30" cy="14" r="1" fill="#cdd8ee"/><circle cx="55" cy="6" r="1.1" fill="#cdd8ee"/><rect y="36" width="96" height="18" fill="#3d3226"/><path d="M38 54 L45 36 L51 36 L58 54 Z" fill="#2c2318"/><rect x="12" y="27" width="3" height="10" fill="#8a8f9a"/><rect x="9" y="29.5" width="9" height="2.6" fill="#8a8f9a"/><rect x="66" y="25" width="8" height="12" rx="3.5" fill="#7e7a72"/><rect x="26" y="29" width="7" height="9" rx="3" fill="#6e6a62"/><rect x="82" y="29" width="7" height="9" rx="3" fill="#8a8f9a"/><path d="M2 33 H94" stroke="#241708" stroke-width="1.6"/></svg><span class="mapName">Boot Hill</span></button>
+        </div>
+        <div class="segRow">
+          <button class="segBtn on" id="btnSheetAnimOn" type="button">Animation On</button>
+          <button class="segBtn" id="btnSheetAnimOff" type="button">Animation Off</button>
+        </div>
+        <div id="bgAnimNow">MENU BACKGROUND · MAIN STREET — ANIMATION ON</div>
+        <div class="locLbl">Time of Day · For Both</div>
+        <div class="segRow">
+          <button class="segBtn timeBtn" type="button" data-tod="day">Day</button>
+          <button class="segBtn timeBtn" type="button" data-tod="sunset">Sunset</button>
+          <button class="segBtn timeBtn" type="button" data-tod="night">Night</button>
+        </div>
+        <div class="locLbl">Next Duel Map</div>
+        <div class="mapGrid">
+          <button class="mapCard" type="button" data-map="street"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#7d9cc0"/><circle cx="79" cy="10" r="6" fill="#ffd98a"/><rect y="34" width="96" height="20" fill="#c99a5e"/><path d="M37 54 L45 34 L51 34 L59 54 Z" fill="#a87c48"/><rect x="1" y="15" width="19" height="19" fill="#5d4026"/><rect x="23" y="11" width="15" height="23" fill="#6e4525"/><rect x="59" y="12" width="16" height="22" fill="#7c4630"/><rect x="77" y="17" width="18" height="17" fill="#54381e"/><rect x="6" y="20" width="4" height="5" fill="#ffd98a"/><rect x="64" y="18" width="4" height="5" fill="#2c1c0e"/></svg><span class="mapName">Main Street</span></button>
+          <button class="mapCard" type="button" data-map="saloon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#2e1c0e"/><rect y="7" width="96" height="3" fill="#54381e"/><circle cx="48" cy="18" r="8" fill="#ffb84d" opacity=".25"/><circle cx="48" cy="18" r="3.2" fill="#ffc873"/><rect x="14" y="14" width="3" height="7" fill="#2e6b34"/><rect x="19" y="13" width="3" height="8" fill="#8a5420"/><rect x="24" y="14" width="3" height="7" fill="#7fb3c8"/><rect x="69" y="14" width="3" height="7" fill="#6e1f16"/><rect x="74" y="13" width="3" height="8" fill="#9a6a24"/><rect x="8" y="32" width="38" height="15" fill="#4a2c14"/><rect x="6" y="29" width="42" height="3.5" fill="#7a5636"/><rect x="58" y="27" width="30" height="20" fill="#17100a"/><rect x="60" y="30" width="26" height="2.5" fill="#e8e0cc"/></svg><span class="mapName">The Saloon</span></button>
+          <button class="mapCard" type="button" data-map="ghost"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#8a4a3a"/><rect y="20" width="96" height="14" fill="#d97b3f"/><circle cx="48" cy="33" r="7" fill="#ffb35e"/><rect y="34" width="96" height="20" fill="#6e4a30"/><path d="M38 54 L45 34 L51 34 L58 54 Z" fill="#59391f"/><rect x="3" y="17" width="18" height="17" fill="#4a3826"/><rect x="7" y="21" width="4" height="5" fill="#241708"/><g transform="rotate(4 68 26)"><rect x="59" y="14" width="17" height="20" fill="#3d2c1c"/></g><rect x="82" y="19" width="12" height="15" fill="#4a3826"/><path d="M28 34 L28 24 M28 27 L24 23 M28 29 L33 25" stroke="#2e1f12" stroke-width="1.8" fill="none"/></svg><span class="mapName">Ghost Town</span></button>
+          <button class="mapCard" type="button" data-map="canyon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#a8c4de"/><circle cx="50" cy="9" r="5.5" fill="#ffe9a8"/><rect y="36" width="96" height="18" fill="#d9a05e"/><path d="M0 54 L0 8 L14 4 L22 16 L26 36 L30 54 Z" fill="#9c5130"/><path d="M96 54 L96 6 L82 3 L74 15 L70 36 L66 54 Z" fill="#a55731"/><path d="M0 24 L24 28 L25 33 L1 30 Z" fill="#b4622f" opacity=".7"/><path d="M95 22 L71 26 L70 31 L94 28 Z" fill="#8f4a2c" opacity=".7"/><path d="M34 54 L44 36 L52 36 L62 54 Z" fill="#c78f4c"/><rect x="46" y="40" width="3.5" height="9" fill="#44682f"/><rect x="42.5" y="43" width="3" height="2.6" fill="#44682f"/></svg><span class="mapName">Desert Canyon</span></button>
+          <button class="mapCard" type="button" data-map="boothill"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#141f36"/><circle cx="76" cy="11" r="6" fill="#e8ecf4"/><circle cx="73" cy="9" r="5" fill="#141f36" opacity=".35"/><circle cx="14" cy="8" r="1.1" fill="#cdd8ee"/><circle cx="30" cy="14" r="1" fill="#cdd8ee"/><circle cx="55" cy="6" r="1.1" fill="#cdd8ee"/><rect y="36" width="96" height="18" fill="#3d3226"/><path d="M38 54 L45 36 L51 36 L58 54 Z" fill="#2c2318"/><rect x="12" y="27" width="3" height="10" fill="#8a8f9a"/><rect x="9" y="29.5" width="9" height="2.6" fill="#8a8f9a"/><rect x="66" y="25" width="8" height="12" rx="3.5" fill="#7e7a72"/><rect x="26" y="29" width="7" height="9" rx="3" fill="#6e6a62"/><rect x="82" y="29" width="7" height="9" rx="3" fill="#8a8f9a"/><path d="M2 33 H94" stroke="#241708" stroke-width="1.6"/></svg><span class="mapName">Boot Hill</span></button>
+        </div>
+        <div id="mapSettingNow">NEXT DUEL · MAIN STREET — DAY</div>
+      </div>
     </div>
 
     <!-- Duels hub (v2.20): every way to fight lives behind the one
@@ -2423,7 +2516,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2440,7 +2533,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2460,7 +2553,7 @@
         <p class="small">One wanted outlaw, loose in town — you get <b>90 seconds</b> to catch him. The faster the capture, the bigger the payout.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2481,7 +2574,7 @@
         <p class="small">Stagecoach after stagecoach, each one different and harder — more outlaws, a faster coach, and guns shooting back truer — until your hide runs out. Longest survive: <b id="rideBestLine">no run yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2515,7 +2608,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2545,7 +2638,7 @@
         <div class="storeSec" data-store-cat="thrown">Throwable</div>
         <div id="storeThrown" data-store-cat="thrown"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2574,7 +2667,7 @@
         <div class="invSec">Clothes</div>
         <div id="invClothes"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2603,7 +2696,7 @@
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnLockerEquip" type="button">Equip This Gun</button>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2643,7 +2736,7 @@
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2673,40 +2766,11 @@
           <button class="segBtn" id="btnGfxHigh" type="button">High</button>
         </div>
         <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
-        <div class="locLbl">BACKGROUND ANIMATION</div>
-        <p class="small">The living scene behind the <b>main menu</b> — nothing to do with where duels are fought. Turn the animation <b>off</b> and the menu background freezes as a still scene; turn it <b>on</b> and it moves again, right away. Tap a scene to pick which one plays behind the menu, at the hour picked below. Your pick is kept between visits.</p>
-        <div class="segRow">
-          <button class="segBtn on" id="btnBgAnimOn" type="button">Animation On</button>
-          <button class="segBtn" id="btnBgAnimOff" type="button">Animation Off</button>
-        </div>
-        <div class="mapGrid">
-          <button class="bgCard" type="button" data-bg="street"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#7d9cc0"/><circle cx="79" cy="10" r="6" fill="#ffd98a"/><rect y="34" width="96" height="20" fill="#c99a5e"/><path d="M37 54 L45 34 L51 34 L59 54 Z" fill="#a87c48"/><rect x="1" y="15" width="19" height="19" fill="#5d4026"/><rect x="23" y="11" width="15" height="23" fill="#6e4525"/><rect x="59" y="12" width="16" height="22" fill="#7c4630"/><rect x="77" y="17" width="18" height="17" fill="#54381e"/><rect x="6" y="20" width="4" height="5" fill="#ffd98a"/><rect x="64" y="18" width="4" height="5" fill="#2c1c0e"/></svg><span class="mapName">Main Street</span></button>
-          <button class="bgCard" type="button" data-bg="saloon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#2e1c0e"/><rect y="7" width="96" height="3" fill="#54381e"/><circle cx="48" cy="18" r="8" fill="#ffb84d" opacity=".25"/><circle cx="48" cy="18" r="3.2" fill="#ffc873"/><rect x="14" y="14" width="3" height="7" fill="#2e6b34"/><rect x="19" y="13" width="3" height="8" fill="#8a5420"/><rect x="24" y="14" width="3" height="7" fill="#7fb3c8"/><rect x="69" y="14" width="3" height="7" fill="#6e1f16"/><rect x="74" y="13" width="3" height="8" fill="#9a6a24"/><rect x="8" y="32" width="38" height="15" fill="#4a2c14"/><rect x="6" y="29" width="42" height="3.5" fill="#7a5636"/><rect x="58" y="27" width="30" height="20" fill="#17100a"/><rect x="60" y="30" width="26" height="2.5" fill="#e8e0cc"/></svg><span class="mapName">The Saloon</span></button>
-          <button class="bgCard" type="button" data-bg="ghost"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#8a4a3a"/><rect y="20" width="96" height="14" fill="#d97b3f"/><circle cx="48" cy="33" r="7" fill="#ffb35e"/><rect y="34" width="96" height="20" fill="#6e4a30"/><path d="M38 54 L45 34 L51 34 L58 54 Z" fill="#59391f"/><rect x="3" y="17" width="18" height="17" fill="#4a3826"/><rect x="7" y="21" width="4" height="5" fill="#241708"/><g transform="rotate(4 68 26)"><rect x="59" y="14" width="17" height="20" fill="#3d2c1c"/></g><rect x="82" y="19" width="12" height="15" fill="#4a3826"/><path d="M28 34 L28 24 M28 27 L24 23 M28 29 L33 25" stroke="#2e1f12" stroke-width="1.8" fill="none"/></svg><span class="mapName">Ghost Town</span></button>
-          <button class="bgCard" type="button" data-bg="canyon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#a8c4de"/><circle cx="50" cy="9" r="5.5" fill="#ffe9a8"/><rect y="36" width="96" height="18" fill="#d9a05e"/><path d="M0 54 L0 8 L14 4 L22 16 L26 36 L30 54 Z" fill="#9c5130"/><path d="M96 54 L96 6 L82 3 L74 15 L70 36 L66 54 Z" fill="#a55731"/><path d="M0 24 L24 28 L25 33 L1 30 Z" fill="#b4622f" opacity=".7"/><path d="M95 22 L71 26 L70 31 L94 28 Z" fill="#8f4a2c" opacity=".7"/><path d="M34 54 L44 36 L52 36 L62 54 Z" fill="#c78f4c"/><rect x="46" y="40" width="3.5" height="9" fill="#44682f"/><rect x="42.5" y="43" width="3" height="2.6" fill="#44682f"/></svg><span class="mapName">Desert Canyon</span></button>
-          <button class="bgCard" type="button" data-bg="boothill"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#141f36"/><circle cx="76" cy="11" r="6" fill="#e8ecf4"/><circle cx="73" cy="9" r="5" fill="#141f36" opacity=".35"/><circle cx="14" cy="8" r="1.1" fill="#cdd8ee"/><circle cx="30" cy="14" r="1" fill="#cdd8ee"/><circle cx="55" cy="6" r="1.1" fill="#cdd8ee"/><rect y="36" width="96" height="18" fill="#3d3226"/><path d="M38 54 L45 36 L51 36 L58 54 Z" fill="#2c2318"/><rect x="12" y="27" width="3" height="10" fill="#8a8f9a"/><rect x="9" y="29.5" width="9" height="2.6" fill="#8a8f9a"/><rect x="66" y="25" width="8" height="12" rx="3.5" fill="#7e7a72"/><rect x="26" y="29" width="7" height="9" rx="3" fill="#6e6a62"/><rect x="82" y="29" width="7" height="9" rx="3" fill="#8a8f9a"/><path d="M2 33 H94" stroke="#241708" stroke-width="1.6"/></svg><span class="mapName">Boot Hill</span></button>
-        </div>
-        <div id="bgAnimNow">MENU BACKGROUND · MAIN STREET — ANIMATION ON</div>
-        <div class="locLbl">MAPS</div>
-        <p class="small">Where duels are fought. <b>Every new duel rotates to the next ground</b> in order — Main Street, the Saloon, Ghost Town, Desert Canyon and Boot Hill, then back to Main Street — always at the hour picked below; the hour never rotates. Tap a ground to make it the <b>next duel's ground</b> and the rotation carries on from there. The main menu's own backdrop is a separate pick — BACKGROUND ANIMATION, just above. This is the same single pick as the Duels hub and Mode Settings.</p>
-        <div class="mapGrid">
-          <button class="mapCard" type="button" data-map="street"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#7d9cc0"/><circle cx="79" cy="10" r="6" fill="#ffd98a"/><rect y="34" width="96" height="20" fill="#c99a5e"/><path d="M37 54 L45 34 L51 34 L59 54 Z" fill="#a87c48"/><rect x="1" y="15" width="19" height="19" fill="#5d4026"/><rect x="23" y="11" width="15" height="23" fill="#6e4525"/><rect x="59" y="12" width="16" height="22" fill="#7c4630"/><rect x="77" y="17" width="18" height="17" fill="#54381e"/><rect x="6" y="20" width="4" height="5" fill="#ffd98a"/><rect x="64" y="18" width="4" height="5" fill="#2c1c0e"/></svg><span class="mapName">Main Street</span></button>
-          <button class="mapCard" type="button" data-map="saloon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#2e1c0e"/><rect y="7" width="96" height="3" fill="#54381e"/><circle cx="48" cy="18" r="8" fill="#ffb84d" opacity=".25"/><circle cx="48" cy="18" r="3.2" fill="#ffc873"/><rect x="14" y="14" width="3" height="7" fill="#2e6b34"/><rect x="19" y="13" width="3" height="8" fill="#8a5420"/><rect x="24" y="14" width="3" height="7" fill="#7fb3c8"/><rect x="69" y="14" width="3" height="7" fill="#6e1f16"/><rect x="74" y="13" width="3" height="8" fill="#9a6a24"/><rect x="8" y="32" width="38" height="15" fill="#4a2c14"/><rect x="6" y="29" width="42" height="3.5" fill="#7a5636"/><rect x="58" y="27" width="30" height="20" fill="#17100a"/><rect x="60" y="30" width="26" height="2.5" fill="#e8e0cc"/></svg><span class="mapName">The Saloon</span></button>
-          <button class="mapCard" type="button" data-map="ghost"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#8a4a3a"/><rect y="20" width="96" height="14" fill="#d97b3f"/><circle cx="48" cy="33" r="7" fill="#ffb35e"/><rect y="34" width="96" height="20" fill="#6e4a30"/><path d="M38 54 L45 34 L51 34 L58 54 Z" fill="#59391f"/><rect x="3" y="17" width="18" height="17" fill="#4a3826"/><rect x="7" y="21" width="4" height="5" fill="#241708"/><g transform="rotate(4 68 26)"><rect x="59" y="14" width="17" height="20" fill="#3d2c1c"/></g><rect x="82" y="19" width="12" height="15" fill="#4a3826"/><path d="M28 34 L28 24 M28 27 L24 23 M28 29 L33 25" stroke="#2e1f12" stroke-width="1.8" fill="none"/></svg><span class="mapName">Ghost Town</span></button>
-          <button class="mapCard" type="button" data-map="canyon"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#a8c4de"/><circle cx="50" cy="9" r="5.5" fill="#ffe9a8"/><rect y="36" width="96" height="18" fill="#d9a05e"/><path d="M0 54 L0 8 L14 4 L22 16 L26 36 L30 54 Z" fill="#9c5130"/><path d="M96 54 L96 6 L82 3 L74 15 L70 36 L66 54 Z" fill="#a55731"/><path d="M0 24 L24 28 L25 33 L1 30 Z" fill="#b4622f" opacity=".7"/><path d="M95 22 L71 26 L70 31 L94 28 Z" fill="#8f4a2c" opacity=".7"/><path d="M34 54 L44 36 L52 36 L62 54 Z" fill="#c78f4c"/><rect x="46" y="40" width="3.5" height="9" fill="#44682f"/><rect x="42.5" y="43" width="3" height="2.6" fill="#44682f"/></svg><span class="mapName">Desert Canyon</span></button>
-          <button class="mapCard" type="button" data-map="boothill"><svg viewBox="0 0 96 54" aria-hidden="true"><rect width="96" height="54" fill="#141f36"/><circle cx="76" cy="11" r="6" fill="#e8ecf4"/><circle cx="73" cy="9" r="5" fill="#141f36" opacity=".35"/><circle cx="14" cy="8" r="1.1" fill="#cdd8ee"/><circle cx="30" cy="14" r="1" fill="#cdd8ee"/><circle cx="55" cy="6" r="1.1" fill="#cdd8ee"/><rect y="36" width="96" height="18" fill="#3d3226"/><path d="M38 54 L45 36 L51 36 L58 54 Z" fill="#2c2318"/><rect x="12" y="27" width="3" height="10" fill="#8a8f9a"/><rect x="9" y="29.5" width="9" height="2.6" fill="#8a8f9a"/><rect x="66" y="25" width="8" height="12" rx="3.5" fill="#7e7a72"/><rect x="26" y="29" width="7" height="9" rx="3" fill="#6e6a62"/><rect x="82" y="29" width="7" height="9" rx="3" fill="#8a8f9a"/><path d="M2 33 H94" stroke="#241708" stroke-width="1.6"/></svg><span class="mapName">Boot Hill</span></button>
-        </div>
-        <div class="segRow">
-          <button class="segBtn timeBtn" type="button" data-tod="day">Day</button>
-          <button class="segBtn timeBtn" type="button" data-tod="sunset">Sunset</button>
-          <button class="segBtn timeBtn" type="button" data-tod="night">Night</button>
-        </div>
-        <div id="mapSettingNow">NEXT DUEL · MAIN STREET — DAY</div>
         <button class="bigbtn learnbtn" id="btnModeSettings" type="button">Mode Settings</button>
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2750,7 +2814,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2778,7 +2842,7 @@
           <p><b>POP-UP TARGETS</b> — The third practice, off the same menu: fifteen bullseye targets <b>jump up one at a time</b> from behind the crates and barrels downrange, <b>somewhere new every time</b> — and each one only stays up a short while before it <b>drops back down and is gone</b>. Shoot it while it's up: hold to aim, release to fire, same guns, same reload. The view <b>turns to face each target</b> as it jumps up, so it always comes up fully in view near the centre of the screen. Too slow and it drops away and the next one pops up somewhere else. Your hits, the ones that got away and your shots are all counted on screen.</p>
           <p><b>SCOPE</b> — Rifles carry a <b>2× scope</b>. The scope icon rides in your plate while a rifle is in hand, and when you hold to aim the scope settles over your aim point and the view doubles in — double, not too much — with its crosshairs dead on where you're pointing: <b>the shot goes exactly where the scope points</b>. While you're scoped, <b>RELOAD stays pressable</b>, and the <b>EXIT SCOPE</b> button (bottom left) drops you back out to normal view <b>without firing</b> — hold to aim again and the scope comes back. While the scope is up, the lens sits dead on your aim point — and on touch that aim is swung by dragging, so your finger never covers the man you're aiming at — and the shot still goes exactly where the scope points.</p>
           <p><b>THE RIDE</b> — Saddle up off the main menu and <b>run down a stagecoach</b> on the open trail. Your horse gallops under you and the long coach bounces and swerves ahead on its team, and the <b>six outlaws riding it — driver and messenger on the bench, two on the roof and two on the rear platform — shoot back</b>. A man you drop <b>ragdolls down</b> off the coach and into the road behind it. Hold to aim, release to fire, same as a duel, and the coach body honestly blocks any shot that hits it instead of a man. <b>Switch guns at any time</b>: tap the REVOLVER / SHOTGUN / RIFLE buttons or press <b>1, 2, 3</b> — every gun keeps its own loads, and a gun you don't own can't be drawn, so buy shotguns and rifles in the Store first. Drop all six outlaws to take the coach and its <b>$150 strongbox</b>. Shooting a team horse slows the coach down; let it pull <b>30 paces</b> ahead and it's gone — and their lead costs you a fifth of your hide a hit. Or pick <b>ENDLESS</b> when you ride: the coaches keep coming, each one different and harder — more outlaws, a faster coach, return fire that lands harder and truer — and the run only ends when your hide does. Your <b>longest survive</b> is kept in Stats.</p>
-          <p><b>SETTINGS</b> — From the main menu's gear, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. <b>Mode Settings</b> (in Settings, and on every mode's picker) holds the per-mode picks: <b>difficulty</b> for duels and the ride, the <b>map picker</b> and the <b>hour</b>, and the practice <b>round size</b>. <b>Settings → MAPS</b> is that same map pick: every new duel <b>rotates to the next ground</b> in order, and tapping a ground there makes it the next duel's ground. Every level was rebuilt richer in v2.7 — sharper wood and dirt, deeper light, cleaner metal — and Medium adds soft live shadows and ground detail while High renders the street at its finest, with full-size soft shadows and the full dressed street. The game runs at the rate you pick, and your choices are kept between visits.</p>
+          <p><b>SETTINGS</b> — From the main menu's gear, open <b>Settings</b> to turn the western background music on or off, to pick the frame rate — <b>30, 60 or 120 FPS</b> — and to pick the <b>graphics quality: Low, Medium or High</b>. <b>Mode Settings</b> (in Settings, and on every mode's picker) holds the per-mode picks: <b>difficulty</b> for duels and the ride, the <b>map picker</b> and the <b>hour</b>, and the practice <b>round size</b>. Backgrounds live on the menu itself: the <b>BACKGROUND</b> tab under BATTLE! opens one sheet holding the <b>menu background</b> scene and its animation switch, the <b>hour</b>, and that same map pick — every new duel <b>rotates to the next ground</b> in order, and tapping a ground there makes it the next duel's ground. Every level was rebuilt richer in v2.7 — sharper wood and dirt, deeper light, cleaner metal — and Medium adds soft live shadows and ground detail while High renders the street at its finest, with full-size soft shadows and the full dressed street. The game runs at the rate you pick, and your choices are kept between visits.</p>
           <p><b>AFTER DARK</b> — In the map picker, set the hour to <b>Sunset</b> or <b>Night</b> and the same duels play under a low sun or by lantern light and moonlight — on every map. Night on Main Street still brings its storm: rain hammering down, lightning over the rooftops, and the storm wind pushing your aim around — sway runs half again as wild.</p>
           <p><b>FAN THE HAMMER</b> — Fanning takes <b>two of the same iron</b>, one in each hand — so first buy a second copy of your revolver with <b>BUY DOUBLE</b> in the Store (it costs what the gun costs). Until then the <b>FAN</b> toggle (top right, under TITLE) reads <b>NEEDS DOUBLE</b> and stays locked. Own the double and FAN opens up: a second iron comes out, and every release fans off a fast burst of three — the <b>first shot flies true</b> and the next two land <b>close behind it</b>, grouped around where the gun points. Tap FAN off to go back to one slow, careful shot.</p>
           <p><b>BOUNTY HUNT</b> — Off the Practice menu: the wanted poster names one outlaw. You get <b>90 seconds</b> to catch him — he starts on Main Street with a henchman, and if you wound him or run the street clock he bolts for the Saloon. The faster the capture, the bigger the payout.</p>
@@ -2789,7 +2853,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2803,6 +2867,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.3</b> — <b>Backgrounds move to the menu.</b> Tap <b>BACKGROUND</b> under BATTLE! for one quick sheet: the <b>menu background</b> scene and its <b>animation on/off</b>, the <b>hour</b>, and the <b>next duel map</b> — everything background in one place, changing live as you tap. The two Settings sections are gone; your picks are kept.</p>
           <p><b>v3.2</b> — <b>Background Animation, in Settings.</b> Turn the menu's living background <b>on or off</b> — off freezes it as a still scene — and <b>pick which scene plays behind the menu</b>: Main Street, the Saloon, Ghost Town, Desert Canyon or Boot Hill, at your picked Day, Sunset or Night. Menu only: duels still rotate grounds, and MAPS still picks the next duel's ground.</p>
           <p><b>v3.1</b> — <b>Duels rotate grounds — and MAPS in Settings picks the next one.</b> The menu background no longer rotates or locks: the menu always stands on the one lively Main Street. Now <b>every new duel moves on to the next ground</b> — Main Street, the Saloon, Ghost Town, Desert Canyon, Boot Hill, then round again — at your picked Day, Sunset or Night. Open <b>Settings → MAPS</b> (the same pick as the Duels hub and Mode Settings), tap a ground to make it the next duel's ground, and the rotation carries on from there.</p>
           <p><b>v3.0</b> — <b>Every gun rebuilt from the real thing — no two alike, anywhere.</b> Each iron was remodelled part by part from period photos and patent drawings, at its true size: the percussion Colts are <b>open-top</b> now — no top strap, a barrel wedge, octagon barrels on the Navy, Pocket and 1858, the Army's stepped cylinder, the Walker's latch-less lever and the Dragoon's latch; the <b>Schofield's latch pulls back</b> behind its hammer while the <b>Russian's lifts up</b> over its backstrap hump and finger spur; the <b>Lightning is a true 20% smaller</b> with its bird's-head grip, the <b>1878 wears its round side plate</b> and lanyard ring, and the <b>LeMat's shot barrel runs full-length</b> under the rifled one to two stacked muzzles. Long guns too: the <b>Henry's slotted tube</b> and no fore-end, sideplates and dust covers told apart on the <b>1873, 1876 and solid-frame 1886</b>, the Spencer's tube in its buttstock, the <b>Sharps rifle's octagon barrel — and the carbine's round one</b>, Parker's case-hardened action, Greener's sidelocks and cross-bolt. And the throwables are honest: a <b>guard-less, centre-balanced throwing knife</b>, a fan-headed tomahawk, <b>dynamite as a 3+2 twine-tied bundle with one black fuse</b>, and the Plains Bow wearing its <b>pale sinew back</b>. Same guns, same prices, same stats — now each one is itself in your hand, on the Locker bench and in the Store picture. Every gun is built to a <b>verified dimensions table</b> — real overall length, barrel and weight per gun, so the Walker really is 15½″ and 4½ lb looming over the 4⅞″ derringer. Two honest flags, kept visible: the <b>Schofield's sources conflict</b> (7″ standard barrel vs a 12¾″ museum specimen), and the <b>1849 Pocket's overall length is verified nowhere</b> — it is sized smallest by proportion, not by an invented number.</p>
@@ -2900,7 +2965,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.2</div>
+        <div class="ver">VERSION 3.3</div>
       </div>
     </div>
 
@@ -2923,7 +2988,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2945,7 +3010,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2956,7 +3021,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.2 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.3 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -12330,10 +12395,10 @@ three/build/three.module.js:
       shadowDirty = true;
     }
     function applyNightLights(){ applyTimeOfDay(); } // the v2.2 name, kept for any older caller
-    /* The picker (v2.34, one pick in three places since v3.1):
+    /* The picker (v2.34, one pick in every place since v3.1):
        picture cards for the ground, a plain row for the hour — the
        same cards in the Duels hub, in Mode Settings and in
-       Settings \u2192 MAPS, synced from the one pick every time it
+       the menu's BACKGROUND sheet, synced from the one pick every time it
        changes. The pick IS the duel rotation's position (SAVE.map):
        the ground the next duel is fought on. */
     function syncMapPickers(){
@@ -12358,8 +12423,8 @@ three/build/three.module.js:
     }
     /* ============================== DUEL ROTATION (v3.1) ==============================
        The menu backdrop does not rotate and cannot be locked:
-       the floating menu stands on the scene the player picked in
-       Settings → BACKGROUND ANIMATION (v3.2; Main Street by
+       the floating menu stands on the scene the player picked on
+       the menu's BACKGROUND tab (v3.3; Main Street by
        default), at the hour the player picked (applyMenuScene,
        run by the animate loop whenever the title card is up).
        Rotation
@@ -12369,7 +12434,7 @@ three/build/three.module.js:
        Daily Duel, Bounty Hunt) fights on SAVE.map, then the
        position advances one step in MAP_ORDER and is saved, so the
        duel after fights on the next ground. A manual pick in any
-       map picker (Duels hub, Mode Settings, Settings \u2192 MAPS —
+       map picker (Duels hub, Mode Settings, the BACKGROUND sheet —
        one shared choice) sets SAVE.map, so the next duel fights on
        the picked ground and rotation carries on from there. The
        hour is never rotated: timeOfDay always follows the player's
@@ -12393,8 +12458,8 @@ three/build/three.module.js:
       timeOfDay = pickedTod(); nightOn = timeOfDay === 'night';
       applyLocation(bgSceneLoc());
     }
-    /* ============================== MENU BACKGROUND ANIMATION (v3.2) ==============================
-       Settings \u2192 BACKGROUND ANIMATION: two picks for the scene
+    /* ============================== MENU BACKGROUND ANIMATION (v3.2, on the menu's BACKGROUND sheet since v3.3) ==============================
+       The menu's BACKGROUND sheet: two picks for the scene
        behind the floating menu, and nothing else. SAVE.bgAnim is
        the on/off switch (default on) — while the game is in the
        menu system and it is off, the animate loop skips every
@@ -12411,7 +12476,7 @@ three/build/three.module.js:
     function bgAnimOn(){ return SAVE.bgAnim !== false; }
     function bgSceneLoc(){ return MAP_ORDER.indexOf(SAVE.bgScene) >= 0 ? SAVE.bgScene : 'street'; }
     function syncBgAnimUI(){
-      var onB = document.getElementById('btnBgAnimOn'), offB = document.getElementById('btnBgAnimOff');
+      var onB = document.getElementById('btnSheetAnimOn'), offB = document.getElementById('btnSheetAnimOff');
       if (onB) onB.className = 'segBtn' + (bgAnimOn() ? ' on' : '');
       if (offB) offB.className = 'segBtn' + (!bgAnimOn() ? ' on' : '');
       var bcards = document.querySelectorAll('.bgCard');
@@ -12427,6 +12492,11 @@ three/build/three.module.js:
       if (MAP_ORDER.indexOf(loc) < 0) return;
       SAVE.bgScene = loc; persistSave();
       syncBgAnimUI();
+      // v3.3: the pick is made on the menu's own BACKGROUND sheet,
+      // over the living menu — the new scene takes the backdrop at
+      // once, behind the sheet, so the player sees it change live.
+      var tcEl = document.getElementById('titleCard');
+      if (G.state === 'title' && tcEl && tcEl.style.display !== 'none') applyMenuScene();
     }
     function applyChoiceScene(){
       timeOfDay = pickedTod(); nightOn = timeOfDay === 'night';
@@ -17742,25 +17812,57 @@ three/build/three.module.js:
     (function wireMapPickers(){
       var cards = document.querySelectorAll('.mapCard');
       for (var ci = 0; ci < cards.length; ci++) (function(btn){
-        btn.addEventListener('click', function(){ initAudio(); sndClick(); setMap(btn.getAttribute('data-map')); syncModeUI(); });
+        btn.addEventListener('click', function(){ initAudio(); sndClick(); setMap(btn.getAttribute('data-map')); syncModeUI();
+          // v3.3: picked from the menu's BACKGROUND sheet, the card
+          // sits over the living menu — setMap shows the picked
+          // ground, so hand the backdrop straight back to the menu's
+          // own scene; only the NEXT DUEL has moved.
+          var bsh = document.getElementById('bgSheet');
+          if (bsh && bsh.classList.contains('open')) applyMenuScene();
+        });
       })(cards[ci]);
       var tbs = document.querySelectorAll('.timeBtn');
       for (var ti = 0; ti < tbs.length; ti++) (function(btn){
         btn.addEventListener('click', function(){ initAudio(); sndClick(); setTimeOfDay(btn.getAttribute('data-tod')); syncModeUI(); });
       })(tbs[ti]);
     })();
-    /* Background Animation controls (v3.2): the Settings section's
-       own on/off switch and scene cards — wired separately from
-       the map cards above and never calling setMap, so the menu
-       backdrop pick and the duel ground pick stay independent. */
+    /* Background controls (v3.2, on the menu's BACKGROUND sheet
+       since v3.3): the sheet's own on/off switch and scene cards —
+       wired separately from the map cards above and never calling
+       setMap, so the menu backdrop pick and the duel ground pick
+       stay independent. The sheet itself opens from the menu's
+       BACKGROUND tab and closes from its round ✕ or the scrim,
+       sliding back down to the menu clean. */
     (function wireBgAnim(){
-      var onB = $('btnBgAnimOn'), offB = $('btnBgAnimOff');
+      var onB = $('btnSheetAnimOn'), offB = $('btnSheetAnimOff');
       if (onB) onB.addEventListener('click', function(){ initAudio(); sndClick(); setBgAnim(true); });
       if (offB) offB.addEventListener('click', function(){ initAudio(); sndClick(); setBgAnim(false); });
       var bcards = document.querySelectorAll('.bgCard');
       for (var bi = 0; bi < bcards.length; bi++) (function(btn){
         btn.addEventListener('click', function(){ initAudio(); sndClick(); setBgScene(btn.getAttribute('data-bg')); });
       })(bcards[bi]);
+      var bgSheetEl = $('bgSheet');
+      function openBgSheet(){
+        if (!bgSheetEl) return;
+        syncBgAnimUI(); syncMapPickers();
+        bgSheetEl.classList.add('open');
+        bgSheetEl.setAttribute('aria-hidden', 'false');
+      }
+      function closeBgSheet(){
+        if (!bgSheetEl) return;
+        bgSheetEl.classList.remove('open');
+        bgSheetEl.setAttribute('aria-hidden', 'true');
+      }
+      var bgTab = $('btnBgTab');
+      if (bgTab) bgTab.addEventListener('click', function(){
+        initAudio(); sndClick();
+        if (performance.now() - splashDismissedAt < 800) return; // the splash tap must never click through (v1.0.1)
+        openBgSheet();
+      });
+      var bgX = $('btnBgSheetX');
+      if (bgX) bgX.addEventListener('click', function(){ initAudio(); sndClick(); closeBgSheet(); });
+      var bgScrimEl = $('bgScrim');
+      if (bgScrimEl) bgScrimEl.addEventListener('click', function(){ closeBgSheet(); });
     })();
     $('btnStart').addEventListener('click', function(){
       initAudio();
@@ -19402,8 +19504,8 @@ three/build/three.module.js:
         lastMs = now;
         elapsed += dt;
         var t = elapsed;
-        /* Menu background freeze (v3.2): Settings \u2192 BACKGROUND
-           ANIMATION off — while the game is in the menu system
+        /* Menu background freeze (v3.2): the BACKGROUND sheet's
+           animation switch off — while the game is in the menu system
            (state 'title'), every background update below is skipped
            and the picked scene holds as a still frame. Fights,
            practice and the ride run under other states and are
@@ -20139,8 +20241,8 @@ three/build/three.module.js:
            and birds never ride and the sway settles to nothing; only
            the smoke's slow rise keeps moving. ---- */
         /* ---- menu scene (v3.1, player's pick since v3.2): the
-           floating menu stands on the scene picked in Settings →
-           BACKGROUND ANIMATION (SAVE.bgScene, Main Street by
+           floating menu stands on the scene picked on the menu's
+           BACKGROUND tab (SAVE.bgScene, Main Street by
            default), at the player's picked hour — a manual pick
            only: no rotation, no lock, no timer. Leaving the title
            for any other menu card shows the duel choice ground
