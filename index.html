@@ -218,11 +218,6 @@
       .lockerSec::after{ content:''; flex:1; border-top:1px solid var(--plate-line); }
       .lockerSec small{ letter-spacing:.08em; color:#c8ab77; font-size:9.5px; }
       #lockerScopes{ display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 4px; }
-      /* Special Ammo (v3.16): the AMMO tab's chips and the stat line
-         that shows the loaded round's effect on this gun. */
-      #lockerAmmo{ display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 4px; }
-      .skinChip .bullet{ display:inline-block; width:9px; height:14px; margin-right:7px; vertical-align:-2px; border-radius:4px 4px 2px 2px; box-shadow:inset 0 -5px 0 rgba(0,0,0,.35); }
-      #lockerAmmoFx{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.06em; color:#ffd98f; border:1px solid var(--plate-line); background:rgba(217,164,65,.10); padding:7px 10px; margin-top:8px; line-height:1.55; text-align:left; }
       .skinChip .mag{ display:inline-block; min-width:26px; text-align:center; margin-right:6px; padding:1px 4px; border:1px solid rgba(255,217,143,.55); border-radius:3px; color:#ffd98f; font-size:10.5px; vertical-align:-1px; }
       /* Long Range (v3.10): the hub button — deep walnut and brass,
          a sharpshooter's colours, on the Duels card (v3.10.2). */
@@ -2737,7 +2732,7 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
@@ -2847,7 +2842,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2864,7 +2859,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2886,7 +2881,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2911,7 +2906,7 @@
         <p class="small">Three miles by moonlight. Best ride: <b id="nightBestLine">no ride yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2945,7 +2940,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2965,7 +2960,6 @@
           <button type="button" data-filter="revolvers">Medium</button>
           <button type="button" data-filter="rifles">Long</button>
           <button type="button" data-filter="thrown">Throwable</button>
-          <button type="button" data-filter="ammo">Ammo</button>
           <button type="button" data-filter="outfits">Outfits</button>
         </div>
         <div class="storeSec" data-store-cat="revolvers">Medium Range</div>
@@ -2976,11 +2970,6 @@
         <div id="storeRifles" data-store-cat="rifles"></div>
         <div class="storeSec" data-store-cat="thrown">Throwable</div>
         <div id="storeThrown" data-store-cat="thrown"></div>
-        <!-- Special Ammo (v3.16): buyable rounds, stocked per gun
-             family — Revolvers, Shotguns, Rifles. Bought here once
-             per family, then loaded per gun in the Gun Locker. -->
-        <div class="storeSec" data-store-cat="ammo">Special Ammo · By Gun Family</div>
-        <div id="storeAmmo" data-store-cat="ammo"></div>
         <!-- Gunslinger Outfits (v3.9): four slots of pure look under
              their own tab — hat, coat, bandana, boots. Bought like
              anything else on the shelf, equipped with one tap, and
@@ -2994,7 +2983,7 @@
         <div class="storeSec" data-store-cat="outfits">Boots</div>
         <div id="storeBoots" data-store-cat="outfits"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3027,7 +3016,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3057,7 +3046,6 @@
         <div id="lockerTabs">
           <button class="lockerTab on" id="tabLockerSkin" type="button">SKIN</button>
           <button class="lockerTab" id="tabLockerScope" type="button">SCOPE</button>
-          <button class="lockerTab" id="tabLockerAmmo" type="button">AMMO</button>
         </div>
         <p class="small" style="margin-top:6px;">TAP TO PREVIEW ON THE GUN · TAP AGAIN TO FIT</p>
         <div id="lockerSkinSec">
@@ -3072,20 +3060,9 @@
           <p class="small" id="lockerScopeDesc"></p>
           <button class="bigbtn" id="btnLockerScopeAct" type="button">Fit Scope</button>
         </div>
-        <!-- Special Ammo (v3.16): the load in THIS gun — tap a round
-             to preview its effect on the gun's stats, tap again (or
-             the Load button) to load it. Switching is free once the
-             family stock is bought in the Store. -->
-        <div id="lockerAmmoSec">
-          <p class="small" id="lockerAmmoName" style="margin-top:6px;"></p>
-          <div id="lockerAmmo"></div>
-          <p class="small" id="lockerAmmoDesc"></p>
-          <div id="lockerAmmoFx"></div>
-          <button class="bigbtn" id="btnLockerAmmoAct" type="button">Load Rounds</button>
-        </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3161,7 +3138,7 @@
         <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
         <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3200,7 +3177,7 @@
         <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
         <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
         <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3234,7 +3211,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3269,7 +3246,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3308,7 +3285,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3322,9 +3299,9 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.19</b> — <b>Special Ammo is gone.</b> The <b>AMMO</b> tabs in the Store and the Gun Locker, and every gun's load pick, are removed — every gun shoots <b>standard loads</b> again, exactly as it did before. Guns, prices, money and progress are untouched.</p>
           <p><b>v3.18</b> — <b>A cleaner duel screen.</b> The foe's name is now a <b>small quiet label</b> up top, and the big intro name <b>fades away in about a second and a half</b> instead of staying up. <b>"Steady… wait for the bell"</b> and every other fight message now sit on <b>their own line high in the sky</b> — clear of the weapon bar, the throwable tile, RELOAD and the Next button, in every mode.</p>
           <p><b>v3.17</b> — <b>Barrel lengths.</b> Revolvers now come in <b>short, standard and long barrels</b> with the length in the name — <b>Colt SAA 3.5″</b>, <b>Colt SAA 4.75″</b>, a 5″ Schofield, a 6″ Lightning — and the derringer wears its 3″ too. A <b>shorter barrel draws faster</b>, a shade weaker at range; a <b>longer one</b> draws slower and reaches farther. Every gun — rifles and shotguns too — shows one clean line: its <b>barrel length and draw speed</b>.</p>
-          <p><b>v3.16</b> — <b>Special Ammo.</b> Buyable rounds in the Store's new <b>AMMO</b> tab, stocked per gun family: <b>Quick Draw Loads</b> (draw 18% quicker, hits 12% lighter), <b>Heavy Loads</b> (hits 30% harder, draw 18% slower) and cheap <b>Practice Loads</b> (practice grounds only — a duel shoots standard). Load each gun in the Locker's <b>AMMO</b> tab — switching is free once stocked, and the tab shows the round's effect on that gun's draw and power.</p>
           <p><b>v3.15</b> — <b>Your own Wanted Poster.</b> Open it from <b>Stats</b> or by tapping <b>your name on the menu</b>: a proper poster of <b>you</b> — your face in the gear you wear, your <b>rank</b> and the <b>bounty on your head</b>, both rising with your wins, bounties, crowns and Rival beats, from <b>Unknown</b> up to <b>Legend of the West</b>. Your headline stats print on the sheet, and <b>Share Poster</b> sends it as a picture.</p>
           <p><b>v3.14</b> — <b>Back-to-Back 2-on-1.</b> A new fight in the Duels hub: one gunslinger <b>in front of you, one behind you</b>. <b>TURN</b> — the button, a swipe, or the ← → keys — spins you round; you can only shoot the man you face. The man at your back <b>waits his turn</b>, then <b>shouts before he fires</b>. Drop both for <b>$100</b>; your pairs and best clear are kept in <b>Stats</b> and on the picker.</p>
           <p><b>v3.13</b> — <b>The Rival.</b> One nemesis in the Duels hub: <b>Silas Crowe</b> challenges you himself, and every beat he <b>comes back faster</b> with a new trick — a quick draw, head-hunter aim, a fake-out flinch, two fanned irons, then the long street. <b>Five beats</b> finish him for good, each paying more than the last; lose one and it costs nothing — the round waits. Your beats are kept in <b>Stats</b> and on the picker.</p>
@@ -3440,7 +3417,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.18</div>
+        <div class="ver">VERSION 3.19</div>
       </div>
     </div>
 
@@ -3463,7 +3440,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3485,7 +3462,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3504,7 +3481,7 @@
         <div class="wbWall" id="wbWall"></div>
         <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
         <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3522,7 +3499,7 @@
         <p class="streakPips" id="tnLine">NO BRACKET YET</p>
         <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
         <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3543,7 +3520,7 @@
         <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
         <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
         <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3569,7 +3546,7 @@
         <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
         <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
         <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3580,7 +3557,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -10985,84 +10962,6 @@ three/build/three.module.js:
       var sc = scopeById(SAVE.gunScope && SAVE.gunScope[itemId]);
       return scopeOwned(itemId, sc) ? sc : SCOPES[0]; // an unowned pick never rides the gun
     }
-    /* Special Ammo (v3.16): buyable rounds, stocked per gun FAMILY
-       (revolvers / shotguns / rifles) in the Store's AMMO tab, then
-       loaded per GUN in the Gun Locker — the same buy-once, fit-per-gun
-       shape as scopes. Standard loads are the honest factory round
-       every gun has always fired, free forever. Quick Draw loads burn
-       lighter powder: the gun comes up faster and hits a shade softer.
-       Heavy loads are charged hot: slower out of leather, hitting far
-       harder — more wounding on every body shot (vitals still end it
-       outright, as always). Practice loads are the cheap box: they
-       only ever fire on the practice grounds — in a duel or on the
-       ride the gun shoots as if standard loads were in it. Effects
-       ride currentWeapon(), so they hold in every mode a gun fires:
-       duels, the ride, practice and LAN (your phone judges your own
-       shots, as it always has). Throwables and the bow never take
-       cartridges and are untouched. */
-    var AMMO = [
-      { id: 'standard', name: 'Standard Loads', price: 0, drawMul: 1, powerMul: 1, sw: '#b9bec8',
-        spec: 'THE HONEST ROUND · NO CHANGE',
-        desc: 'The factory round every gun on this street has always fired. Honest draw, honest power — and free, because it is already in the box.' },
-      { id: 'quick', name: 'Quick Draw Loads', price: 400, drawMul: 0.82, powerMul: 0.88, sw: '#7ec8e3',
-        spec: 'DRAW 18% QUICKER · POWER 12% LIGHTER',
-        desc: 'A lighter powder charge in a lighter case: the gun clears leather and comes up near a fifth faster, but each ball lands a shade softer. For a man who wins on the draw, not the hit.' },
-      { id: 'heavy', name: 'Heavy Loads', price: 600, drawMul: 1.18, powerMul: 1.3, sw: '#e2482e',
-        spec: 'POWER 30% HARDER · DRAW 18% SLOWER',
-        desc: 'Charged hot and seated heavy: the gun bucks and comes up slower, but every body hit wounds far deeper. For a man who only needs the one shot to count.' },
-      { id: 'practice', name: 'Practice Loads', price: 100, practiceOnly: true, drawMul: 1, powerMul: 1, sw: '#9ec49a',
-        spec: 'PRACTICE ONLY · THE CHEAP BOX',
-        desc: 'Cheap rounds for the practice grounds — bottles, targets and the gallery. They carry no punch in a real fight: load them for a duel and the gun shoots standard, so save them for cheap practice.' }
-    ];
-    function ammoById(id){ for (var i = 0; i < AMMO.length; i++) if (AMMO[i].id === id) return AMMO[i]; return AMMO[0]; }
-    var AMMO_FAMS = [
-      { id: 'revolver', label: 'Revolvers' },
-      { id: 'shotgun', label: 'Shotguns' },
-      { id: 'rifle', label: 'Rifles' }
-    ];
-    function ammoFamilyFor(kind, item){
-      if (kind === 'gun') return 'revolver';
-      if (kind === 'long') return item && item.type === 'rifle' ? 'rifle' : 'shotgun';
-      return null;
-    }
-    function ammoItemKind(item){
-      if (!item) return null;
-      for (var i = 0; i < GUNS.length; i++) if (GUNS[i] === item) return 'gun';
-      for (var j = 0; j < LONGGUNS.length; j++) if (LONGGUNS[j] === item) return 'long';
-      return null;
-    }
-    function ammoOwned(fam, am){
-      if (!am || am.id === 'standard') return true;
-      var o = SAVE.ammoOwned && SAVE.ammoOwned[fam];
-      return !!o && o.indexOf(am.id) >= 0;
-    }
-    /* The load picked for this gun in the Locker — an unowned pick
-       (an edited save, a family stock not yet bought) never rides. */
-    function loadedAmmoFor(item){
-      var kind = ammoItemKind(item);
-      if (!kind) return AMMO[0];
-      var am = ammoById(SAVE.gunAmmo && SAVE.gunAmmo[item.id]);
-      return ammoOwned(ammoFamilyFor(kind, item), am) ? am : AMMO[0];
-    }
-    /* The load that actually fires right now: practice loads only
-       count where practice is shot — everywhere else the gun shoots
-       standard, exactly as their box says. */
-    function activeAmmoFor(item){
-      var am = loadedAmmoFor(item);
-      if (am.practiceOnly && !(typeof G !== 'undefined' && G && G.mode === 'practice')) return AMMO[0];
-      return am;
-    }
-    /* currentWeapon() passes its result through here, so the loaded
-       round bends the gun's draw and power in every mode at once. */
-    function withAmmo(w){
-      var am = activeAmmoFor(w.item);
-      if (am && (am.drawMul !== 1 || am.powerMul !== 1)){
-        w.power = (w.power || 1) * am.powerMul;
-        w.drawFirst = w.drawFirst * am.drawMul;
-        w.drawNext = w.drawNext * am.drawMul;
-      }
-      return w;
-    }
     /* The Long Range snipers (v3.10): the single-shot long arms the
        valley was built for — Sharps, Rolling Block, Trapdoor and the
        Spencer. Nothing else shoots out there. */
@@ -11113,11 +11012,6 @@ three/build/three.module.js:
          -> scope id). Missing on an old save means iron sights on
          every rifle — exactly what every rifle has always had. */
       scopesOwned: {}, gunScope: {},
-      /* Special Ammo (v3.16): the special loads you own, per gun
-         family (family id -> ammo ids), and the load in each gun
-         (item id -> ammo id). Missing on an old save means standard
-         loads everywhere — what every gun has always fired. */
-      ammoOwned: {}, gunAmmo: {},
       /* Long Range (v3.10): the best score on the valley range
          (points are yards dropped), the longest hit in yards, and
          the rounds shot — shown in Stats and on the pickers. */
@@ -11257,25 +11151,6 @@ three/build/three.module.js:
           var sc2 = parsedSave.gunScope[itemId];
           if (it2.id === itemId && it2.type === 'rifle' && scopeById(sc2).id === sc2) SAVE.gunScope[itemId] = sc2;
         });
-        /* Special Ammo (v3.16): family stock and per-gun loads merge
-           like the scopes — family and ammo ids validated against
-           the catalogues, loads validated against the gun lists, so
-           an old or edited save can never stock a load that does
-           not exist or load one into a gun that is not there. */
-        if (parsedSave && parsedSave.ammoOwned && typeof parsedSave.ammoOwned === 'object') Object.keys(parsedSave.ammoOwned).forEach(function(fam){
-          if (['revolver', 'shotgun', 'rifle'].indexOf(fam) < 0 || !Array.isArray(parsedSave.ammoOwned[fam])) return;
-          parsedSave.ammoOwned[fam].forEach(function(amId){
-            if (ammoById(amId).id === amId && amId !== 'standard'){
-              if (!SAVE.ammoOwned[fam]) SAVE.ammoOwned[fam] = [];
-              if (SAVE.ammoOwned[fam].indexOf(amId) < 0) SAVE.ammoOwned[fam].push(amId);
-            }
-          });
-        });
-        if (parsedSave && parsedSave.gunAmmo && typeof parsedSave.gunAmmo === 'object') Object.keys(parsedSave.gunAmmo).forEach(function(itemId){
-          var am3 = parsedSave.gunAmmo[itemId];
-          var itemOk3 = gearById(GUNS, itemId).id === itemId || gearById(LONGGUNS, itemId).id === itemId;
-          if (itemOk3 && ammoById(am3).id === am3) SAVE.gunAmmo[itemId] = am3;
-        });
         if (parsedSave && typeof parsedSave.lrBest === 'number' && parsedSave.lrBest >= 0) SAVE.lrBest = Math.floor(parsedSave.lrBest);
         if (parsedSave && typeof parsedSave.lrLongest === 'number' && parsedSave.lrLongest >= 0) SAVE.lrLongest = Math.floor(parsedSave.lrLongest);
         if (parsedSave && typeof parsedSave.lrRounds === 'number' && parsedSave.lrRounds >= 0) SAVE.lrRounds = Math.floor(parsedSave.lrRounds);
@@ -11352,19 +11227,19 @@ three/build/three.module.js:
       if (SAVE.weapon === 'long' && equippedLongGun()){
         var lg = equippedLongGun();
         var isShot = lg.type === 'shotgun';
-        return withAmmo({ kind: lg.type, item: lg, cap: lg.cap, power: lg.power || 1, spread: lg.spread || 1,
+        return { kind: lg.type, item: lg, cap: lg.cap, power: lg.power || 1, spread: lg.spread || 1,
           drawFirst: lg.drawFirst || (isShot ? 0.36 : 0.32), drawNext: lg.drawNext || (isShot ? 0.15 : 0.12),
           recoilDecay: lg.recoilDecay || (isShot ? 3.4 : 4.6), sway: lg.sway || (isShot ? 1.3 : 0.7), aimEase: lg.aimEase || (isShot ? 13 : 14),
-          cycle: lg.cycle });
+          cycle: lg.cycle };
       }
       /* v2.31: every handgun now carries its own real numbers (see
          the GUNS table) — a Walker draws like the anchor it is and
          hits like a mule, a derringer is out before you blink with
          two light shots, a Schofield reloads all six at a gulp. */
       var hg = equippedGun();
-      return withAmmo({ kind: 'revolver', item: hg, cap: hg.cap || 6, power: hg.power || 1, spread: hg.spread || 1,
+      return { kind: 'revolver', item: hg, cap: hg.cap || 6, power: hg.power || 1, spread: hg.spread || 1,
         drawFirst: hg.drawFirst || 0.15, drawNext: hg.drawNext || 0.07, recoilDecay: hg.recoilDecay || 6.5,
-        sway: hg.sway || 1, aimEase: hg.aimEase || 19, cycle: hg.cycle });
+        sway: hg.sway || 1, aimEase: hg.aimEase || 19, cycle: hg.cycle };
     }
     /* Weapon balance (v1.7): the three families trade damage, range,
        accuracy and draw speed honestly. A revolver is the fastest draw
@@ -14116,23 +13991,6 @@ three/build/three.module.js:
       return o;
     }
 
-    /* Special Ammo shelf art (v3.16): three cartridges standing on
-       the shelf — brass cases, the load's own colour on the bullet,
-       a heavier bullet drawn fatter, a practice bullet drawn pale. */
-    function ammoArt(am){
-      var fat = am.id === 'heavy' ? 1.35 : 1;
-      var one = function(dx, dy, s){
-        return '<g transform="translate(' + dx + ' ' + dy + ') scale(' + s + ')">' +
-          '<path d="M-4.6 26 L-4.6 2 Q-4.6 -3 -2.2 -8 L0 -13 L2.2 -8 Q4.6 -3 4.6 2 L4.6 26 Z" fill="' + am.sw + '" stroke="rgba(20,10,2,.55)" stroke-width="1" transform="scale(' + fat + ' 1)"/>' +
-          '<rect x="-5" y="26" width="10" height="15" fill="#c9973f" stroke="rgba(20,10,2,.55)"/>' +
-          '<rect x="-6" y="41" width="12" height="4" fill="#8a6a34" stroke="rgba(20,10,2,.55)"/>' +
-          '</g>';
-      };
-      return '<svg viewBox="0 0 96 68" aria-hidden="true">' +
-        '<ellipse cx="48" cy="61" rx="30" ry="3.4" fill="rgba(0,0,0,.4)"/>' +
-        one(30, 16, 0.92) + one(48, 13, 1.05) + one(66, 16, 0.92) + '</svg>';
-    }
-
     function renderStore(){
       updateMoneyUI();
       var eq = $('storeEquipped');
@@ -14222,55 +14080,6 @@ three/build/three.module.js:
       fill('storeRifles', LONGGUNS.filter(function(g){ return g.type === 'rifle'; }), SAVE.longguns, 'long');
       /* v2.19: Throwable is knives, axes and dynamite only — no bow. */
       fill('storeThrown', HANDWEAPONS.filter(function(w){ return w.id !== 'bow'; }), SAVE.hand, 'hand');
-      /* Special Ammo (v3.16): one row per load per gun family —
-         buying stocks that family's guns for good; the load each
-         gun actually carries is picked in the Gun Locker. Standard
-         loads are free and always in the box, shown so the shelf
-         tells the whole story. */
-      (function(){
-        var box = $('storeAmmo'); if (!box) return;
-        box.innerHTML = '';
-        AMMO.forEach(function(am){
-          AMMO_FAMS.forEach(function(fam){
-            var owned = ammoOwned(fam.id, am);
-            var canAfford = SAVE.money >= am.price;
-            var row = document.createElement('div');
-            row.className = 'storeItem' + (owned ? ' owned' : (canAfford ? '' : ' cantafford'));
-            var art = document.createElement('span'); art.className = 'art';
-            art.innerHTML = ammoArt(am);
-            var info = document.createElement('div'); info.className = 'info';
-            var nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = am.name + ' · ' + fam.label;
-            var mt = document.createElement('div'); mt.className = 'meta'; mt.textContent = am.spec;
-            var ds = document.createElement('div'); ds.className = 'ds'; ds.textContent = am.desc;
-            var st = document.createElement('div'); st.className = 'state';
-            st.textContent = am.id === 'standard' ? 'IN EVERY BOX · ALWAYS'
-              : owned ? 'STOCKED — LOAD IT PER GUN IN THE GUN LOCKER'
-              : 'BUY ONCE · STOCKS EVERY ' + fam.label.slice(0, -1).toUpperCase() + ' YOU OWN';
-            info.appendChild(nm); info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
-            var buyBox = document.createElement('div'); buyBox.className = 'buyBox';
-            var pr = document.createElement('div'); pr.className = 'price';
-            pr.textContent = am.id === 'standard' ? 'FREE' : owned ? 'OWNED' : '$' + am.price;
-            var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'act';
-            if (am.id === 'standard'){ btn.textContent = 'IN THE BOX'; btn.disabled = true; }
-            else if (owned){ btn.textContent = 'OWNED'; btn.disabled = true; }
-            else if (canAfford){ btn.textContent = 'BUY · $' + am.price; }
-            else { btn.textContent = '$' + am.price; btn.disabled = true; }
-            btn.addEventListener('click', function(){
-              initAudio();
-              if (ammoOwned(fam.id, am) || SAVE.money < am.price) return;
-              SAVE.money -= am.price;
-              if (!SAVE.ammoOwned[fam.id]) SAVE.ammoOwned[fam.id] = [];
-              SAVE.ammoOwned[fam.id].push(am.id);
-              sndBell();
-              persistSave(); renderStore();
-              toast(am.name + ' stocked for ' + fam.label + ' — load them in the Gun Locker!', true);
-            });
-            buyBox.appendChild(pr); buyBox.appendChild(btn);
-            row.appendChild(art); row.appendChild(info); row.appendChild(buyBox);
-            box.appendChild(row);
-          });
-        });
-      })();
       /* Gunslinger Outfits (v3.9): the four clothing slots share the
          Outfits tab's shelf — hats and coats were always wearable,
          bandanas and boots join them, all bought and equipped here. */
@@ -14342,7 +14151,6 @@ three/build/three.module.js:
           var st = document.createElement('div'); st.className = 'state';
           st.textContent = isEq ? '★ EQUIPPED NOW' : 'OWNED — READY TO EQUIP';
           if (kind === 'hand') st.textContent = 'OWNED — PICK IT WITH THE ROUND THROW BUTTON IN A FIGHT';
-          if (kind === 'gun' || kind === 'long') st.textContent += ' · LOADED · ' + loadedAmmoFor(item).name.toUpperCase();
           info.appendChild(nm);
           if (kind === 'gun' || kind === 'long'){ var bs2 = document.createElement('div'); bs2.className = 'barstat'; bs2.textContent = barrelStatFor(item, kind); info.appendChild(bs2); } // v3.17: one clean line — barrel · draw
           info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
@@ -14368,9 +14176,6 @@ three/build/three.module.js:
             var lkBtn2 = document.createElement('button'); lkBtn2.type = 'button'; lkBtn2.className = 'act lock'; lkBtn2.textContent = 'LOCKER';
             lkBtn2.addEventListener('click', function(){ initAudio(); sndClick(); openLocker(item, kind, 'inv'); });
             buyBox.appendChild(lkBtn2);
-            var amBtn2 = document.createElement('button'); amBtn2.type = 'button'; amBtn2.className = 'act lock'; amBtn2.textContent = 'AMMO · ' + loadedAmmoFor(item).name.replace(' Loads', '').toUpperCase();
-            amBtn2.addEventListener('click', function(){ initAudio(); sndClick(); openLocker(item, kind, 'inv', 'ammo'); });
-            buyBox.appendChild(amBtn2);
           }
           row.appendChild(art); row.appendChild(info); row.appendChild(buyBox);
           box.appendChild(row);
@@ -15697,8 +15502,7 @@ three/build/three.module.js:
     var lockerItem = null, lockerKind = 'gun', lockerReturn = 'store';
     var lockerFinish = null;
     var lockerScope = null; // v3.10: the scope being previewed on a rifle — the bench's second row
-    var lockerAmmo = null; // v3.16: the load being previewed in this gun — the bench's AMMO tab
-    var lockerTab = 'skin'; // v3.10.1: which bench tab is showing — 'skin', 'scope' (rifles only) or 'ammo' (v3.16)
+    var lockerTab = 'skin'; // v3.10.1: which bench tab is showing — 'skin' or 'scope' (rifles only)
     var LK = null;
     function lockerOwnedList(){ return lockerKind === 'gun' ? SAVE.guns : SAVE.longguns; }
     function lockerGunOwned(){ return !!lockerItem && lockerOwnedList().indexOf(lockerItem.id) >= 0; }
@@ -15839,11 +15643,8 @@ three/build/three.module.js:
       if (tabS) tabS.style.display = lockerIsRifle() ? '' : 'none';
       $('tabLockerSkin').classList.toggle('on', t === 'skin');
       if (tabS) tabS.classList.toggle('on', t === 'scope');
-      var tabA = $('tabLockerAmmo');
-      if (tabA) tabA.classList.toggle('on', t === 'ammo');
       $('lockerSkinSec').style.display = t === 'skin' ? '' : 'none';
       $('lockerScopeSec').style.display = (t === 'scope' && lockerIsRifle()) ? '' : 'none';
-      $('lockerAmmoSec').style.display = t === 'ammo' ? '' : 'none';
     }
     function lockerRenderPanel(){
       if (!lockerItem) return;
@@ -15935,53 +15736,6 @@ three/build/three.module.js:
         else if (SAVE.money >= scSel.price){ sact.textContent = 'BUY SCOPE · $' + scSel.price; sact.disabled = false; }
         else { sact.textContent = 'NEEDS $' + (scSel.price - SAVE.money) + ' MORE'; sact.disabled = true; }
       }
-      /* Special Ammo (v3.16, AMMO tab): every gun takes loads — the
-         chips are the four rounds, stocked per family in the Store
-         (or bought right here), loaded per gun for free once
-         stocked. The stat line under the chips shows the picked
-         round's effect on THIS gun's own draw and power, figured
-         off its real numbers. */
-      (function(){
-        var fam = ammoFamilyFor(lockerKind, lockerItem);
-        var famLabel = fam === 'revolver' ? 'Revolvers' : fam === 'shotgun' ? 'Shotguns' : 'Rifles';
-        var aApplied = loadedAmmoFor(lockerItem);
-        var aSel = lockerAmmo || aApplied;
-        var aBox = $('lockerAmmo'); aBox.innerHTML = '';
-        AMMO.forEach(function(am){
-          var owned = ammoOwned(fam, am);
-          var chip = document.createElement('button'); chip.type = 'button';
-          chip.className = 'skinChip' + (aSel.id === am.id ? ' sel' : '') + (aApplied.id === am.id ? ' applied' : '');
-          var state = aApplied.id === am.id ? 'IN THE GUN'
-            : owned ? (am.id === 'standard' ? 'ALWAYS IN THE BOX' : 'STOCKED · ' + famLabel.toUpperCase())
-            : ('$' + am.price + ' · ' + famLabel.toUpperCase());
-          chip.innerHTML = '<span class="bullet" style="background:' + am.sw + '"></span>' + am.name + '<span class="pr">' + state + '</span>';
-          chip.addEventListener('click', function(){
-            initAudio();
-            if (lockerAmmo && lockerAmmo.id === am.id && aApplied.id !== am.id && ammoOwned(fam, am)){
-              lockerApplyAmmo(); return; // second tap on your stocked load puts it in the gun
-            }
-            sndClick();
-            lockerAmmo = am;
-            lockerRenderPanel();
-          });
-          aBox.appendChild(chip);
-        });
-        $('lockerAmmoName').textContent = aSel.name.toUpperCase() + (aApplied.id === aSel.id ? ' · IN THIS GUN' : ' · PREVIEW');
-        $('lockerAmmoDesc').textContent = aSel.desc;
-        var basePower = lockerItem.power || 1;
-        var baseDraw = lockerItem.drawFirst || (lockerKind === 'gun' ? 0.15 : (lockerItem.type === 'shotgun' ? 0.36 : 0.32));
-        var fx = $('lockerAmmoFx');
-        if (aSel.practiceOnly){
-          fx.textContent = 'ON THIS GUN · PRACTICE GROUNDS ONLY — IN A DUEL OR ON THE RIDE IT SHOOTS STANDARD · DRAW ' + baseDraw.toFixed(3) + 's · POWER ×' + basePower.toFixed(2) + ' (UNCHANGED)';
-        } else {
-          fx.textContent = 'ON THIS GUN · DRAW ' + baseDraw.toFixed(3) + 's → ' + (baseDraw * aSel.drawMul).toFixed(3) + 's · POWER ×' + basePower.toFixed(2) + ' → ×' + (basePower * aSel.powerMul).toFixed(2);
-        }
-        var aact = $('btnLockerAmmoAct');
-        if (aApplied.id === aSel.id){ aact.textContent = '★ THESE ROUNDS ARE IN'; aact.disabled = true; }
-        else if (ammoOwned(fam, aSel)){ aact.textContent = 'LOAD · ' + aSel.name.toUpperCase(); aact.disabled = false; }
-        else if (SAVE.money >= aSel.price){ aact.textContent = 'BUY STOCK & LOAD · $' + aSel.price; aact.disabled = false; }
-        else { aact.textContent = 'NEEDS $' + (aSel.price - SAVE.money) + ' MORE'; aact.disabled = true; }
-      })();
     }
     function lockerReturnRefresh(){
       if (lockerReturn === 'inv') renderInventory();
@@ -15991,8 +15745,7 @@ three/build/three.module.js:
       lockerItem = item; lockerKind = kind; lockerReturn = from || 'store';
       lockerFinish = gunSkinFor(item.id);
       lockerScope = gunScopeFor(item.id); // v3.10: the bench opens wearing the scope the rifle already carries
-      lockerAmmo = loadedAmmoFor(item); // v3.16: the bench opens on the load the gun already carries
-      lockerTab = tab === 'ammo' ? 'ammo' : 'skin'; // v3.10.1: the bench opens on SKIN — unless Inventory's AMMO button asked for the loads
+      lockerTab = 'skin'; // v3.10.1: the bench opens on SKIN
       $('storeCard').style.display = 'none';
       $('inventoryCard').style.display = 'none';
       $('lockerCard').style.display = 'flex';
@@ -16016,10 +15769,6 @@ three/build/three.module.js:
     $('tabLockerScope').addEventListener('click', function(){
       initAudio(); sndClick();
       setLockerTab('scope');
-    });
-    $('tabLockerAmmo').addEventListener('click', function(){
-      initAudio(); sndClick();
-      setLockerTab('ammo');
     });
     function lockerApplyFinish(){
       if (!lockerItem || !lockerFinish) return;
@@ -16067,33 +15816,6 @@ three/build/three.module.js:
       if (!lockerItem || !lockerScope) return;
       initAudio();
       lockerApplyScope();
-    });
-    /* Special Ammo (v3.16): loading a round is the scope flow, per
-       family — buy the family stock if it is not already yours,
-       then the load rides THIS gun. Switching between loads you
-       stock is always free, and nothing about the iron's look
-       changes: a load is powder and lead, not paint. */
-    function lockerApplyAmmo(){
-      if (!lockerItem || !lockerAmmo) return;
-      var fam = ammoFamilyFor(lockerKind, lockerItem);
-      var am = lockerAmmo;
-      if (!ammoOwned(fam, am)){
-        if (SAVE.money < am.price) return;
-        SAVE.money -= am.price;
-        if (!SAVE.ammoOwned[fam]) SAVE.ammoOwned[fam] = [];
-        SAVE.ammoOwned[fam].push(am.id);
-        sndBell();
-      } else sndClick();
-      SAVE.gunAmmo[lockerItem.id] = am.id;
-      persistSave();
-      updateMoneyUI();
-      lockerRenderPanel();
-      lockerReturnRefresh();
-    }
-    $('btnLockerAmmoAct').addEventListener('click', function(){
-      if (!lockerItem || !lockerAmmo) return;
-      initAudio();
-      lockerApplyAmmo();
     });
     $('btnLockerEquip').addEventListener('click', function(){
       if (!lockerItem) return;
