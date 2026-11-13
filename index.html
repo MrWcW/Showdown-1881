@@ -158,6 +158,29 @@
       .lanDistRow .segBtn small{ display:block; font-size:10px; letter-spacing:.08em; opacity:.85; margin-top:3px; text-transform:none; }
       .lanWpn{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.08em; color:#c8ab77; margin:4px 0 0; line-height:1.5; }
       .lanWpn b{ color:#ffe9bd; }
+      /* ---------- Stable (v3.22): your own horse — the same panel
+         on the Ride card and in the Store's Horse tab ---------- */
+      .stableBox{ text-align:left; border:1px solid var(--plate-line); background:rgba(0,0,0,.32); padding:10px 12px; margin:8px 0 4px; }
+      .stableBox .hcard{ display:flex; gap:10px; align-items:center; }
+      .stableBox .hsw{ flex:0 0 44px; width:44px; height:44px; border-radius:50%; border:2px solid var(--brass); box-shadow:inset 0 -8px 12px rgba(0,0,0,.4); }
+      .stableBox .hname{ font-family:'Rye',Georgia,serif; font-size:19px; color:#ffe9bd; line-height:1.15; }
+      .stableBox .hmeta{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.1em; color:#c8ab77; margin-top:2px; line-height:1.5; }
+      .stableBox .hsec{ font-family:'Special Elite',monospace; font-size:10.5px; letter-spacing:.24em; color:var(--brass); margin:12px 0 6px; }
+      .horseNameRow{ display:flex; gap:7px; }
+      .horseNameIn{ flex:1; min-width:0; box-sizing:border-box; font-family:'Special Elite',monospace; font-size:15px; letter-spacing:.12em; color:#ffe9bd; background:rgba(0,0,0,.4); border:1px solid var(--plate-line); padding:9px 10px; outline:none; text-transform:uppercase; }
+      .horseNameIn:focus{ border-color:var(--brass); }
+      .horseNameRow .act, .stableBox .hbuy{ cursor:pointer; padding:9px 12px; background:linear-gradient(180deg,#5a2a14,#331607); border:1px solid var(--brass); color:#ffd98f; font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.08em; }
+      .horseNameRow .act:active, .stableBox .hbuy:active{ transform:scale(.97); }
+      .hchipRow{ display:flex; flex-wrap:wrap; gap:6px; }
+      .hchip{ flex:1 1 30%; cursor:pointer; padding:8px 6px; background:rgba(0,0,0,.35); border:1px solid var(--plate-line); color:#c8ab77; font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.06em; }
+      .hchip .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; border:1px solid rgba(0,0,0,.55); margin-right:5px; vertical-align:-2px; box-shadow:inset 0 -3px 5px rgba(0,0,0,.35); }
+      .hchip.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); }
+      .htier{ display:flex; justify-content:space-between; gap:8px; width:100%; box-sizing:border-box; cursor:pointer; padding:9px 10px; margin-bottom:6px; background:rgba(0,0,0,.35); border:1px solid var(--plate-line); color:#c8ab77; font-family:'Special Elite',monospace; font-size:11.5px; letter-spacing:.05em; text-align:left; }
+      .htier.on{ background:linear-gradient(180deg,#6b3d1c,#46250e); color:#ffd98f; border-color:var(--brass); }
+      .htier .pr{ color:#ffe9bd; }
+      .stableBox .hbuy{ width:100%; margin-top:4px; padding:11px; font-size:13px; }
+      .stableBox .hbuy:disabled{ opacity:.55; cursor:default; }
+      .stableBox .hnote{ font-size:12px; color:#c8ab77; line-height:1.45; margin:7px 0 0; }
       /* ---------- Store ---------- */
       #storeCard{ display:none; }
       #storeCard h1{ font-size:clamp(24px,5.6vw,34px); }
@@ -327,8 +350,12 @@
       .trickbtn{ background:linear-gradient(180deg,#c9971f,#6e4d08); margin-top:8px; font-size:17px; }
       /* Sheriff Shift (v3.7): a badge-bronze button under Endless Duel on the Duels hub. */
       .bigbtn.sheriffbtn{ background:linear-gradient(180deg,#b06a1f,#6e3d08); border-color:rgba(255,205,130,.55); color:#ffe9c4; box-shadow:inset 0 1px 0 rgba(255,230,180,.3), inset 0 -8px 14px rgba(0,0,0,.35), 0 4px 14px rgba(0,0,0,.4); margin-top:8px; }
+      /* Bank Robbery (v3.20): a robber's button — near-black with loot-gold letters, under Back-to-Back on the Duels hub. */
+      .bigbtn.bankbtn{ background:linear-gradient(180deg,#3d3423,#171208); border-color:rgba(255,205,130,.55); color:#ffd98a; box-shadow:inset 0 1px 0 rgba(255,230,180,.25), inset 0 -8px 14px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.4); margin-top:8px; }
       /* Night Ride (v3.8): a midnight-blue button under Train Robbery on the Ride picker, moon-silver letters. */
       .bigbtn.nightbtn{ background:linear-gradient(180deg,#22344d,#0a1424); border-color:rgba(170,200,240,.5); color:#dfe9f7; box-shadow:inset 0 1px 0 rgba(210,230,255,.22), inset 0 -8px 14px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.4); margin-top:8px; font-size:17px; }
+      /* Outlaw Ambush (v3.21): a blood-dark button under Night Ride on the Ride picker — near-black plum, ember letters. */
+      .bigbtn.ambbtn{ background:linear-gradient(180deg,#4a1420,#1c060c); border-color:rgba(224,106,77,.55); color:#ffc9b0; box-shadow:inset 0 1px 0 rgba(255,180,150,.22), inset 0 -8px 14px rgba(0,0,0,.45), 0 4px 14px rgba(0,0,0,.4); margin-top:8px; font-size:17px; }
       /* Night Ride (v3.8): the SPUR button — hold it (or W / ↑) to
          gallop; let go and the pace falls off, and dawdling draws the
          ghost rider. Bottom-left, clear of the weapon bar, lit gold
@@ -2442,6 +2469,36 @@
       body.lr #btnPose, body.lr.scoped #btnPose{ bottom:calc(167px + env(safe-area-inset-bottom)); right:12px; }
       body.lr #btnNext{ bottom:calc(208px + env(safe-area-inset-bottom)); }
 
+      /* ---------- Blackjack 21 (v3.23): the Saloon felt table. One
+         green panel on its own card — big readable cards, one bet
+         picker, three action buttons, your cash always in view.
+         The dealer's hole card wears a dark patterned back until
+         he turns it. Red suits run red, as they should. ---------- */
+      #bjCard{ display:none; }
+      .bigbtn.bjbtn{ background:linear-gradient(180deg,#14532d,#0a2e1a); border-color:rgba(120,220,160,.5); color:#d9f5e2; box-shadow:inset 0 1px 0 rgba(190,255,215,.22), inset 0 -8px 14px rgba(0,0,0,.45), 0 4px 14px rgba(0,0,0,.4); margin-top:8px; font-size:17px; }
+      .bjFelt{ background:radial-gradient(ellipse at 50% 38%, #1d6b3c, #0d3d20 78%); border:2px solid #6b4a26; outline:1px solid rgba(0,0,0,.65); outline-offset:-6px; border-radius:10px; padding:14px 12px 12px; margin:10px 0 4px; box-shadow:inset 0 0 34px rgba(0,0,0,.5); }
+      .bjHandLbl{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:.28em; color:#ffe9bd; text-align:center; }
+      .bjCards{ display:flex; justify-content:center; gap:7px; min-height:86px; align-items:center; flex-wrap:wrap; margin:6px 0 2px; }
+      .bjCardEl{ width:58px; height:82px; border-radius:7px; background:linear-gradient(180deg,#fffdf4,#efe6cf); color:#1c1710; box-shadow:0 3px 8px rgba(0,0,0,.5), inset 0 0 0 1px rgba(0,0,0,.18); display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Special Elite',monospace; }
+      .bjCardEl .bjRank{ font-size:26px; line-height:1; font-weight:bold; }
+      .bjCardEl .bjSuit{ font-size:24px; line-height:1.1; }
+      .bjCardEl.red{ color:#b3232a; }
+      .bjCardEl.back{ background:repeating-linear-gradient(45deg,#5e1216 0 7px,#451015 7px 14px); box-shadow:0 3px 8px rgba(0,0,0,.5), inset 0 0 0 3px #d9c9a3, inset 0 0 0 5px rgba(0,0,0,.35); }
+      .bjCardEl.back .bjRank, .bjCardEl.back .bjSuit{ visibility:hidden; }
+      .bjTot{ display:inline-block; min-width:34px; padding:1px 8px; border-radius:9px; background:rgba(0,0,0,.55); border:1px solid rgba(255,233,189,.5); color:#ffe9bd; font-family:'Special Elite',monospace; font-size:14px; letter-spacing:.08em; margin-left:7px; vertical-align:1px; }
+      .bjMsg{ font-family:'Special Elite',monospace; font-size:14.5px; line-height:1.45; color:#ffe9bd; text-align:center; min-height:42px; margin:8px 2px 2px; }
+      .bjCash{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.14em; color:#ffd98f; text-align:center; margin:6px 0 0; }
+      .bjBetRow{ display:flex; gap:7px; margin:8px 0 2px; }
+      .bjBetRow .segBtn{ flex:1; font-size:14px; padding:10px 4px; }
+      .bjBetRow.locked{ opacity:.45; pointer-events:none; }
+      .bjActs{ display:flex; gap:7px; margin:8px 0 2px; }
+      .bjActs .bigbtn{ margin-top:0; font-size:16px; padding:11px 6px; }
+      .bigbtn.bjDeal{ background:linear-gradient(180deg,#8a5a1d,#5e3a0e); border-color:rgba(255,217,143,.6); color:#ffe9bd; }
+      .bjSore{ display:none; border:1px solid rgba(255,120,100,.55); background:rgba(94,18,22,.35); border-radius:8px; padding:10px 10px 4px; margin:10px 0 2px; }
+      .bjSore.on{ display:block; }
+      .bjSore p{ font-family:'Special Elite',monospace; font-size:13.5px; line-height:1.45; color:#ffd9c9; margin:0 0 6px; }
+      @media (max-width:380px){ .bjCardEl{ width:50px; height:72px; } .bjCardEl .bjRank{ font-size:22px; } .bjCardEl .bjSuit{ font-size:20px; } .bjCards{ min-height:76px; } }
+
       /* ---------- Duel screen tidy (v3.18): the foe's name shrinks to
          a small quiet label, and the wait line leaves the weapon bar.
          From the user's phone screenshot (a Saloon duel vs Dusty Dan):
@@ -2732,7 +2789,7 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
@@ -2838,11 +2895,13 @@
         <p class="small">One nemesis, five beats — he comes back faster every time. <b id="rvHubLine">beat 1 of 5 next · pays $150</b></p>
         <button class="bigbtn b2bbtn" id="btnB2B" type="button">★ Back-to-Back · 2-on-1</button>
         <p class="small">One in front, one behind you — turn between them. Drop both for <b>$100</b>. <b id="bbHubLine">no pair dropped yet</b></p>
+        <button class="bigbtn bankbtn" id="btnBank" type="button">★ Bank Robbery · Crack the Box</button>
+        <p class="small">You rob the bank. Crack it, ride out rich. Best take: <b id="bnkHubLine">no robbery yet</b></p>
         <button class="bigbtn altbtn" id="btnDaily" type="button">★ Daily Duel</button>
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2859,7 +2918,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2881,7 +2940,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2904,9 +2963,62 @@
         <p class="small">Fight up a moving train. Best take: <b id="trainBestLine">no robbery yet</b></p>
         <button class="bigbtn nightbtn" id="btnNightRide" type="button">★ Night Ride · Under the Moon</button>
         <p class="small">Three miles by moonlight. Best ride: <b id="nightBestLine">no ride yet</b></p>
+        <button class="bigbtn ambbtn" id="btnAmbush" type="button">★ Outlaw Ambush · The Night Trail</button>
+        <p class="small">No bell. They jump you from the rocks. Best ambush: <b id="ambBestLine">no ambush yet</b></p>
+        <div class="locLbl" style="margin-top:18px;">★ Stable · Your Horse ★</div>
+        <div id="rideStable"></div>
+        <div class="locLbl" style="margin-top:18px;">★ The Saloon ★</div>
+        <button class="bigbtn bjbtn" id="btnBlackjack" type="button">★ Blackjack 21 · The Felt Table</button>
+        <p class="small">Sit down against the dealer and win cash off the town. Biggest win: <b id="bjBestLine">no hand yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Blackjack 21 (v3.23): the Saloon felt table. Its one home is
+         the Saloon section of the Ride card; the table itself lives
+         here. You play your real duel cash against the dealer —
+         place a bet, two cards each, HIT / STAND / DOUBLE, dealer
+         draws to 17, blackjack pays 3:2. Win big and a sore loser
+         at the next stool may call you out: a normal duel, winner
+         takes the pot. -->
+    <div class="card" id="bjCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ THE SALOON ★</p>
+        <h1>Blackjack 21</h1>
+        <div class="rule"></div>
+        <p class="small">Dealer stands on 17 · Blackjack pays 3:2</p>
+        <div class="bjFelt">
+          <div class="bjHandLbl">DEALER · DEALIN' DAN<span class="bjTot" id="bjDTot">—</span></div>
+          <div class="bjCards" id="bjDCards"></div>
+          <div class="bjHandLbl">YOUR HAND<span class="bjTot" id="bjPTot">—</span></div>
+          <div class="bjCards" id="bjPCards"></div>
+        </div>
+        <p class="bjMsg" id="bjMsg">Take a seat. Pick your bet, then DEAL.</p>
+        <p class="bjCash" id="bjCash">YOUR CASH · $0</p>
+        <div class="bjBetRow" id="bjBetRow">
+          <button type="button" class="segBtn" data-bjbet="10">$10</button>
+          <button type="button" class="segBtn" data-bjbet="20">$20</button>
+          <button type="button" class="segBtn" data-bjbet="50">$50</button>
+          <button type="button" class="segBtn" data-bjbet="100">$100</button>
+        </div>
+        <div class="bjActs">
+          <button class="bigbtn bjDeal" id="btnBjDeal" type="button">DEAL</button>
+          <button class="bigbtn" id="btnBjHit" type="button" style="display:none;">HIT</button>
+          <button class="bigbtn" id="btnBjStand" type="button" style="display:none;">STAND</button>
+          <button class="bigbtn" id="btnBjDouble" type="button" style="display:none;">DOUBLE</button>
+        </div>
+        <div class="bjSore" id="bjSore">
+          <p id="bjSoreLine"></p>
+          <div class="bjActs">
+            <button class="bigbtn rivalbtn" id="btnBjFace" type="button">FACE HIM</button>
+            <button class="bigbtn" id="btnBjWalk" type="button">KEEP MY WINNINGS</button>
+          </div>
+        </div>
+        <p class="small" id="bjCardBest">Biggest win: no hand yet</p>
+        <button class="bigbtn" id="btnBackBj" type="button">← Back to Rides</button>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2940,7 +3052,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2961,6 +3073,7 @@
           <button type="button" data-filter="rifles">Long</button>
           <button type="button" data-filter="thrown">Throwable</button>
           <button type="button" data-filter="outfits">Outfits</button>
+          <button type="button" data-filter="horse">Horse</button>
         </div>
         <div class="storeSec" data-store-cat="revolvers">Medium Range</div>
         <div id="storeGuns" data-store-cat="revolvers"></div>
@@ -2982,8 +3095,12 @@
         <div id="storeBandanas" data-store-cat="outfits"></div>
         <div class="storeSec" data-store-cat="outfits">Boots</div>
         <div id="storeBoots" data-store-cat="outfits"></div>
+        <!-- Your Horse (v3.22): the Stable panel, same as the Ride
+             card's — buy your horse here with the guns and gear. -->
+        <div class="storeSec" data-store-cat="horse">Your Horse</div>
+        <div id="storeStable" data-store-cat="horse"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3016,7 +3133,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3062,7 +3179,7 @@
         </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3114,6 +3231,12 @@
         <div class="statRow"><span class="k">Fastest Ride to Town</span><span class="v" id="stNightTime">—</span></div>
         <div class="statRow"><span class="k">Most Coyotes Dropped</span><span class="v" id="stNightKills">—</span></div>
         <div class="statRow"><span class="k">Rides Ridden</span><span class="v" id="stNightRides">0</span></div>
+        <div class="invSec">Outlaw Ambush</div>
+        <div class="statRow"><span class="k">Most Outlaws Dropped</span><span class="v" id="stAmbKills">—</span></div>
+        <div class="statRow"><span class="k">Longest Stretch Survived</span><span class="v" id="stAmbDist">—</span></div>
+        <div class="statRow"><span class="k">Ambushes Ridden</span><span class="v" id="stAmbRuns">0</span></div>
+        <div class="statRow"><span class="k">Trails Cleared</span><span class="v" id="stAmbClears">0</span></div>
+        <div class="statRow"><span class="k">Cash Won</span><span class="v" id="stAmbEarned">$0</span></div>
         <div class="invSec">Long Range</div>
         <div class="statRow"><span class="k">Best Score</span><span class="v" id="stLrBest">—</span></div>
         <div class="statRow"><span class="k">Longest Hit</span><span class="v" id="stLrLongest">—</span></div>
@@ -3133,12 +3256,20 @@
         <div class="statRow"><span class="k">Back-to-Back · Pairs Dropped</span><span class="v" id="stBbPairs">0</span></div>
         <div class="statRow"><span class="k">Back-to-Back · Best Clear</span><span class="v" id="stBbBest">—</span></div>
         <div class="statRow"><span class="k">Back-to-Back · Cash Won</span><span class="v" id="stBbEarned">$0</span></div>
+        <div class="statRow"><span class="k">Bank Robbery · Biggest Take</span><span class="v" id="stBnkTake">—</span></div>
+        <div class="statRow"><span class="k">Bank Robbery · Fastest Crack</span><span class="v" id="stBnkCrack">—</span></div>
+        <div class="statRow"><span class="k">Bank Robbery · Getaways</span><span class="v" id="stBnkWins">0</span></div>
+        <div class="statRow"><span class="k">Bank Robbery · Cash Stolen</span><span class="v" id="stBnkEarned">$0</span></div>
+        <div class="invSec">Blackjack 21 · The Saloon</div>
+        <div class="statRow"><span class="k">Biggest Win</span><span class="v" id="stBjBest">—</span></div>
+        <div class="statRow"><span class="k">Hands Played</span><span class="v" id="stBjHands">0</span></div>
+        <div class="statRow"><span class="k">Cash Won at the Table</span><span class="v" id="stBjEarned">$0</span></div>
         <div class="invSec">Your Wanted Poster</div>
         <div class="statRow"><span class="k">Poster Rank</span><span class="v" id="stPosterRank">UNKNOWN</span></div>
         <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
         <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3177,7 +3308,7 @@
         <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
         <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
         <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3211,7 +3342,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3246,7 +3377,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3285,7 +3416,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3299,6 +3430,10 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.23</b> — <b>Blackjack 21 in the Saloon.</b> Sit at the <b>felt table</b> (Ride card, under the Stable) and play against the dealer for your <b>real cash</b>: pick a bet, <b>HIT / STAND / DOUBLE</b>, dealer draws to 17, <b>blackjack pays 3:2</b>. Win big and a <b>sore loser</b> may call you out — a <b>duel for the pot</b>. Biggest win kept in <b>Stats</b>.</p>
+          <p><b>v3.22</b> — <b>Your own horse.</b> Buy a horse of your own in the <b>Store</b> (Horse tab) or the <b>Stable</b> on the Ride card: pick its <b>colour</b> — bay, black, chestnut, palomino, grey or paint — and its <b>speed</b>, from a steady trail horse to a fast thoroughbred, and <b>name it</b>. Your horse rides <b>under you on every ride</b> in its own colours with its name on the ride, and a faster horse makes a <b>quicker ride</b>.</p>
+          <p><b>v3.21</b> — <b>Outlaw Ambush.</b> A new ride in the RIDE hub: you're on the <b>night trail</b> when the gang jumps you from the <b>rocks</b> — <b>no warning, no bell, just draw</b>. Outlaws pop up from behind rocks and cacti and draw on you while the ride keeps moving; drop them from the saddle with your own iron. <b>Waves</b> come thicker and quicker the deeper you ride. <b>$10 an outlaw</b>, plus <b>$50</b> for clearing the trail <b>untouched</b>. Best ambush kept in <b>Stats</b>.</p>
+          <p><b>v3.20</b> — <b>Bank Robbery.</b> The other side of Sheriff Shift, in the Duels hub: <b>you</b> rob the bank. <b>Shoot the strongbox lock</b> or <b>hold your aim steady on it</b> to crack it while the <b>sheriff's posse</b> closes in — the longer you take, the more lawmen ride in. Crack it, then <b>ride out</b>: the box cash plus <b>$25 a lawman dropped</b> is yours — get caught and the <b>take is lost</b>. Best take and fastest crack kept in <b>Stats</b>.</p>
           <p><b>v3.19</b> — <b>Special Ammo is gone.</b> The <b>AMMO</b> tabs in the Store and the Gun Locker, and every gun's load pick, are removed — every gun shoots <b>standard loads</b> again, exactly as it did before. Guns, prices, money and progress are untouched.</p>
           <p><b>v3.18</b> — <b>A cleaner duel screen.</b> The foe's name is now a <b>small quiet label</b> up top, and the big intro name <b>fades away in about a second and a half</b> instead of staying up. <b>"Steady… wait for the bell"</b> and every other fight message now sit on <b>their own line high in the sky</b> — clear of the weapon bar, the throwable tile, RELOAD and the Next button, in every mode.</p>
           <p><b>v3.17</b> — <b>Barrel lengths.</b> Revolvers now come in <b>short, standard and long barrels</b> with the length in the name — <b>Colt SAA 3.5″</b>, <b>Colt SAA 4.75″</b>, a 5″ Schofield, a 6″ Lightning — and the derringer wears its 3″ too. A <b>shorter barrel draws faster</b>, a shade weaker at range; a <b>longer one</b> draws slower and reaches farther. Every gun — rifles and shotguns too — shows one clean line: its <b>barrel length and draw speed</b>.</p>
@@ -3417,7 +3552,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.19</div>
+        <div class="ver">VERSION 3.23</div>
       </div>
     </div>
 
@@ -3440,7 +3575,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3462,7 +3597,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3481,7 +3616,7 @@
         <div class="wbWall" id="wbWall"></div>
         <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
         <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3499,7 +3634,7 @@
         <p class="streakPips" id="tnLine">NO BRACKET YET</p>
         <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
         <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3520,7 +3655,7 @@
         <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
         <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
         <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3546,7 +3681,7 @@
         <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
         <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
         <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3557,7 +3692,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.19 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -11036,6 +11171,25 @@ three/build/three.module.js:
          (null until the first pair falls), and the cash the mode
          has paid in all. Missing on an old save means untouched. */
       bbWins: 0, bbBest: null, bbEarned: 0,
+      /* Bank Robbery (v3.20): getaways made, the biggest take, the
+         fastest crack in milliseconds (null until the first box
+         opens), and the cash stolen in all. Missing on an old save
+         means no robbery yet. */
+      bnkWins: 0, bnkBestTake: 0, bnkBestCrack: null, bnkEarned: 0,
+      /* Outlaw Ambush (v3.21): the most outlaws dropped on any one
+         ambush, the longest stretch survived in trail units,
+         ambushes ridden, trails cleared, and the cash the gang has
+         paid you in all. Missing on an old save means untouched. */
+      ambBestKills: 0, ambBestDist: 0, ambRuns: 0, ambClears: 0, ambEarned: 0,
+      /* Blackjack 21 (v3.23): the biggest single-hand win at the
+         Saloon table, the hands played, and the cash the table has
+         paid you in all. Missing on an old save means no hand yet. */
+      bjBestWin: 0, bjHands: 0, bjEarned: 0,
+      /* Your Horse (v3.22): the horse you own — its name, coat colour
+         and speed tier, and whether you have bought one at all.
+         Missing on an old save means the default unnamed bay trail
+         horse you have always ridden. */
+      horseName: '', horseColor: 'bay', horseTier: 'trail', horseBought: false,
       /* Gun Locker (v1.33): finishes you own, and the finish riding on
          each gun (item id -> skin id). Missing on an old save means
          factory finishes everywhere — nothing already earned changes. */
@@ -11123,6 +11277,18 @@ three/build/three.module.js:
         if (parsedSave && typeof parsedSave.nightBestTime === 'number' && parsedSave.nightBestTime > 0) SAVE.nightBestTime = parsedSave.nightBestTime;
         if (parsedSave && typeof parsedSave.nightBestKills === 'number' && parsedSave.nightBestKills >= 0) SAVE.nightBestKills = Math.floor(parsedSave.nightBestKills);
         if (parsedSave && typeof parsedSave.nightRides === 'number' && parsedSave.nightRides >= 0) SAVE.nightRides = Math.floor(parsedSave.nightRides);
+        if (parsedSave && typeof parsedSave.ambBestKills === 'number' && parsedSave.ambBestKills >= 0) SAVE.ambBestKills = Math.floor(parsedSave.ambBestKills);
+        if (parsedSave && typeof parsedSave.ambBestDist === 'number' && parsedSave.ambBestDist >= 0) SAVE.ambBestDist = Math.floor(parsedSave.ambBestDist);
+        if (parsedSave && typeof parsedSave.ambRuns === 'number' && parsedSave.ambRuns >= 0) SAVE.ambRuns = Math.floor(parsedSave.ambRuns);
+        if (parsedSave && typeof parsedSave.ambClears === 'number' && parsedSave.ambClears >= 0) SAVE.ambClears = Math.floor(parsedSave.ambClears);
+        if (parsedSave && typeof parsedSave.ambEarned === 'number' && parsedSave.ambEarned >= 0) SAVE.ambEarned = Math.floor(parsedSave.ambEarned);
+        if (parsedSave && typeof parsedSave.horseName === 'string') SAVE.horseName = parsedSave.horseName.replace(/[<>&"]/g, '').slice(0, 18);
+        if (parsedSave && ['bay', 'black', 'chestnut', 'palomino', 'grey', 'paint'].indexOf(parsedSave.horseColor) >= 0) SAVE.horseColor = parsedSave.horseColor;
+        if (parsedSave && ['trail', 'runner', 'thoroughbred'].indexOf(parsedSave.horseTier) >= 0) SAVE.horseTier = parsedSave.horseTier;
+        if (parsedSave && typeof parsedSave.horseBought === 'boolean') SAVE.horseBought = parsedSave.horseBought;
+        if (parsedSave && typeof parsedSave.bjBestWin === 'number' && parsedSave.bjBestWin >= 0) SAVE.bjBestWin = Math.floor(parsedSave.bjBestWin);
+        if (parsedSave && typeof parsedSave.bjHands === 'number' && parsedSave.bjHands >= 0) SAVE.bjHands = Math.floor(parsedSave.bjHands);
+        if (parsedSave && typeof parsedSave.bjEarned === 'number' && parsedSave.bjEarned >= 0) SAVE.bjEarned = Math.floor(parsedSave.bjEarned);
         if (parsedSave && Array.isArray(parsedSave.skins)) parsedSave.skins.forEach(function(id){ if (skinById(id).id === id && SAVE.skins.indexOf(id) < 0) SAVE.skins.push(id); });
         if (parsedSave && Array.isArray(parsedSave.doubles)) parsedSave.doubles.forEach(function(id){ if (gearById(GUNS, id).id === id && SAVE.doubles.indexOf(id) < 0) SAVE.doubles.push(id); });
         if (parsedSave && Array.isArray(parsedSave.hand)) parsedSave.hand.forEach(function(id){ if (gearById(HANDWEAPONS, id).id === id && SAVE.hand.indexOf(id) < 0) SAVE.hand.push(id); });
@@ -13160,7 +13326,12 @@ three/build/three.module.js:
       // the ride clock, coyotes dropped, your horse's pace on the
       // trail, how long you've dawdled, and how solid the ghost
       // rider riding alongside you has become (0 = not there)
-      night: false, nightDist: 0, nightTime: 0, nightKills: 0, nightSpeed: 0, nightSlowT: 0, nightGhostK: 0, nightSpawnAt: 0, nightWarned: false
+      night: false, nightDist: 0, nightTime: 0, nightKills: 0, nightSpeed: 0, nightSlowT: 0, nightGhostK: 0, nightSpawnAt: 0, nightWarned: false,
+      // Outlaw Ambush (v3.21): a ride-mode variant — outlaws dropped,
+      // trail covered and its clock, the wave you're riding through,
+      // whether a shot has landed on you (the clean bonus rides on
+      // it), and when the next of the gang is due out of the rocks
+      ambush: false, ambKills: 0, ambDist: 0, ambTime: 0, ambWave: 1, ambHitTaken: false, ambSpawnAt: 0
     };
     /* ============================== v2.2 STATE ==============================
        Night storm, the slow-mo replay, fanning, the bounty hunt and
@@ -13170,7 +13341,7 @@ three/build/three.module.js:
        of the round state. */
     var nightOn = false;
     var timeOfDay = 'day'; // v2.34: 'day' | 'sunset' | 'night' — nightOn stays the flag the storm rules read
-    var specialKind = null; // null | 'bounty' | 'daily' | 'quick' | 'endless' | 'sheriff' | 'wanted' | 'tourn' | 'rival' | 'b2b'
+    var specialKind = null; // null | 'bounty' | 'daily' | 'quick' | 'endless' | 'sheriff' | 'wanted' | 'tourn' | 'rival' | 'b2b' | 'bjduel'
     var fanOn = false;
     var replayUntil = 0, replayTarget = null, lastKillOpp = null;
     var bountyTargetOpp = null, bountyFled = false, bountyDrawT0 = 0;
@@ -13192,6 +13363,7 @@ three/build/three.module.js:
        rebuilt every wave and struck by disposeOpps like the bales. */
     var SHF = { wave: 0, kills: 0, wavesHeld: 0, bags: 5, earned: 0, toSpawn: 0, spawnAt: 0, spawned: 0, waveBreakEnd: 0, settled: false, started: false };
     var shfCoverGroup = null, shfCovers = [];
+    var bnkBoxGroup = null, bnkLockMesh = null; // Bank Robbery (v3.20): the strongbox and its gold lock, struck by disposeOpps like the bales
     /* ============================== MAPS & THE HOUR (v2.34) ==============================
        Five grounds, one set of rules. applyLocation shows the picked
        map, deals it its own cover list and lays down its DAY light;
@@ -14100,6 +14272,7 @@ three/build/three.module.js:
         var catName = cats[ci].getAttribute('data-store-cat');
         cats[ci].style.display = catName === storeFilter ? '' : 'none'; // v2.19: one tab, one shelf — nothing else on screen
       }
+      renderStable(); // Your Horse (v3.22): the Stable panel rides the Store's Horse tab too
     }
     /* ============================== INVENTORY (v1.9) ==============================
        Its own screen off the main menu, separate from the Store: every
@@ -15888,6 +16061,16 @@ three/build/three.module.js:
       $('stNightTime').textContent = fmtSurvive(SAVE.nightBestTime);
       $('stNightKills').textContent = (SAVE.nightBestKills || 0) + ((SAVE.nightBestKills || 0) === 1 ? ' COYOTE' : ' COYOTES');
       $('stNightRides').textContent = SAVE.nightRides || 0;
+      /* Outlaw Ambush (v3.21): the fullest bag, the longest stretch
+         survived, the rides and clears, and the cash — beside the
+         Night Ride records, with the picker line kept in step. */
+      $('stAmbKills').textContent = (SAVE.ambBestKills || 0) + ((SAVE.ambBestKills || 0) === 1 ? ' OUTLAW' : ' OUTLAWS');
+      $('stAmbDist').textContent = SAVE.ambBestDist > 0 ? (SAVE.ambBestDist / 600).toFixed(2) + ' MI' : '—';
+      $('stAmbRuns').textContent = SAVE.ambRuns || 0;
+      $('stAmbClears').textContent = SAVE.ambClears || 0;
+      $('stAmbEarned').textContent = '$' + (SAVE.ambEarned || 0);
+      var ambHubEl = $('ambBestLine');
+      if (ambHubEl) ambHubEl.textContent = (SAVE.ambRuns || 0) > 0 ? ((SAVE.ambBestKills || 0) + ' dropped · best ' + (SAVE.ambBestDist / 600).toFixed(1) + ' mi') : 'no ambush yet';
       /* Long Range (v3.10): the best score on the valley, the
          longest hit ever made out there, and the rounds shot. */
       $('stLrBest').textContent = SAVE.lrBest === null ? '—' : SAVE.lrBest + ' PTS';
@@ -15912,6 +16095,19 @@ three/build/three.module.js:
       $('stBbPairs').textContent = SAVE.bbWins || 0;
       $('stBbBest').textContent = SAVE.bbBest ? (SAVE.bbBest / 1000).toFixed(2) + 's' : '—';
       $('stBbEarned').textContent = '$' + (SAVE.bbEarned || 0);
+      /* Bank Robbery (v3.20): the robber's book, and the hub line. */
+      $('stBnkTake').textContent = SAVE.bnkBestTake > 0 ? '$' + SAVE.bnkBestTake : '—';
+      $('stBnkCrack').textContent = SAVE.bnkBestCrack ? (SAVE.bnkBestCrack / 1000).toFixed(2) + 's' : '—';
+      $('stBnkWins').textContent = SAVE.bnkWins || 0;
+      $('stBnkEarned').textContent = '$' + (SAVE.bnkEarned || 0);
+      var bnkHubEl = $('bnkHubLine');
+      if (bnkHubEl) bnkHubEl.textContent = SAVE.bnkBestTake > 0 ? ('$' + SAVE.bnkBestTake + (SAVE.bnkBestCrack ? ' · fastest crack ' + (SAVE.bnkBestCrack / 1000).toFixed(2) + 's' : '')) : 'no robbery yet';
+      /* Blackjack 21 (v3.23): the table's book, and the Saloon picker line. */
+      $('stBjBest').textContent = SAVE.bjBestWin > 0 ? '$' + SAVE.bjBestWin : '—';
+      $('stBjHands').textContent = SAVE.bjHands || 0;
+      $('stBjEarned').textContent = '$' + (SAVE.bjEarned || 0);
+      var bjHubEl = $('bjBestLine');
+      if (bjHubEl) bjHubEl.textContent = SAVE.bjBestWin > 0 ? ('$' + SAVE.bjBestWin) : 'no hand yet';
       /* Your Wanted Poster (v3.15): the poster's rank, bounty and
          notoriety ride at the foot of Stats, beside the button. */
       var pdS = posterData();
@@ -17331,6 +17527,108 @@ three/build/three.module.js:
       }
     }
 
+    /* ============================== YOUR HORSE (v3.22) ==============================
+       One horse of your own: bought with duel cash in the Store's
+       Horse tab or in the Stable on the Ride card. You pick its coat
+       and its speed, you name it, and it is the horse under you on
+       every ride — the stagecoach chase, the Night Ride and the
+       Ambush — in its own colours, at its own pace: a faster horse
+       runs a coach down sooner and covers the night miles quicker,
+       so ride times fall with the tier. One horse at a time: buying
+       another is a new buy at that horse's price. */
+    var HORSE_COLORS = [
+      { id: 'bay', name: 'Bay', coat: 0x6e4a2c, mane: 0x2a1a0e, sw: '#6e4a2c' },
+      { id: 'black', name: 'Black', coat: 0x262320, mane: 0x0d0c0b, sw: '#262320' },
+      { id: 'chestnut', name: 'Chestnut', coat: 0x8a4a22, mane: 0x552c10, sw: '#8a4a22' },
+      { id: 'palomino', name: 'Palomino', coat: 0xc99a4a, mane: 0xe9dcb0, sw: '#c99a4a' },
+      { id: 'grey', name: 'Grey', coat: 0x9b9b97, mane: 0x55534f, sw: '#9b9b97' },
+      { id: 'paint', name: 'Paint', coat: 0xe9e1cd, mane: 0x3a2413, sw: '#e9e1cd', patch: 0x6e4a2c }
+    ];
+    var HORSE_TIERS = [
+      { id: 'trail', name: 'Steady Trail Horse', pace: 1, price: 200, note: 'The honest trail pace you have always ridden.' },
+      { id: 'runner', name: 'Quick Runner', pace: 1.12, price: 600, note: 'Ride pace x1.12 — runs a coach down sooner and covers the night miles quicker.' },
+      { id: 'thoroughbred', name: 'Fast Thoroughbred', pace: 1.25, price: 1200, note: 'Ride pace x1.25 — the quickest horse in the territory.' }
+    ];
+    function horseColorById(id){ for (var i = 0; i < HORSE_COLORS.length; i++) if (HORSE_COLORS[i].id === id) return HORSE_COLORS[i]; return HORSE_COLORS[0]; }
+    function horseTierById(id){ for (var i = 0; i < HORSE_TIERS.length; i++) if (HORSE_TIERS[i].id === id) return HORSE_TIERS[i]; return HORSE_TIERS[0]; }
+    function myHorseColor(){ return horseColorById(SAVE.horseColor); }
+    function myHorseTier(){ return horseTierById(SAVE.horseTier); }
+    function horsePace(){ return myHorseTier().pace; }
+    function horseRideTag(){ return SAVE.horseName ? ' · ON ' + SAVE.horseName.toUpperCase() : ''; }
+    function cleanHorseName(v){ return (v || '').replace(/[<>&"]/g, '').replace(/\s+/g, ' ').trim().slice(0, 18); }
+    /* your horse, built fresh for a ride: the game's horse builder in
+       your coat and mane — and a paint gets its patches laid over the
+       pale coat, on the neck and both flanks, where the saddle view
+       shows them */
+    function buildPlayerHorse(){
+      var c = myHorseColor();
+      var h = buildHorse(c.coat, c.mane);
+      if (c.patch !== undefined){
+        var pm = new THREE.MeshStandardMaterial({ color: c.patch, roughness: 0.6, metalness: 0.05 });
+        [[0.29, 0.10, -0.28, 0.16], [-0.29, 0.02, 0.18, 0.19], [0.28, -0.06, 0.34, 0.13], [-0.28, 0.14, -0.38, 0.12]].forEach(function(pp){
+          var m = new THREE.Mesh(new THREE.SphereGeometry(pp[3], 10, 8), pm);
+          m.scale.set(0.35, 0.8, 1); m.position.set(pp[0], pp[1], pp[2]); h.body.add(m);
+        });
+        var nm2 = new THREE.Mesh(new THREE.SphereGeometry(0.13, 10, 8), pm);
+        nm2.scale.set(0.55, 1, 0.8); nm2.position.set(0.09, 0.30, -0.10); nm2.rotation.x = -0.62; h.neck.add(nm2);
+      }
+      return h;
+    }
+    /* ---- the Stable panel: one card, rendered in both homes (the
+       Ride card's Stable section and the Store's Horse tab) — your
+       horse up top, then its name, colour and speed to pick, and the
+       buy button. Colour and speed picks stage until you buy;
+       naming is free, any time, and rides along at once. ---- */
+    var stablePick = { color: null, tier: null };
+    function stableSelColor(){ return stablePick.color || SAVE.horseColor; }
+    function stableSelTier(){ return stablePick.tier || SAVE.horseTier; }
+    function renderStable(){
+      ['rideStable', 'storeStable'].forEach(function(boxId){
+        var box = $(boxId); if (!box) return;
+        var cur = myHorseColor(), curT = myHorseTier();
+        var selC = horseColorById(stableSelColor()), selT = horseTierById(stableSelTier());
+        var isCurrent = SAVE.horseBought && selC.id === cur.id && selT.id === curT.id;
+        var html = '<div class="stableBox"><div class="hcard">' +
+          '<div class="hsw" style="background:' + (cur.id === 'paint' ? 'linear-gradient(135deg,#e9e1cd 55%,#6e4a2c 45%)' : cur.sw) + '"></div>' +
+          '<div><div class="hname">' + (SAVE.horseName ? SAVE.horseName : 'Unnamed') + '</div>' +
+          '<div class="hmeta">' + cur.name.toUpperCase() + ' · ' + curT.name.toUpperCase() + '<br>RIDE PACE x' + curT.pace.toFixed(2) + (SAVE.horseBought ? ' · YOUR HORSE' : ' · THE OLD TRAIL HORSE') + '</div></div></div>' +
+          '<div class="hsec">NAME YOUR HORSE</div>' +
+          '<div class="horseNameRow"><input class="horseNameIn" maxlength="18" placeholder="HORSE NAME" value="' + (SAVE.horseName || '') + '" aria-label="Your horse name"><button type="button" class="act hnameSave">SET NAME</button></div>' +
+          '<div class="hsec">COLOUR</div><div class="hchipRow">';
+        HORSE_COLORS.forEach(function(c){ html += '<button type="button" class="hchip' + (c.id === selC.id ? ' on' : '') + '" data-hcolor="' + c.id + '"><span class="dot" style="background:' + c.sw + '"></span>' + c.name + '</button>'; });
+        html += '</div><div class="hsec">SPEED</div>';
+        HORSE_TIERS.forEach(function(tr){ html += '<button type="button" class="htier' + (tr.id === selT.id ? ' on' : '') + '" data-htier="' + tr.id + '"><span>' + tr.name + ' · PACE x' + tr.pace.toFixed(2) + '</span><span class="pr">$' + tr.price + '</span></button>'; });
+        html += '<p class="hnote">' + selT.note + '</p>' +
+          '<button type="button" class="hbuy"' + (isCurrent ? ' disabled' : '') + '>' + (isCurrent ? 'THIS IS YOUR HORSE' : 'BUY THIS HORSE · $' + selT.price) + '</button>' +
+          (SAVE.horseBought ? '<p class="hnote">One horse at a time — buying another replaces this one.</p>' : '<p class="hnote">Until you buy, you ride the old trail horse: bay, steady, unnamed.</p>') +
+          '</div>';
+        box.innerHTML = html;
+        var chips = box.querySelectorAll('[data-hcolor]');
+        for (var ci = 0; ci < chips.length; ci++) (function(b){ b.addEventListener('click', function(){ initAudio(); sndClick(); stablePick.color = b.getAttribute('data-hcolor'); renderStable(); }); })(chips[ci]);
+        var tiers = box.querySelectorAll('[data-htier]');
+        for (var ti2 = 0; ti2 < tiers.length; ti2++) (function(b){ b.addEventListener('click', function(){ initAudio(); sndClick(); stablePick.tier = b.getAttribute('data-htier'); renderStable(); }); })(tiers[ti2]);
+        var saveBtn = box.querySelector('.hnameSave'), nameIn = box.querySelector('.horseNameIn');
+        if (saveBtn && nameIn) saveBtn.addEventListener('click', function(){
+          initAudio(); sndClick();
+          SAVE.horseName = cleanHorseName(nameIn.value);
+          persistSave(); renderStable();
+          toast(SAVE.horseName ? ('Your horse is ' + SAVE.horseName + '!') : 'Name cleared.', true);
+        });
+        var buyBtn = box.querySelector('.hbuy');
+        if (buyBtn) buyBtn.addEventListener('click', function(){
+          initAudio();
+          var c2 = horseColorById(stableSelColor()), t2 = horseTierById(stableSelTier());
+          if (SAVE.money < t2.price){ sndClick(); toast('Not enough cash — that horse is $' + t2.price + '.', true); return; }
+          SAVE.money -= t2.price; SAVE.horseColor = c2.id; SAVE.horseTier = t2.id; SAVE.horseBought = true;
+          var nm = box.querySelector('.horseNameIn');
+          if (nm && cleanHorseName(nm.value)) SAVE.horseName = cleanHorseName(nm.value);
+          stablePick.color = null; stablePick.tier = null;
+          persistSave(); updateMoneyUI(); renderStable(); sndBell();
+          toast((SAVE.horseName || 'Your horse') + ' is yours — ' + c2.name + ', ' + t2.name + '!', true);
+        });
+      });
+    }
+
     /* ============================== RIDE: STAGECOACH CHASE (v1.17) ==============================
        The third way to fight: you are IN THE SADDLE, running down a
        stagecoach on the open trail. Your horse gallops under the camera
@@ -17687,6 +17985,7 @@ three/build/three.module.js:
     function cleanupRideWorld(){
       cleanupTrain(); // Train Robbery (v3.4): the train leaves with the ride world, whichever way out you take
       cleanupNightRide(); // Night Ride (v3.8): the night — lantern, coyotes, ghost and all — leaves with it too
+      cleanupAmbush(); // Outlaw Ambush (v3.21): the gang and their rocks leave with the ride world too
       var sw = $('rideSwitch'); if (sw) sw.className = '';
       var tb9 = $('throwBtn'); if (tb9) tb9.className = ''; // the throw button steps off with the bar
       if (handProp) handProp.visible = false;
@@ -18484,7 +18783,7 @@ three/build/three.module.js:
       hemi.intensity = 0.62 * lm; sun.intensity = 1.75 * lm; fill.intensity = 0.35 * lm; faceLight.intensity = 0.72 * lm;
       scene.fog.color.setHex(sf.color); scene.fog.near = sf.near; scene.fog.far = sf.far;
       // your horse
-      playerHorse = buildHorse(0x6e4a2c, 0x2a1a0e);
+      playerHorse = buildPlayerHorse();
       playerHorse.group.position.set(0, 0, 1.15);
       playerHorse.group.scale.setScalar(0.95);
       rideGroup.add(playerHorse.group);
@@ -18534,7 +18833,7 @@ three/build/three.module.js:
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
       G.bullets = rideAmmo[rideFam]; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
-      G.ridePhase = 0; G.ridePS = 11.4; G.rideCS = 11.2; G.rideTime = 0;
+      G.ridePhase = 0; G.ridePS = 11.4 * horsePace(); G.rideCS = 11.2; G.rideTime = 0;
       G.rideDustAt = 0; G.rideWon = false; G.rideOverT = 0; G.rideUiAt = 0;
       holding = false; gunDrawn = true; gunV = 0;
       if (adsTagEl) adsTagEl.className = 'plate';
@@ -18634,7 +18933,7 @@ three/build/three.module.js:
         if (c.roof){ o.legL.rotation.x = 0.12; o.legR.rotation.x = -0.1; } // roof men braced against the bounce
         rideOutlaws.push(o);
       });
-      $('duelLabel').textContent = endless ? ('ENDLESS STAGECOACH · COACH ' + n) : 'RIDE · STAGECOACH CHASE';
+      $('duelLabel').textContent = (endless ? ('ENDLESS STAGECOACH · COACH ' + n) : 'RIDE · STAGECOACH CHASE') + horseRideTag();
       $('oppName').textContent = endless ? COACH_NAMES[(n - 1) % COACH_NAMES.length] : 'The Overland Stage';
       updateRideHUD();
       clockEl.textContent = '15 PACES';
@@ -18883,7 +19182,7 @@ three/build/three.module.js:
       // (v1.20: six men urge the longer coach on now, not three — so
       // each man urges it less, and the pace balance stays what it was)
       var urgePer = rideOutlaws.length > 6 ? 0.19 * 6 / rideOutlaws.length : 0.19;
-      var pT = 11.4, cT = 10.35 + aliveN * urgePer - deadH * 1.8 + Math.sin(t * 0.6) * 0.3 + (G.rideSpeedBonus || 0);
+      var pT = 11.4 * horsePace(), cT = 10.35 + aliveN * urgePer - deadH * 1.8 + Math.sin(t * 0.6) * 0.3 + (G.rideSpeedBonus || 0);
       if (over){ if (G.rideWon){ pT = 0; cT = 0; } else { pT = 1.4; cT = 11; } }
       // a beaten Endless coach coasts riderless (v1.24): it slows hard
       // so you ride past it and the next coach can roll in behind it
@@ -19976,7 +20275,7 @@ three/build/three.module.js:
       rainPts.visible = !!nightOn;
       // your horse, same as the stagecoach ride — and the saddle rig
       // with it (built once, the first ride that needs it)
-      playerHorse = buildHorse(0x6e4a2c, 0x2a1a0e);
+      playerHorse = buildPlayerHorse();
       playerHorse.group.position.set(0, 0, 1.15);
       playerHorse.group.scale.setScalar(0.95);
       rideGroup.add(playerHorse.group);
@@ -20027,7 +20326,7 @@ three/build/three.module.js:
       $('rideSwitch').className = 'on';
       var sb2 = $('btnSpur'); if (sb2) sb2.style.display = 'block';
       updateRideSwitchUI();
-      $('duelLabel').textContent = 'NIGHT RIDE · THE MOONLIT TRAIL';
+      $('duelLabel').textContent = 'NIGHT RIDE · THE MOONLIT TRAIL' + horseRideTag();
       $('oppName').textContent = 'Night Ride';
       updateNightHUD();
       clockEl.textContent = (NIGHT_LEN / NIGHT_MILE).toFixed(1) + ' MI';
@@ -20046,7 +20345,7 @@ three/build/three.module.js:
       // the pace: spurred, the horse stretches out to a gallop; let
       // go and he falls off, second by second, to an amble
       if (riding){
-        var tgt = spurHeld ? NIGHT_GALLOP : NIGHT_WALK;
+        var tgt = spurHeld ? NIGHT_GALLOP * horsePace() : NIGHT_WALK * horsePace();
         var rate = tgt > G.nightSpeed ? 3.4 : 1.15;
         G.nightSpeed += Math.max(-rate * dt, Math.min(rate * dt, tgt - G.nightSpeed));
         G.nightTime += dt;
@@ -20257,12 +20556,412 @@ three/build/three.module.js:
       });
     }
 
+    /* ============================== OUTLAW AMBUSH (v3.21) ==============================
+       The fifth ride, picked from the idea list: you are riding the
+       trail at night when the gang jumps you from the rocks. No
+       warning, no bell — just draw. You are in the saddle on the same
+       moonlit trail world the Night Ride scrolls, your equipped gun
+       in hand (switching and reloading as on any ride), and outlaws
+       pop up from behind rocks and cacti along the trail and draw on
+       you — a man always SHOWS himself a fair beat before he can
+       fire, the same honest telegraph as every other fight in the
+       game. The ride never stops: the trail streams past at a steady
+       gallop while the waves come — five of them, each thicker and
+       quicker on the draw than the last — and riding the full stretch
+       ends the ambush. Every outlaw dropped pays $10, banked the
+       moment he falls, and clearing the whole trail without taking a
+       hit pays a $50 untouched bonus on top. Difficulty follows Mode
+       Settings; the night lighting is the Night Ride's own. Best
+       ambush — most dropped and longest survived — is kept in Stats
+       and on the Ride picker. */
+    var AMB_SPEED = 10.5, AMB_PAY = 10, AMB_CLEAN_BONUS = 50, AMB_WAVES = 5, AMB_MILE = 600;
+    var ambParty = [];
+    var AMB_CFGS = [
+      { name: 'Black Jack Rourke', coat: 0x1f1c1a, pants: 0x232120, shirt: 0x6e6252, hat: 0x141210, skin: 0xc98d54, scarf: 0x6e1f16 },
+      { name: 'Dead-Eye Flint', coat: 0x2a2118, pants: 0x1e1a16, shirt: 0x8a7a5c, hat: 0x241a10, skin: 0xb57e4e, band: 0xd9a441 },
+      { name: 'Moses Kane', coat: 0x23282e, pants: 0x1c1f24, shirt: 0x7d7466, hat: 0x191d22, skin: 0xd9a066 },
+      { name: 'The Preacher', coat: 0x17151c, pants: 0x201d24, shirt: 0x9a9284, hat: 0x100e14, skin: 0xe0aa72 },
+      { name: 'Rattlesnake Ruiz', coat: 0x33231a, pants: 0x26201a, shirt: 0xa89061, hat: 0x2a1c10, skin: 0xb57e4e, scarf: 0x274435, wideBrim: true },
+      { name: 'Bloody Bill Hart', coat: 0x3d1420, pants: 0x241016, shirt: 0x8f867a, hat: 0x1c0d12, skin: 0xc98d54, band: 0x8a2f23 },
+      { name: 'Coyote Smith', coat: 0x2e2a20, pants: 0x23201e, shirt: 0x77694f, hat: 0x201a14, skin: 0xd9a066, scarf: 0x54442a },
+      { name: 'Gravedigger Cole', coat: 0x1c2026, pants: 0x191c20, shirt: 0x6d6a60, hat: 0x121519, skin: 0xc98d54 }
+    ];
+    function ambushDiff(){
+      if (SAVE.difficulty === 'easy') return { len: 1300, cap: 2, hit: 0.15, dmg: 12, spawn: 1.25, draw: 1.3 };
+      if (SAVE.difficulty === 'hard') return { len: 1800, cap: 4, hit: 0.30, dmg: 20, spawn: 0.8, draw: 0.78 };
+      return { len: 1500, cap: 3, hit: 0.22, dmg: 16, spawn: 1, draw: 1 };
+    }
+    /* ---- his cover: a trail boulder a man can hide his whole
+       length behind, or a tall saguaro — dark as the night makes
+       them, and honest cover both ways: your lead stops in them
+       exactly like his body stops behind them ---- */
+    function buildAmbCover(kind){
+      var g = new THREE.Group(), meshes = [];
+      if (kind === 'cactus'){
+        var cm = new THREE.MeshStandardMaterial({ color: 0x2e5230, roughness: 0.95 });
+        var trunk = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.20, 2.3, 8), cm));
+        trunk.position.y = 1.15; g.add(trunk); meshes.push(trunk);
+        [-1, 1].forEach(function(s){
+          var armV = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.10, 0.85, 7), cm));
+          armV.position.set(s * 0.36, 1.35 + (s > 0 ? 0.2 : 0), 0); g.add(armV); meshes.push(armV);
+          var armH = new THREE.Mesh(new THREE.CylinderGeometry(0.095, 0.095, 0.38, 7), cm);
+          armH.rotation.z = Math.PI / 2; armH.position.set(s * 0.19, 1.0 + (s > 0 ? 0.2 : 0), 0); g.add(armH); meshes.push(armH);
+        });
+        g.scale.setScalar(1.05 + Math.random() * 0.3);
+      } else {
+        var rm = new THREE.MeshStandardMaterial({ color: 0x4d4238, roughness: 1 });
+        var r1 = shadowed(new THREE.Mesh(new THREE.DodecahedronGeometry(1.02 + Math.random() * 0.25), rm));
+        r1.position.y = 0.52; r1.scale.y = 0.85; r1.rotation.set(Math.random() * 3, Math.random() * 3, 0); g.add(r1); meshes.push(r1);
+        var r2 = shadowed(new THREE.Mesh(new THREE.DodecahedronGeometry(0.62 + Math.random() * 0.2), rm));
+        r2.position.set(0.78, 0.3, 0.15); r2.scale.y = 0.8; r2.rotation.set(Math.random() * 3, Math.random() * 3, 0); g.add(r2); meshes.push(r2);
+      }
+      return { g: g, meshes: meshes };
+    }
+    function disposeAmbEntry(w){
+      if (w.o.group.parent) w.o.group.parent.remove(w.o.group);
+      w.o.group.traverse(function(n){ if (n.geometry) n.geometry.dispose(); });
+      if (w.coverG.parent) w.coverG.parent.remove(w.coverG);
+      w.coverG.traverse(function(n){ if (n.geometry) n.geometry.dispose(); });
+    }
+    function cleanupAmbush(){
+      ambParty.forEach(disposeAmbEntry);
+      ambParty = [];
+      G.ambush = false;
+    }
+    function aliveAmbushers(){ var n = 0; ambParty.forEach(function(w){ if (!w.dead) n++; }); return n; }
+    function upAmbushers(){ var n = 0; ambParty.forEach(function(w){ if (!w.dead && w.state === 'up') n++; }); return n; }
+    /* ---- one of the gang, down in the rocks ahead: he starts
+       crouched clean out of sight behind his cover and pops up on
+       his own clock — no bell, no shout, the pop IS the warning ---- */
+    function spawnAmbusher(now){
+      var cfg = AMB_CFGS[(Math.random() * AMB_CFGS.length) | 0];
+      var o = buildGunslinger(cfg);
+      var side = Math.random() < 0.5 ? -1 : 1;
+      var x = side * (3.4 + Math.random() * 1.9), z = -38 - Math.random() * 6;
+      o.group.position.set(x, -1.14, z);
+      o.group.rotation.y = side > 0 ? -0.16 : 0.16; // angled a touch toward the trail, and at you
+      o.armR.sh.rotation.x = -1.5; o.armR.el.rotation.x = -0.06; // gun arm up and aimed down the trail
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      var cover = buildAmbCover(Math.random() < 0.45 ? 'cactus' : 'rock');
+      cover.g.position.set(x + (side > 0 ? 0.12 : -0.12), 0, z + 1.15); // the cover stands between you and him
+      scene.add(cover.g);
+      var w = { o: o, coverG: cover.g, coverMeshes: cover.meshes, state: 'hide', showK: 0,
+        popAt: now + 550 + Math.random() * 850, fireAt: 0, dead: false, deathT: 0, slot: ambParty.length };
+      o.ambEntry = w;
+      ambParty.push(w);
+      shadowDirty = true;
+    }
+    function killAmbusher(w){
+      w.dead = true; w.deathT = 0; w.o.dead = true;
+      G.ambKills++;
+      SAVE.money += AMB_PAY; SAVE.ambEarned = (SAVE.ambEarned || 0) + AMB_PAY; persistSave(); // his $10 is yours the moment he drops, win or lose
+      sndThud(0.4);
+      toast(w.o.cfg.name + ' down — +$10 · ' + G.ambKills + ' dropped!', true);
+      updateAmbushHUD();
+    }
+    function ambushPlayerHit(){
+      var diff = ambushDiff();
+      G.hp -= diff.dmg; G.ambHitTaken = true; updateHp();
+      G.vig = 0.9;
+      G.shake = REDUCED ? 0.15 : 0.55;
+      sndThud(0.7);
+      if (G.hp <= 0) ambushEnd(false);
+      else toast('Hit! Hide ' + Math.max(Math.ceil(G.hp), 0) + '%.', true);
+    }
+    function updateAmbushHUD(){
+      if (G.state === 'rideover') return;
+      $('oppSub').textContent = 'Dropped ' + G.ambKills + ' · Wave ' + G.ambWave + ' of ' + AMB_WAVES +
+        (G.ambHitTaken ? ' · Hit taken — clean bonus gone' : ' · Untouched — $50 clean bonus riding');
+    }
+    /* the records: most dropped on any one ambush, and the longest
+       stretch survived — banked at every ambush's end, and on a
+       mid-ambush quit */
+    function recordAmbushBest(){
+      var nb = false;
+      if (G.ambKills > (SAVE.ambBestKills || 0)){ SAVE.ambBestKills = G.ambKills; nb = true; }
+      if (G.ambDist > (SAVE.ambBestDist || 0)){ SAVE.ambBestDist = Math.round(G.ambDist); nb = true; }
+      if (nb) persistSave();
+      return nb;
+    }
+    function ambushEnd(win){
+      if (G.state !== 'ride') return;
+      G.state = 'rideover'; G.rideWon = win; G.lastWin = win; G.rideOverT = 0;
+      SAVE.ambRuns = (SAVE.ambRuns || 0) + 1;
+      if (win) SAVE.ambClears = (SAVE.ambClears || 0) + 1;
+      var bonus = (win && !G.ambHitTaken) ? AMB_CLEAN_BONUS : 0;
+      if (bonus){ SAVE.money += bonus; SAVE.ambEarned = (SAVE.ambEarned || 0) + bonus; }
+      var newBest = recordAmbushBest();
+      persistSave(); updateStats();
+      if (win) banner('YOU RODE THROUGH!');
+      else { G.vig = 1; banner('THE GANG GOT YOU'); }
+      var len = ambushDiff().len;
+      $('oppName').textContent = win ? 'TRAIL CLEARED' : 'DOWN IN THE DARK';
+      $('oppSub').textContent = 'Outlaws dropped ' + G.ambKills +
+        ' · Trail ' + (Math.min(G.ambDist, len) / AMB_MILE).toFixed(2) + ' of ' + (len / AMB_MILE).toFixed(1) + ' mi' +
+        ' · Hide ' + Math.max(Math.ceil(G.hp), 0) + '%' +
+        ' · Won $' + (G.ambKills * AMB_PAY + bonus) + (bonus ? ' (incl. $50 untouched bonus)' : '') +
+        (newBest ? ' · NEW BEST' : '');
+      toast(win ? (bonus ? 'Clean through, never touched — the gang is short ' + G.ambKills + ' men and you are $' + (G.ambKills * AMB_PAY + bonus) + ' richer.' : 'You rode out the far side of the ambush — $' + (G.ambKills * AMB_PAY) + ' off the gang.') : 'The rocks keep their secret — the $' + (G.ambKills * AMB_PAY) + ' off the men you dropped stays yours.', true);
+      showNext('Ride Again');
+    }
+    /* Firing from the saddle at the gang — the ride's own shot,
+       resolved against whichever outlaws are up out of cover, with
+       their rocks and cacti as honest cover in between. */
+    function shootAmbush(){
+      var now = performance.now();
+      gunDrawn = true;
+      drumTarget -= Math.PI / 3;
+      if (G.reloading){ sndClick(); return; }
+      if (now < (G.cycleUntil || 0)){ sndClick(); return; }
+      if (G.bullets <= 0){ sndClick(); autoReloadOnEmpty(); return; }
+      G.bullets--; updateChambers(); refreshCylinder(G.bullets);
+      var wpn = currentWeapon();
+      G.cycleUntil = now + (wpn.cycle != null ? wpn.cycle : (wpn.kind === 'rifle' ? 300 : wpn.kind === 'shotgun' ? 400 : 0));
+      recoil = 1;
+      sndShot(false, wpn.kind);
+      pgunRev.muzzle.getWorldPosition(_v); fireFlash(playerFlash, _v);
+      spawnPuff(smokePool, _v, new THREE.Vector3((Math.random() - 0.5) * 0.2, 0.55, -0.4), 0.22, 0.9);
+      if (wpn.kind === 'shotgun') G.shake = Math.max(G.shake, 0.13);
+      var targets = [], covers = [];
+      ambParty.forEach(function(w){
+        if (w.dead) return;
+        if (w.showK > 0.35) targets = targets.concat(w.o.hitboxes);
+        covers = covers.concat(w.coverMeshes);
+      });
+      var spread = (gunV >= 0.97 ? (wpn.kind === 'shotgun' ? 0.016 : 0) : 0.012 + (1 - gunV) * 0.055 * (wpn.kind === 'revolver' ? 1 : 1.7)) * wpn.spread;
+      if (wpn.kind === 'shotgun') spread *= shotgunSpreadScale(11);
+      var pellets = wpn.kind === 'shotgun' ? 6 : 1;
+      var pelletHits = [], blockedHit = null;
+      for (var pli = 0; pli < pellets; pli++){
+        _aim.set(pointer.x + (Math.random() * 2 - 1) * spread,
+                 pointer.y + (Math.random() * 2 - 1) * spread * 0.7);
+        raycaster.setFromCamera(_aim, camera);
+        var ph = raycaster.intersectObjects(targets, false);
+        var pc = raycaster.intersectObjects(covers, false);
+        if (pc.length && (!ph.length || pc[0].distance < ph[0].distance - 0.03)){
+          if (!blockedHit) blockedHit = pc[0];
+        } else if (ph.length) pelletHits.push(ph[0]);
+      }
+      if (!pelletHits.length && blockedHit){
+        spawnPuff(dustPool, blockedHit.point, new THREE.Vector3(0, 0.3, 0.35), 0.35, 0.6);
+        sndRico();
+        toast('Blocked — his cover ate it!', true);
+      } else if (pelletHits.length){
+        var chosen = pelletHits[0];
+        for (var pvi = 0; pvi < pelletHits.length; pvi++){
+          var cand = pelletHits[pvi];
+          if (cand.object.userData.zone && ZONES[cand.object.userData.zone].vital){ chosen = cand; break; }
+          if (!chosen.object.userData.zone && cand.object.userData.zone) chosen = cand;
+        }
+        var pelletBonus = wpn.kind === 'shotgun' ? Math.max(0, pelletHits.length - 1) * 12 : 0;
+        spawnPuff(dustPool, chosen.point, new THREE.Vector3(0, 0.25, 0.3), 0.3, 0.55);
+        var target = chosen.object.userData.owner;
+        var zoneName = chosen.object.userData.zone;
+        var zone = ZONES[zoneName];
+        hitmark(zone.vital);
+        var dealtDmg = (zone.dmg * (wpn.power || 1) + pelletBonus) * rangeFactor(wpn.kind, Math.max(chosen.distance, 4));
+        if (zoneName === 'head') dealtDmg = Math.max(dealtDmg, target.hp); // a headshot ends it — any gun, any range
+        target.hp -= dealtDmg;
+        target.staggerUntil = now + 380;
+        if (target.hp <= 0) killAmbusher(target.ambEntry);
+        else toast(zone.label + ' — still up!', true);
+      } else {
+        raycaster.setFromCamera(_aim.set(pointer.x, pointer.y), camera);
+        var far = raycaster.ray.at(30, new THREE.Vector3());
+        if (far.y < 0.05) far.y = 0.05;
+        spawnPuff(dustPool, far, new THREE.Vector3(0, 0.5, 0), 0.5, 0.8);
+        if (Math.random() < 0.4) setTimeout(sndRico, 70);
+        toast('Missed — into the dark!', true);
+      }
+      updateRideSwitchUI();
+      if (G.bullets <= 0 && G.state === 'ride') autoReloadOnEmpty();
+    }
+    function startAmbush(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'ride'; G.ambush = true; G.state = 'ride'; G.lastWin = false;
+      centreAim(); // every fight opens with the gun's aim dead centre
+      G.rideEndless = false; G.rideCoachN = 0; G.rideCoachDone = false;
+      ensureRideWorld();
+      rideGroup.visible = true; streetGroup.visible = false; saloonGroup.visible = false; ghostGroup.visible = false; canyonGroup.visible = false; boothillGroup.visible = false;
+      ambParty = [];
+      coverMeshes = []; // nothing on the trail but their rocks and cacti — and those are settled in shootAmbush itself
+      // the night itself, same as the Night Ride: moonlight for the
+      // sun, a dark sky, the game's own moon and stars over the
+      // trail, and a short dark fog so the rocks loom out of it
+      var lm = gfxNow.lightMul;
+      hemi.color.setHex(0x2e3d5c); hemi.intensity = 0.17 * lm;
+      sun.color.setHex(0x93a7cc); sun.position.set(-9, 20, -8); sun.intensity = 0.38 * lm;
+      fill.intensity = 0.06 * lm; faceLight.intensity = 0.34 * lm;
+      scene.fog.color.setHex(0x0a1220); scene.fog.near = 10; scene.fog.far = 62;
+      sky.visible = true; sky.material.color.setHex(0x27364f);
+      moonSprite.visible = true; starPts.visible = true; sunSprite.visible = false;
+      rainPts.visible = !!nightOn;
+      // your horse, same as every ride — and the saddle rig with it
+      // (built once, the first ride that needs it)
+      playerHorse = buildPlayerHorse();
+      playerHorse.group.position.set(0, 0, 1.15);
+      playerHorse.group.scale.setScalar(0.95);
+      rideGroup.add(playerHorse.group);
+      if (!riderRig){
+        riderRig = new THREE.Group();
+        var denimM = new THREE.MeshStandardMaterial({ color: 0x33455e, roughness: 0.9 });
+        var bootM2 = new THREE.MeshStandardMaterial({ color: 0x2a1a0e, roughness: 0.55 });
+        var reinM2 = new THREE.MeshStandardMaterial({ color: 0x3a2413, roughness: 0.8 });
+        var gloveM = new THREE.MeshStandardMaterial({ color: 0x5a3a1e, roughness: 0.85 });
+        function rigSeg(mat, w, h, from, to){
+          var dir = to.clone().sub(from), len = dir.length();
+          var m = new THREE.Mesh(new THREE.BoxGeometry(w, len, h), mat);
+          m.position.copy(from).addScaledVector(dir, 0.5);
+          m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+          riderRig.add(m); return m;
+        }
+        [-1, 1].forEach(function(sd){
+          rigSeg(denimM, 0.13, 0.15, new THREE.Vector3(sd * 0.15, -0.26, -0.14), new THREE.Vector3(sd * 0.235, -0.42, -0.85));
+          rigSeg(denimM, 0.105, 0.12, new THREE.Vector3(sd * 0.235, -0.42, -0.85), new THREE.Vector3(sd * 0.25, -0.56, -0.95));
+          var boot2 = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.09, 0.30), bootM2);
+          boot2.position.set(sd * 0.25, -0.575, -1.06); boot2.rotation.x = 0.1; riderRig.add(boot2);
+          var hand = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.07, 0.17), gloveM);
+          hand.position.set(sd * 0.12, -0.31, -0.38); hand.rotation.x = 0.35; riderRig.add(hand);
+          rigSeg(reinM2, 0.016, 0.008, new THREE.Vector3(sd * 0.12, -0.295, -0.44), new THREE.Vector3(sd * 0.05, -0.25, -1.92));
+        });
+        riderRig.visible = false;
+        camera.add(riderRig);
+      }
+      // the ride's own state: fresh hide, each gun family carrying
+      // its own full load into the ambush, same as any ride
+      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
+      rideFam = currentWeapon().kind;
+      rideAmmo = {
+        revolver: (equippedGun().cap || 6),
+        shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
+        rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
+      };
+      G.bullets = rideAmmo[rideFam]; G.reloadFrom = G.bullets; G.reloadShown = G.bullets;
+      G.ambKills = 0; G.ambDist = 0; G.ambTime = 0; G.ambWave = 1; G.ambHitTaken = false;
+      G.ambSpawnAt = performance.now() + 1300; // the first of them jumps you almost at once — no warning, no bell
+      G.rideDist = 12; G.ridePhase = 0; G.ridePS = AMB_SPEED * horsePace(); G.rideTime = 0;
+      G.rideDustAt = 0; G.rideWon = false; G.rideOverT = 0; G.rideUiAt = 0;
+      holding = false; gunDrawn = true; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      var clbl = document.querySelector('#clockPlate .lbl'); if (clbl) clbl.textContent = 'Trail Left';
+      updateHp(); updateChambers(); refreshCylinder(G.bullets); updateStats();
+      hideNext(); bannerEl.className = ''; bannerEl.textContent = ''; steadyEl.className = '';
+      $('rideSwitch').className = 'on';
+      updateRideSwitchUI();
+      $('duelLabel').textContent = 'OUTLAW AMBUSH · THE NIGHT TRAIL' + horseRideTag();
+      $('oppName').textContent = 'Outlaw Ambush';
+      updateAmbushHUD();
+      clockEl.textContent = (ambushDiff().len / AMB_MILE).toFixed(1) + ' MI';
+      shadowDirty = true;
+    }
+    /* The ambush itself, advanced every frame from the main loop:
+       the trail streaming past at a steady gallop, the waves
+       spawning in the rocks ahead, and every outlaw's own pop-up,
+       draw and duck — he shows himself a fair beat before his shot,
+       and never more than two are up at once. */
+    function updateAmbush(dt, now, t){
+      var riding = G.state === 'ride', over = G.state === 'rideover';
+      if (!riding && !over) return;
+      if (over) G.rideOverT += dt;
+      var diff = ambushDiff(), len = diff.len;
+      if (riding){ G.ambTime += dt; G.ambDist += AMB_SPEED * horsePace() * dt; G.rideTime = G.ambTime; }
+      var spd = riding ? AMB_SPEED * horsePace() : (G.rideWon ? 5 : 1.2);
+      G.ridePS = spd;
+      var strideK = Math.min(spd / 11.4, 1);
+      G.ridePhase += dt * Math.max(spd, 0.001) * 1.5;
+      if (playerHorse) animateHorse(playerHorse, G.ridePhase, 0.25 + 0.75 * strideK);
+      // the moonlit world streams past at your horse's pace
+      if (rideGroundTex) rideGroundTex.offset.y += spd * dt / 8.5;
+      for (var pi = 0; pi < rideProps.length; pi++){
+        var pr = rideProps[pi];
+        pr.g.position.z += spd * pr.k * dt;
+        if (pr.g.position.z > 22) pr.g.position.z -= pr.range;
+      }
+      // dust off the hooves, thin in the moonlight
+      if (now >= G.rideDustAt && spd > 1){
+        G.rideDustAt = now + 130;
+        if (playerHorse) spawnPuff(dustPool, new THREE.Vector3(playerHorse.group.position.x + (Math.random() - 0.5) * 0.5, 0.12, 1.35 + Math.random() * 0.7),
+          new THREE.Vector3(0, 0.5, 0.9), 0.5, 0.8);
+      }
+      // which wave of the gang you're riding through
+      if (riding) G.ambWave = Math.min(AMB_WAVES, 1 + Math.floor(G.ambDist / (len / AMB_WAVES)));
+      // the waves ride in: thicker and closer together the deeper
+      // into the ambush you get, and done spawning near the far side
+      if (riding && now >= G.ambSpawnAt){
+        var gap = Math.max(2400, 5600 - G.ambWave * 520) * diff.spawn * (0.8 + Math.random() * 0.4);
+        G.ambSpawnAt = now + gap;
+        if (aliveAmbushers() < diff.cap && G.ambDist < len - 120){
+          spawnAmbusher(now);
+          if (G.ambWave >= 3 && Math.random() < 0.45 && aliveAmbushers() < diff.cap) spawnAmbusher(now); // later waves jump you in pairs
+        }
+      }
+      // every man of the gang: the trail carries him toward you,
+      // his cover with him, until you ride past or he drops
+      for (var ai = ambParty.length - 1; ai >= 0; ai--){
+        var w = ambParty[ai], o = w.o;
+        o.group.position.z += spd * dt;
+        w.coverG.position.z += spd * dt;
+        if (w.dead){
+          w.deathT += dt;
+          var fallK = Math.min(w.deathT / 0.32, 1);
+          o.group.rotation.x = -Math.PI / 2 * fallK * fallK; // he tips back off his rock into the dark
+          if (o.group.position.z > 12){ disposeAmbEntry(w); ambParty.splice(ai, 1); }
+          continue;
+        }
+        o.upper.position.y = 1.06 + Math.sin(t * 1.9 + w.slot * 1.7) * 0.008;
+        if (riding){
+          if (w.state === 'hide'){
+            w.showK = Math.max(0, w.showK - dt * 3);
+            if (now >= w.popAt && upAmbushers() < 2 && o.group.position.z < -14){
+              w.state = 'up';
+              var drawMs = Math.max(620, (1180 - G.ambWave * 95) * diff.draw) * (0.85 + Math.random() * 0.3);
+              w.fireAt = now + drawMs; // the fair beat: he is UP and aiming well before this — drop him first
+            }
+          } else {
+            w.showK = Math.min(1, w.showK + dt * 2.8);
+            if (w.showK >= 1 && now >= w.fireAt){
+              w.state = 'hide';
+              w.popAt = now + (1300 + Math.random() * 1400) * diff.spawn; // he ducks back behind his rock
+              o.muzzle.getWorldPosition(_v);
+              fireFlash(oppFlash, _v);
+              sndShot(true);
+              spawnPuff(smokePool, _v, new THREE.Vector3(0, 0.3, 0.4), 0.2, 0.9);
+              if (Math.random() < Math.min(0.85, diff.hit)) ambushPlayerHit();
+              else {
+                sndRico();
+                G.shake = Math.max(G.shake, 0.12);
+                spawnPuff(dustPool, new THREE.Vector3((Math.random() - 0.5) * 1.6, 0.4, 2.2),
+                  new THREE.Vector3(0, 0.4, 0), 0.45, 0.7);
+                if (Math.random() < 0.5) toast('He missed!', true);
+              }
+              if (G.state !== 'ride') return; // his shot may have ended it
+            }
+          }
+        }
+        var ek = w.showK * w.showK * (3 - 2 * w.showK);
+        o.group.position.y = -1.14 + ek * 1.14;
+        // a man you ride clean past is gone into the dark behind you
+        if (o.group.position.z > 9){ disposeAmbEntry(w); ambParty.splice(ai, 1); }
+      }
+      // the far side of the stretch ends it — you rode through
+      if (riding && G.state === 'ride' && G.ambDist >= len) ambushEnd(true);
+      // HUD: the trail left on the clock plate, the tally below
+      clockEl.textContent = Math.max(0, (len - G.ambDist) / AMB_MILE).toFixed(1) + ' MI';
+      if (now - G.rideUiAt > 300){
+        G.rideUiAt = now;
+        updateRideSwitchUI();
+        if (G.state === 'ride') updateAmbushHUD();
+      }
+      shadowDirty = true;
+    }
+
     /* ============================== DUEL FLOW ============================== */
     var _v = new THREE.Vector3();
     function disposeOpps(){
       disposeAvatar();
       if (endlessCoverGroup){ scene.remove(endlessCoverGroup); endlessCoverGroup = null; endlessBales = []; } // Endless Duel (v2.12): the hay bales leave with the goons
       if (shfCoverGroup){ scene.remove(shfCoverGroup); shfCoverGroup = null; shfCovers = []; } // Sheriff Shift (v3.7): the robbers' street cover leaves with them
+      if (bnkBoxGroup){ scene.remove(bnkBoxGroup); bnkBoxGroup = null; bnkLockMesh = null; } // Bank Robbery (v3.20): the strongbox leaves with the posse
       if (G.state === 'cinematic'){ pgun.visible = true; offHand.visible = false; hipHolster.visible = (pgunRev.kind === 'revolver');
         $('cineTop').className = 'cineBar'; $('cineBot').className = 'cineBar'; }
       opps.forEach(function(o){
@@ -20451,6 +21150,7 @@ three/build/three.module.js:
       if (specialKind === 'tourn'){ tournWin(zone, now); return; } // High Noon Tournament (v3.12)
       if (specialKind === 'rival'){ rivalWin(zone, now); return; } // The Rival (v3.13)
       if (specialKind === 'b2b'){ b2bWin(zone, now); return; } // Back-to-Back 2-on-1 (v3.14)
+      if (specialKind === 'bjduel'){ bjDuelWin(zone, now); return; } // Blackjack 21 (v3.23): the sore loser pays up
       if (specialKind === 'bounty'){ bountyWin(zone, now); return; }
       if (specialKind === 'daily'){ dailyWin(zone, now); return; }
       G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
@@ -20485,6 +21185,8 @@ three/build/three.module.js:
       if (specialKind === 'tourn'){ tournLose(kind); return; } // High Noon Tournament (v3.12): a loss ends the run
       if (specialKind === 'rival'){ rivalLose(kind); return; } // The Rival (v3.13): a loss costs nothing — he stays at that round
       if (specialKind === 'b2b'){ b2bLose(kind); return; } // Back-to-Back 2-on-1 (v3.14): a loss costs nothing — the pair waits
+      if (specialKind === 'bjduel'){ bjDuelLose(kind); return; } // Blackjack 21 (v3.23): the sore loser takes the pot
+      if (specialKind === 'bank'){ bankLose(kind); return; } // Bank Robbery (v3.20): caught — the whole take is lost
       if (specialKind === 'endless'){ endlessLose(kind); return; }
       if (specialKind === 'sheriff'){ sheriffLose(kind); return; } // Sheriff Shift (v3.7): a fallen sheriff ends the shift, and the bags still in the vault still pay
       if (specialKind === 'bounty'){ bountyLose(kind); return; }
@@ -20550,6 +21252,7 @@ three/build/three.module.js:
       var left = aliveOpps().length;
       if (specialKind === 'endless'){ endlessOnKill(opp, now); return; } // Endless Duel (v2.12): a fallen goon pays $10, frees his open spot for the next pop-out, and only an empty street clears the wave
       if (specialKind === 'sheriff'){ sheriffOnKill(opp, now); return; } // Sheriff Shift (v3.7): a fallen robber pays $10 — and one dropped on the run gives his money bag back
+      if (specialKind === 'bank'){ bankOnKill(opp, now); return; } // Bank Robbery (v3.20): a lawman down adds $25 to the take — the robbery ends at the getaway or the capture, never on one fall
       if (specialKind === 'bounty' && opp === bountyTargetOpp && left > 0){ bountyWin(zone, now); return; } // the hunt ends when the WANTED man drops — his henchman standing changes nothing (v2.2)
       if (left <= 0 && G.lan){
         /* v1.32: the puppet falling on THIS phone is not the verdict.
@@ -20637,7 +21340,7 @@ three/build/three.module.js:
     // gun has been drawn by holding. Let go before the sights are up and
     // the shot sprays wild from the hip.
     function shoot(){
-      if (G.mode === 'ride'){ if (G.state === 'ride'){ if (G.train) shootTrain(); else if (G.night) shootNightRide(); else shootRide(); } return; } // Train Robbery (v3.4) fires its own shot on the roofs; Night Ride (v3.8) fires at the coyotes
+      if (G.mode === 'ride'){ if (G.state === 'ride'){ if (G.train) shootTrain(); else if (G.night) shootNightRide(); else if (G.ambush) shootAmbush(); else shootRide(); } return; } // Train Robbery (v3.4) fires its own shot on the roofs; Night Ride (v3.8) fires at the coyotes; Outlaw Ambush (v3.21) fires at the gang in the rocks
       if (G.mode === 'practice'){ if (G.state === 'practice') shootPractice(); return; }
       var now = performance.now();
       if (G.state !== 'draw' || !anyAlive()) return;
@@ -20708,10 +21411,22 @@ three/build/three.module.js:
         }
         hits = [chosen];
       }
+      // Bank Robbery (v3.20): a shot into the strongbox's gold lock
+      // cracks it a third of the way — tested on the true aim ray,
+      // ahead of any man standing behind the box
+      var bankLockHit = null;
+      if (specialKind === 'bank' && bnkLockMesh && typeof BNK !== 'undefined' && BNK.phase === 'crack'){
+        raycaster.setFromCamera(pointer, camera);
+        var blh = raycaster.intersectObject(bnkLockMesh, false);
+        if (blh.length && (!pelletHits.length || blh[0].distance < pelletHits[0].distance)) bankLockHit = blh[0];
+      }
       var pelletBonus = wpn.kind === 'shotgun' ? Math.max(0, pelletHits.length - 1) * 12 : 0;
       var coverHits = blockedHit ? [blockedHit] : [];
       var blocked = !pelletHits.length && !!blockedHit;
-      if (blocked){
+      if (bankLockHit){
+        spawnPuff(dustPool, bankLockHit.point, new THREE.Vector3(0, 0.3, 0.35), 0.3, 0.5);
+        bankLockShot(now);
+      } else if (blocked){
         spawnPuff(dustPool, coverHits[0].point, new THREE.Vector3(0, 0.3, 0.35), 0.35, 0.6);
         sndRico();
         toast('Blocked by cover!', true);
@@ -21071,7 +21786,9 @@ three/build/three.module.js:
       $('rideBestLine').textContent = SAVE.bestEndless ? fmtSurvive(SAVE.bestEndless) : 'no run yet';
       $('trainBestLine').textContent = SAVE.trainBestTime ? (fmtSurvive(SAVE.trainBestTime) + ' · ' + (SAVE.trainBestGuards || 0) + ' guards') : 'no robbery yet'; // Train Robbery (v3.4)
       $('nightBestLine').textContent = SAVE.nightBestTime ? (fmtSurvive(SAVE.nightBestTime) + ' · ' + (SAVE.nightBestKills || 0) + ' coyotes') : 'no ride yet'; // Night Ride (v3.8)
+      $('ambBestLine').textContent = (SAVE.ambRuns || 0) > 0 ? ((SAVE.ambBestKills || 0) + ' dropped · best ' + (SAVE.ambBestDist / 600).toFixed(1) + ' mi') : 'no ambush yet'; // Outlaw Ambush (v3.21)
       $('titleCard').style.display = 'none';
+      renderStable(); // Your Horse (v3.22): the Stable section shows your horse as he stands
       $('rideCard').style.display = 'flex';
     });
     function beginRide(endless){
@@ -21106,6 +21823,17 @@ three/build/three.module.js:
       startNightRide();
     }
     $('btnNightRide').addEventListener('click', beginNightRide);
+    /* Outlaw Ambush (v3.21): the fifth choice on the Ride card —
+       one tap off the picker and the gang is in the rocks. */
+    function beginAmbush(){
+      initAudio(); sndClick();
+      $('rideCard').style.display = 'none';
+      $('hud').className = 'on ride';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startAmbush();
+    }
+    $('btnAmbush').addEventListener('click', beginAmbush);
     /* Duels hub (v2.20): the menu's one DUELS tile opens the fight
        picker — ladder, Quick Duel, Endless Duel, Daily Duel and LAN,
        with the location switch at the top. Quick and Endless keep
@@ -21225,11 +21953,13 @@ three/build/three.module.js:
       $('btnQuit').style.display = 'block';
       if (kind === 'quick') startQuickDuel();
       else if (kind === 'sheriff') startSheriffShift(); // Sheriff Shift (v3.7): the bank defence starts its first wave
+      else if (kind === 'bank') startBankRobbery(); // Bank Robbery (v3.20): the other side of the bank job
       else startEndlessDuel();
     }
     $('btnQuickDuel').addEventListener('click', function(){ beginModeDuel('quick'); });
     $('btnEndlessDuel').addEventListener('click', function(){ beginModeDuel('endless'); });
     $('btnSheriff').addEventListener('click', function(){ beginModeDuel('sheriff'); }); // Sheriff Shift (v3.7)
+    $('btnBank').addEventListener('click', function(){ beginModeDuel('bank'); }); // Bank Robbery (v3.20)
     $('btnBackRide').addEventListener('click', function(){
       initAudio(); sndClick();
       $('rideCard').style.display = 'none';
@@ -21313,7 +22043,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'lanCard', 'posterCard'];
+    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'lanCard', 'posterCard', 'bjCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -21363,7 +22093,8 @@ three/build/three.module.js:
       ['lockerCard', 'btnBackLocker'], ['statsCard', 'btnBackStatsTop'],
       ['settingsCard', 'btnBackSettings'], ['learnCard', 'btnBackLearn'],
       ['updatesCard', 'btnBackUpdates'], ['bountyCard', 'btnBackBounty'],
-      ['dailyCard', 'btnBackDaily'], ['posterCard', 'btnBackPoster']
+      ['dailyCard', 'btnBackDaily'], ['posterCard', 'btnBackPoster'],
+      ['bjCard', 'btnBackBj']
     ];
     CARD_X.forEach(function(pair){
       var card = $(pair[0]); if (!card) return;
@@ -21461,7 +22192,7 @@ three/build/three.module.js:
     function posterData(){
       var wins = SAVE.careerWins || 0;
       var wb = SAVE.wbCaught || 0, bh = SAVE.bountyWins || 0, crowns = SAVE.hnWins || 0, beats = SAVE.rvBeats || 0;
-      var score = wins + wb * 2 + bh * 2 + crowns * 5 + beats * 3 + (SAVE.bbWins || 0) * 2 + (SAVE.dailyWins || 0);
+      var score = wins + wb * 2 + bh * 2 + crowns * 5 + beats * 3 + (SAVE.bbWins || 0) * 2 + (SAVE.bnkWins || 0) * 2 + (SAVE.dailyWins || 0);
       var tier = POSTER_TIERS[0], next = null;
       for (var i = 0; i < POSTER_TIERS.length; i++){
         if (score >= POSTER_TIERS[i].at) tier = POSTER_TIERS[i];
@@ -21647,6 +22378,9 @@ three/build/three.module.js:
       // Night Ride (v3.8): quitting a night ride mid-trail still
       // banks the coyote record — the ones you dropped stay dropped
       if (G.night && G.state === 'ride') recordNightBest(false);
+      // Outlaw Ambush (v3.21): quitting mid-ambush still banks the
+      // best ambush — the men you dropped stay dropped
+      if (G.ambush && G.state === 'ride') recordAmbushBest();
       // quitting an Endless Duel mid-run banks the best run too
       // (v2.12): waves cleared and goons dropped so far count,
       // exactly as they do when the street finally gets you
@@ -21688,14 +22422,15 @@ three/build/three.module.js:
       // LAN duel (v1.25): after a LAN round the button walks back to
       // the room — same rival, same code, ready for a rematch
       if (G.lan){ openLanRoom(); return; }
-      if (specialKind === 'quick' || specialKind === 'endless' || specialKind === 'sheriff'){ $('btnQuit').click(); return; }
+      if (specialKind === 'quick' || specialKind === 'endless' || specialKind === 'sheriff' || specialKind === 'bank'){ $('btnQuit').click(); return; }
       if (specialKind === 'bounty'){ openBountyCard(); return; }
       if (specialKind === 'wanted'){ openWantedBoard(); return; } // Wanted Board (v3.11)
       if (specialKind === 'tourn'){ openTournBoard(); return; } // High Noon Tournament (v3.12)
       if (specialKind === 'rival'){ openRivalCard(); return; } // The Rival (v3.13)
       if (specialKind === 'b2b'){ openB2BCard(); return; } // Back-to-Back 2-on-1 (v3.14)
+      if (specialKind === 'bjduel'){ openBjCard(); return; } // Blackjack 21 (v3.23): back to the felt table
       if (specialKind === 'daily'){ $('btnQuit').click(); return; }
-      if (G.mode === 'ride'){ if (G.train) startTrain(); else if (G.night) startNightRide(); else startRide(G.rideEndless); return; } // Train Robbery (v3.4): the Next button robs the train again; Night Ride (v3.8) rides out again
+      if (G.mode === 'ride'){ if (G.train) startTrain(); else if (G.night) startNightRide(); else if (G.ambush) startAmbush(); else startRide(G.rideEndless); return; } // Train Robbery (v3.4): the Next button robs the train again; Night Ride (v3.8) rides out again; Outlaw Ambush (v3.21) rides into the rocks again
       if (G.mode === 'practice'){ startPractice(G.practiceKind); return; }
       if (G.lastWin && G.duel >= OPPONENTS.length - 1){
         // champion
@@ -21731,6 +22466,7 @@ three/build/three.module.js:
       initAudio(); sndClick();
       hideNext();
       if (specialKind === 'sheriff'){ startSheriffShift(); return; } // Sheriff Shift (v3.7): RETRY works a fresh shift
+      if (specialKind === 'bank'){ startBankRobbery(); return; } // Bank Robbery (v3.20): RETRY robs it again on the spot
       startEndlessDuel();
     });
 
@@ -22379,6 +23115,234 @@ three/build/three.module.js:
       bag.position.set(0.36, 0.72, 0.08);
       o.group.add(bag);
       shadowDirty = true;
+    }
+
+    /* ============================== BANK ROBBERY (v3.20) ==============================
+       The other side of Sheriff Shift, on the duel engine: YOU hold
+       up the bank. The strongbox you hauled out sits down the street
+       with a fat gold lock — shoot the lock (each clean hit takes a
+       third of it, see shoot) or hold your aim steady on it to work
+       the tumblers — while the sheriff and his deputies close in.
+       They draw on the bell like any duel: full draw before the
+       first shot, the fair telegraph. The longer the crack takes,
+       the more lawmen ride in, never more than three on the street
+       at once. Every lawman dropped adds $25 to the take. Crack the
+       box and its cash joins the take; then RIDE OUT — nine seconds
+       under fire, or a street cleared of lawmen — and the take is
+       yours. Your hide at zero at any point and you are CAUGHT: the
+       whole take is lost, nothing is paid. Difficulty is Mode
+       Settings' own, the ground rotates like every duel, and the
+       picked Day / Sunset / Night applies. */
+    var BNK = { phase: 'crack', crack: 0, kills: 0, arrived: 0, take: 0, boxCash: 0, nextArriveAt: 0, arriveGap: 11000, escapeT0: 0, crackMs: 0, drawSeen: false, lastTick: 0, hudAt: 0, settled: false };
+    var BNK_NAMES = ['Sheriff Amos Hart', 'Deputy Cole Brandt', 'Deputy Ezra Flint', 'Deputy Wade Mercer', 'Deputy Silas Boone', 'Deputy Henry Cobb', 'Deputy Amos Reed', 'Deputy Luke Farrell'];
+    var BNK_ESCAPE_MS = 9000;
+    function bankLawmanCfg(n){
+      var base = pickFrom(QUICK_POOL);
+      var cfg = {};
+      for (var k in base) cfg[k] = base[k];
+      cfg.name = BNK_NAMES[Math.min(n, BNK_NAMES.length - 1)];
+      var draw = Math.max(720, 1020 - n * 45); // the posse rides in keener than the sheriff who met you first
+      cfg.drawMs = draw;
+      cfg.acc = Math.min(0.58, 0.46 + n * 0.015);
+      cfg.sub = (n === 0 ? 'The Sheriff' : 'The Posse') + ' · Draw: ' + (draw >= 1000 ? 'Fair' : draw >= 850 ? 'Quick' : 'Fast');
+      return cfg;
+    }
+    function spawnBankLawman(now, x){
+      var o = buildGunslinger(bankLawmanCfg(BNK.arrived));
+      o.slot = BNK.arrived;
+      BNK.arrived++;
+      var dist = DISTANCES[G.duel];
+      o.group.position.set(x, 0, 4.6 - dist);
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      if (G.state === 'draw'){
+        o.raiseStart = now; // his arm comes up over his full draw before he can fire — the fair telegraph
+        o.nextShotAt = now + effDrawMs(o) + 250 + (o.slot % 3) * 160;
+      }
+      shadowDirty = true;
+      return o;
+    }
+    /* The strongbox itself: banded iron, down the street on the
+       right, its fat gold lock facing you. Only the lock takes rays
+       of its own (in shoot); the body is set dressing. */
+    function setupBankBox(){
+      bnkBoxGroup = new THREE.Group();
+      var iron = new THREE.MeshStandardMaterial({ color: 0x2e3136, roughness: 0.45, metalness: 0.75 });
+      var ironDark = new THREE.MeshStandardMaterial({ color: 0x1d1f23, roughness: 0.5, metalness: 0.7 });
+      var gold = new THREE.MeshStandardMaterial({ color: 0xd9a441, roughness: 0.3, metalness: 0.85 });
+      var body = shadowed(new THREE.Mesh(new THREE.BoxGeometry(1.05, 0.72, 0.72), iron));
+      body.position.y = 0.36; bnkBoxGroup.add(body);
+      var lid = shadowed(new THREE.Mesh(new THREE.BoxGeometry(1.12, 0.14, 0.78), ironDark));
+      lid.position.y = 0.79; bnkBoxGroup.add(lid);
+      [-0.4, 0.4].forEach(function(bx){
+        var band = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.74, 0.74), ironDark);
+        band.position.set(bx, 0.36, 0); bnkBoxGroup.add(band);
+      });
+      bnkLockMesh = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.4, 0.1), gold);
+      bnkLockMesh.position.set(0, 0.42, 0.41);
+      bnkBoxGroup.add(bnkLockMesh);
+      var dist = DISTANCES[G.duel];
+      bnkBoxGroup.position.set(1.9, 0, 4.6 - dist * 0.45);
+      scene.add(bnkBoxGroup);
+      shadowDirty = true;
+    }
+    function updateBankHUD(){
+      var alive = aliveOpps().length;
+      if (BNK.phase === 'escape'){
+        var secs = Math.max(0, Math.ceil((BNK_ESCAPE_MS - (performance.now() - BNK.escapeT0)) / 1000));
+        $('oppName').textContent = 'THE GETAWAY — ' + secs + 's to ride clear!';
+        $('oppSub').textContent = 'Take $' + BNK.take + ' · ' + alive + (alive === 1 ? ' lawman' : ' lawmen') + ' still shooting — drop them all to ride free now';
+        $('duelLabel').textContent = 'BANK ROBBERY · RIDE OUT';
+      } else {
+        $('oppName').textContent = 'THE POSSE — ' + alive + (alive === 1 ? ' lawman' : ' lawmen') + ' on the street, more coming';
+        $('oppSub').textContent = 'Strongbox $' + BNK.boxCash + ' · lock ' + Math.floor(BNK.crack) + '% cracked · take $' + BNK.take;
+        $('duelLabel').textContent = 'BANK ROBBERY · CRACK THE BOX';
+      }
+    }
+    function startBankRobbery(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'bank'; fanOn = false; updateFanBtn();
+      centreAim();
+      BNK.phase = 'crack'; BNK.crack = 0; BNK.kills = 0; BNK.arrived = 0; BNK.take = 0;
+      BNK.boxCash = 320 + Math.round(Math.random() * 18) * 10; // $320–$500 in the box
+      BNK.nextArriveAt = 0; BNK.arriveGap = 11000; BNK.escapeT0 = 0; BNK.crackMs = 0;
+      BNK.drawSeen = false; BNK.lastTick = performance.now(); BNK.hudAt = 0; BNK.settled = false;
+      G.duel = 2; // eleven paces — room for the box and the posse both
+      rotateDuelGround(); // a robbery rotates like every duel — ground and picked hour apply
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      setupBankBox();
+      spawnBankLawman(performance.now(), 0); // the sheriff himself steps out first
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = 'Bank Robbery'; G.cineDist = DISTANCES[G.duel];
+      clockEl.textContent = '—';
+      var clblK = document.querySelector('#clockPlate .lbl'); if (clblK) clblK.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      updateBankHUD();
+      startCinematic(G.duel, 1);
+      updateDuelSwitchUI();
+    }
+    /* A lawman down: $25 more in the saddlebag — but it is only a
+       take while you are still free to ride with it. */
+    function bankOnKill(opp, now){
+      BNK.kills++;
+      BNK.take += 25;
+      toast(opp.cfg.name + ' down — +$25 to the take · $' + BNK.take + ' riding on this.', true);
+      updateBankHUD();
+      if (BNK.phase === 'escape' && aliveOpps().length === 0) bankWin(now); // a clear street is a clean getaway
+    }
+    function bankCracked(now){
+      BNK.phase = 'escape';
+      BNK.crackMs = G.drawT0 ? (now - G.drawT0) : 0;
+      BNK.take += BNK.boxCash;
+      BNK.escapeT0 = now;
+      if (bnkLockMesh) bnkLockMesh.visible = false; // the lock hangs open
+      banner('BOX CRACKED — RIDE OUT!', 'pop');
+      toast('The box is open — +$' + BNK.boxCash + '! Take $' + BNK.take + '. Ride out or clear the street!', true);
+      updateBankHUD();
+    }
+    function bankWin(now){
+      if (BNK.settled) return;
+      BNK.settled = true;
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var pay = BNK.take;
+      SAVE.money += pay;
+      SAVE.bnkWins = (SAVE.bnkWins || 0) + 1;
+      SAVE.bnkEarned = (SAVE.bnkEarned || 0) + pay;
+      var newBest = false;
+      if (pay > (SAVE.bnkBestTake || 0)){ SAVE.bnkBestTake = pay; newBest = true; }
+      if (BNK.crackMs > 0 && (SAVE.bnkBestCrack === null || SAVE.bnkBestCrack === undefined || BNK.crackMs < SAVE.bnkBestCrack)) SAVE.bnkBestCrack = BNK.crackMs;
+      persistSave();
+      G.lastReward = pay;
+      endRoundCommon();
+      banner('★ CLEAN GETAWAY ★');
+      toast('You rode out with $' + pay + ' — the box $' + BNK.boxCash + ' and $' + (BNK.kills * 25) + ' off ' + BNK.kills + (BNK.kills === 1 ? ' lawman.' : ' lawmen.') + (newBest ? ' Biggest take yet!' : ''), true);
+      $('rideSwitch').className = '';
+      syncPickBar();
+      showNext('Back to Menu');
+      showRetry();
+    }
+    function bankLose(kind){
+      if (BNK.settled) return;
+      BNK.settled = true;
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('THE ROBBERY IS BLOWN');
+        toast('Foul — iron out before the bell, and the posse had you covered. The take is lost.', true);
+      } else {
+        G.camFall = 0;
+        banner('CAUGHT!');
+        toast('The posse got you — the $' + BNK.take + ' take is lost. The box, the cut, all of it.', true);
+      }
+      $('rideSwitch').className = '';
+      syncPickBar();
+      showNext('Back to Menu');
+      showRetry();
+    }
+    /* One clean hit on the gold lock, called from shoot: a third
+       of the lock gone, with a spark and a jump. */
+    function bankLockShot(now){
+      if (BNK.phase !== 'crack') return;
+      BNK.crack += 34;
+      sndRico();
+      toast('The lock jumps — ' + Math.min(100, Math.floor(BNK.crack)) + '% cracked!', true);
+      if (BNK.crack >= 100){ BNK.crack = 100; bankCracked(now); }
+      updateBankHUD();
+    }
+    /* Every frame of the robbery: the steady-aim crack, the posse
+       riding in, and the ride out — run from the animate loop. */
+    var _bnkV = new THREE.Vector3();
+    function bankTick(now){
+      if (specialKind !== 'bank' || G.mode !== 'duel') return;
+      var dt = Math.min((now - (BNK.lastTick || now)) / 1000, 0.05);
+      BNK.lastTick = now;
+      if (G.state !== 'draw') return;
+      if (!BNK.drawSeen){
+        BNK.drawSeen = true;
+        BNK.nextArriveAt = now + BNK.arriveGap; // the posse starts riding in once the shooting does
+      }
+      if (BNK.phase === 'crack'){
+        if (holding && bnkLockMesh){
+          bnkLockMesh.getWorldPosition(_bnkV); _bnkV.project(camera);
+          if (_bnkV.z < 1){
+            var sx = (_bnkV.x * 0.5 + 0.5) * window.innerWidth;
+            var sy = (-_bnkV.y * 0.5 + 0.5) * window.innerHeight;
+            var dx = px - sx, dy = py - sy;
+            if (dx * dx + dy * dy < 85 * 85) BNK.crack += dt * 20; // a steady hand on the lock: the box in about five held seconds
+          }
+        }
+        if (BNK.crack >= 100){ BNK.crack = 100; bankCracked(now); }
+        else if (aliveOpps().length === 0){
+          // an empty street never stays empty — and the fight needs
+          // a live lawman for your iron to work at all
+          spawnBankLawman(now, BNK.arrived % 2 === 0 ? -1.55 : 1.55);
+          BNK.nextArriveAt = now + BNK.arriveGap;
+          toast('Another lawman rounds the corner!', true);
+          updateBankHUD();
+        }
+        else if (BNK.nextArriveAt && now >= BNK.nextArriveAt && aliveOpps().length < 3){
+          var xs = [-1.55, 1.55, 0];
+          spawnBankLawman(now, xs[BNK.arrived % 3]);
+          BNK.arriveGap = Math.max(7000, BNK.arriveGap - 600); // they come faster the longer you take
+          BNK.nextArriveAt = now + BNK.arriveGap;
+          banner('THE POSSE GROWS!', 'pop');
+          toast('Another lawman rides in — the longer you take, the more of them there are!', true);
+          updateBankHUD();
+        }
+      } else if (BNK.phase === 'escape'){
+        if (now - BNK.escapeT0 >= BNK_ESCAPE_MS) bankWin(now); // you outran them
+      }
+      if (now - BNK.hudAt > 250){ BNK.hudAt = now; updateBankHUD(); }
     }
 
     /* ============================== BOUNTY HUNT & DAILY DUEL (v2.2) ==============================
@@ -23412,6 +24376,295 @@ three/build/three.module.js:
       startRivalDuel();
     });
 
+    /* ============================== BLACKJACK 21 (v3.23) ==============================
+       The Saloon felt table, in the Saloon section of the Ride card.
+       You play your real duel cash against the dealer, Dealin' Dan:
+       pick a bet ($10 / $20 / $50 / $100), two cards each — his hole
+       card face down — then HIT, STAND, or DOUBLE (first call only,
+       one more card, stake doubled). Dan turns his hole card and
+       draws until he holds 17 or better, standing on every 17.
+       Blackjack pays 3:2, a win pays your stake back doubled, a
+       push returns your stake, a bust loses it. The bet leaves your
+       cash at the deal and winnings land the moment the hand ends,
+       so the table and the street share one wallet. Win $100 or
+       more on one hand and Slim Calloway, the sore loser at the
+       next stool, sometimes calls you out: a short line at the
+       table, then a normal duel — winner takes the pot (that
+       hand's profit; he matches it if you win, he takes it if you
+       fall or foul). Walking away costs nothing, and quitting the
+       duel mid-fight leaves the pot unplayed and your winnings
+       untouched. Biggest win, hands and table cash ride in Stats. */
+    var BJ = { phase: 'idle', betSel: 10, bet: 0, stake: 0, deck: [], player: [], dealer: [], holeHidden: true, acted: false, pot: 0 };
+    var BJ_RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    var BJ_SUITS = ['♠', '♥', '♦', '♣'];
+    function bjValue(hand){
+      var total = 0, aces = 0;
+      hand.forEach(function(c){ total += c.val; if (c.rank === 'A') aces++; });
+      while (total > 21 && aces > 0){ total -= 10; aces--; }
+      return total;
+    }
+    function bjCardHTML(c, hidden){
+      if (hidden) return '<div class="bjCardEl back"><span class="bjRank">?</span><span class="bjSuit">?</span></div>';
+      var red = (c.suit === '♥' || c.suit === '♦') ? ' red' : '';
+      return '<div class="bjCardEl' + red + '"><span class="bjRank">' + c.rank + '</span><span class="bjSuit">' + c.suit + '</span></div>';
+    }
+    function bjRender(){
+      var dHtml = '', pHtml = '';
+      BJ.dealer.forEach(function(c, i){ dHtml += bjCardHTML(c, BJ.holeHidden && i === 1); });
+      BJ.player.forEach(function(c){ pHtml += bjCardHTML(c, false); });
+      $('bjDCards').innerHTML = dHtml || '<div class="bjCardEl back"><span class="bjRank">·</span><span class="bjSuit">·</span></div>';
+      $('bjPCards').innerHTML = pHtml || '<div class="bjCardEl back"><span class="bjRank">·</span><span class="bjSuit">·</span></div>';
+      $('bjDTot').textContent = BJ.dealer.length ? (BJ.holeHidden ? bjValue([BJ.dealer[0]]) + ' + ?' : '' + bjValue(BJ.dealer)) : '—';
+      $('bjPTot').textContent = BJ.player.length ? '' + bjValue(BJ.player) : '—';
+      $('bjCash').textContent = 'YOUR CASH · $' + SAVE.money + (BJ.stake > 0 ? ' · ON THE TABLE · $' + BJ.stake : '');
+      var chips = document.querySelectorAll('#bjBetRow [data-bjbet]');
+      for (var ci = 0; ci < chips.length; ci++)
+        chips[ci].className = 'segBtn' + (parseInt(chips[ci].getAttribute('data-bjbet'), 10) === BJ.betSel ? ' on' : '');
+      $('bjBetRow').className = 'bjBetRow' + (BJ.phase === 'player' ? ' locked' : '');
+      $('btnBjDeal').style.display = BJ.phase === 'player' ? 'none' : 'block';
+      $('btnBjDeal').textContent = BJ.phase === 'done' ? 'DEAL AGAIN' : 'DEAL';
+      $('btnBjHit').style.display = BJ.phase === 'player' ? 'block' : 'none';
+      $('btnBjStand').style.display = BJ.phase === 'player' ? 'block' : 'none';
+      $('btnBjDouble').style.display = (BJ.phase === 'player' && !BJ.acted && SAVE.money >= BJ.bet) ? 'block' : 'none';
+      $('btnBackBj').disabled = BJ.phase === 'player';
+      var best = $('bjCardBest');
+      if (best) best.textContent = SAVE.bjBestWin > 0 ? ('Biggest win: $' + SAVE.bjBestWin + ' · Hands played: ' + (SAVE.bjHands || 0)) : 'Biggest win: no hand yet';
+      var hub = $('bjBestLine');
+      if (hub) hub.textContent = SAVE.bjBestWin > 0 ? ('$' + SAVE.bjBestWin) : 'no hand yet';
+    }
+    function bjMsg(t){ $('bjMsg').textContent = t; }
+    function bjDrawCard(){
+      var c = BJ.deck.pop();
+      return c;
+    }
+    function bjNewDeck(){
+      BJ.deck = [];
+      BJ_SUITS.forEach(function(s){
+        BJ_RANKS.forEach(function(r){
+          var v = r === 'A' ? 11 : (r === 'J' || r === 'Q' || r === 'K') ? 10 : parseInt(r, 10);
+          BJ.deck.push({ rank: r, suit: s, val: v });
+        });
+      });
+      for (var i = BJ.deck.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = BJ.deck[i]; BJ.deck[i] = BJ.deck[j]; BJ.deck[j] = tmp;
+      }
+    }
+    function bjSettle(kind){
+      BJ.phase = 'done';
+      var profit = 0, credit = 0;
+      if (kind === 'bj'){ profit = Math.floor(BJ.bet * 1.5); credit = BJ.stake + profit; }
+      else if (kind === 'win' || kind === 'dealerbust'){ profit = BJ.stake; credit = BJ.stake * 2; }
+      else if (kind === 'push'){ credit = BJ.stake; }
+      if (credit > 0) SAVE.money += credit;
+      if (profit > 0){
+        SAVE.bjEarned = (SAVE.bjEarned || 0) + profit;
+        if (profit > (SAVE.bjBestWin || 0)) SAVE.bjBestWin = profit;
+      }
+      persistSave(); updateMoneyUI();
+      var pv = bjValue(BJ.player), dv = bjValue(BJ.dealer);
+      if (kind === 'bj'){ bjMsg('★ BLACKJACK! ★ You hold 21 — Dan pays 3:2. +$' + profit); sndBell(); }
+      else if (kind === 'dealerbust'){ bjMsg('Dan draws and busts on ' + dv + '. Your ' + pv + ' takes it — +$' + profit + '.'); sndBell(); }
+      else if (kind === 'win'){ bjMsg('Your ' + pv + ' beats Dan\'s ' + dv + ' — +$' + profit + '.'); sndBell(); }
+      else if (kind === 'push'){ bjMsg('Push — ' + pv + ' apiece. Your $' + BJ.stake + ' comes back.'); }
+      else if (kind === 'bust'){ bjMsg('Bust on ' + pv + '. Dan rakes in your $' + BJ.stake + '.'); }
+      else if (kind === 'dealerbj'){ bjMsg('Dan turns over blackjack. Your $' + BJ.stake + ' is his.'); }
+      else { bjMsg('Dan\'s ' + dv + ' beats your ' + pv + '. Your $' + BJ.stake + ' is his.'); }
+      BJ.stake = 0;
+      /* The sore loser (v3.23): a big win sometimes draws a call-out. */
+      if (profit >= 100 && Math.random() < 0.5){
+        BJ.pot = profit;
+        $('bjSoreLine').textContent = 'Slim Calloway, at the next stool, slams his glass down. “Nobody\'s that lucky, friend. Outside — winner takes the pot.” The pot is your $' + profit + ' win: beat him and he matches it, fall and he takes it.';
+        $('btnBjFace').textContent = 'FACE HIM · POT $' + profit;
+        $('bjSore').className = 'bjSore on';
+      }
+      bjRender();
+    }
+    function bjDealerPlay(){
+      BJ.holeHidden = false;
+      while (bjValue(BJ.dealer) < 17) BJ.dealer.push(bjDrawCard());
+      var pv = bjValue(BJ.player), dv = bjValue(BJ.dealer);
+      if (dv > 21) bjSettle('dealerbust');
+      else if (pv > dv) bjSettle('win');
+      else if (pv < dv) bjSettle('lose');
+      else bjSettle('push');
+    }
+    function bjDeal(){
+      if (BJ.phase === 'player') return;
+      $('bjSore').className = 'bjSore'; BJ.pot = 0;
+      if (SAVE.money < BJ.betSel){
+        bjMsg(SAVE.money < 10 ? 'You\'re broke, partner — the table needs at least $10. Go win some cash first.' : 'Not enough cash for a $' + BJ.betSel + ' bet — pick a smaller one.');
+        bjRender(); return;
+      }
+      BJ.bet = BJ.betSel; BJ.stake = BJ.bet; BJ.acted = false;
+      SAVE.money -= BJ.bet; SAVE.bjHands = (SAVE.bjHands || 0) + 1;
+      persistSave(); updateMoneyUI();
+      bjNewDeck();
+      BJ.player = [bjDrawCard(), bjDrawCard()];
+      BJ.dealer = [bjDrawCard(), bjDrawCard()];
+      BJ.holeHidden = true; BJ.phase = 'player';
+      var pv = bjValue(BJ.player), dv = bjValue(BJ.dealer);
+      if (pv === 21 || dv === 21){
+        BJ.holeHidden = false;
+        if (pv === 21 && dv === 21) bjSettle('push');
+        else if (pv === 21) bjSettle('bj');
+        else bjSettle('dealerbj');
+        return;
+      }
+      bjMsg('Dan shows a ' + BJ.dealer[0].rank + '. You hold ' + pv + ' — HIT, STAND, or DOUBLE?');
+      bjRender();
+    }
+    function bjHit(){
+      if (BJ.phase !== 'player') return;
+      BJ.acted = true;
+      BJ.player.push(bjDrawCard());
+      var pv = bjValue(BJ.player);
+      if (pv > 21){ BJ.holeHidden = false; bjSettle('bust'); return; }
+      if (pv === 21){ bjDealerPlay(); return; }
+      bjMsg('You hold ' + pv + ' — HIT or STAND?');
+      bjRender();
+    }
+    function bjDouble(){
+      if (BJ.phase !== 'player' || BJ.acted) return;
+      if (SAVE.money < BJ.bet){ bjMsg('Not enough cash to double — HIT or STAND.'); bjRender(); return; }
+      SAVE.money -= BJ.bet; BJ.stake += BJ.bet; BJ.acted = true;
+      persistSave(); updateMoneyUI();
+      BJ.player.push(bjDrawCard());
+      var pv = bjValue(BJ.player);
+      if (pv > 21){ BJ.holeHidden = false; bjSettle('bust'); return; }
+      bjDealerPlay();
+    }
+    function bjResetTable(msg){
+      BJ.phase = 'idle'; BJ.bet = 0; BJ.stake = 0; BJ.player = []; BJ.dealer = []; BJ.holeHidden = true; BJ.acted = false; BJ.pot = 0;
+      $('bjSore').className = 'bjSore';
+      bjMsg(msg || 'Take a seat. Pick your bet, then DEAL.');
+      bjRender();
+    }
+    function openBjCard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      bjResetTable('Back at the table. Pick your bet, then DEAL.');
+      $('titleCard').style.display = 'none';
+      $('bjCard').style.display = 'flex'; // …then the felt table takes its place
+      var bi = document.querySelector('#bjCard .inner'); if (bi) bi.scrollTop = 0;
+    }
+    /* The sore loser's duel: a normal duel against Slim Calloway,
+       winner takes the pot — modelled on the Quick Duel, one man,
+       one bell, your equipped iron and the full switch bar. */
+    function startBjDuel(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'bjduel'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      G.duel = 2; // 13.5 paces — close enough to hear him breathe
+      rotateDuelGround(); // v3.1: the call-out duel rotates like every duel
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var cfg = { name: 'Slim Calloway', sub: '"Slim" Calloway · The Sore Loser · Draw: Quick', drawMs: 980, acc: 0.52,
+        coat: 0x274435, pants: 0x23211c, shirt: 0xc9b189, hat: 0x1f2a22, skin: 0xc98d54, band: 0xd9a441 };
+      var dist = DISTANCES[G.duel];
+      var o = buildGunslinger(cfg);
+      o.slot = 0;
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - dist;
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = cfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = 'BLACKJACK · WINNER TAKES THE POT · $' + BJ.pot;
+      $('oppName').textContent = cfg.name;
+      $('oppSub').textContent = cfg.sub;
+      clockEl.textContent = '—';
+      var clblB = document.querySelector('#clockPlate .lbl'); if (clblB) clblB.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 1);
+      updateDuelSwitchUI();
+    }
+    function bjDuelWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var pot = BJ.pot; BJ.pot = 0;
+      SAVE.money += pot; persistSave();
+      G.lastReward = pot;
+      endRoundCommon();
+      var rpB = startReplay(); // the killing shot plays back in slow motion, same as any duel (v2.2)
+      setTimeout(function(){
+        banner('THE POT IS YOURS');
+        toast('Calloway pays up — +$' + pot + '. He goes back to his drink.', true);
+      }, rpB ? 2100 : 480);
+      if (rpB) setTimeout(function(){ showNext('Back to the Table'); }, 2100);
+      else showNext('Back to the Table');
+    }
+    function bjDuelLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++;
+      var pot = BJ.pot; BJ.pot = 0;
+      SAVE.money = Math.max(0, SAVE.money - pot); persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('Foul — too eager! Calloway takes the pot: −$' + pot + '.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('Calloway takes the pot — $' + pot + ' handed over.', true);
+      }
+      showNext('Back to the Table');
+    }
+    $('btnBlackjack').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      bjResetTable();
+      $('rideCard').style.display = 'none';
+      $('bjCard').style.display = 'flex';
+      var bi = document.querySelector('#bjCard .inner'); if (bi) bi.scrollTop = 0;
+    });
+    $('btnBackBj').addEventListener('click', function(){
+      if (BJ.phase === 'player') return; // a live hand finishes first — it takes seconds
+      initAudio(); sndClick();
+      $('bjCard').style.display = 'none';
+      $('rideCard').style.display = 'flex'; // the table's home is the Saloon section of the Ride card (v3.23)
+      bjRender(); // the picker line stays honest
+    });
+    var bjChips = document.querySelectorAll('#bjBetRow [data-bjbet]');
+    for (var bci = 0; bci < bjChips.length; bci++){
+      (function(btn){
+        btn.addEventListener('click', function(){
+          if (BJ.phase === 'player') return;
+          initAudio(); sndClick();
+          BJ.betSel = parseInt(btn.getAttribute('data-bjbet'), 10) || 10;
+          bjRender();
+        });
+      })(bjChips[bci]);
+    }
+    $('btnBjDeal').addEventListener('click', function(){ initAudio(); sndClick(); bjDeal(); });
+    $('btnBjHit').addEventListener('click', function(){ initAudio(); sndClick(); bjHit(); });
+    $('btnBjStand').addEventListener('click', function(){ initAudio(); sndClick(); if (BJ.phase === 'player') bjDealerPlay(); });
+    $('btnBjDouble').addEventListener('click', function(){ initAudio(); sndClick(); bjDouble(); });
+    $('btnBjWalk').addEventListener('click', function(){
+      initAudio(); sndClick();
+      BJ.pot = 0;
+      $('bjSore').className = 'bjSore';
+      bjMsg('You tip your hat and keep your winnings. Calloway goes back to his drink, muttering.');
+      bjRender();
+    });
+    $('btnBjFace').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('bjSore').className = 'bjSore';
+      $('bjCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startBjDuel();
+    });
+    bjRender(); // the table is dressed before its first seat is taken
+
     /* ============================== BACK-TO-BACK 2-ON-1 (v3.14) ==============================
        One gunslinger in front of you, one behind you, on the
        rotation's ground at the picked hour, at Mode Settings
@@ -24260,6 +25513,7 @@ three/build/three.module.js:
         wantedQuirkTick(now); // Wanted Board (v3.11): the poster's tell plays out — a flinch or a wild early shot before the bell, two-iron bursts after it
         rivalQuirkTick(now); // The Rival (v3.13): Crowe's own tricks on the same stagecraft — his fake-out flinch before the bell, his two-iron fan after it
         b2bTick(now); // Back-to-Back 2-on-1 (v3.14): the man at your back waits his turn, shouts his warning, then fires — and the TURN button rides along
+        bankTick(now); // Bank Robbery (v3.20): the lock cracking under a steady aim, the posse riding in, and the ride out
 
         if (G.state === 'draw' && anyAlive()){
           shadowDirty = true; // their gun arms are on the move — keep shadows honest
@@ -24533,7 +25787,7 @@ three/build/three.module.js:
 
         /* ---- the ride (v1.17): gallop, coach, outlaws and the whole
            scrolling trail live in updateRide ---- */
-        if (G.mode === 'ride'){ if (G.train) updateTrain(dt, now, t); else if (G.night) updateNightRide(dt, now, t); else updateRide(dt, now, t); } // Train Robbery (v3.4) advances on its own rails; Night Ride (v3.8) rides the moonlit trail
+        if (G.mode === 'ride'){ if (G.train) updateTrain(dt, now, t); else if (G.night) updateNightRide(dt, now, t); else if (G.ambush) updateAmbush(dt, now, t); else updateRide(dt, now, t); } // Train Robbery (v3.4) advances on its own rails; Night Ride (v3.8) rides the moonlit trail; Outlaw Ambush (v3.21) rides it under fire
 
         /* ---- opponents idle / reactions (every gunman in the street) ---- */
         opps.forEach(function(opp){
