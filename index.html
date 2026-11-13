@@ -218,6 +218,11 @@
       .lockerSec::after{ content:''; flex:1; border-top:1px solid var(--plate-line); }
       .lockerSec small{ letter-spacing:.08em; color:#c8ab77; font-size:9.5px; }
       #lockerScopes{ display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 4px; }
+      /* Special Ammo (v3.16): the AMMO tab's chips and the stat line
+         that shows the loaded round's effect on this gun. */
+      #lockerAmmo{ display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 4px; }
+      .skinChip .bullet{ display:inline-block; width:9px; height:14px; margin-right:7px; vertical-align:-2px; border-radius:4px 4px 2px 2px; box-shadow:inset 0 -5px 0 rgba(0,0,0,.35); }
+      #lockerAmmoFx{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.06em; color:#ffd98f; border:1px solid var(--plate-line); background:rgba(217,164,65,.10); padding:7px 10px; margin-top:8px; line-height:1.55; text-align:left; }
       .skinChip .mag{ display:inline-block; min-width:26px; text-align:center; margin-right:6px; padding:1px 4px; border:1px solid rgba(255,217,143,.55); border-radius:3px; color:#ffd98f; font-size:10.5px; vertical-align:-1px; }
       /* Long Range (v3.10): the hub button — deep walnut and brass,
          a sharpshooter's colours, on the Duels card (v3.10.2). */
@@ -1021,8 +1026,8 @@
       #btnFan.locked{ opacity:.72; border-style:dashed; color:#b49b74; }
       #btnFan:active{ transform:scale(.96); }
       body.scoped #btnFan{ display:none !important; }
-      #bountyCard,#dailyCard{ display:none; }
-      #bountyCard h1,#dailyCard h1{ font-size:clamp(24px,5.6vw,34px); }
+      #bountyCard,#dailyCard,#wantedCard,#tournCard{ display:none; }
+      #bountyCard h1,#dailyCard h1,#wantedCard h1,#tournCard h1{ font-size:clamp(24px,5.6vw,34px); }
       .wantedBox{ margin:12px 0 4px; padding:16px 14px 13px; color:#2a1a08; text-align:center;
         background:linear-gradient(180deg,#ecd9ab,#dcc48d); border:2px solid #6b4a22; outline:1px solid rgba(42,26,8,.55); outline-offset:-6px;
         box-shadow:0 6px 22px rgba(0,0,0,.5); }
@@ -1031,6 +1036,113 @@
       .wantedBox .wCrime{ font-family:'Special Elite',monospace; font-size:12.5px; letter-spacing:.06em; line-height:1.5; margin:0; }
       .wantedBox .wReward{ font-family:'Special Elite',monospace; font-size:17px; letter-spacing:.12em; margin-top:9px; color:#3a2410; }
       .wantedBox .wReward b{ font-size:21px; }
+      /* Wanted Board (v3.11): the saloon wall — dark planks behind a
+         grid of paper posters, each pinned a touch crooked. A beaten
+         man's poster stays up under its stamp until it comes down
+         and a fresh outlaw is pinned in its place. */
+      .wbWall{ margin:12px 0 4px; padding:12px 10px; display:grid; grid-template-columns:1fr 1fr; gap:10px;
+        background:repeating-linear-gradient(180deg,#4a2f18 0 26px,#3c2512 26px 28px); border:2px solid #241708;
+        box-shadow:inset 0 0 24px rgba(0,0,0,.55), 0 6px 22px rgba(0,0,0,.45); }
+      .wbPoster{ position:relative; overflow:hidden; text-align:center; color:#2a1a08; padding:10px 8px 9px;
+        background:linear-gradient(180deg,#ecd9ab,#dbc28a); border:2px solid #6b4a22; outline:1px solid rgba(42,26,8,.5); outline-offset:-5px;
+        box-shadow:0 4px 12px rgba(0,0,0,.5); }
+      .wbPoster:nth-child(odd){ transform:rotate(-.7deg); }
+      .wbPoster:nth-child(even){ transform:rotate(.6deg); }
+      .wbPoster.done{ filter:sepia(.35) brightness(.93); }
+      .wbHead{ font-family:'Rye',Georgia,serif; font-size:16px; letter-spacing:.24em; color:#3a2410; }
+      .wbFace{ width:62px; height:62px; margin:3px auto 1px; }
+      .wbFace svg{ width:100%; height:100%; display:block; }
+      .wbName{ font-family:'Rye',Georgia,serif; font-size:15.5px; line-height:1.15; color:#571d10; margin:2px 0; }
+      .wbCrime{ font-family:'Special Elite',monospace; font-size:10.5px; line-height:1.45; letter-spacing:.03em; margin:0; }
+      .wbTell{ font-family:'Special Elite',monospace; font-size:10.5px; line-height:1.45; margin:6px 0 0; padding-top:5px; border-top:1px dashed rgba(42,26,8,.5); }
+      .wbBounty{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.1em; margin-top:6px; color:#3a2410; }
+      .wbBounty b{ font-size:18px; }
+      .wbGo{ font-family:'Special Elite',monospace; font-size:11.5px; letter-spacing:.1em; width:100%; margin-top:7px; padding:7px 4px;
+        background:#3a2410; color:#ffe9bd; border:1px solid #6b4a22; cursor:pointer; }
+      .wbGo:active{ transform:scale(.97); }
+      .wbStamp{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+      .wbStamp span{ font-family:'Rye',Georgia,serif; font-size:25px; letter-spacing:.12em; color:rgba(146,22,10,.88);
+        border:3px solid rgba(146,22,10,.82); border-radius:4px; padding:1px 9px; transform:rotate(-11deg); background:rgba(236,217,171,.28); }
+      .bigbtn.wbbtn{ background:linear-gradient(180deg,#6e4525,#3c2410); border-color:rgba(217,164,65,.55); color:#ffe9bd; margin-top:8px; }
+      .bigbtn.tournbtn{ background:linear-gradient(180deg,#7a5a14,#4a3408); border-color:rgba(255,217,143,.6); color:#ffe9bd; margin-top:8px; }
+      .bigbtn.rivalbtn{ background:linear-gradient(180deg,#5e1216,#2a0508); border-color:rgba(255,120,100,.55); color:#ffd9c9; margin-top:8px; }
+      .bigbtn.b2bbtn{ background:linear-gradient(180deg,#2e4a52,#152227); border-color:rgba(150,200,205,.55); color:#e6f2ec; margin-top:8px; }
+      .bigbtn.posterbtn{ background:linear-gradient(180deg,#7e2430,#451207); border-color:rgba(255,150,120,.55); color:#ffe0d2; margin-top:8px; }
+      /* Your Wanted Poster (v3.15): the player's own poster — one big
+         aged sheet, pinned straight, that re-prints itself from the
+         career record every time it is opened: the face you wear,
+         the rank you have earned, and a bounty that grows with it. */
+      #posterCard{ display:none; }
+      #posterCard h1{ font-size:clamp(24px,5.6vw,34px); }
+      .mpPoster{ margin:12px 0 4px; padding:20px 16px 15px; color:#2a1a08; text-align:center; position:relative;
+        background:linear-gradient(180deg,#efdcab,#dcc48d 78%,#d3ba82); border:2px solid #6b4a22; outline:1px solid rgba(42,26,8,.55); outline-offset:-7px;
+        box-shadow:0 8px 26px rgba(0,0,0,.55), inset 0 0 44px rgba(122,77,32,.22); }
+      .mpPoster::before,.mpPoster::after{ content:""; position:absolute; width:9px; height:9px; border-radius:50%;
+        background:radial-gradient(circle at 35% 30%, #d8d8de, #6e6e78 70%); box-shadow:0 1px 3px rgba(0,0,0,.6); top:9px; }
+      .mpPoster::before{ left:9px; } .mpPoster::after{ right:9px; }
+      .mpHead{ font-family:'Rye',Georgia,serif; font-size:clamp(38px,10vw,52px); letter-spacing:.3em; padding-left:.3em; margin:0; color:#3a2410; line-height:1.05; }
+      .mpSub{ font-family:'Rye',Georgia,serif; font-size:clamp(14px,3.6vw,19px); letter-spacing:.24em; margin:5px 0 0; color:#571d10; }
+      .mpFace{ width:148px; height:148px; margin:8px auto 0; }
+      .mpFace svg{ width:100%; height:100%; display:block; }
+      .mpName{ font-family:'Rye',Georgia,serif; font-size:clamp(24px,6vw,32px); line-height:1.12; margin:6px 0 0; color:#571d10; }
+      .mpRank{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.22em; margin:4px 0 0; color:#3a2410; }
+      .mpCrime{ font-family:'Special Elite',monospace; font-size:12.5px; line-height:1.55; margin:8px 6px 0; }
+      .mpStats{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px 8px; margin:13px 2px 0; padding-top:10px; border-top:1px dashed rgba(42,26,8,.55); }
+      .mpStat b{ display:block; font-family:'Rye',Georgia,serif; font-weight:normal; font-size:17px; color:#571d10; line-height:1.15; }
+      .mpStat span{ font-family:'Special Elite',monospace; font-size:9px; letter-spacing:.14em; color:#5c4322; }
+      @media (max-width:380px){ .mpStats{ grid-template-columns:1fr 1fr; } }
+      .mpReward{ font-family:'Special Elite',monospace; font-size:14px; letter-spacing:.16em; margin-top:14px; color:#3a2410; }
+      .mpReward b{ display:block; font-family:'Rye',Georgia,serif; font-weight:normal; font-size:clamp(34px,9vw,46px); line-height:1.1; color:#571d10; }
+      .mpFoot{ font-family:'Special Elite',monospace; font-size:9.5px; letter-spacing:.2em; color:#6b4a22; margin-top:10px; }
+      .mtPlayer{ cursor:pointer; }
+      /* The Rival (v3.13): Crowe's card — his face, his taunt, and
+         the five beats as parchment rows that fill as he falls. */
+      .rvFace{ width:84px; height:84px; margin:6px auto 2px; }
+      .rvFace svg{ width:100%; height:100%; display:block; }
+      .rvTaunt{ font-family:'Special Elite',monospace; font-size:13.5px; line-height:1.55; color:#ffd9c9; text-align:center; margin:8px 4px 2px; }
+      .rvBeats{ margin:12px 0 4px; display:flex; flex-direction:column; gap:7px; }
+      .rvBeat{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:8px 11px;
+        background:linear-gradient(180deg,#ecd9ab,#dbc28a); border:2px solid #6b4a22; color:#2a1a08;
+        font-family:'Special Elite',monospace; font-size:12.5px; line-height:1.45; box-shadow:0 3px 9px rgba(0,0,0,.45); }
+      .rvBeat.next{ outline:2px solid #c22e22; outline-offset:2px; }
+      .rvBeat.beaten{ opacity:.55; }
+      .rvBeat .rvPay{ white-space:nowrap; font-weight:bold; }
+      .rvBeat .rvState{ font-size:10px; letter-spacing:.14em; color:#7a2d12; white-space:nowrap; }
+      /* Back-to-Back 2-on-1 (v3.14): the pair's card — two faces
+         side by side, front and back, over two parchment rows. */
+      .bbFaces{ display:flex; gap:26px; justify-content:center; margin:6px 0 2px; }
+      .bbFaces .rvFace{ margin:0 auto; }
+      .bbFaceCap{ font-family:'Special Elite',monospace; font-size:10px; letter-spacing:.16em; color:#ffd98f; text-align:center; margin-top:3px; }
+      /* The TURN control (v3.14): a plated button on the left edge,
+         mid-height — clear of the aim at centre screen and of the
+         weapon bar, throw tile and RELOAD along the bottom. Shown
+         only while a Back-to-Back fight is live; it pulses red
+         while the man at your back is shouting his warning. */
+      #btnTurn{ display:none; position:fixed; left:12px; top:50%; transform:translateY(-50%); z-index:9; pointer-events:auto;
+        min-width:88px; padding:12px 10px; text-align:center; cursor:pointer;
+        font-family:'Special Elite',monospace; font-size:15px; letter-spacing:.12em; color:#ffe9bd;
+        background:rgba(24,13,6,.66); border:1px solid rgba(217,164,65,.55); border-radius:8px; box-shadow:0 4px 14px rgba(0,0,0,.5); }
+      #btnTurn small{ display:block; font-size:9.5px; letter-spacing:.06em; color:rgba(255,233,189,.78); margin-top:4px; line-height:1.4; }
+      #btnTurn.warn{ border-color:#e0483a; color:#ffd9c9; animation:bbPulse .5s ease-in-out infinite alternate; }
+      @keyframes bbPulse{ from{ box-shadow:0 0 0 rgba(224,72,58,0); } to{ box-shadow:0 0 22px rgba(224,72,58,.85); } }
+      @media (prefers-reduced-motion: reduce){ #btnTurn.warn{ animation:none; } }
+      body.scoped #btnTurn{ display:none !important; }
+      /* High Noon Tournament (v3.12): the bracket board — three
+         rounds of parchment match cards. The columns sit side by
+         side on a wide screen and stack on a phone. */
+      .tnBoard{ margin:12px 0 4px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; align-items:start; }
+      @media (max-width:600px){ .tnBoard{ grid-template-columns:1fr; } }
+      .tnColHead{ font-family:'Special Elite',monospace; font-size:11.5px; letter-spacing:.22em; color:#ffd98f; text-align:center; margin:0 0 6px; }
+      .tnMatch{ background:linear-gradient(180deg,#ecd9ab,#dbc28a); border:2px solid #6b4a22; outline:1px solid rgba(42,26,8,.5); outline-offset:-5px;
+        box-shadow:0 4px 12px rgba(0,0,0,.5); padding:8px 9px 7px; margin-bottom:9px; color:#2a1a08; }
+      .tnMatch.next{ outline:2px solid #d9a441; outline-offset:2px; }
+      .tnRow{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-family:'Special Elite',monospace; font-size:12.5px; line-height:1.55; }
+      .tnRow + .tnRow{ border-top:1px dashed rgba(42,26,8,.4); }
+      .tnRow .tnTag{ font-size:10px; letter-spacing:.14em; color:#7a2d12; white-space:nowrap; }
+      .tnRow.win{ font-weight:bold; color:#571d10; }
+      .tnRow.out{ opacity:.45; }
+      .tnRow.you{ color:#571d10; }
+      .tnCrown{ font-family:'Rye',Georgia,serif; text-align:center; color:#3a2410; font-size:15px; letter-spacing:.12em; padding:2px 0; }
       #storeDaily,#storeFan{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:.1em; color:#ffe9bd; text-align:center;
         border:1px solid var(--plate-line); background:rgba(217,164,65,.12); padding:8px 10px; margin-top:8px; line-height:1.5; border-radius:5px; }
       .streakPips{ font-family:'Special Elite',monospace; font-size:13px; letter-spacing:.14em; color:#ffd98f; margin:6px 0 0; }
@@ -2161,6 +2273,7 @@
       #storeCard .storeItem .nm{ font-size:15.5px; color:#ffe9bd; line-height:1.25; }
       #storeCard .storeItem .price{ font-family:'Special Elite',monospace; font-size:16px; color:#ffd98f; margin-top:5px; letter-spacing:.05em; text-align:left; }
       #storeCard .storeItem .meta, #storeCard .storeItem .ds, #storeCard .storeItem .state{ display:none; }
+    #storeCard .storeItem .barstat, #inventoryCard .storeItem .barstat{ display:block; font-family:'Special Elite',monospace; font-size:10.5px; letter-spacing:.14em; color:#ffd98f; margin-top:3px; }
       #storeCard #storeGuns .storeItem .buyBox, #storeCard #storeShotguns .storeItem .buyBox,
       #storeCard #storeRifles .storeItem .buyBox, #storeCard #storeThrown .storeItem .buyBox{
         flex:0 0 auto; width:auto; flex-direction:column; align-items:stretch; gap:7px; }
@@ -2333,6 +2446,51 @@
       body.lr #btnSteady, body.lr.scoped #btnSteady{ bottom:calc(14px + env(safe-area-inset-bottom)); right:12px; }
       body.lr #btnPose, body.lr.scoped #btnPose{ bottom:calc(167px + env(safe-area-inset-bottom)); right:12px; }
       body.lr #btnNext{ bottom:calc(208px + env(safe-area-inset-bottom)); }
+
+      /* ---------- Duel screen tidy (v3.18): the foe's name shrinks to
+         a small quiet label, and the wait line leaves the weapon bar.
+         From the user's phone screenshot (a Saloon duel vs Dusty Dan):
+         the name rode big at the top for the whole fight, and
+         STEADY... WAIT FOR THE BELL sat right across the REVOLVER /
+         SHOTGUN / RIFLE / BOW tiles. Now the name label is about half
+         its old size (the big intro name gets its own smaller, faster
+         .namepop banner in the script and is gone in ~1.5s), and
+         #steady is anchored HIGH in the sky beside #toast instead of
+         from the bottom — no screen height can push it onto the
+         weapon bar, the throwable switcher, RELOAD or the Next
+         button, in any mode: duels, Endless, Sheriff Shift, Long
+         Range, Wanted, Tournament, Rival and Back-to-Back all share
+         this one #steady / #oppName / #toast stack. The small name
+         and the hide bar stay — just small. This block sits last in
+         the sheet on purpose: it retires every earlier bottom
+         anchoring of #steady and every earlier #oppName size,
+         scoped and ride included. ---------- */
+      #oppName{ font-size:11px; line-height:1.15; letter-spacing:.05em; margin-top:1px; }
+      #hud.ride #oppName{ font-size:11px; }
+      body.scoped #oppName{ font-size:10.5px; margin-top:0; }
+      #steady{
+        top:calc(108px + env(safe-area-inset-top)); bottom:auto;
+        font-size:12.5px; letter-spacing:.22em; padding:0 18px;
+      }
+      body.scoped #steady{ top:calc(64px + env(safe-area-inset-top)); }
+      @media (max-width:520px){
+        #oppName{ font-size:10.5px; }
+        #steady{ top:calc(104px + env(safe-area-inset-top)); font-size:11.5px; letter-spacing:.18em; }
+      }
+      /* the foe's big intro name: smaller than a result banner and
+         faded out in about a second and a half, never parked */
+      #banner.namepop{ animation:namepop 1.5s ease forwards; font-size:clamp(20px, 4.8vw, 36px); }
+      @keyframes namepop{ 0%{opacity:0; transform:scale(1.3);} 12%{opacity:1; transform:scale(1);} 68%{opacity:1;} 100%{opacity:0;} }
+      /* Short screens (landscape phones, small windows): the high
+         stack — steady at ~104px, toast at 148px — would meet the
+         banner band (top 35–36% of a short screen is ~150–210px),
+         so on a short screen the banner drops to mid-screen, still
+         far above the weapon bar's row, and the intro name, the
+         wait line and the message line never share a strip. The
+         scoped banner keeps its own high rule (higher specificity). */
+      @media (max-height:600px){
+        #banner, #banner.namepop{ top:46%; }
+      }
     </style>
   </head>
   <body>
@@ -2346,7 +2504,7 @@
         <div class="sponsors">AMD · NVIDIA · INTEL · APPLE · WEBGL</div>
         <button type="button" class="tapbtn" id="btnSplash">Tap to Ride In</button>
       </div>
-      <div class="sver">★ SHOWDOWN 1881 · v3.10.3 ★</div>
+      <div class="sver">★ SHOWDOWN 1881 · v3.12 ★</div>
     </div>
     <!-- Ride-in welcome (v1.33, bottles v1.35, plains + title v1.36,
          the gunslinger v2.8): a gunslinger in front of you over open
@@ -2474,7 +2632,7 @@
         <div class="row">WON <b id="statW">0</b> · LOST <b id="statL">0</b></div>
         <div class="row">BEST DRAW <b id="statBest">—</b></div>
         <div class="row">MONEY <b id="statMoney">$0</b></div>
-        <div class="ver">SHOWDOWN 1881 · v3.10.3</div>
+        <div class="ver">SHOWDOWN 1881 · v3.12</div>
       </div>
       <div class="plate" id="selfPlate">
         <div class="lbl">Your Hide</div>
@@ -2493,6 +2651,11 @@
     <button id="btnSteady" type="button" aria-label="Hold to steady your breath">STEADY<small>HOLD YOUR<br>BREATH</small></button>
     <button id="btnQuit" type="button" aria-label="Back to title">✕</button>
     <button id="btnFan" type="button" aria-label="Toggle fanning the hammer">FAN · OFF</button>
+    <!-- Back-to-Back (v3.14): the TURN control — spins you round to
+         face the other gunslinger. Left edge, mid-height: it never
+         covers the aim at centre screen or the weapon bar along
+         the bottom. Shown only during a Back-to-Back fight. -->
+    <button id="btnTurn" type="button" aria-label="Turn around to face the other gunslinger">⟲ TURN<small id="btnTurnSub">FACE THE OTHER MAN</small></button>
     <!-- Exit Scope (v1.19): appears only while the rifle scope is up.
          Drops the scope and the 2x zoom back to normal view, no shot. -->
     <button id="btnExitScope" type="button" aria-label="Exit scope">✕&nbsp;Exit Scope</button>
@@ -2558,7 +2721,7 @@
            on the right and one small settings gear — one clean row,
            nothing else up there. -->
       <div class="menuTop">
-        <div class="mtPlayer">
+        <div class="mtPlayer" id="mtPlayerBtn" role="button" title="Your Wanted Poster — tap to see it">
           <span class="mtAvatar" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="9" ry="2.6" fill="currentColor"/><path d="M7.4 14.8 L8.5 8.6 Q12 7.2 15.5 8.6 L16.6 14.8 Q12 13 7.4 14.8 Z" fill="currentColor"/></svg></span>
           <span class="mtNameBlock"><span class="mtName">THE STRANGER</span><span class="mtXp"><span class="mtLevel" id="mtLevel">1</span><span class="mtXpTrack"><span class="mtXpFill" id="mtXpFill"></span></span></span></span>
         </div>
@@ -2574,7 +2737,7 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
@@ -2672,11 +2835,19 @@
         <p class="small">Hold the bank doorway. Best shift: <b id="shfBestLine">no shift yet</b></p>
         <button class="bigbtn lrbtn" id="btnLongRange" type="button">★ Long Range · The Valley</button>
         <p class="small" id="lrDescD">Sniper rifles only. 200–600 yards. Best score: <b id="lrBestLine">no round yet</b></p>
+        <button class="bigbtn wbbtn" id="btnWantedBoard" type="button">★ Wanted Board · The Saloon Wall</button>
+        <p class="small">Four posters up. Beat one, collect his bounty. Best bounty: <b id="wbBestLine">none yet</b></p>
+        <button class="bigbtn tournbtn" id="btnTourn" type="button">★ High Noon Tournament · The Bracket</button>
+        <p class="small">Eight guns. Win 3 in a row for the crown and <b>$500</b>. <b id="hnBestLine">no bracket yet</b></p>
+        <button class="bigbtn rivalbtn" id="btnRival" type="button">★ The Rival · Silas Crowe</button>
+        <p class="small">One nemesis, five beats — he comes back faster every time. <b id="rvHubLine">beat 1 of 5 next · pays $150</b></p>
+        <button class="bigbtn b2bbtn" id="btnB2B" type="button">★ Back-to-Back · 2-on-1</button>
+        <p class="small">One in front, one behind you — turn between them. Drop both for <b>$100</b>. <b id="bbHubLine">no pair dropped yet</b></p>
         <button class="bigbtn altbtn" id="btnDaily" type="button">★ Daily Duel</button>
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2693,7 +2864,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2715,7 +2886,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2740,7 +2911,7 @@
         <p class="small">Three miles by moonlight. Best ride: <b id="nightBestLine">no ride yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2774,7 +2945,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2794,6 +2965,7 @@
           <button type="button" data-filter="revolvers">Medium</button>
           <button type="button" data-filter="rifles">Long</button>
           <button type="button" data-filter="thrown">Throwable</button>
+          <button type="button" data-filter="ammo">Ammo</button>
           <button type="button" data-filter="outfits">Outfits</button>
         </div>
         <div class="storeSec" data-store-cat="revolvers">Medium Range</div>
@@ -2804,6 +2976,11 @@
         <div id="storeRifles" data-store-cat="rifles"></div>
         <div class="storeSec" data-store-cat="thrown">Throwable</div>
         <div id="storeThrown" data-store-cat="thrown"></div>
+        <!-- Special Ammo (v3.16): buyable rounds, stocked per gun
+             family — Revolvers, Shotguns, Rifles. Bought here once
+             per family, then loaded per gun in the Gun Locker. -->
+        <div class="storeSec" data-store-cat="ammo">Special Ammo · By Gun Family</div>
+        <div id="storeAmmo" data-store-cat="ammo"></div>
         <!-- Gunslinger Outfits (v3.9): four slots of pure look under
              their own tab — hat, coat, bandana, boots. Bought like
              anything else on the shelf, equipped with one tap, and
@@ -2817,7 +2994,7 @@
         <div class="storeSec" data-store-cat="outfits">Boots</div>
         <div id="storeBoots" data-store-cat="outfits"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2850,7 +3027,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2880,6 +3057,7 @@
         <div id="lockerTabs">
           <button class="lockerTab on" id="tabLockerSkin" type="button">SKIN</button>
           <button class="lockerTab" id="tabLockerScope" type="button">SCOPE</button>
+          <button class="lockerTab" id="tabLockerAmmo" type="button">AMMO</button>
         </div>
         <p class="small" style="margin-top:6px;">TAP TO PREVIEW ON THE GUN · TAP AGAIN TO FIT</p>
         <div id="lockerSkinSec">
@@ -2894,9 +3072,20 @@
           <p class="small" id="lockerScopeDesc"></p>
           <button class="bigbtn" id="btnLockerScopeAct" type="button">Fit Scope</button>
         </div>
+        <!-- Special Ammo (v3.16): the load in THIS gun — tap a round
+             to preview its effect on the gun's stats, tap again (or
+             the Load button) to load it. Switching is free once the
+             family stock is bought in the Store. -->
+        <div id="lockerAmmoSec">
+          <p class="small" id="lockerAmmoName" style="margin-top:6px;"></p>
+          <div id="lockerAmmo"></div>
+          <p class="small" id="lockerAmmoDesc"></p>
+          <div id="lockerAmmoFx"></div>
+          <button class="bigbtn" id="btnLockerAmmoAct" type="button">Load Rounds</button>
+        </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2911,6 +3100,8 @@
         <div class="rule"></div>
         <p class="small">Your career records, kept between visits — every draw, every shot and every bottle clear counts toward them.</p>
         <button class="bigbtn backTop" id="btnBackStatsTop" type="button">← Back to Menu</button>
+        <button class="bigbtn posterbtn" id="btnPosterFromStats" type="button">★ Your Wanted Poster</button>
+        <p class="small" id="stPosterLine">RANK · UNKNOWN — BOUNTY $25</p>
         <div class="invSec">The Draw</div>
         <div class="statRow"><span class="k">Average Draw</span><span class="v" id="stAvgDraw">—</span></div>
         <div class="statRow"><span class="k">Best Draw</span><span class="v" id="stBestDraw">—</span></div>
@@ -2954,8 +3145,62 @@
         <div class="statRow"><span class="k">Daily Streak</span><span class="v" id="stDailyStreak">0 DAYS · BEST 0</span></div>
         <div class="statRow"><span class="k">Bounties Caught</span><span class="v" id="stBountyWins">0</span></div>
         <div class="statRow"><span class="k">Fastest Capture</span><span class="v" id="stFastCapture">—</span></div>
+        <div class="statRow"><span class="k">Wanted Board · Caught</span><span class="v" id="stWbCaught">0</span></div>
+        <div class="statRow"><span class="k">Wanted Board · Collected</span><span class="v" id="stWbCollected">$0</span></div>
+        <div class="statRow"><span class="k">Wanted Board · Biggest Bounty</span><span class="v" id="stWbBest">—</span></div>
+        <div class="statRow"><span class="k">High Noon · Crowns Won</span><span class="v" id="stHnCrowns">0</span></div>
+        <div class="statRow"><span class="k">High Noon · Best Run</span><span class="v" id="stHnBest">—</span></div>
+        <div class="statRow"><span class="k">The Rival · Beats Won</span><span class="v" id="stRvBeats">0 OF 5</span></div>
+        <div class="statRow"><span class="k">The Rival · Status</span><span class="v" id="stRvStatus">STILL OUT THERE</span></div>
+        <div class="statRow"><span class="k">The Rival · Cash Won</span><span class="v" id="stRvEarned">$0</span></div>
+        <div class="statRow"><span class="k">Back-to-Back · Pairs Dropped</span><span class="v" id="stBbPairs">0</span></div>
+        <div class="statRow"><span class="k">Back-to-Back · Best Clear</span><span class="v" id="stBbBest">—</span></div>
+        <div class="statRow"><span class="k">Back-to-Back · Cash Won</span><span class="v" id="stBbEarned">$0</span></div>
+        <div class="invSec">Your Wanted Poster</div>
+        <div class="statRow"><span class="k">Poster Rank</span><span class="v" id="stPosterRank">UNKNOWN</span></div>
+        <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
+        <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Your Wanted Poster (v3.15): the player's OWN poster — the
+         flip side of the Wanted Board. It is re-printed from the
+         career record every time it opens: the face is drawn in the
+         outfit, hat and bandana you wear, the rank and the bounty on
+         your head rise with your wins, bounties, crowns and beats,
+         and the SHARE button renders this same sheet to a picture
+         you can send to friends. -->
+    <div class="card" id="posterCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ YOUR WANTED POSTER ★</p>
+        <h1>Wanted: You</h1>
+        <div class="rule"></div>
+        <p class="small">The territory has started printing <b>you</b>. The more you win, the bigger the number — and the worse the wording.</p>
+        <div class="mpPoster" id="mpPoster">
+          <p class="mpHead">WANTED</p>
+          <p class="mpSub" id="mpSub">DEAD OR ALIVE</p>
+          <div class="mpFace" id="mpFace"></div>
+          <p class="mpName">THE STRANGER</p>
+          <p class="mpRank" id="mpRank">★ UNKNOWN ★</p>
+          <p class="mpCrime" id="mpCrime">For loitering by the water trough, looking suspicious.</p>
+          <div class="mpStats">
+            <div class="mpStat"><b id="mpWins">0</b><span>DUELS WON</span></div>
+            <div class="mpStat"><b id="mpBounties">0</b><span>BOUNTIES TAKEN</span></div>
+            <div class="mpStat"><b id="mpCrowns">0</b><span>CROWNS WON</span></div>
+            <div class="mpStat"><b id="mpRival">0 OF 5</b><span>RIVAL BEATS</span></div>
+            <div class="mpStat"><b id="mpBest">—</b><span>BEST DRAW</span></div>
+            <div class="mpStat"><b id="mpAvg">—</b><span>AVERAGE DRAW</span></div>
+          </div>
+          <p class="mpReward">REWARD<b id="mpBounty">$25</b></p>
+          <p class="mpFoot">BY ORDER OF THE TERRITORIAL MARSHAL · SHOWDOWN TERRITORY · 1881</p>
+        </div>
+        <p class="streakPips" id="mpNextLine">NOTORIETY 0 · NEXT RANK GREENHORN AT 3</p>
+        <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
+        <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
+        <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2989,7 +3234,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3024,7 +3269,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3063,7 +3308,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3077,6 +3322,14 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.18</b> — <b>A cleaner duel screen.</b> The foe's name is now a <b>small quiet label</b> up top, and the big intro name <b>fades away in about a second and a half</b> instead of staying up. <b>"Steady… wait for the bell"</b> and every other fight message now sit on <b>their own line high in the sky</b> — clear of the weapon bar, the throwable tile, RELOAD and the Next button, in every mode.</p>
+          <p><b>v3.17</b> — <b>Barrel lengths.</b> Revolvers now come in <b>short, standard and long barrels</b> with the length in the name — <b>Colt SAA 3.5″</b>, <b>Colt SAA 4.75″</b>, a 5″ Schofield, a 6″ Lightning — and the derringer wears its 3″ too. A <b>shorter barrel draws faster</b>, a shade weaker at range; a <b>longer one</b> draws slower and reaches farther. Every gun — rifles and shotguns too — shows one clean line: its <b>barrel length and draw speed</b>.</p>
+          <p><b>v3.16</b> — <b>Special Ammo.</b> Buyable rounds in the Store's new <b>AMMO</b> tab, stocked per gun family: <b>Quick Draw Loads</b> (draw 18% quicker, hits 12% lighter), <b>Heavy Loads</b> (hits 30% harder, draw 18% slower) and cheap <b>Practice Loads</b> (practice grounds only — a duel shoots standard). Load each gun in the Locker's <b>AMMO</b> tab — switching is free once stocked, and the tab shows the round's effect on that gun's draw and power.</p>
+          <p><b>v3.15</b> — <b>Your own Wanted Poster.</b> Open it from <b>Stats</b> or by tapping <b>your name on the menu</b>: a proper poster of <b>you</b> — your face in the gear you wear, your <b>rank</b> and the <b>bounty on your head</b>, both rising with your wins, bounties, crowns and Rival beats, from <b>Unknown</b> up to <b>Legend of the West</b>. Your headline stats print on the sheet, and <b>Share Poster</b> sends it as a picture.</p>
+          <p><b>v3.14</b> — <b>Back-to-Back 2-on-1.</b> A new fight in the Duels hub: one gunslinger <b>in front of you, one behind you</b>. <b>TURN</b> — the button, a swipe, or the ← → keys — spins you round; you can only shoot the man you face. The man at your back <b>waits his turn</b>, then <b>shouts before he fires</b>. Drop both for <b>$100</b>; your pairs and best clear are kept in <b>Stats</b> and on the picker.</p>
+          <p><b>v3.13</b> — <b>The Rival.</b> One nemesis in the Duels hub: <b>Silas Crowe</b> challenges you himself, and every beat he <b>comes back faster</b> with a new trick — a quick draw, head-hunter aim, a fake-out flinch, two fanned irons, then the long street. <b>Five beats</b> finish him for good, each paying more than the last; lose one and it costs nothing — the round waits. Your beats are kept in <b>Stats</b> and on the picker.</p>
+          <p><b>v3.12</b> — <b>High Noon Tournament.</b> An <b>8-gunslinger bracket</b> in the Duels hub — you and seven seeded guns. Win <b>3 in a row</b> — quarter-final, semi-final, final, each man quicker and truer than the last — to take the <b>crown and a $500 purse</b>. Lose any round and the run is over; enter again anytime. Your <b>crowns and best run</b> are kept in Stats and on the picker.</p>
+          <p><b>v3.11</b> — <b>The Wanted Board.</b> Four <b>wanted posters</b> on the saloon wall in the Duels hub, each outlaw with a <b>bounty, a crime and a tell</b> — the flincher, the early shot, the head-hunter, the two-iron fan, the plated coat. Beat him and <b>the bounty is yours</b>; lose and it costs nothing. Beaten posters are <b>stamped CAUGHT or DEAD</b> and replaced by a fresh outlaw.</p>
           <p><b>v3.10.3</b> — <b>Shorter hub descriptions, and a clear Long Range view.</b> The BATTLE, Practice and Ride cards now carry <b>one short line each</b> — no long descriptions. And in <b>Long Range</b> the prone rock is flattened down out of the sightline (the sitting fence lowered too), so the view to the ridges, boards, coach and train is <b>clear in both poses</b>.</p>
           <p><b>v3.10.2</b> — <b>Long Range moves to BATTLE, and the valley is a valley.</b> Long Range now lives in the <b>Duels hub</b> — out of Practice and Ride — and it opens in its <b>own open valley</b>, no Main Street around you. Its fight screen is restacked into clear rows: the <b>POSE</b> pill has a row of its own, <b>STEADY</b> keeps its words inside its circle, and only the <b>sniper rifle</b> shows — no other guns, no throwables, no switching.</p>
           <p><b>v3.10.1</b> — <b>Scopes at half price, and a tabbed Gun Locker.</b> Every rifle scope is half what it was: the 4× brass tube is now <b>$2,000</b>, the 6× long brass <b>$4,500</b>, the 8× Malcolm long tube <b>$8,000</b>. Scopes you already own stay owned and fitted. And the Locker bench is <b>tabs now</b> — <b>SKIN</b> and, on a rifle, <b>SCOPE</b> — one tap swaps, the gun stays up top, no scrolling.</p>
@@ -3187,7 +3440,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.10.3</div>
+        <div class="ver">VERSION 3.18</div>
       </div>
     </div>
 
@@ -3210,7 +3463,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3232,7 +3485,91 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Wanted Board (v3.11): a saloon wall of wanted posters in the
+         Duels hub — four outlaws at a time, each poster carrying his
+         face, his bounty, his crime and his tell. Facing a man is a
+         straight duel on the usual rules; beating him pays the
+         bounty, losing costs nothing, and his poster stays up
+         stamped CAUGHT or DEAD until a fresh outlaw replaces it. -->
+    <div class="card" id="wantedCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ WANTED BOARD ★</p>
+        <h1>The Saloon Wall</h1>
+        <div class="rule"></div>
+        <p class="small">Four posters up. Read a man's tell before you face him — every tell is true.</p>
+        <div class="wbWall" id="wbWall"></div>
+        <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
+        <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- High Noon Tournament (v3.12): an 8-gunslinger bracket in
+         the Duels hub — you and seven seeded guns. Win the quarter,
+         the semi and the final in a row for the crown and a $500
+         purse; lose any round and the run ends where it fell. -->
+    <div class="card" id="tournCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ HIGH NOON TOURNAMENT ★</p>
+        <h1>The Bracket</h1>
+        <div class="rule"></div>
+        <p class="small">Eight guns enter. Win <b>3 in a row</b> — quarter-final, semi-final, final — for the crown and a <b>$500 purse</b>. Every round the draw gets quicker and the aim truer. Lose once and you're out.</p>
+        <div class="tnBoard" id="tnBoard"></div>
+        <p class="streakPips" id="tnLine">NO BRACKET YET</p>
+        <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
+        <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- The Rival (v3.13): one recurring nemesis in the Duels hub —
+         Silas Crowe challenges you himself, and every time you beat
+         him he swears revenge and returns faster, with a new trick.
+         Five beats finish him for good; losing one costs nothing
+         and the round simply waits. -->
+    <div class="card" id="rivalCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ THE RIVAL ★</p>
+        <h1>Silas Crowe</h1>
+        <div class="rule"></div>
+        <div class="rvFace" id="rvFace"></div>
+        <p class="small" style="text-align:center; margin:2px 0 0;">Black coat, crimson shirt, a red band on a black hat. He keeps coming back — faster every time.</p>
+        <p class="rvTaunt" id="rvTaunt"></p>
+        <div class="rvBeats" id="rvBeats"></div>
+        <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
+        <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
+        <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Back-to-Back 2-on-1 (v3.14): one gunslinger in front of
+         you, one behind you, and you turn between them. You can
+         only shoot the man you face; the man at your back waits
+         his turn, then shouts his warning before his iron comes
+         up. Drop both and the pair pays $100. -->
+    <div class="card" id="b2bCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ BACK-TO-BACK · 2-ON-1 ★</p>
+        <h1>Two Guns, One Street</h1>
+        <div class="rule"></div>
+        <div class="bbFaces">
+          <div><div class="rvFace" id="bbFaceF"></div><div class="bbFaceCap">IN FRONT</div></div>
+          <div><div class="rvFace" id="bbFaceB"></div><div class="bbFaceCap">BEHIND YOU</div></div>
+        </div>
+        <p class="small" style="text-align:center; margin:4px 0 0;">Both draw on the bell. You can only shoot the man you face — <b>TURN</b> (the button, a swipe, or ← →) spins you round to the other. The man at your back waits his turn… then he <b>shouts</b>, and his iron comes up. Your hide carries across the turn.</p>
+        <div class="rvBeats">
+          <div class="rvBeat"><span>IN FRONT · Wade Corrigan — a straight, honest draw.</span><span class="rvState">FRONT</span></div>
+          <div class="rvBeat"><span>BEHIND YOU · Jesse Larkin — patient, until he shouts.</span><span class="rvState">BACK</span></div>
+        </div>
+        <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
+        <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
+        <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3243,7 +3580,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.10.3 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.18 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -10204,6 +10541,17 @@ three/build/three.module.js:
        at once; a Remington swaps its whole cylinder). barIn is the
        real barrel length in inches — buildRevolver turns the barrel
        to exactly that length, and the shelf drawing draws it too. */
+    /* Barrel variants (v3.17): the shelf now carries short, standard
+       and long barrels of the same iron, the length in the name —
+       a Colt SAA 3.5″ beside the 4.75″ and the 7½″ Cavalry. The
+       trade is honest and small, the way the shelf has always run
+       (Sheriff's 3″ vs Buntline 12″): a shorter barrel lowers
+       drawFirst (faster out of leather) and gives up a few percent
+       of power with a touch more spread — a shade weaker at range,
+       never crippled; a longer barrel does the reverse. A variant
+       declares base: '<family id>' and wears that model's form in
+       the builders and the shelf drawing, with its own barIn
+       stretching or cutting the barrel itself. */
     var GUNS = [
       { id: 'stock', name: 'Colt Single Action Army · 7½″', price: 0, cap: 6, power: 1, spread: 1, drawFirst: 0.15, drawNext: 0.07, sway: 1, recoilDecay: 6.5, aimEase: 19, reloadMs: 230, barIn: 7.5,
         desc: 'The Peacemaker itself: blued barrel, case-hardened frame, walnut grips, chambered in .45 Colt. The standard every other iron on this street is judged by — honest power, the fastest honest draw, six shots fed one at a time through the loading gate.',
@@ -10213,9 +10561,17 @@ three/build/three.module.js:
         desc: 'Colt’s little .31 cap-and-ball pocket revolver — the best-selling Colt of its century. Five light shots, the quickest draw on the shelf, and a cap-and-ball reload you measure in patience, not seconds.',
         spec: '.31 CAP & BALL · 5 SHOTS · 4″ BARREL · SLOW RELOAD',
         grip: 0x7a4a26, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x3a3f47, sw: '#2f333b' },
+      { id: 'pocket49_6', base: 'pocket49', name: 'Colt 1849 Pocket 6″', price: 350, cap: 5, power: 0.62, spread: 1.06, drawFirst: 0.12, drawNext: 0.055, sway: 1.08, recoilDecay: 7.8, aimEase: 18, reloadMs: 700, barIn: 6,
+        desc: 'The little .31 Pocket stretched to its longest factory barrel, a full 6 inches: a step slower out of a vest pocket than the 4-inch gun, but the long barrel steadies the light ball and carries it a shade farther. Still powder, ball and cap, five times over.',
+        spec: '.31 CAP & BALL · 5 SHOTS · 6 IN BARREL · SLOW RELOAD',
+        grip: 0x7a4a26, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x3a3f47, sw: '#2f333b' },
       { id: 'navy51', name: 'Colt 1851 Navy · 7½″', price: 300, cap: 6, power: 0.8, spread: 0.95, drawFirst: 0.16, drawNext: 0.08, sway: 0.9, recoilDecay: 7, aimEase: 19, reloadMs: 850, barIn: 7.5,
         desc: 'The .36 Navy with its octagon barrel and brass grip frame — Wild Bill’s gun, and the best-balanced Colt ever made. A lighter ball than the cartridge guns and a true cap-and-ball reload: powder, ball and cap, six times over.',
         spec: '.36 CAP & BALL · 6 SHOTS · 7½″ OCTAGON BARREL · SLOW RELOAD',
+        grip: 0x7a4a26, steel: 0x2f333b, polished: 0x8a8f96, frame: 0xc9973f, sw: '#2f333b' },
+      { id: 'navy_55', base: 'navy51', name: 'Colt 1851 Navy 5.5″', price: 260, cap: 6, power: 0.76, spread: 1, drawFirst: 0.145, drawNext: 0.075, sway: 0.92, recoilDecay: 7.1, aimEase: 18, reloadMs: 850, barIn: 5.5,
+        desc: 'The Navy cut to 5½ inches: the same graceful .36, handier on the hip and a step quicker out of leather than its long brother, for a shade less reach down the street. Still powder, ball and cap, six times over.',
+        spec: '.36 CAP & BALL · 6 SHOTS · 5.5 IN BARREL · SLOW RELOAD',
         grip: 0x7a4a26, steel: 0x2f333b, polished: 0x8a8f96, frame: 0xc9973f, sw: '#2f333b' },
       { id: 'nickel', name: 'Colt SAA Artillery · 5½″ Nickel', price: 350, cap: 6, power: 0.98, spread: 1, drawFirst: 0.14, drawNext: 0.07, sway: 0.95, recoilDecay: 6.5, aimEase: 19, reloadMs: 230, barIn: 5.5,
         desc: 'The Artillery Model: a Peacemaker cut to 5½ inches and plated head-to-toe in bright nickel that catches the sun — a marshal’s shine. A touch quicker out of leather than the long Cavalry barrel, for a hair less bite.',
@@ -10225,13 +10581,21 @@ three/build/three.module.js:
         desc: 'The .44 Army of the Civil War: a long round 8-inch barrel on the Navy’s graceful frame. Hits harder than the .36 Navy, points like a duelling pistol — and reloads the slow cap-and-ball way.',
         spec: '.44 CAP & BALL · 6 SHOTS · 8″ BARREL · SLOW RELOAD',
         grip: 0x7a4a26, steel: 0x2f333b, polished: 0x8a8f96, frame: 0x3a3f47, sw: '#2f333b' },
-      { id: 'derringer', name: 'Remington Model 95 Derringer', price: 450, cap: 2, power: 0.72, spread: 1.5, drawFirst: 0.09, drawNext: 0.05, sway: 1.3, recoilDecay: 8, aimEase: 15, reloadMs: 500, barIn: 3,
+      { id: 'army60_55', base: 'army60', name: 'Colt 1860 Army 5.5″', price: 350, cap: 6, power: 0.88, spread: 1, drawFirst: 0.152, drawNext: 0.075, sway: 0.97, recoilDecay: 6.9, aimEase: 18, reloadMs: 850, barIn: 5.5,
+        desc: 'The .44 Army cut to 5½ inches on the Navy’s graceful frame: handier on the hip and quicker out of leather than the long 8-inch gun, giving up only a shade of reach down the street. Still the slow cap-and-ball reload, six times over.',
+        spec: '.44 CAP & BALL · 6 SHOTS · 5.5 IN BARREL · SLOW RELOAD',
+        grip: 0x7a4a26, steel: 0x2f333b, polished: 0x8a8f96, frame: 0x3a3f47, sw: '#2f333b' },
+      { id: 'derringer', name: 'Remington Model 95 Derringer · 3″', price: 450, cap: 2, power: 0.72, spread: 1.5, drawFirst: 0.09, drawNext: 0.05, sway: 1.3, recoilDecay: 8, aimEase: 15, reloadMs: 500, barIn: 3,
         desc: 'The gambler’s hideout gun: two stub .41 rimfire barrels over a nickel frame with pearl grips. The fastest draw money can buy and two shots is all you get — a vest-pocket argument, settled at arm’s length.',
         spec: '.41 RIMFIRE · 2 SHOTS · 3″ BARRELS · FASTEST DRAW · CLOSE RANGE',
         grip: 0xf3ead8, steel: 0xdfe6ee, polished: 0xf2f6fb, frame: 0xd8dee6, sw: '#dfe6ee' },
       { id: 'rem58', name: 'Remington 1858 New Army · 8″', price: 550, cap: 6, power: 0.95, spread: 0.92, drawFirst: 0.155, drawNext: 0.075, sway: 0.92, recoilDecay: 6.8, aimEase: 20, reloadMs: 700, reloadBatch: 6, barIn: 8,
         desc: 'Remington’s solid-frame .44, the Colt’s great rival: a top strap over the cylinder makes it the steadiest cap-and-ball here, and its famous party trick is a reload no Colt can match — drop the spent cylinder and swap a loaded one in whole.',
         spec: '.44 CAP & BALL · 6 SHOTS · 8″ BARREL · CYLINDER-SWAP RELOAD',
+        grip: 0x6e4520, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
+      { id: 'rem58_55', base: 'rem58', name: 'Remington 1858 New Army 5.5″', price: 475, cap: 6, power: 0.9, spread: 0.98, drawFirst: 0.14, drawNext: 0.07, sway: 0.94, recoilDecay: 7, aimEase: 19, reloadMs: 700, reloadBatch: 6, barIn: 5.5,
+        desc: 'The solid-frame Remington .44 cut to 5½ inches: quicker out of leather than the 8-inch Army, a shade lighter at range, and it keeps the party trick — drop the spent cylinder, swap a loaded one in whole.',
+        spec: '.44 CAP & BALL · 6 SHOTS · 5.5 IN BARREL · CYLINDER-SWAP RELOAD',
         grip: 0x6e4520, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
       { id: 'sheriff', name: 'Colt SAA Sheriff’s Model · 3″', price: 600, cap: 6, power: 0.94, spread: 1.1, drawFirst: 0.11, drawNext: 0.06, sway: 1.05, recoilDecay: 7, aimEase: 17, reloadMs: 400, barIn: 3,
         desc: 'The Shopkeeper: a Peacemaker with its barrel sawn to 3 inches and no ejector rod at all. Nothing on this shelf leaves a holster faster — but spent cases must be poked out one by one, so its reload crawls.',
@@ -10241,21 +10605,49 @@ three/build/three.module.js:
         desc: 'The Civilian Model: a 4¾-inch Peacemaker in polished steel with grips of genuine ivory-white pearl. The gunfighter’s own barrel length — quick, handy, and too pretty to miss with.',
         spec: '.45 COLT · 6 SHOTS · 4¾″ BARREL · IVORY GRIPS',
         grip: 0xf3ead8, steel: 0xe8ecf2, polished: 0xf6f8fb, frame: 0xe2e6ec, sw: '#f3ead8' },
+      { id: 'saa35', base: 'stock', name: 'Colt SAA 3.5″', price: 525, cap: 6, power: 0.95, spread: 1.07, drawFirst: 0.115, drawNext: 0.06, sway: 1.04, recoilDecay: 6.8, aimEase: 17, reloadMs: 230, barIn: 3.5,
+        desc: 'A Peacemaker cut to 3½ inches, ejector and all: near the fastest draw on the shelf, and up close it is all .45 Colt — but the short barrel gives up a shade of bite as the street stretches out.',
+        spec: '.45 COLT · 6 SHOTS · 3.5 IN BARREL · FAST DRAW · A SHADE LIGHTER AT RANGE',
+        grip: 0x8a5a30, steel: 0xffffff, polished: 0xb9bec8, frame: 0xffffff, sw: '#3a3f47' },
+      { id: 'saa475', base: 'stock', name: 'Colt SAA 4.75″', price: 475, cap: 6, power: 0.97, spread: 1, drawFirst: 0.13, drawNext: 0.065, sway: 0.97, recoilDecay: 6.6, aimEase: 19, reloadMs: 230, barIn: 4.75,
+        desc: 'The gunfighter’s own length in plain blued steel: a 4¾-inch Peacemaker, quicker out of leather than the Cavalry barrel and handier than the Artillery, losing almost nothing down the street.',
+        spec: '.45 COLT · 6 SHOTS · 4.75 IN BARREL · GATE LOADING',
+        grip: 0x8a5a30, steel: 0xffffff, polished: 0xb9bec8, frame: 0xffffff, sw: '#3a3f47' },
       { id: 'lightning', name: 'Colt 1877 Lightning · 4½″', price: 700, cap: 6, power: 0.78, spread: 1.05, drawFirst: 0.12, drawNext: 0.04, sway: 1.1, recoilDecay: 7.5, aimEase: 17, reloadMs: 230, cycle: 60, barIn: 4.5,
         desc: 'Colt’s first double-action: the .38 Lightning, Billy the Kid’s gun. No thumbing the hammer back — just pull, and pull again. Each shot lands lighter than a .45, but the follow-ups come faster than any single-action alive.',
         spec: '.38 COLT · 6 SHOTS · DOUBLE ACTION · FASTEST FOLLOW-UPS',
+        grip: 0x4a2418, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
+      { id: 'lightning35', base: 'lightning', name: 'Colt 1877 Lightning 3.5″', price: 625, cap: 6, power: 0.74, spread: 1.12, drawFirst: 0.105, drawNext: 0.04, sway: 1.12, recoilDecay: 7.6, aimEase: 16, reloadMs: 230, cycle: 60, barIn: 3.5,
+        desc: 'The little double-action cut to 3½ inches: the fastest first shot on the shelf and follow-ups faster still — but the .38 ball leaves a short barrel with the least reach here.',
+        spec: '.38 COLT · 6 SHOTS · 3.5 IN BARREL · DOUBLE ACTION · FASTEST DRAW',
+        grip: 0x4a2418, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
+      { id: 'lightning6', base: 'lightning', name: 'Colt 1877 Lightning 6″', price: 775, cap: 6, power: 0.82, spread: 0.97, drawFirst: 0.14, drawNext: 0.045, sway: 1.02, recoilDecay: 7.2, aimEase: 18, reloadMs: 230, cycle: 60, barIn: 6,
+        desc: 'The Lightning stretched to 6 inches: a touch slower out of leather than its short brothers, but the long barrel steadies the .38 and carries it farther — double-action speed with a duelling pistol’s reach.',
+        spec: '.38 COLT · 6 SHOTS · 6 IN BARREL · DOUBLE ACTION · LONGER REACH',
         grip: 0x4a2418, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
       { id: 'rem75', name: 'Remington 1875 · 7½″ Nickel', price: 800, cap: 6, power: 1.03, spread: 0.97, drawFirst: 0.15, drawNext: 0.07, sway: 0.97, recoilDecay: 6.4, aimEase: 19, reloadMs: 215, barIn: 7.5,
         desc: 'Remington’s answer to the Peacemaker, in its handsome factory nickel: a solid frame, a web under the barrel, and a loading gate that feeds slicker than Colt’s. Hits a shade harder than the Army Colt, reloads a shade faster.',
         spec: '.45 COLT · 6 SHOTS · 7½″ BARREL · NICKEL PLATE',
         grip: 0x6e4520, steel: 0xdfe6ee, polished: 0xf2f6fb, frame: 0xd8dee6, sw: '#dfe6ee' },
+      { id: 'rem75_55', base: 'rem75', name: 'Remington 1875 5.5″', price: 725, cap: 6, power: 1, spread: 1, drawFirst: 0.138, drawNext: 0.068, sway: 0.98, recoilDecay: 6.5, aimEase: 19, reloadMs: 215, barIn: 5.5,
+        desc: 'Remington’s Peacemaker rival cut to 5½ inches, in the same factory nickel: quicker out of leather than the long 7½, a shade lighter at the far end of the street, and its slick loading gate feeds just as fast.',
+        spec: '.45 COLT · 6 SHOTS · 5.5 IN BARREL · NICKEL PLATE',
+        grip: 0x6e4520, steel: 0xdfe6ee, polished: 0xf2f6fb, frame: 0xd8dee6, sw: '#dfe6ee' },
       { id: 'frontier78', name: 'Colt 1878 Frontier · 5½″', price: 950, cap: 6, power: 1, spread: 1, drawFirst: 0.145, drawNext: 0.05, sway: 1.02, recoilDecay: 6.8, aimEase: 18, reloadMs: 230, cycle: 60, barIn: 5.5,
         desc: 'The big-frame double-action Frontier in .45 Colt: Peacemaker power with a Lightning’s manners. Full-weight hits, and the hammer never needs your thumb — follow-ups run near double-action fast.',
         spec: '.45 COLT · 6 SHOTS · DOUBLE ACTION · FULL POWER',
         grip: 0x5a3a22, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
+      { id: 'frontier_475', base: 'frontier78', name: 'Colt 1878 Frontier 4.75″', price: 875, cap: 6, power: 0.98, spread: 1.02, drawFirst: 0.132, drawNext: 0.05, sway: 1.03, recoilDecay: 6.9, aimEase: 18, reloadMs: 230, cycle: 60, barIn: 4.75,
+        desc: 'The big-frame double-action Frontier cut to 4¾ inches: Peacemaker power that leaves leather a step quicker, follow-ups at double-action pace, and only a shade given up at range.',
+        spec: '.45 COLT · 6 SHOTS · 4.75 IN BARREL · DOUBLE ACTION · FULL POWER',
+        grip: 0x5a3a22, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x353a42, sw: '#2f333b' },
       { id: 'russian', name: 'Smith & Wesson Model 3 Russian · 6½″', price: 975, cap: 6, power: 0.9, spread: 0.9, drawFirst: 0.15, drawNext: 0.07, sway: 0.9, recoilDecay: 7, aimEase: 21, reloadMs: 520, reloadBatch: 6, barIn: 6.5,
         desc: 'The target shooter’s top-break, built for the Tsar’s cavalry contract: a spur on the trigger guard, the steadiest aim of any handgun here, and a barrel that tips up to throw all six empties out at once — then takes six fresh in one motion.',
         spec: '.44 RUSSIAN · 6 SHOTS · TOP-BREAK · ALL SIX AT ONCE · STEADIEST AIM',
+        grip: 0x5a3a22, steel: 0xdfe6ee, polished: 0xf2f6fb, frame: 0xd8dee6, sw: '#dfe6ee' },
+      { id: 'russian_8', base: 'russian', name: 'Smith & Wesson Model 3 Russian 8″', price: 1075, cap: 6, power: 0.93, spread: 0.84, drawFirst: 0.165, drawNext: 0.075, sway: 0.88, recoilDecay: 6.9, aimEase: 21, reloadMs: 520, reloadBatch: 6, barIn: 8,
+        desc: 'The target Russian stretched to a full 8 inches: the slowest draw of the top-breaks, and the steadiest, longest reach of any handgun here — the barrel tips up and throws all six empties out at once, same as its brother.',
+        spec: '.44 RUSSIAN · 6 SHOTS · 8 IN BARREL · TOP-BREAK · LONGEST REACH',
         grip: 0x5a3a22, steel: 0xdfe6ee, polished: 0xf2f6fb, frame: 0xd8dee6, sw: '#dfe6ee' },
       { id: 'blackgold', name: 'Colt Buntline Special · 12″', price: 1050, cap: 6, power: 1.08, spread: 0.8, drawFirst: 0.21, drawNext: 0.09, sway: 0.8, recoilDecay: 6, aimEase: 21, reloadMs: 230, barIn: 12,
         desc: 'The legend Ned Buntline handed to Wyatt Earp: a Peacemaker stretched to a full 12 inches of barrel, blackened steel with gold cylinder bands and a gold hammer. Slow to clear leather — but that long sight line shoots straighter than anything else in a holster.',
@@ -10265,11 +10657,15 @@ three/build/three.module.js:
         desc: 'Major Schofield’s cavalry top-break — the gun the U.S. Cavalry and the Wells Fargo men actually carried. Thumb the latch and the barrel drops, all six cases kick out together, and six fresh rounds drop in as one. The fastest full reload on this street.',
         spec: '.45 SCHOFIELD · 6 SHOTS · TOP-BREAK · FASTEST RELOAD',
         grip: 0x6e4520, steel: 0x2f333b, polished: 0xb9bec8, frame: 0x353a42, sw: '#2f333b' },
+      { id: 'schofield5', base: 'schofield', name: 'Smith & Wesson Schofield 5″', price: 1025, cap: 6, power: 0.94, spread: 1, drawFirst: 0.128, drawNext: 0.062, sway: 0.97, recoilDecay: 6.7, aimEase: 18, reloadMs: 480, reloadBatch: 6, barIn: 5,
+        desc: 'The Wells Fargo Schofield: the cavalry top-break cut to 5 inches for the express messengers. Quicker out of leather than the 7-inch gun, a shade lighter at range — and the same gulp of a reload, all six out and six in at once.',
+        spec: '.45 SCHOFIELD · 6 SHOTS · 5 IN BARREL · TOP-BREAK · FASTEST RELOAD',
+        grip: 0x6e4520, steel: 0x2f333b, polished: 0xb9bec8, frame: 0x353a42, sw: '#2f333b' },
       { id: 'dragoon', name: 'Colt Dragoon · 7½″', price: 1500, cap: 6, power: 1.18, spread: 0.9, drawFirst: 0.22, drawNext: 0.1, sway: 0.85, recoilDecay: 5, aimEase: 19, reloadMs: 850, barIn: 7.5,
         desc: 'The big .44 horse pistol of the Mexican War’s aftermath — four pounds of blued steel that tamed the Walker’s wild charge and kept most of its authority. Heavy to draw, heavy to hold, and it hits like a rifle’s little brother.',
         spec: '.44 CAP & BALL · 6 SHOTS · 7½″ BARREL · HEAVY HITTER · SLOW RELOAD',
         grip: 0x7a4a26, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x55483a, sw: '#2f333b' },
-      { id: 'eldorado', name: 'Colt SAA Presentation · Gold & Engraved', price: 1750, cap: 6, power: 1, spread: 0.95, drawFirst: 0.15, drawNext: 0.07, sway: 1, recoilDecay: 6.5, aimEase: 19, reloadMs: 230, barIn: 7.5,
+      { id: 'eldorado', name: 'Colt SAA Presentation · 7½″ · Gold & Engraved', price: 1750, cap: 6, power: 1, spread: 0.95, drawFirst: 0.15, drawNext: 0.07, sway: 1, recoilDecay: 6.5, aimEase: 19, reloadMs: 230, barIn: 7.5,
         desc: 'A presentation Peacemaker in the exhibition style: gold wash over every part that shows, over deep hand-cut scroll engraving. Guns like this were given to governors and gunfighters alike — and it shoots exactly like the Army Colt under the gold.',
         spec: '.45 COLT · 6 SHOTS · 7½″ BARREL · GOLD WASH · HAND-ENGRAVED',
         grip: 0x6e4520, steel: 0xf0bd58, polished: 0xffd98f, frame: 0xe8b34c, sw: '#d9a441' },
@@ -10277,7 +10673,7 @@ three/build/three.module.js:
         desc: 'The most powerful handgun in the world until the magnum age: Captain Walker’s .44, four and a half pounds, a 9-inch barrel and a charge of powder no other revolver dared. The slowest draw and the slowest reload here — and nothing in a holster hits harder.',
         spec: '.44 CAP & BALL · 6 SHOTS · 9″ BARREL · HARDEST HITTING · SLOWEST DRAW',
         grip: 0x7a4a26, steel: 0x2f333b, polished: 0x9aa1ab, frame: 0x3a3f47, sw: '#2f333b' },
-      { id: 'lemat', name: 'LeMat 1861 · 9-Shot + Shot Barrel', price: 2400, cap: 9, power: 1.02, spread: 1, drawFirst: 0.23, drawNext: 0.1, sway: 0.85, recoilDecay: 5.2, aimEase: 18, reloadMs: 380, barIn: 6.75,
+      { id: 'lemat', name: 'LeMat 1861 · 6¾″ · 9-Shot + Shot Barrel', price: 2400, cap: 9, power: 1.02, spread: 1, drawFirst: 0.23, drawNext: 0.1, sway: 0.85, recoilDecay: 5.2, aimEase: 18, reloadMs: 380, barIn: 6.75,
         desc: 'The Confederate’s grapeshot revolver: nine .42 chambers around a central 18-bore shotgun barrel — J.E.B. Stuart’s gun, and the strangest iron ever holstered. Nine shots before you reload, but every one of them loads the slow way, and the piece weighs a ton.',
         spec: '.42 · 9 SHOTS + 18-BORE BARREL · SLOW RELOAD · HEAVY',
         grip: 0x6e4520, steel: 0x2f333b, polished: 0xb9bec8, frame: 0x353a42, sw: '#2f333b' }
@@ -10341,52 +10737,52 @@ three/build/three.module.js:
        gun is a different way to fight, not a revolver skin: shotguns
        spread, rifles reach, and both are held in two hands. */
     var LONGGUNS = [
-      { id: 'coach', type: 'shotgun', action: 'double', name: 'Wells Fargo Coach Gun', price: 900, cap: 2, power: 1, spread: 1, barLen: 0.52,
+      { id: 'coach', type: 'shotgun', action: 'double', name: 'Wells Fargo Coach Gun', price: 900, cap: 2, power: 1, spread: 1, barLen: 0.52, barIn: 20, drawFirst: 0.33, drawNext: 0.14,
         desc: 'Short side-by-side 12-gauge with exposed hammers, a walnut fore-end and twin barrels cut down for stagecoach work. Two shells, a pattern tight up close that spreads wide with distance — a street-clearer up close. And both shells speed-load in one hand motion, so it is back in the fight fast.',
         spec: '12-GAUGE · 2 SHELLS · SPEED-LOADS BOTH AT ONCE', steel: 0x4a5058, polished: 0xb9bec8, frame: 0x3a3f47, wood: 0xd9b98c, sw: '#4a5058', sw2: '#7a5230' },
-      { id: 'sgpistol', type: 'shotgun', action: 'pistol', name: 'Break-Barrel Shotgun Pistol', price: 1150, cap: 2, power: 1.05, spread: 1.3, barLen: 0.3,
+      { id: 'sgpistol', type: 'shotgun', action: 'pistol', name: 'Break-Barrel Shotgun Pistol', price: 1150, cap: 2, power: 1.05, spread: 1.3, barLen: 0.3, barIn: 11, drawFirst: 0.27, drawNext: 0.13,
         desc: 'A sawed break-barrel pistol chambered for 12-gauge shells: twin short barrels over a walnut grip, one exposed hammer per barrel. Pure Short range — a hand cannon that clears a doorway and not much past it.',
         spec: 'SHORT RANGE · 12-GAUGE · 2 SHELLS · SPEED-LOADS BOTH AT ONCE', steel: 0x4a5058, polished: 0xb9bec8, frame: 0x3a3f47, wood: 0xd9b98c, sw: '#4a5058', sw2: '#7a5230' },
-      { id: 'parker', type: 'shotgun', action: 'double', name: 'Parker Field Gun', price: 1550, cap: 2, power: 1.05, spread: 0.8, barLen: 0.66,
+      { id: 'parker', type: 'shotgun', action: 'double', name: 'Parker Field Gun', price: 1550, cap: 2, power: 1.05, spread: 0.8, barLen: 0.66, barIn: 28, drawFirst: 0.38, drawNext: 0.15,
         desc: 'A fine American field gun: longer Damascus barrels, checkered walnut and a fitted case-hardened receiver. Tighter pattern than the coach gun, and it carries like a gentleman’s arm.',
         spec: '12-GAUGE · 2 SHELLS · SPEED-LOAD · TIGHTER PATTERN', steel: 0x5a5148, polished: 0xc8b490, frame: 0x6e5a3a, wood: 0xcfa878, sw: '#5a5148', sw2: '#6e4a26' },
-      { id: 'greener', type: 'shotgun', action: 'double', name: 'Greener Empire Gun', price: 2300, cap: 2, power: 1.1, spread: 0.85, barLen: 0.62,
+      { id: 'greener', type: 'shotgun', action: 'double', name: 'Greener Empire Gun', price: 2300, cap: 2, power: 1.1, spread: 0.85, barLen: 0.62, barIn: 26, drawFirst: 0.37, drawNext: 0.15,
         desc: 'English best quality: chiselled fences, deep-scroll engraving and barrels regulated by hand. The most beautiful scattergun money on this street can buy.',
         spec: '12-GAUGE · 2 SHELLS · SPEED-LOAD · BEST QUALITY', steel: 0x707880, polished: 0xe8ecf2, frame: 0x8a6a34, wood: 0xe0c090, sw: '#707880', sw2: '#7a5230' },
-      { id: 'sawedoff', type: 'shotgun', action: 'double', name: 'Sawed-Off Coach Gun', price: 650, cap: 2, power: 1.12, spread: 1.7, barLen: 0.28,
+      { id: 'sawedoff', type: 'shotgun', action: 'double', name: 'Sawed-Off Coach Gun', price: 650, cap: 2, power: 1.12, spread: 1.7, barLen: 0.28, barIn: 18, drawFirst: 0.31, drawNext: 0.14,
         desc: 'A coach gun cut down past the fore-end, the way road agents and their guards both carried them. No choke left at all: the pattern opens the moment it leaves the muzzle — a broom for sweeping a doorway, and not much use past it.',
         spec: '12-GAUGE · 2 SHELLS · SPEED-LOAD · WIDEST PATTERN · CLOSE RANGE ONLY', steel: 0x3f444b, polished: 0xa8adb6, frame: 0x33373d, wood: 0xc9a06a, sw: '#3f444b', sw2: '#6e4a26' },
-      { id: 'colt1878', type: 'shotgun', action: 'double', name: 'Colt Model 1878 Hammer Gun', price: 1900, cap: 2, power: 1.08, spread: 0.78, barLen: 0.72,
+      { id: 'colt1878', type: 'shotgun', action: 'double', name: 'Colt Model 1878 Hammer Gun', price: 1900, cap: 2, power: 1.08, spread: 0.78, barLen: 0.72, barIn: 30, drawFirst: 0.4, drawNext: 0.16,
         desc: 'Colt’s own double gun: long 30-inch Damascus barrels, rebounding locks and fine checkered walnut. The long barrels hold the tightest pattern of any scattergun here — a gentleman’s fowling piece that works just as well on the street.',
         spec: '12-GAUGE · 2 SHELLS · SPEED-LOAD · 30″ BARRELS · TIGHTEST PATTERN', steel: 0x5a5148, polished: 0xc8b490, frame: 0x4a4038, wood: 0xcfa878, sw: '#5a5148', sw2: '#6e4a26' },
-      { id: 'win73', type: 'rifle', action: 'lever', name: 'Winchester 1873 Carbine', price: 1250, cap: 10, power: 1.1, spread: 0.55, barLen: 0.6,
+      { id: 'win73', type: 'rifle', action: 'lever', name: 'Winchester 1873 Carbine', price: 1250, cap: 10, power: 1.1, spread: 0.55, barLen: 0.6, barIn: 20, drawFirst: 0.3, drawNext: 0.11,
         desc: 'The gun that won the West: saddle-ring carbine with a tube magazine under the barrel and a lever that throws the next round in fast. Straighter and harder-hitting than any six-gun here.',
         spec: '.44-40 · 10 ROUNDS · LEVER ACTION', steel: 0x3f4650, polished: 0xb9bec8, frame: 0x4a4038, wood: 0xd9b98c, sw: '#3f4650', sw2: '#7a5230' },
-      { id: 'henry', type: 'rifle', action: 'lever', name: 'Henry Brass Rifle', price: 2100, cap: 10, power: 1.2, spread: 0.5, barLen: 0.64,
+      { id: 'henry', type: 'rifle', action: 'lever', name: 'Henry Brass Rifle', price: 2100, cap: 10, power: 1.2, spread: 0.5, barLen: 0.64, barIn: 24, drawFirst: 0.33, drawNext: 0.12,
         desc: 'A brass-framed Henry with an octagon barrel and no fore-end wood — the barrel itself is what your left hand steadies. Heavy, handsome, and it hits like a mule kick.',
         spec: '.44 RIMFIRE · 10 ROUNDS · BRASS FRAME', steel: 0x4a4640, polished: 0xd9a441, frame: 0xc9973f, wood: 0xd9b98c, sw: '#c9973f', sw2: '#4a4640' },
-      { id: 'sharps', type: 'rifle', action: 'single', name: 'Sharps Buffalo Rifle', price: 2900, cap: 1, power: 1.8, spread: 0.35, barLen: 0.8,
+      { id: 'sharps', type: 'rifle', action: 'single', name: 'Sharps Buffalo Rifle', price: 2900, cap: 1, power: 1.8, spread: 0.35, barLen: 0.8, barIn: 30, drawFirst: 0.38, drawNext: 0.13,
         desc: 'A falling-block buffalo gun with a barrel long as a fence rail and a tang sight. One round at a time — but one round is all it has ever needed, and that one round drops straight into the breech, fast.',
         spec: '.45-70 · 1 ROUND · FAST SINGLE LOAD · LONG RANGE', steel: 0x3a3f47, polished: 0xb9bec8, frame: 0x55483a, wood: 0xcfa878, sw: '#3a3f47', sw2: '#6e4a26' },
-      { id: 'trapdoor', type: 'rifle', action: 'single', name: 'Springfield 1873 Trapdoor', price: 1350, cap: 1, power: 1.55, spread: 0.38, barLen: 0.78, cycle: 520, reloadMs: 680,
+      { id: 'trapdoor', type: 'rifle', action: 'single', name: 'Springfield 1873 Trapdoor', price: 1350, cap: 1, power: 1.55, spread: 0.38, barLen: 0.78, barIn: 32.5, drawFirst: 0.39, drawNext: 0.13, cycle: 520, reloadMs: 680,
         desc: 'The U.S. Army’s own breechloader: a trapdoor that flips up, takes one .45-70 cartridge, and snaps shut. The arm that armed the frontier cavalry — a soldier’s rifle, honest and strong, one deliberate shot at a time.',
         spec: '.45-70 · 1 ROUND · TRAPDOOR ACTION · ARMY ISSUE', steel: 0x3a3f47, polished: 0xb0b5bd, frame: 0x3f3830, wood: 0xc9a06a, sw: '#3a3f47', sw2: '#6e4a26' },
-      { id: 'spencer', type: 'rifle', action: 'lever', name: 'Spencer 1860 Carbine', price: 1450, cap: 7, power: 1.18, spread: 0.52, barLen: 0.56, cycle: 460, reloadMs: 240,
+      { id: 'spencer', type: 'rifle', action: 'lever', name: 'Spencer 1860 Carbine', price: 1450, cap: 7, power: 1.18, spread: 0.52, barLen: 0.56, barIn: 20, drawFirst: 0.3, drawNext: 0.12, cycle: 460, reloadMs: 240,
         desc: 'The carbine that could be “loaded on Sunday and fired all week”: seven .56-50 rounds in a tube through the buttstock. The lever only opens the breech — you thumb the hammer back for every shot, so its rhythm is deliberate — but seven shots without a reload was sorcery in its day.',
         spec: '.56-50 · 7 ROUNDS · BUTTSTOCK TUBE · COCK EACH SHOT', steel: 0x3f4650, polished: 0xb9bec8, frame: 0x4a4038, wood: 0xc9a06a, sw: '#3f4650', sw2: '#6e4a26' },
-      { id: 'yellowboy', type: 'rifle', action: 'lever', name: 'Winchester 1866 “Yellowboy”', price: 1600, cap: 12, power: 1.05, spread: 0.52, barLen: 0.6,
+      { id: 'yellowboy', type: 'rifle', action: 'lever', name: 'Winchester 1866 “Yellowboy”', price: 1600, cap: 12, power: 1.05, spread: 0.52, barLen: 0.6, barIn: 24, drawFirst: 0.33, drawNext: 0.12,
         desc: 'The improved Henry with a brass receiver bright as a trumpet — hence Yellowboy — a loading gate in its side and a proper wooden fore-end. Twelve .44 rimfire in the tube, fed one by one through the gate when they run dry.',
         spec: '.44 RIMFIRE · 12 ROUNDS · BRASS RECEIVER · LOADING GATE', steel: 0x4a4640, polished: 0xd9a441, frame: 0xc9973f, wood: 0xd9b98c, sw: '#c9973f', sw2: '#4a4640' },
-      { id: 'rollingblock', type: 'rifle', action: 'single', name: 'Remington Rolling Block', price: 1650, cap: 1, power: 1.45, spread: 0.42, barLen: 0.72, cycle: 480, reloadMs: 640,
+      { id: 'rollingblock', type: 'rifle', action: 'single', name: 'Remington Rolling Block', price: 1650, cap: 1, power: 1.45, spread: 0.42, barLen: 0.72, barIn: 30, drawFirst: 0.37, drawNext: 0.13, cycle: 480, reloadMs: 640,
         desc: 'The strongest simple action ever put on a rifle: thumb the breechblock back, drop in a .43 or .45 cartridge, roll it shut. Armies on four continents carried it, and buffalo men trusted it — one shot, delivered with certainty.',
         spec: '.43 / .45 · 1 ROUND · ROLLING BLOCK · FAST SINGLE LOAD', steel: 0x3f4650, polished: 0xb9bec8, frame: 0x55483a, wood: 0xcfa878, sw: '#3f4650', sw2: '#6e4a26' },
-      { id: 'win76', type: 'rifle', action: 'lever', name: 'Winchester 1876 Centennial', price: 1750, cap: 12, power: 1.32, spread: 0.48, barLen: 0.7,
+      { id: 'win76', type: 'rifle', action: 'lever', name: 'Winchester 1876 Centennial', price: 1750, cap: 12, power: 1.32, spread: 0.48, barLen: 0.7, barIn: 28, drawFirst: 0.36, drawNext: 0.13,
         desc: 'The Centennial Model: an 1873 stretched and strengthened for the big .45-75 express cartridge, the rifle the Texas Rangers and the Canadian North-West Mounted Police reached for. Twelve in the tube, and every one of them hits like the frontier means it.',
         spec: '.45-75 · 12 ROUNDS · LEVER ACTION · EXPRESS POWER', steel: 0x3f4650, polished: 0xb9bec8, frame: 0x4a4038, wood: 0xcfa878, sw: '#3f4650', sw2: '#7a5230' },
-      { id: 'sharpscarb', type: 'rifle', action: 'single', name: 'Sharps 1874 Carbine', price: 2100, cap: 1, power: 1.5, spread: 0.4, barLen: 0.58, cycle: 430, reloadMs: 600,
+      { id: 'sharpscarb', type: 'rifle', action: 'single', name: 'Sharps 1874 Carbine', price: 2100, cap: 1, power: 1.5, spread: 0.4, barLen: 0.58, barIn: 22, drawFirst: 0.31, drawNext: 0.12, cycle: 430, reloadMs: 600,
         desc: 'The buffalo rifle’s handy little brother: the same falling block in a short cavalry carbine chambered for .50-70. Quicker to shoulder and faster through its single-shot cycle than the long rifle, giving up only a little of its reach and none of its authority.',
         spec: '.50-70 · 1 ROUND · FALLING BLOCK · HANDY CARBINE', steel: 0x3a3f47, polished: 0xb9bec8, frame: 0x55483a, wood: 0xc9a06a, sw: '#3a3f47', sw2: '#6e4a26' },
-      { id: 'win86', type: 'rifle', action: 'lever', name: 'Winchester 1886', price: 2600, cap: 8, power: 1.5, spread: 0.45, barLen: 0.66, cycle: 340,
+      { id: 'win86', type: 'rifle', action: 'lever', name: 'Winchester 1886', price: 2600, cap: 8, power: 1.5, spread: 0.45, barLen: 0.66, barIn: 26, drawFirst: 0.35, drawNext: 0.12, cycle: 340,
         desc: 'John Browning’s masterpiece of a lever gun, built massively strong for the full .45-70 government cartridge: the strongest lever action on this shelf, with a smoother, weightier cycle than the toggle-link Winchesters. Eight rounds of buffalo medicine, levered as fast as you can work it.',
         spec: '.45-70 · 8 ROUNDS · STRONGEST LEVER ACTION', steel: 0x353b44, polished: 0xb9bec8, frame: 0x40382c, wood: 0xcfa878, sw: '#353b44', sw2: '#7a5230' }
     ];
@@ -10432,6 +10828,30 @@ three/build/three.module.js:
       if (d <= 0.135) return 'FAST DRAW';
       if (d <= 0.165) return 'STEADY DRAW';
       return 'HEAVY, SLOW DRAW';
+    }
+    /* Barrel · draw line (v3.17): the ONE clean stat every gun
+       shows — its real barrel length and its draw speed, nothing
+       else. A revolver reads its own barIn and drawFirst; a long
+       gun reads its barIn and its own shoulder time — every long
+       gun declares drawFirst (a shorter barrel shoulders faster,
+       a longer one slower), with currentWeapon's 0.36s shotgun /
+       0.32s rifle as the fallback, so the line never lies about
+       the fight. */
+    function barrelStatFor(item, kind){
+      if (!item || !item.barIn) return '';
+      var d = item.drawFirst || (kind === 'long' ? (item.type === 'shotgun' ? 0.36 : 0.32) : 0.15);
+      return item.barIn + ' in · DRAW ' + d.toFixed(2) + 's';
+    }
+    /* Spec without its barrel phrase (v3.17): the barrel length
+       lives in the one clean barrel · draw line and in the gun's
+       name — a spec segment that is only a length and the word
+       BARREL would say it a third time, so it is dropped wherever
+       a spec is shown beside that line. */
+    function cleanSpec(spec){
+      if (!spec) return '';
+      return spec.split(' · ').filter(function(seg){
+        return !/^[\d¼½¾\.]+\s*(″\s*)?(IN\s+)?(OCTAGON\s+)?BARRELS?$/.test(seg);
+      }).join(' · ');
     }
     /* Hats (v1.7): real felt and straw headwear of the period, each with
        its own brim width and crown shape, worn by your gunfighter in the
@@ -10565,6 +10985,84 @@ three/build/three.module.js:
       var sc = scopeById(SAVE.gunScope && SAVE.gunScope[itemId]);
       return scopeOwned(itemId, sc) ? sc : SCOPES[0]; // an unowned pick never rides the gun
     }
+    /* Special Ammo (v3.16): buyable rounds, stocked per gun FAMILY
+       (revolvers / shotguns / rifles) in the Store's AMMO tab, then
+       loaded per GUN in the Gun Locker — the same buy-once, fit-per-gun
+       shape as scopes. Standard loads are the honest factory round
+       every gun has always fired, free forever. Quick Draw loads burn
+       lighter powder: the gun comes up faster and hits a shade softer.
+       Heavy loads are charged hot: slower out of leather, hitting far
+       harder — more wounding on every body shot (vitals still end it
+       outright, as always). Practice loads are the cheap box: they
+       only ever fire on the practice grounds — in a duel or on the
+       ride the gun shoots as if standard loads were in it. Effects
+       ride currentWeapon(), so they hold in every mode a gun fires:
+       duels, the ride, practice and LAN (your phone judges your own
+       shots, as it always has). Throwables and the bow never take
+       cartridges and are untouched. */
+    var AMMO = [
+      { id: 'standard', name: 'Standard Loads', price: 0, drawMul: 1, powerMul: 1, sw: '#b9bec8',
+        spec: 'THE HONEST ROUND · NO CHANGE',
+        desc: 'The factory round every gun on this street has always fired. Honest draw, honest power — and free, because it is already in the box.' },
+      { id: 'quick', name: 'Quick Draw Loads', price: 400, drawMul: 0.82, powerMul: 0.88, sw: '#7ec8e3',
+        spec: 'DRAW 18% QUICKER · POWER 12% LIGHTER',
+        desc: 'A lighter powder charge in a lighter case: the gun clears leather and comes up near a fifth faster, but each ball lands a shade softer. For a man who wins on the draw, not the hit.' },
+      { id: 'heavy', name: 'Heavy Loads', price: 600, drawMul: 1.18, powerMul: 1.3, sw: '#e2482e',
+        spec: 'POWER 30% HARDER · DRAW 18% SLOWER',
+        desc: 'Charged hot and seated heavy: the gun bucks and comes up slower, but every body hit wounds far deeper. For a man who only needs the one shot to count.' },
+      { id: 'practice', name: 'Practice Loads', price: 100, practiceOnly: true, drawMul: 1, powerMul: 1, sw: '#9ec49a',
+        spec: 'PRACTICE ONLY · THE CHEAP BOX',
+        desc: 'Cheap rounds for the practice grounds — bottles, targets and the gallery. They carry no punch in a real fight: load them for a duel and the gun shoots standard, so save them for cheap practice.' }
+    ];
+    function ammoById(id){ for (var i = 0; i < AMMO.length; i++) if (AMMO[i].id === id) return AMMO[i]; return AMMO[0]; }
+    var AMMO_FAMS = [
+      { id: 'revolver', label: 'Revolvers' },
+      { id: 'shotgun', label: 'Shotguns' },
+      { id: 'rifle', label: 'Rifles' }
+    ];
+    function ammoFamilyFor(kind, item){
+      if (kind === 'gun') return 'revolver';
+      if (kind === 'long') return item && item.type === 'rifle' ? 'rifle' : 'shotgun';
+      return null;
+    }
+    function ammoItemKind(item){
+      if (!item) return null;
+      for (var i = 0; i < GUNS.length; i++) if (GUNS[i] === item) return 'gun';
+      for (var j = 0; j < LONGGUNS.length; j++) if (LONGGUNS[j] === item) return 'long';
+      return null;
+    }
+    function ammoOwned(fam, am){
+      if (!am || am.id === 'standard') return true;
+      var o = SAVE.ammoOwned && SAVE.ammoOwned[fam];
+      return !!o && o.indexOf(am.id) >= 0;
+    }
+    /* The load picked for this gun in the Locker — an unowned pick
+       (an edited save, a family stock not yet bought) never rides. */
+    function loadedAmmoFor(item){
+      var kind = ammoItemKind(item);
+      if (!kind) return AMMO[0];
+      var am = ammoById(SAVE.gunAmmo && SAVE.gunAmmo[item.id]);
+      return ammoOwned(ammoFamilyFor(kind, item), am) ? am : AMMO[0];
+    }
+    /* The load that actually fires right now: practice loads only
+       count where practice is shot — everywhere else the gun shoots
+       standard, exactly as their box says. */
+    function activeAmmoFor(item){
+      var am = loadedAmmoFor(item);
+      if (am.practiceOnly && !(typeof G !== 'undefined' && G && G.mode === 'practice')) return AMMO[0];
+      return am;
+    }
+    /* currentWeapon() passes its result through here, so the loaded
+       round bends the gun's draw and power in every mode at once. */
+    function withAmmo(w){
+      var am = activeAmmoFor(w.item);
+      if (am && (am.drawMul !== 1 || am.powerMul !== 1)){
+        w.power = (w.power || 1) * am.powerMul;
+        w.drawFirst = w.drawFirst * am.drawMul;
+        w.drawNext = w.drawNext * am.drawMul;
+      }
+      return w;
+    }
     /* The Long Range snipers (v3.10): the single-shot long arms the
        valley was built for — Sharps, Rolling Block, Trapdoor and the
        Spencer. Nothing else shoots out there. */
@@ -10615,10 +11113,35 @@ three/build/three.module.js:
          -> scope id). Missing on an old save means iron sights on
          every rifle — exactly what every rifle has always had. */
       scopesOwned: {}, gunScope: {},
+      /* Special Ammo (v3.16): the special loads you own, per gun
+         family (family id -> ammo ids), and the load in each gun
+         (item id -> ammo id). Missing on an old save means standard
+         loads everywhere — what every gun has always fired. */
+      ammoOwned: {}, gunAmmo: {},
       /* Long Range (v3.10): the best score on the valley range
          (points are yards dropped), the longest hit in yards, and
          the rounds shot — shown in Stats and on the pickers. */
       lrBest: null, lrLongest: 0, lrRounds: 0,
+      /* Wanted Board (v3.11): the posters on the wall (pool indexes),
+         a beaten poster's stamp and when it comes down, and the
+         board's book — men caught, cash collected, biggest bounty. */
+      wbBoard: [], wbStamp: null, wbGoneAt: 0, wbCaught: 0, wbCollected: 0, wbBest: 0,
+      /* High Noon Tournament (v3.12): crowns won and the best run
+         in rounds, plus the current bracket — eight seeds (indexes
+         into the combined gunslinger pool, -1 is you at seed 0),
+         rounds won this run, the run's state, who came through the
+         far semi-final, and who took the crown if you fell. */
+      hnWins: 0, hnBest: 0, hnSeeds: null, hnRound: 0, hnStatus: '', hnSfW: -1, hnChampPos: -1,
+      /* The Rival (v3.13): beats won against Silas Crowe (0–5 —
+         the current round is beats + 1), whether he is finished
+         for good, and the cash his five beats have paid in all.
+         Missing on an old save means round 1, untouched. */
+      rvBeats: 0, rvDone: false, rvEarned: 0,
+      /* Back-to-Back 2-on-1 (v3.14): pairs dropped, the fastest
+         clear in milliseconds from the bell to the second man down
+         (null until the first pair falls), and the cash the mode
+         has paid in all. Missing on an old save means untouched. */
+      bbWins: 0, bbBest: null, bbEarned: 0,
       /* Gun Locker (v1.33): finishes you own, and the finish riding on
          each gun (item id -> skin id). Missing on an old save means
          factory finishes everywhere — nothing already earned changes. */
@@ -10734,9 +11257,44 @@ three/build/three.module.js:
           var sc2 = parsedSave.gunScope[itemId];
           if (it2.id === itemId && it2.type === 'rifle' && scopeById(sc2).id === sc2) SAVE.gunScope[itemId] = sc2;
         });
+        /* Special Ammo (v3.16): family stock and per-gun loads merge
+           like the scopes — family and ammo ids validated against
+           the catalogues, loads validated against the gun lists, so
+           an old or edited save can never stock a load that does
+           not exist or load one into a gun that is not there. */
+        if (parsedSave && parsedSave.ammoOwned && typeof parsedSave.ammoOwned === 'object') Object.keys(parsedSave.ammoOwned).forEach(function(fam){
+          if (['revolver', 'shotgun', 'rifle'].indexOf(fam) < 0 || !Array.isArray(parsedSave.ammoOwned[fam])) return;
+          parsedSave.ammoOwned[fam].forEach(function(amId){
+            if (ammoById(amId).id === amId && amId !== 'standard'){
+              if (!SAVE.ammoOwned[fam]) SAVE.ammoOwned[fam] = [];
+              if (SAVE.ammoOwned[fam].indexOf(amId) < 0) SAVE.ammoOwned[fam].push(amId);
+            }
+          });
+        });
+        if (parsedSave && parsedSave.gunAmmo && typeof parsedSave.gunAmmo === 'object') Object.keys(parsedSave.gunAmmo).forEach(function(itemId){
+          var am3 = parsedSave.gunAmmo[itemId];
+          var itemOk3 = gearById(GUNS, itemId).id === itemId || gearById(LONGGUNS, itemId).id === itemId;
+          if (itemOk3 && ammoById(am3).id === am3) SAVE.gunAmmo[itemId] = am3;
+        });
         if (parsedSave && typeof parsedSave.lrBest === 'number' && parsedSave.lrBest >= 0) SAVE.lrBest = Math.floor(parsedSave.lrBest);
         if (parsedSave && typeof parsedSave.lrLongest === 'number' && parsedSave.lrLongest >= 0) SAVE.lrLongest = Math.floor(parsedSave.lrLongest);
         if (parsedSave && typeof parsedSave.lrRounds === 'number' && parsedSave.lrRounds >= 0) SAVE.lrRounds = Math.floor(parsedSave.lrRounds);
+        if (parsedSave && Array.isArray(parsedSave.wbBoard)) parsedSave.wbBoard.forEach(function(pi){ if (typeof pi === 'number' && pi >= 0 && pi < 64 && SAVE.wbBoard.indexOf(pi) < 0 && SAVE.wbBoard.length < 4) SAVE.wbBoard.push(Math.floor(pi)); });
+        if (parsedSave && parsedSave.wbStamp && typeof parsedSave.wbStamp.idx === 'number' && (parsedSave.wbStamp.word === 'CAUGHT' || parsedSave.wbStamp.word === 'DEAD')) SAVE.wbStamp = { idx: Math.floor(parsedSave.wbStamp.idx), word: parsedSave.wbStamp.word };
+        if (parsedSave && typeof parsedSave.wbGoneAt === 'number' && parsedSave.wbGoneAt > 0) SAVE.wbGoneAt = parsedSave.wbGoneAt;
+        if (parsedSave && typeof parsedSave.wbCaught === 'number' && parsedSave.wbCaught >= 0) SAVE.wbCaught = Math.floor(parsedSave.wbCaught);
+        if (parsedSave && typeof parsedSave.wbCollected === 'number' && parsedSave.wbCollected >= 0) SAVE.wbCollected = Math.floor(parsedSave.wbCollected);
+        if (parsedSave && typeof parsedSave.wbBest === 'number' && parsedSave.wbBest >= 0) SAVE.wbBest = Math.floor(parsedSave.wbBest);
+        if (parsedSave && typeof parsedSave.hnWins === 'number' && parsedSave.hnWins >= 0) SAVE.hnWins = Math.floor(parsedSave.hnWins);
+        if (parsedSave && typeof parsedSave.hnBest === 'number' && parsedSave.hnBest >= 0 && parsedSave.hnBest <= 3) SAVE.hnBest = Math.floor(parsedSave.hnBest);
+        if (parsedSave && Array.isArray(parsedSave.hnSeeds) && parsedSave.hnSeeds.length === 8) SAVE.hnSeeds = parsedSave.hnSeeds.map(function(n){ return (typeof n === 'number' && n >= -1 && n < 64) ? Math.floor(n) : -1; });
+        if (parsedSave && typeof parsedSave.hnRound === 'number' && parsedSave.hnRound >= 0 && parsedSave.hnRound <= 3) SAVE.hnRound = Math.floor(parsedSave.hnRound);
+        if (parsedSave && (parsedSave.hnStatus === 'live' || parsedSave.hnStatus === 'out' || parsedSave.hnStatus === 'champ')) SAVE.hnStatus = parsedSave.hnStatus;
+        if (parsedSave && typeof parsedSave.hnSfW === 'number' && parsedSave.hnSfW >= -1 && parsedSave.hnSfW < 8) SAVE.hnSfW = Math.floor(parsedSave.hnSfW);
+        if (parsedSave && typeof parsedSave.hnChampPos === 'number' && parsedSave.hnChampPos >= -1 && parsedSave.hnChampPos < 8) SAVE.hnChampPos = Math.floor(parsedSave.hnChampPos);
+        if (parsedSave && typeof parsedSave.rvBeats === 'number' && parsedSave.rvBeats >= 0 && parsedSave.rvBeats <= 5) SAVE.rvBeats = Math.floor(parsedSave.rvBeats);
+        if (parsedSave && typeof parsedSave.rvDone === 'boolean') SAVE.rvDone = parsedSave.rvDone;
+        if (parsedSave && typeof parsedSave.rvEarned === 'number' && parsedSave.rvEarned >= 0) SAVE.rvEarned = Math.floor(parsedSave.rvEarned);
       }
     } catch (e) {}
         if (parsedSave && typeof parsedSave.night === 'boolean') SAVE.night = parsedSave.night;
@@ -10794,19 +11352,19 @@ three/build/three.module.js:
       if (SAVE.weapon === 'long' && equippedLongGun()){
         var lg = equippedLongGun();
         var isShot = lg.type === 'shotgun';
-        return { kind: lg.type, item: lg, cap: lg.cap, power: lg.power || 1, spread: lg.spread || 1,
+        return withAmmo({ kind: lg.type, item: lg, cap: lg.cap, power: lg.power || 1, spread: lg.spread || 1,
           drawFirst: lg.drawFirst || (isShot ? 0.36 : 0.32), drawNext: lg.drawNext || (isShot ? 0.15 : 0.12),
           recoilDecay: lg.recoilDecay || (isShot ? 3.4 : 4.6), sway: lg.sway || (isShot ? 1.3 : 0.7), aimEase: lg.aimEase || (isShot ? 13 : 14),
-          cycle: lg.cycle };
+          cycle: lg.cycle });
       }
       /* v2.31: every handgun now carries its own real numbers (see
          the GUNS table) — a Walker draws like the anchor it is and
          hits like a mule, a derringer is out before you blink with
          two light shots, a Schofield reloads all six at a gulp. */
       var hg = equippedGun();
-      return { kind: 'revolver', item: hg, cap: hg.cap || 6, power: hg.power || 1, spread: hg.spread || 1,
+      return withAmmo({ kind: 'revolver', item: hg, cap: hg.cap || 6, power: hg.power || 1, spread: hg.spread || 1,
         drawFirst: hg.drawFirst || 0.15, drawNext: hg.drawNext || 0.07, recoilDecay: hg.recoilDecay || 6.5,
-        sway: hg.sway || 1, aimEase: hg.aimEase || 19, cycle: hg.cycle };
+        sway: hg.sway || 1, aimEase: hg.aimEase || 19, cycle: hg.cycle });
     }
     /* Weapon balance (v1.7): the three families trade damage, range,
        accuracy and draw speed honestly. A revolver is the fastest draw
@@ -11074,7 +11632,7 @@ three/build/three.module.js:
          sheds for the gun in hand, so the iron you hold, the one on
          the Locker bench and the one in the cinematic is the gun
          itself: cap-and-ball, top-break, Remington, LeMat, derringer. */
-      var gid = skin && skin.id;
+      var gid = skin && (skin.base || skin.id); // v3.17: a barrel variant wears its base model's form
       var isCapBall = gid === 'pocket49' || gid === 'navy51' || gid === 'army60' || gid === 'rem58' || gid === 'dragoon' || gid === 'walker' || gid === 'lemat';
       var isTopBreak = gid === 'schofield' || gid === 'russian';
       /* Real actions (v3.0): the percussion Colts are OPEN-TOP — no
@@ -12498,6 +13056,13 @@ three/build/three.module.js:
           new THREE.MeshStandardMaterial({ color: cfg.poncho, roughness: 0.95, side: THREE.DoubleSide })));
         pon.position.y = 0.44; upper.add(pon);
       }
+      if (cfg.plate){
+        // Wanted Board (v3.11): the plated coat made plain — a riveted
+        // steel breastplate over the chest, readable down the lane
+        var plateM = shadowed(new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.42, 0.07),
+          new THREE.MeshStandardMaterial({ color: 0x8f97a3, roughness: 0.38, metalness: 0.85 })));
+        plateM.position.set(0, 0.42, 0.19); upper.add(plateM);
+      }
       if (cfg.scarf){
         var sc = new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.045, 8, 16),
           new THREE.MeshStandardMaterial({ color: cfg.scarf, roughness: 0.9 }));
@@ -12730,7 +13295,7 @@ three/build/three.module.js:
        of the round state. */
     var nightOn = false;
     var timeOfDay = 'day'; // v2.34: 'day' | 'sunset' | 'night' — nightOn stays the flag the storm rules read
-    var specialKind = null; // null | 'bounty' | 'daily' | 'quick' | 'endless' | 'sheriff'
+    var specialKind = null; // null | 'bounty' | 'daily' | 'quick' | 'endless' | 'sheriff' | 'wanted' | 'tourn' | 'rival' | 'b2b'
     var fanOn = false;
     var replayUntil = 0, replayTarget = null, lastKillOpp = null;
     var bountyTargetOpp = null, bountyFled = false, bountyDrawT0 = 0;
@@ -13117,7 +13682,7 @@ three/build/three.module.js:
            Navy keeps its octagon barrel, the LeMat its central shot
            barrel under the main one, and the derringer is its own
            little drawing entirely. */
-        var gid2 = item.id;
+        var gid2 = item.base || item.id; // v3.17: same — the shelf drawing is the base model's own profile
         var capBall2 = gid2 === 'pocket49' || gid2 === 'navy51' || gid2 === 'army60' || gid2 === 'rem58' || gid2 === 'dragoon' || gid2 === 'walker' || gid2 === 'lemat';
         var topBreak2 = gid2 === 'schofield' || gid2 === 'russian';
         /* Unmistakable profiles (v2.33): every gun keeps its own
@@ -13551,6 +14116,23 @@ three/build/three.module.js:
       return o;
     }
 
+    /* Special Ammo shelf art (v3.16): three cartridges standing on
+       the shelf — brass cases, the load's own colour on the bullet,
+       a heavier bullet drawn fatter, a practice bullet drawn pale. */
+    function ammoArt(am){
+      var fat = am.id === 'heavy' ? 1.35 : 1;
+      var one = function(dx, dy, s){
+        return '<g transform="translate(' + dx + ' ' + dy + ') scale(' + s + ')">' +
+          '<path d="M-4.6 26 L-4.6 2 Q-4.6 -3 -2.2 -8 L0 -13 L2.2 -8 Q4.6 -3 4.6 2 L4.6 26 Z" fill="' + am.sw + '" stroke="rgba(20,10,2,.55)" stroke-width="1" transform="scale(' + fat + ' 1)"/>' +
+          '<rect x="-5" y="26" width="10" height="15" fill="#c9973f" stroke="rgba(20,10,2,.55)"/>' +
+          '<rect x="-6" y="41" width="12" height="4" fill="#8a6a34" stroke="rgba(20,10,2,.55)"/>' +
+          '</g>';
+      };
+      return '<svg viewBox="0 0 96 68" aria-hidden="true">' +
+        '<ellipse cx="48" cy="61" rx="30" ry="3.4" fill="rgba(0,0,0,.4)"/>' +
+        one(30, 16, 0.92) + one(48, 13, 1.05) + one(66, 16, 0.92) + '</svg>';
+    }
+
     function renderStore(){
       updateMoneyUI();
       var eq = $('storeEquipped');
@@ -13558,7 +14140,7 @@ three/build/three.module.js:
       function cssHex(n){ return '#' + ('000000' + (n || 0).toString(16)).slice(-6); }
       function itemMeta(item, kind){
         if (kind === 'hand') return item.spec;
-        if (item.spec) return kind === 'long' ? rangeLabelFor(kind, item) + ' · ' + item.spec + (item.type === 'shotgun' ? ' · SLOW DRAW' : ' · SLOWER DRAW') : item.spec;
+        if (item.spec) return kind === 'long' ? rangeLabelFor(kind, item) + ' · ' + cleanSpec(item.spec) : cleanSpec(item.spec);
         if (kind === 'gun') return 'MEDIUM RANGE · SINGLE ACTION · 6 SHOTS · FASTEST DRAW · 1-SHOT HEAD';
         if (kind === 'long') return rangeLabelFor(kind, item) + ' · ' + (item.type === 'shotgun' ? 'SHOTGUN' : 'RIFLE') + ' · ' + item.cap + (item.cap === 1 ? ' ROUND' : ' ROUNDS') + ' · 1-SHOT HEAD';
         if (kind === 'hat') return 'WORN IN THE CINEMATIC & DUEL';
@@ -13585,7 +14167,9 @@ three/build/three.module.js:
           var nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = item.name;
           var pr = document.createElement('div'); pr.className = 'price';
           pr.textContent = isEq ? '★ EQUIPPED' : isOwned ? 'OWNED' : (item.price === 0 ? 'FREE' : '$' + item.price);
-          info.appendChild(nm); info.appendChild(pr);
+          info.appendChild(nm);
+          if (kind === 'gun' || kind === 'long'){ var bs = document.createElement('div'); bs.className = 'barstat'; bs.textContent = barrelStatFor(item, kind); info.appendChild(bs); } // v3.17: one clean line — barrel · draw
+          info.appendChild(pr);
           var buyBox = document.createElement('div'); buyBox.className = 'buyBox';
           var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'act';
           if (isEq){ btn.textContent = 'EQUIPPED'; btn.disabled = true; }
@@ -13638,6 +14222,55 @@ three/build/three.module.js:
       fill('storeRifles', LONGGUNS.filter(function(g){ return g.type === 'rifle'; }), SAVE.longguns, 'long');
       /* v2.19: Throwable is knives, axes and dynamite only — no bow. */
       fill('storeThrown', HANDWEAPONS.filter(function(w){ return w.id !== 'bow'; }), SAVE.hand, 'hand');
+      /* Special Ammo (v3.16): one row per load per gun family —
+         buying stocks that family's guns for good; the load each
+         gun actually carries is picked in the Gun Locker. Standard
+         loads are free and always in the box, shown so the shelf
+         tells the whole story. */
+      (function(){
+        var box = $('storeAmmo'); if (!box) return;
+        box.innerHTML = '';
+        AMMO.forEach(function(am){
+          AMMO_FAMS.forEach(function(fam){
+            var owned = ammoOwned(fam.id, am);
+            var canAfford = SAVE.money >= am.price;
+            var row = document.createElement('div');
+            row.className = 'storeItem' + (owned ? ' owned' : (canAfford ? '' : ' cantafford'));
+            var art = document.createElement('span'); art.className = 'art';
+            art.innerHTML = ammoArt(am);
+            var info = document.createElement('div'); info.className = 'info';
+            var nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = am.name + ' · ' + fam.label;
+            var mt = document.createElement('div'); mt.className = 'meta'; mt.textContent = am.spec;
+            var ds = document.createElement('div'); ds.className = 'ds'; ds.textContent = am.desc;
+            var st = document.createElement('div'); st.className = 'state';
+            st.textContent = am.id === 'standard' ? 'IN EVERY BOX · ALWAYS'
+              : owned ? 'STOCKED — LOAD IT PER GUN IN THE GUN LOCKER'
+              : 'BUY ONCE · STOCKS EVERY ' + fam.label.slice(0, -1).toUpperCase() + ' YOU OWN';
+            info.appendChild(nm); info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
+            var buyBox = document.createElement('div'); buyBox.className = 'buyBox';
+            var pr = document.createElement('div'); pr.className = 'price';
+            pr.textContent = am.id === 'standard' ? 'FREE' : owned ? 'OWNED' : '$' + am.price;
+            var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'act';
+            if (am.id === 'standard'){ btn.textContent = 'IN THE BOX'; btn.disabled = true; }
+            else if (owned){ btn.textContent = 'OWNED'; btn.disabled = true; }
+            else if (canAfford){ btn.textContent = 'BUY · $' + am.price; }
+            else { btn.textContent = '$' + am.price; btn.disabled = true; }
+            btn.addEventListener('click', function(){
+              initAudio();
+              if (ammoOwned(fam.id, am) || SAVE.money < am.price) return;
+              SAVE.money -= am.price;
+              if (!SAVE.ammoOwned[fam.id]) SAVE.ammoOwned[fam.id] = [];
+              SAVE.ammoOwned[fam.id].push(am.id);
+              sndBell();
+              persistSave(); renderStore();
+              toast(am.name + ' stocked for ' + fam.label + ' — load them in the Gun Locker!', true);
+            });
+            buyBox.appendChild(pr); buyBox.appendChild(btn);
+            row.appendChild(art); row.appendChild(info); row.appendChild(buyBox);
+            box.appendChild(row);
+          });
+        });
+      })();
       /* Gunslinger Outfits (v3.9): the four clothing slots share the
          Outfits tab's shelf — hats and coats were always wearable,
          bandanas and boots join them, all bought and equipped here. */
@@ -13672,7 +14305,7 @@ three/build/three.module.js:
       function cssHex(n){ return '#' + ('000000' + (n || 0).toString(16)).slice(-6); }
       function itemMeta(item, kind){
         if (kind === 'hand') return item.spec;
-        if (item.spec) return kind === 'long' ? rangeLabelFor(kind, item) + ' · ' + item.spec + (item.type === 'shotgun' ? ' · SLOW DRAW' : ' · SLOWER DRAW') : item.spec;
+        if (item.spec) return kind === 'long' ? rangeLabelFor(kind, item) + ' · ' + cleanSpec(item.spec) : cleanSpec(item.spec);
         if (kind === 'gun') return 'MEDIUM RANGE · SINGLE ACTION · 6 SHOTS · FASTEST DRAW · 1-SHOT HEAD';
         if (kind === 'long') return rangeLabelFor(kind, item) + ' · ' + (item.type === 'shotgun' ? 'SHOTGUN' : 'RIFLE') + ' · ' + item.cap + (item.cap === 1 ? ' ROUND' : ' ROUNDS') + ' · 1-SHOT HEAD';
         if (kind === 'hat') return 'WORN IN THE CINEMATIC & DUEL';
@@ -13709,7 +14342,10 @@ three/build/three.module.js:
           var st = document.createElement('div'); st.className = 'state';
           st.textContent = isEq ? '★ EQUIPPED NOW' : 'OWNED — READY TO EQUIP';
           if (kind === 'hand') st.textContent = 'OWNED — PICK IT WITH THE ROUND THROW BUTTON IN A FIGHT';
-          info.appendChild(nm); info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
+          if (kind === 'gun' || kind === 'long') st.textContent += ' · LOADED · ' + loadedAmmoFor(item).name.toUpperCase();
+          info.appendChild(nm);
+          if (kind === 'gun' || kind === 'long'){ var bs2 = document.createElement('div'); bs2.className = 'barstat'; bs2.textContent = barrelStatFor(item, kind); info.appendChild(bs2); } // v3.17: one clean line — barrel · draw
+          info.appendChild(mt); info.appendChild(ds); info.appendChild(st);
           var buyBox = document.createElement('div'); buyBox.className = 'buyBox';
           var pr = document.createElement('div'); pr.className = 'price'; pr.textContent = 'YOURS';
           var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'act';
@@ -13732,6 +14368,9 @@ three/build/three.module.js:
             var lkBtn2 = document.createElement('button'); lkBtn2.type = 'button'; lkBtn2.className = 'act lock'; lkBtn2.textContent = 'LOCKER';
             lkBtn2.addEventListener('click', function(){ initAudio(); sndClick(); openLocker(item, kind, 'inv'); });
             buyBox.appendChild(lkBtn2);
+            var amBtn2 = document.createElement('button'); amBtn2.type = 'button'; amBtn2.className = 'act lock'; amBtn2.textContent = 'AMMO · ' + loadedAmmoFor(item).name.replace(' Loads', '').toUpperCase();
+            amBtn2.addEventListener('click', function(){ initAudio(); sndClick(); openLocker(item, kind, 'inv', 'ammo'); });
+            buyBox.appendChild(amBtn2);
           }
           row.appendChild(art); row.appendChild(info); row.appendChild(buyBox);
           box.appendChild(row);
@@ -15058,7 +15697,8 @@ three/build/three.module.js:
     var lockerItem = null, lockerKind = 'gun', lockerReturn = 'store';
     var lockerFinish = null;
     var lockerScope = null; // v3.10: the scope being previewed on a rifle — the bench's second row
-    var lockerTab = 'skin'; // v3.10.1: which bench tab is showing — 'skin' or 'scope' (rifles only)
+    var lockerAmmo = null; // v3.16: the load being previewed in this gun — the bench's AMMO tab
+    var lockerTab = 'skin'; // v3.10.1: which bench tab is showing — 'skin', 'scope' (rifles only) or 'ammo' (v3.16)
     var LK = null;
     function lockerOwnedList(){ return lockerKind === 'gun' ? SAVE.guns : SAVE.longguns; }
     function lockerGunOwned(){ return !!lockerItem && lockerOwnedList().indexOf(lockerItem.id) >= 0; }
@@ -15199,13 +15839,18 @@ three/build/three.module.js:
       if (tabS) tabS.style.display = lockerIsRifle() ? '' : 'none';
       $('tabLockerSkin').classList.toggle('on', t === 'skin');
       if (tabS) tabS.classList.toggle('on', t === 'scope');
+      var tabA = $('tabLockerAmmo');
+      if (tabA) tabA.classList.toggle('on', t === 'ammo');
       $('lockerSkinSec').style.display = t === 'skin' ? '' : 'none';
       $('lockerScopeSec').style.display = (t === 'scope' && lockerIsRifle()) ? '' : 'none';
+      $('lockerAmmoSec').style.display = t === 'ammo' ? '' : 'none';
     }
     function lockerRenderPanel(){
       if (!lockerItem) return;
       $('lockerName').textContent = lockerItem.name;
-      $('lockerMeta').textContent = lockerItem.spec || ''; // v2.33: every gun is named by its own spec — no shared label
+      var lkBs = (lockerKind === 'gun' || lockerKind === 'long') ? barrelStatFor(lockerItem, lockerKind) : '';
+      var lkSpec = cleanSpec(lockerItem.spec || '');
+      $('lockerMeta').textContent = lkBs ? lkBs + (lkSpec ? ' · ' + lkSpec : '') : (lockerItem.spec || ''); // v3.17: one clean barrel · draw line leads the Locker meta; the spec follows without repeating the barrel length
       $('lockerWallet').textContent = 'WALLET · $' + SAVE.money;
       var applied = gunSkinFor(lockerItem.id);
       var sel = lockerFinish || applied;
@@ -15290,16 +15935,64 @@ three/build/three.module.js:
         else if (SAVE.money >= scSel.price){ sact.textContent = 'BUY SCOPE · $' + scSel.price; sact.disabled = false; }
         else { sact.textContent = 'NEEDS $' + (scSel.price - SAVE.money) + ' MORE'; sact.disabled = true; }
       }
+      /* Special Ammo (v3.16, AMMO tab): every gun takes loads — the
+         chips are the four rounds, stocked per family in the Store
+         (or bought right here), loaded per gun for free once
+         stocked. The stat line under the chips shows the picked
+         round's effect on THIS gun's own draw and power, figured
+         off its real numbers. */
+      (function(){
+        var fam = ammoFamilyFor(lockerKind, lockerItem);
+        var famLabel = fam === 'revolver' ? 'Revolvers' : fam === 'shotgun' ? 'Shotguns' : 'Rifles';
+        var aApplied = loadedAmmoFor(lockerItem);
+        var aSel = lockerAmmo || aApplied;
+        var aBox = $('lockerAmmo'); aBox.innerHTML = '';
+        AMMO.forEach(function(am){
+          var owned = ammoOwned(fam, am);
+          var chip = document.createElement('button'); chip.type = 'button';
+          chip.className = 'skinChip' + (aSel.id === am.id ? ' sel' : '') + (aApplied.id === am.id ? ' applied' : '');
+          var state = aApplied.id === am.id ? 'IN THE GUN'
+            : owned ? (am.id === 'standard' ? 'ALWAYS IN THE BOX' : 'STOCKED · ' + famLabel.toUpperCase())
+            : ('$' + am.price + ' · ' + famLabel.toUpperCase());
+          chip.innerHTML = '<span class="bullet" style="background:' + am.sw + '"></span>' + am.name + '<span class="pr">' + state + '</span>';
+          chip.addEventListener('click', function(){
+            initAudio();
+            if (lockerAmmo && lockerAmmo.id === am.id && aApplied.id !== am.id && ammoOwned(fam, am)){
+              lockerApplyAmmo(); return; // second tap on your stocked load puts it in the gun
+            }
+            sndClick();
+            lockerAmmo = am;
+            lockerRenderPanel();
+          });
+          aBox.appendChild(chip);
+        });
+        $('lockerAmmoName').textContent = aSel.name.toUpperCase() + (aApplied.id === aSel.id ? ' · IN THIS GUN' : ' · PREVIEW');
+        $('lockerAmmoDesc').textContent = aSel.desc;
+        var basePower = lockerItem.power || 1;
+        var baseDraw = lockerItem.drawFirst || (lockerKind === 'gun' ? 0.15 : (lockerItem.type === 'shotgun' ? 0.36 : 0.32));
+        var fx = $('lockerAmmoFx');
+        if (aSel.practiceOnly){
+          fx.textContent = 'ON THIS GUN · PRACTICE GROUNDS ONLY — IN A DUEL OR ON THE RIDE IT SHOOTS STANDARD · DRAW ' + baseDraw.toFixed(3) + 's · POWER ×' + basePower.toFixed(2) + ' (UNCHANGED)';
+        } else {
+          fx.textContent = 'ON THIS GUN · DRAW ' + baseDraw.toFixed(3) + 's → ' + (baseDraw * aSel.drawMul).toFixed(3) + 's · POWER ×' + basePower.toFixed(2) + ' → ×' + (basePower * aSel.powerMul).toFixed(2);
+        }
+        var aact = $('btnLockerAmmoAct');
+        if (aApplied.id === aSel.id){ aact.textContent = '★ THESE ROUNDS ARE IN'; aact.disabled = true; }
+        else if (ammoOwned(fam, aSel)){ aact.textContent = 'LOAD · ' + aSel.name.toUpperCase(); aact.disabled = false; }
+        else if (SAVE.money >= aSel.price){ aact.textContent = 'BUY STOCK & LOAD · $' + aSel.price; aact.disabled = false; }
+        else { aact.textContent = 'NEEDS $' + (aSel.price - SAVE.money) + ' MORE'; aact.disabled = true; }
+      })();
     }
     function lockerReturnRefresh(){
       if (lockerReturn === 'inv') renderInventory();
       else if (lockerReturn !== 'gear') renderStore(); // 'gear' (v2.20): opened from the Gear hub — nothing to re-render
     }
-    function openLocker(item, kind, from){
+    function openLocker(item, kind, from, tab){
       lockerItem = item; lockerKind = kind; lockerReturn = from || 'store';
       lockerFinish = gunSkinFor(item.id);
       lockerScope = gunScopeFor(item.id); // v3.10: the bench opens wearing the scope the rifle already carries
-      lockerTab = 'skin'; // v3.10.1: the bench always opens on the SKIN tab
+      lockerAmmo = loadedAmmoFor(item); // v3.16: the bench opens on the load the gun already carries
+      lockerTab = tab === 'ammo' ? 'ammo' : 'skin'; // v3.10.1: the bench opens on SKIN — unless Inventory's AMMO button asked for the loads
       $('storeCard').style.display = 'none';
       $('inventoryCard').style.display = 'none';
       $('lockerCard').style.display = 'flex';
@@ -15323,6 +16016,10 @@ three/build/three.module.js:
     $('tabLockerScope').addEventListener('click', function(){
       initAudio(); sndClick();
       setLockerTab('scope');
+    });
+    $('tabLockerAmmo').addEventListener('click', function(){
+      initAudio(); sndClick();
+      setLockerTab('ammo');
     });
     function lockerApplyFinish(){
       if (!lockerItem || !lockerFinish) return;
@@ -15370,6 +16067,33 @@ three/build/three.module.js:
       if (!lockerItem || !lockerScope) return;
       initAudio();
       lockerApplyScope();
+    });
+    /* Special Ammo (v3.16): loading a round is the scope flow, per
+       family — buy the family stock if it is not already yours,
+       then the load rides THIS gun. Switching between loads you
+       stock is always free, and nothing about the iron's look
+       changes: a load is powder and lead, not paint. */
+    function lockerApplyAmmo(){
+      if (!lockerItem || !lockerAmmo) return;
+      var fam = ammoFamilyFor(lockerKind, lockerItem);
+      var am = lockerAmmo;
+      if (!ammoOwned(fam, am)){
+        if (SAVE.money < am.price) return;
+        SAVE.money -= am.price;
+        if (!SAVE.ammoOwned[fam]) SAVE.ammoOwned[fam] = [];
+        SAVE.ammoOwned[fam].push(am.id);
+        sndBell();
+      } else sndClick();
+      SAVE.gunAmmo[lockerItem.id] = am.id;
+      persistSave();
+      updateMoneyUI();
+      lockerRenderPanel();
+      lockerReturnRefresh();
+    }
+    $('btnLockerAmmoAct').addEventListener('click', function(){
+      if (!lockerItem || !lockerAmmo) return;
+      initAudio();
+      lockerApplyAmmo();
     });
     $('btnLockerEquip').addEventListener('click', function(){
       if (!lockerItem) return;
@@ -15451,6 +16175,28 @@ three/build/three.module.js:
       $('stDailyStreak').textContent = SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS') + ' · BEST ' + SAVE.dailyBest;
       $('stBountyWins').textContent = SAVE.bountyWins;
       $('stFastCapture').textContent = SAVE.bountyBest !== null ? SAVE.bountyBest + 's' : '—';
+      /* Wanted Board (v3.11): the board's book, beside the bounty record. */
+      $('stWbCaught').textContent = SAVE.wbCaught || 0;
+      $('stWbCollected').textContent = '$' + (SAVE.wbCollected || 0);
+      $('stWbBest').textContent = SAVE.wbBest > 0 ? '$' + SAVE.wbBest : '—';
+      /* High Noon Tournament (v3.12): crowns and the best run. */
+      $('stHnCrowns').textContent = SAVE.hnWins || 0;
+      $('stHnBest').textContent = SAVE.hnBest >= 3 ? 'CHAMPION · 3 OF 3' : (SAVE.hnBest > 0 ? SAVE.hnBest + ' OF 3 ROUNDS' : '—');
+      /* The Rival (v3.13): beats won, the finished mark, and the cash. */
+      $('stRvBeats').textContent = (SAVE.rvBeats || 0) + ' OF 5';
+      $('stRvStatus').textContent = SAVE.rvDone ? 'RIVAL DEFEATED ★' : 'STILL OUT THERE';
+      $('stRvEarned').textContent = '$' + (SAVE.rvEarned || 0);
+      /* Back-to-Back 2-on-1 (v3.14): pairs dropped, best clear, cash. */
+      $('stBbPairs').textContent = SAVE.bbWins || 0;
+      $('stBbBest').textContent = SAVE.bbBest ? (SAVE.bbBest / 1000).toFixed(2) + 's' : '—';
+      $('stBbEarned').textContent = '$' + (SAVE.bbEarned || 0);
+      /* Your Wanted Poster (v3.15): the poster's rank, bounty and
+         notoriety ride at the foot of Stats, beside the button. */
+      var pdS = posterData();
+      $('stPosterRank').textContent = pdS.rank;
+      $('stPosterBounty').textContent = '$' + pdS.bounty;
+      $('stPosterScore').textContent = pdS.score;
+      $('stPosterLine').textContent = 'RANK · ' + pdS.rank + ' — BOUNTY $' + pdS.bounty;
     }
     function updateChambers(){
       // Throwing weapons (v2.15): the pips count what's left in the
@@ -19903,7 +20649,7 @@ three/build/three.module.js:
       G.cineT0 = performance.now();
       G.cineDur = REDUCED ? 1600 : 4000;
       pgun.visible = false; offHand.visible = false; hipHolster.visible = false;
-      banner((G.cineName || OPPONENTS[idx].name).toUpperCase(), 'pop');
+      banner((G.cineName || OPPONENTS[idx].name).toUpperCase(), 'namepop'); // v3.18: the intro name is smaller and fades in ~1.5s — it never stays up
       toast((n > 1 ? n + ' gunmen' : (G.cineName || OPPONENTS[idx].name)) + ' · ' + (G.cineDist || DISTANCES[idx]) + ' paces. Tap to skip.', true);
     }
     function endCinematic(){
@@ -19949,6 +20695,15 @@ three/build/three.module.js:
         // wingmen draw a breath behind the leader, so it's a hard fight, not a firing squad
         o.nextShotAt = now + effDrawMs(o) + o.slot * 380;
       });
+      // Wanted Board (v3.11): two tells land at the bell itself — the
+      // flincher's true shot comes a long beat after his gun is up,
+      // and the head-hunter takes one extra beat to line up
+      // the head shot he always takes. Both are pure gift to a
+      // player who read the poster.
+      if (specialKind === 'wanted' || specialKind === 'rival') opps.forEach(function(o){
+        if (o.cfg.wb === 'fake') o.nextShotAt += 620;
+        else if (o.cfg.wb === 'head') o.nextShotAt += 480;
+      });
       clockEl.textContent = '0.000s';
       if (specialKind === 'bounty') bountyDrawT0 = now;
     }
@@ -19970,6 +20725,10 @@ three/build/three.module.js:
     }
     function winRound(zone, now){
       if (specialKind === 'quick'){ quickWin(zone, now); return; }
+      if (specialKind === 'wanted'){ wantedWin(zone, now); return; } // Wanted Board (v3.11)
+      if (specialKind === 'tourn'){ tournWin(zone, now); return; } // High Noon Tournament (v3.12)
+      if (specialKind === 'rival'){ rivalWin(zone, now); return; } // The Rival (v3.13)
+      if (specialKind === 'b2b'){ b2bWin(zone, now); return; } // Back-to-Back 2-on-1 (v3.14)
       if (specialKind === 'bounty'){ bountyWin(zone, now); return; }
       if (specialKind === 'daily'){ dailyWin(zone, now); return; }
       G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
@@ -20000,6 +20759,10 @@ three/build/three.module.js:
         return;
       }
       if (specialKind === 'quick'){ quickLose(kind); return; }
+      if (specialKind === 'wanted'){ wantedLose(kind); return; } // Wanted Board (v3.11): a loss costs nothing — the poster stays up
+      if (specialKind === 'tourn'){ tournLose(kind); return; } // High Noon Tournament (v3.12): a loss ends the run
+      if (specialKind === 'rival'){ rivalLose(kind); return; } // The Rival (v3.13): a loss costs nothing — he stays at that round
+      if (specialKind === 'b2b'){ b2bLose(kind); return; } // Back-to-Back 2-on-1 (v3.14): a loss costs nothing — the pair waits
       if (specialKind === 'endless'){ endlessLose(kind); return; }
       if (specialKind === 'sheriff'){ sheriffLose(kind); return; } // Sheriff Shift (v3.7): a fallen sheriff ends the shift, and the bags still in the vault still pay
       if (specialKind === 'bounty'){ bountyLose(kind); return; }
@@ -20239,6 +21002,13 @@ three/build/three.module.js:
         hitmark(zone.vital);
         spawnPuff(dustPool, hits[0].point, new THREE.Vector3(0, 0.25, 0.3), 0.3, 0.55);
         var dealtDmg = (zone.dmg * (wpn.power || 1) + pelletBonus) * rangeFactor(wpn.kind, distNow);
+        // Wanted Board (v3.11): a plated coat swallows body shots —
+        // head and heart still end him outright, everything else
+        // barely dents the plate
+        if (target.cfg && target.cfg.wb === 'armor' && !zone.vital){
+          dealtDmg *= 0.45;
+          if (!target.wbPlateToast){ target.wbPlateToast = true; setTimeout(function(){ toast('Plated coat — body shots barely slow him. Go vital!', true); }, 350); }
+        }
         if (zoneName === 'head') dealtDmg = Math.max(dealtDmg, target.hp); // v2.17: a headshot ends it — any gun, any range
         target.hp -= dealtDmg;
         /* LAN duel (v1.32): the identical wound is dealt to the real
@@ -20625,7 +21395,11 @@ three/build/three.module.js:
         : (SAVE.bestEndlessDuel + (SAVE.bestEndlessDuel === 1 ? ' wave' : ' waves') + ' · ' + (SAVE.bestEndlessDuelKills || 0) + ' goons dropped');
       $('shfBestLine').textContent = SAVE.shfBestWaves === null ? 'no shift yet'
         : (SAVE.shfBestWaves + (SAVE.shfBestWaves === 1 ? ' wave' : ' waves') + ' held · ' + (SAVE.shfBestKills || 0) + ' robbers dropped'); // Sheriff Shift (v3.7)
-      $('lrBestLine').textContent = lrBestText(); // Long Range (v3.10.2): the valley fights out of the Duels hub now
+      $('lrBestLine').textContent = lrBestText();
+      $('wbBestLine').textContent = wbBestText(); // Wanted Board (v3.11): the board's best bounty rides on the Duels hub // Long Range (v3.10.2): the valley fights out of the Duels hub now
+      $('hnBestLine').textContent = hnLineText(); // High Noon Tournament (v3.12): the crown count rides on the Duels hub
+      $('rvHubLine').textContent = rvLineText(); // The Rival (v3.13): the beat you're on rides on the Duels hub
+      $('bbHubLine').textContent = bbLineText(); // Back-to-Back 2-on-1 (v3.14): the pairs dropped ride on the Duels hub
       $('titleCard').style.display = 'none';
       $('duelsCard').style.display = 'flex';
       var di2 = document.querySelector('#duelsCard .inner'); if (di2) di2.scrollTop = 0;
@@ -20817,7 +21591,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'lanCard'];
+    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'lanCard', 'posterCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -20867,7 +21641,7 @@ three/build/three.module.js:
       ['lockerCard', 'btnBackLocker'], ['statsCard', 'btnBackStatsTop'],
       ['settingsCard', 'btnBackSettings'], ['learnCard', 'btnBackLearn'],
       ['updatesCard', 'btnBackUpdates'], ['bountyCard', 'btnBackBounty'],
-      ['dailyCard', 'btnBackDaily']
+      ['dailyCard', 'btnBackDaily'], ['posterCard', 'btnBackPoster']
     ];
     CARD_X.forEach(function(pair){
       var card = $(pair[0]); if (!card) return;
@@ -20937,6 +21711,206 @@ three/build/three.module.js:
     }
     $('btnBackStats').addEventListener('click', closeStatsToMenu);
     $('btnBackStatsTop').addEventListener('click', closeStatsToMenu);
+
+    /* ================= YOUR WANTED POSTER (v3.15) =================
+       The flip side of the Wanted Board: a poster of the PLAYER.
+       Everything on it is derived live from the career record in
+       SAVE — nothing new is stored. Notoriety scores every win,
+       every bounty taken (Wanted Board + Bounty Hunt), every crown
+       and every Rival beat; the score picks a rank from UNKNOWN to
+       LEGEND OF THE WEST, and the bounty on your head is the rank's
+       base price plus half of everything the Board has paid you,
+       $250 a crown and $100 a Rival beat. The face is the Wanted
+       Board's own face-drawing, coloured by the outfit, hat and
+       bandana you actually wear. SHARE renders the same sheet to a
+       PNG and offers it to the phone's share sheet, falling back
+       to saving the picture as a file. */
+    var POSTER_TIERS = [
+      { at: 0,   rank: 'UNKNOWN',                 bounty: 25,   sub: 'WANTED',                crime: 'For loitering by the water trough, looking suspicious.' },
+      { at: 3,   rank: 'GREENHORN',               bounty: 75,   sub: 'WANTED',                crime: 'For outdrawing one honest man — and bragging on it in the saloon.' },
+      { at: 8,   rank: 'TROUBLEMAKER',            bounty: 150,  sub: 'WANTED — DEAD OR ALIVE', crime: 'For disturbing the peace of Main Street, repeatedly and with style.' },
+      { at: 15,  rank: 'GUNHAND',                 bounty: 300,  sub: 'WANTED — DEAD OR ALIVE', crime: 'For clearing the street at high noon more often than the law can count.' },
+      { at: 25,  rank: 'FAST HAND',               bounty: 500,  sub: 'WANTED — DEAD OR ALIVE', crime: 'For gun work too quick for any witness to swear to.' },
+      { at: 40,  rank: 'DEADEYE',                 bounty: 800,  sub: 'WANTED — DEAD OR ALIVE', crime: 'For dropping wanted men off their own posters and collecting on every head.' },
+      { at: 60,  rank: 'MOST WANTED',             bounty: 1200, sub: 'WANTED — DEAD OR ALIVE', crime: 'For beating every gun the territory has sent against him.' },
+      { at: 85,  rank: 'TERROR OF THE TERRITORY', bounty: 2000, sub: 'WANTED — DEAD OR ALIVE', crime: 'For emptying the saloon without ever raising his voice.' },
+      { at: 120, rank: 'LEGEND OF THE WEST',      bounty: 5000, sub: 'WANTED — DEAD OR ALIVE', crime: 'For outdrawing the West itself. Approach with extreme caution — or not at all.' }
+    ];
+    function posterData(){
+      var wins = SAVE.careerWins || 0;
+      var wb = SAVE.wbCaught || 0, bh = SAVE.bountyWins || 0, crowns = SAVE.hnWins || 0, beats = SAVE.rvBeats || 0;
+      var score = wins + wb * 2 + bh * 2 + crowns * 5 + beats * 3 + (SAVE.bbWins || 0) * 2 + (SAVE.dailyWins || 0);
+      var tier = POSTER_TIERS[0], next = null;
+      for (var i = 0; i < POSTER_TIERS.length; i++){
+        if (score >= POSTER_TIERS[i].at) tier = POSTER_TIERS[i];
+        else { next = POSTER_TIERS[i]; break; }
+      }
+      var bounty = tier.bounty + Math.floor((SAVE.wbCollected || 0) / 2) + crowns * 250 + beats * 100;
+      function fd(ms){ return (ms === null || ms === undefined) ? '—' : (ms / 1000).toFixed(3) + 's'; }
+      return {
+        score: score, rank: tier.rank, sub: tier.sub, crime: tier.crime, bounty: bounty, next: next,
+        wins: wins, bounties: wb + bh, crowns: crowns, beats: beats,
+        best: fd(SAVE.bestDraw), avg: SAVE.drawCount > 0 ? fd(SAVE.drawSum / SAVE.drawCount) : '—'
+      };
+    }
+    function playerFaceCfg(){
+      var o = gearById(OUTFITS, SAVE.outfit || 'trail');
+      var h = gearById(HATS, SAVE.hat || 'trail');
+      var b = gearById(BANDANAS, SAVE.bandana || 'none');
+      return {
+        coat: o.coat, shirt: o.shirt, skin: 0xcfa06a,
+        hat: (h && h.color) || o.hat, band: (h && h.band) || o.band || 0,
+        scarf: (b && b.color) || o.scarf || 0,
+        poncho: o.poncho || 0, wideBrim: !!(h && h.brim >= 1.4)
+      };
+    }
+    function posterSetShareLine(txt){ var el = $('mpShareLine'); if (el) el.textContent = txt; }
+    function renderPoster(){
+      var d = posterData();
+      $('mpFace').innerHTML = wbFaceSVG(playerFaceCfg());
+      $('mpSub').textContent = d.sub;
+      $('mpRank').textContent = '★ ' + d.rank + ' ★';
+      $('mpCrime').textContent = d.crime;
+      $('mpWins').textContent = d.wins;
+      $('mpBounties').textContent = d.bounties;
+      $('mpCrowns').textContent = d.crowns;
+      $('mpRival').textContent = d.beats + ' OF 5';
+      $('mpBest').textContent = d.best;
+      $('mpAvg').textContent = d.avg;
+      $('mpBounty').textContent = '$' + d.bounty;
+      $('mpNextLine').textContent = d.next
+        ? 'NOTORIETY ' + d.score + ' · NEXT RANK ' + d.next.rank + ' AT ' + d.next.at + ' — ' + (d.next.at - d.score) + ' TO GO'
+        : 'NOTORIETY ' + d.score + ' · TOP OF THE BOARD — NO HIGHER RANK';
+      posterSetShareLine('Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.');
+    }
+    var posterReturn = 'menu';
+    function openPoster(from){
+      initAudio(); sndClick();
+      posterReturn = from || 'menu';
+      renderPoster();
+      $('titleCard').style.display = 'none';
+      $('statsCard').style.display = 'none';
+      $('settingsCard').style.display = 'none';
+      settingsOpen = false;
+      $('posterCard').style.display = 'flex';
+      var pi = document.querySelector('#posterCard .inner'); if (pi) pi.scrollTop = 0;
+    }
+    function closePoster(){
+      initAudio(); sndClick();
+      $('posterCard').style.display = 'none';
+      if (posterReturn === 'stats'){ renderStats(); $('statsCard').style.display = 'flex'; }
+      else $('titleCard').style.display = 'flex';
+    }
+    $('btnPosterFromStats').addEventListener('click', function(){ openPoster('stats'); });
+    var mtPlayerBtnEl = $('mtPlayerBtn');
+    if (mtPlayerBtnEl) mtPlayerBtnEl.addEventListener('click', function(){ openPoster('menu'); });
+    $('btnBackPoster').addEventListener('click', closePoster);
+    /* The share picture: the same poster, drawn on a 900×1240
+       canvas — aged paper, double rule, the drawn face rasterised
+       from its SVG, and every word the on-screen sheet carries. */
+    function buildPosterCanvas(done){
+      var d = posterData();
+      var W = 900, H = 1240;
+      var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      var g = cv.getContext('2d'); if (!g){ done(null); return; }
+      var grad = g.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#efdcab'); grad.addColorStop(.78, '#dcc48d'); grad.addColorStop(1, '#d0b57e');
+      g.fillStyle = grad; g.fillRect(0, 0, W, H);
+      g.fillStyle = 'rgba(107,74,34,.16)';
+      for (var si = 0; si < 260; si++){
+        g.beginPath(); g.arc(Math.random() * W, Math.random() * H, Math.random() * 2.2 + .4, 0, 6.283); g.fill();
+      }
+      g.strokeStyle = '#6b4a22'; g.lineWidth = 6; g.strokeRect(18, 18, W - 36, H - 36);
+      g.lineWidth = 2; g.strokeRect(34, 34, W - 68, H - 68);
+      g.textAlign = 'center';
+      g.fillStyle = '#3a2410'; g.font = '92px Rye, Georgia, serif';
+      g.fillText('W A N T E D', W / 2, 140);
+      g.fillStyle = '#571d10'; g.font = '34px Rye, Georgia, serif';
+      g.fillText(d.sub, W / 2, 198);
+      function wrapLines(text, maxW, font){
+        g.font = font;
+        var words = text.split(' '), lines = [], cur = '';
+        for (var wi = 0; wi < words.length; wi++){
+          var test = cur ? cur + ' ' + words[wi] : words[wi];
+          if (g.measureText(test).width > maxW && cur){ lines.push(cur); cur = words[wi]; }
+          else cur = test;
+        }
+        if (cur) lines.push(cur);
+        return lines;
+      }
+      function finish(faceImg){
+        if (faceImg) g.drawImage(faceImg, W / 2 - 150, 226, 300, 300);
+        g.fillStyle = '#571d10'; g.font = '58px Rye, Georgia, serif';
+        g.fillText('THE STRANGER', W / 2, 596);
+        g.fillStyle = '#3a2410'; g.font = '26px "Special Elite", monospace';
+        g.fillText('★ ' + d.rank + ' ★', W / 2, 640);
+        g.fillStyle = '#2a1a08';
+        var lines = wrapLines(d.crime, 740, '24px "Special Elite", monospace');
+        for (var li = 0; li < lines.length && li < 3; li++) g.fillText(lines[li], W / 2, 684 + li * 32);
+        var gridTop = 716 + lines.length * 32;
+        g.strokeStyle = 'rgba(42,26,8,.55)'; g.lineWidth = 1.5;
+        g.setLineDash([6, 5]); g.beginPath(); g.moveTo(90, gridTop); g.lineTo(W - 90, gridTop); g.stroke(); g.setLineDash([]);
+        var stats = [
+          [String(d.wins), 'DUELS WON'], [String(d.bounties), 'BOUNTIES TAKEN'], [String(d.crowns), 'CROWNS WON'],
+          [d.beats + ' OF 5', 'RIVAL BEATS'], [d.best, 'BEST DRAW'], [d.avg, 'AVERAGE DRAW']
+        ];
+        for (var gi = 0; gi < stats.length; gi++){
+          var cx = 190 + (gi % 3) * 260, cy = gridTop + 58 + Math.floor(gi / 3) * 86;
+          g.fillStyle = '#571d10'; g.font = '34px Rye, Georgia, serif';
+          g.fillText(stats[gi][0], cx, cy);
+          g.fillStyle = '#5c4322'; g.font = '17px "Special Elite", monospace';
+          g.fillText(stats[gi][1], cx, cy + 28);
+        }
+        var rewY = gridTop + 58 + 86 + 92;
+        g.fillStyle = '#3a2410'; g.font = '26px "Special Elite", monospace';
+        g.fillText('R E W A R D', W / 2, rewY);
+        g.fillStyle = '#571d10'; g.font = '88px Rye, Georgia, serif';
+        g.fillText('$' + d.bounty, W / 2, rewY + 92);
+        g.fillStyle = '#6b4a22'; g.font = '17px "Special Elite", monospace';
+        g.fillText('BY ORDER OF THE TERRITORIAL MARSHAL · SHOWDOWN TERRITORY · 1881', W / 2, H - 108);
+        g.fillText('NOTORIETY ' + d.score + ' · ' + d.rank, W / 2, H - 76);
+        done(cv);
+      }
+      var svg = wbFaceSVG(playerFaceCfg()).replace('<svg ', '<svg width="300" height="300" ');
+      var img = new Image();
+      img.onload = function(){ finish(img); };
+      img.onerror = function(){ finish(null); };
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+    function sharePoster(){
+      initAudio(); sndClick();
+      posterSetShareLine('Printing your poster…');
+      buildPosterCanvas(function(cv){
+        if (!cv){ posterSetShareLine('This device could not draw the poster picture.'); return; }
+        function download(){
+          try {
+            var a = document.createElement('a');
+            a.href = cv.toDataURL('image/png');
+            a.download = 'showdown-1881-wanted-poster.png';
+            document.body.appendChild(a); a.click();
+            setTimeout(function(){ if (a.parentNode) a.parentNode.removeChild(a); }, 400);
+            posterSetShareLine('Poster saved as a picture — look in your downloads or photos.');
+          } catch (e){ posterSetShareLine('Sharing is blocked here — a screenshot of the poster works just as well.'); }
+        }
+        if (cv.toBlob){
+          cv.toBlob(function(blob){
+            if (!blob){ download(); return; }
+            var file = null;
+            try { file = new File([blob], 'showdown-1881-wanted-poster.png', { type: 'image/png' }); } catch (e) {}
+            if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })){
+              var d2 = posterData();
+              navigator.share({ files: [file], title: 'WANTED — The Stranger', text: 'WANTED — ' + d2.sub + ' · The Stranger · ' + d2.rank + ' · Reward $' + d2.bounty + ' · Showdown 1881' })
+                .then(function(){ posterSetShareLine('Poster shared. The territory has been warned.'); })
+                .catch(function(err){
+                  if (err && err.name === 'AbortError') posterSetShareLine('Share sheet closed — the poster is still yours to send.');
+                  else download();
+                });
+            } else download();
+          }, 'image/png');
+        } else download();
+      });
+    }
+    $('btnSharePoster').addEventListener('click', sharePoster);
     $('btnQuit').addEventListener('click', function(){
       initAudio();
       // LAN duel (v1.25): walking out mid-duel tells the rival — he
@@ -20994,6 +21968,10 @@ three/build/three.module.js:
       if (G.lan){ openLanRoom(); return; }
       if (specialKind === 'quick' || specialKind === 'endless' || specialKind === 'sheriff'){ $('btnQuit').click(); return; }
       if (specialKind === 'bounty'){ openBountyCard(); return; }
+      if (specialKind === 'wanted'){ openWantedBoard(); return; } // Wanted Board (v3.11)
+      if (specialKind === 'tourn'){ openTournBoard(); return; } // High Noon Tournament (v3.12)
+      if (specialKind === 'rival'){ openRivalCard(); return; } // The Rival (v3.13)
+      if (specialKind === 'b2b'){ openB2BCard(); return; } // Back-to-Back 2-on-1 (v3.14)
       if (specialKind === 'daily'){ $('btnQuit').click(); return; }
       if (G.mode === 'ride'){ if (G.train) startTrain(); else if (G.night) startNightRide(); else startRide(G.rideEndless); return; } // Train Robbery (v3.4): the Next button robs the train again; Night Ride (v3.8) rides out again
       if (G.mode === 'practice'){ startPractice(G.practiceKind); return; }
@@ -21718,6 +22696,284 @@ three/build/three.module.js:
       { name: 'Graves', sub: 'Just "Graves" · Daily Duel · Draw: Death Itself', drawMs: 540, acc: 0.74,
         coat: 0x1d1b1a, pants: 0x171615, shirt: 0x5c564e, hat: 0x121110, skin: 0xcfa06a, band: 0x3d0f0a }
     ];
+    /* ============================== WANTED BOARD (v3.11) ==============================
+       A saloon wall of wanted posters in the Duels hub. Ten outlaws
+       ride the pool; four posters hang at a time. Every man carries
+       a bounty, a crime and a TELL — and every tell is true in the
+       fight itself: the flincher's hand jumps before the bell and
+       his real draw comes late (a held nerve wins), the early shot
+       fires BEFORE the bell, wild — firing back before the bell is
+       still a foul — the head-hunter is dead accurate but takes one
+       extra beat to line up the head shot he always takes, the fan
+       answers every shot with a fast pair from his second iron, and
+       the plated coat swallows body shots while vitals still end
+       him. Facing a poster is a straight duel — bell, DRAW!, vitals
+       kill, your hide — on the rotation's ground at the picked hour,
+       at Mode Settings difficulty (effDrawMs reads it for every
+       gunman). A win pays the bounty and stamps the poster CAUGHT
+       (a wounding finish) or DEAD (a vital one); the stamped poster
+       comes down after a while and a fresh outlaw is pinned up. A
+       loss costs nothing — the poster simply stays up. */
+    var WB_POOL = [
+      { name: 'Finnick Shaw', crime: 'the Red Mesa payroll wagon, driver and all', bounty: 220, wb: 'fake',
+        tell: 'Tell: his hand flinches first — the real draw comes late. Don\'t bite on the flinch.',
+        sub: '"Finnick" Shaw · Wanted · Draw: Quick', drawMs: 900, acc: 0.55,
+        coat: 0x5c4632, pants: 0x2e2a24, shirt: 0x9a8a68, hat: 0x3a2c1c, skin: 0xc98d54, scarf: 0x7e3430 },
+      { name: 'Amos Earle', crime: 'shooting up the Canyon Junction depot', bounty: 260, wb: 'early',
+        tell: 'Tell: he fires before the bell — and wild. Hold your nerve and let him waste it.',
+        sub: '"Early" Earle · Wanted · Draw: Quick', drawMs: 870, acc: 0.52,
+        coat: 0x74522f, pants: 0x4a3a28, shirt: 0xa08b6a, hat: 0x54402a, skin: 0xd9a066 },
+      { name: 'Vince Brandt', crime: 'three lawmen dropped, every one a head shot', bounty: 380, wb: 'head',
+        tell: 'Tell: he always goes for the head — dead true, but he takes his beat to line it up.',
+        sub: 'Brandt · Wanted · Draw: Fast', drawMs: 790, acc: 0.77,
+        coat: 0x2a2723, pants: 0x232120, shirt: 0x8a7a5c, hat: 0x191716, skin: 0xb57e4e, patch: true, band: 0x6e1f16 },
+      { name: 'Doyle Rook', crime: 'the express hold-up at Two Rivers, both hands full', bounty: 340, wb: 'fan',
+        tell: 'Tell: he fans two revolvers at once — his shots come three in a rush.',
+        sub: 'Rook · Wanted · Draw: Quick', drawMs: 890, acc: 0.50,
+        coat: 0x7e3430, pants: 0x33231e, shirt: 0xc9b189, hat: 0x33231e, skin: 0xe0aa72, band: 0xd9a441 },
+      { name: 'Mose Teller', crime: 'walking out of the Boot Hill jail in a plated coat', bounty: 300, wb: 'armor',
+        tell: 'Tell: slow, and plated. Body shots barely dent him — go for the vitals.',
+        sub: 'Big Mose · Wanted · Draw: Plodding', drawMs: 1130, acc: 0.50, plate: true,
+        coat: 0x3c4a5a, pants: 0x2c2f36, shirt: 0xa39a88, hat: 0x2e2a26, skin: 0xd9a066, scarf: 0x24303c },
+      { name: 'Willa June Hart', crime: 'robbing the night train in a deputy\'s coat', bounty: 280, wb: 'fake',
+        tell: 'Tell: her hand jumps before her draw — the real one comes late.',
+        sub: 'Willa June · Wanted · Draw: Quick', drawMs: 865, acc: 0.58,
+        coat: 0x274435, pants: 0x201d1a, shirt: 0xd8c096, hat: 0x1f2a22, skin: 0xe0aa72, hair: 0x59331c, band: 0x6e1f16 },
+      { name: 'Rufus Pell', crime: 'gunning down a card cheat before the hand was done', bounty: 320, wb: 'early',
+        tell: 'Tell: his first shot comes before the bell and flies wild. Stand fast.',
+        sub: 'Pell · Wanted · Draw: Fast', drawMs: 825, acc: 0.50,
+        coat: 0x4a2e3a, pants: 0x26222c, shirt: 0xa39a88, hat: 0x2e2430, skin: 0xb57e4e, scarf: 0x5c6e46 },
+      { name: 'Ada Merritt', crime: 'dropping a witness off the Canyon Junction water tower', bounty: 460, wb: 'head',
+        tell: 'Tell: every shot she takes is at your head — but she always takes her beat first.',
+        sub: 'Ada Merritt · Wanted · Draw: Fast', drawMs: 745, acc: 0.80,
+        coat: 0x33302c, pants: 0x232120, shirt: 0x8a7a5c, hat: 0x191716, skin: 0xc98d54, hair: 0x2a1a10 },
+      { name: 'Jesse Vale', crime: 'robbing two banks in one afternoon, an iron in each hand', bounty: 420, wb: 'fan',
+        tell: 'Tell: two revolvers, fanned together — expect a rush of three.',
+        sub: '"Twin-Iron" Vale · Wanted · Draw: Fast', drawMs: 845, acc: 0.52,
+        coat: 0x4a3220, pants: 0x2e2620, shirt: 0xa08b6a, hat: 0x3a2a18, skin: 0xc98d54, scarf: 0x274435 },
+      { name: 'Old Man Ferris', crime: 'forty years of robberies, and never once dropped', bounty: 520, wb: 'armor',
+        tell: 'Tell: the slowest draw on the wall, in a plated coat. Vitals only — body shots are wasted lead.',
+        sub: 'Old Man Ferris · Wanted · Draw: Plodding', drawMs: 1180, acc: 0.56, plate: true,
+        coat: 0x1d1b1a, pants: 0x171615, shirt: 0x5c564e, hat: 0x121110, skin: 0xcfa06a, band: 0x3d0f0a }
+    ];
+    var wantedCfg = null, wantedIdx = -1;
+    /* A poster's face, drawn from the man's own colours — his hat,
+       his skin, his coat, his patch or plate — the same face the
+       street builds in 3D when you face him. */
+    function wbFaceSVG(c){
+      function hx(n){ return '#' + ('000000' + (n || 0).toString(16)).slice(-6); }
+      var s = '<svg viewBox="0 0 64 64" aria-hidden="true">';
+      s += '<path d="M6 64 L14 44 Q32 36 50 44 L58 64 Z" fill="' + hx(c.coat) + '"/>';
+      if (c.poncho) s += '<path d="M14 44 Q32 36 50 44 L46 53 Q32 46 18 53 Z" fill="' + hx(c.poncho) + '"/>';
+      if (c.plate) s += '<rect x="24" y="44" width="16" height="13" rx="3" fill="#8f97a3" stroke="#5c636e" stroke-width="1.5"/>';
+      if (c.scarf) s += '<path d="M21 42 Q32 38 43 42 L41 46.5 Q32 43 23 46.5 Z" fill="' + hx(c.scarf) + '"/>';
+      s += '<rect x="28" y="33" width="8" height="9" fill="' + hx(c.skin) + '"/>';
+      s += '<ellipse cx="32" cy="26.5" rx="10.5" ry="12" fill="' + hx(c.skin) + '"/>';
+      if (c.hair) s += '<path d="M21.5 25 Q20 10 32 9.5 Q44 10 42.5 25 L39.5 25 Q40.5 15.5 32 15 Q23.5 15.5 24.5 25 Z" fill="' + hx(c.hair) + '"/>';
+      if (c.patch){
+        s += '<circle cx="27.5" cy="26.5" r="1.5" fill="#241708"/><circle cx="36.5" cy="26.5" r="3.1" fill="#17120c"/><path d="M21.5 20.5 L42.5 30.5" stroke="#17120c" stroke-width="1.6"/>';
+      } else {
+        s += '<circle cx="27.5" cy="26.5" r="1.5" fill="#241708"/><circle cx="36.5" cy="26.5" r="1.5" fill="#241708"/>';
+      }
+      s += '<path d="M32 28.5 L31 32.5 L33.5 32.5" stroke="rgba(0,0,0,.35)" stroke-width="1.1" fill="none"/>';
+      s += '<path d="M27.5 36.8 Q32 35.4 36.5 36.8" stroke="#5c3420" stroke-width="1.6" fill="none"/>';
+      var bw = c.wideBrim ? 31 : 25;
+      s += '<rect x="' + (32 - bw / 2) + '" y="14.8" width="' + bw + '" height="3.4" rx="1.7" fill="' + hx(c.hat) + '"/>';
+      s += '<path d="M24 15.3 L26 4.5 Q32 2 38 4.5 L40 15.3 Z" fill="' + hx(c.hat) + '"/>';
+      if (c.band) s += '<rect x="24.6" y="12" width="14.8" height="3" fill="' + hx(c.band) + '"/>';
+      s += '</svg>';
+      return s;
+    }
+    function wbFreshIdx(){
+      var cands = [];
+      for (var i = 0; i < WB_POOL.length; i++) if ((SAVE.wbBoard || []).indexOf(i) < 0) cands.push(i);
+      if (!cands.length) return -1;
+      return cands[Math.floor(Math.random() * cands.length)];
+    }
+    /* The wall keeps itself honest: four posters up, no man twice,
+       and a stamped poster whose time has run out comes down with a
+       fresh outlaw pinned in its place. */
+    function wbEnsureBoard(){
+      var now = Date.now(), changed = false;
+      var clean = [];
+      (SAVE.wbBoard || []).forEach(function(pi){ if (typeof pi === 'number' && pi >= 0 && pi < WB_POOL.length && clean.indexOf(pi) < 0) clean.push(pi); });
+      if (clean.length !== (SAVE.wbBoard || []).length) changed = true;
+      SAVE.wbBoard = clean;
+      if (SAVE.wbStamp && SAVE.wbBoard.indexOf(SAVE.wbStamp.idx) < 0){ SAVE.wbStamp = null; SAVE.wbGoneAt = 0; changed = true; }
+      if (SAVE.wbStamp && SAVE.wbGoneAt && now >= SAVE.wbGoneAt){
+        var at = SAVE.wbBoard.indexOf(SAVE.wbStamp.idx);
+        var fresh = wbFreshIdx();
+        if (at >= 0 && fresh >= 0) SAVE.wbBoard[at] = fresh;
+        SAVE.wbStamp = null; SAVE.wbGoneAt = 0; changed = true;
+      }
+      while (SAVE.wbBoard.length < 4){ var n = wbFreshIdx(); if (n < 0) break; SAVE.wbBoard.push(n); changed = true; }
+      if (SAVE.wbBoard.length > 4){ SAVE.wbBoard.length = 4; changed = true; }
+      if (changed) persistSave();
+    }
+    function wbBestText(){
+      return SAVE.wbBest > 0 ? ('$' + SAVE.wbBest + ' · $' + SAVE.wbCollected + ' collected') : 'none yet';
+    }
+    function renderWantedBoard(){
+      wbEnsureBoard();
+      var wall = $('wbWall'); if (!wall) return;
+      wall.innerHTML = '';
+      SAVE.wbBoard.forEach(function(pi){
+        var c = WB_POOL[pi];
+        var stamped = !!(SAVE.wbStamp && SAVE.wbStamp.idx === pi);
+        var d = document.createElement('div');
+        d.className = 'wbPoster' + (stamped ? ' done' : '');
+        var h = '<div class="wbHead">WANTED</div>' +
+          '<div class="wbFace">' + wbFaceSVG(c) + '</div>' +
+          '<div class="wbName">' + c.name + '</div>' +
+          '<p class="wbCrime">Wanted for ' + c.crime + '.</p>' +
+          '<p class="wbTell">' + c.tell + '</p>' +
+          '<div class="wbBounty">BOUNTY <b>$' + c.bounty + '</b></div>';
+        if (stamped) h += '<div class="wbStamp"><span>' + SAVE.wbStamp.word + '</span></div>';
+        else h += '<button class="wbGo" type="button">FACE HIM · $' + c.bounty + '</button>';
+        d.innerHTML = h;
+        if (!stamped){
+          d.querySelector('.wbGo').addEventListener('click', function(){
+            initAudio(); sndClick();
+            $('wantedCard').style.display = 'none';
+            startWantedDuel(pi);
+          });
+        }
+        wall.appendChild(d);
+      });
+      $('wbBoardLine').textContent = SAVE.wbCaught > 0
+        ? 'CAUGHT · ' + SAVE.wbCaught + ' · COLLECTED $' + SAVE.wbCollected + ' · BIGGEST $' + SAVE.wbBest
+        : 'NO BOUNTIES COLLECTED YET';
+    }
+    function openWantedBoard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      renderWantedBoard();   // …then the wall takes the menu's place
+      $('titleCard').style.display = 'none';
+      $('wantedCard').style.display = 'flex';
+      var wi = document.querySelector('#wantedCard .inner'); if (wi) wi.scrollTop = 0;
+    }
+    /* Facing a poster: one man, a straight duel — the Quick Duel's
+       setup with the poster's own bounty riding on it. */
+    function startWantedDuel(pi){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'wanted'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      wantedIdx = pi; wantedCfg = WB_POOL[pi];
+      G.duel = 1 + Math.floor(Math.random() * 4); // a random range: 9 to 16 paces
+      rotateDuelGround(); // v3.1: a Wanted duel rotates like every duel — ground and picked hour apply
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var o = buildGunslinger(wantedCfg);
+      o.slot = 0;
+      if (wantedCfg.wb === 'early') o.accMul = 0.85; // his hand is wild, before the bell and after it
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - dist;
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = wantedCfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = 'WANTED BOARD · ' + dist + ' PACES';
+      $('oppName').textContent = wantedCfg.name;
+      $('oppSub').textContent = wantedCfg.sub;
+      clockEl.textContent = '—';
+      var clblW = document.querySelector('#clockPlate .lbl'); if (clblW) clblW.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 1);
+      updateDuelSwitchUI();
+    }
+    function wantedWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var pay = wantedCfg ? wantedCfg.bounty : 0;
+      SAVE.money += pay;
+      SAVE.wbCaught++; SAVE.wbCollected += pay;
+      if (pay > SAVE.wbBest) SAVE.wbBest = pay;
+      var word = (zone && ZONES[zone] && ZONES[zone].vital) ? 'DEAD' : 'CAUGHT';
+      if (wantedIdx >= 0){ SAVE.wbStamp = { idx: wantedIdx, word: word }; SAVE.wbGoneAt = Date.now() + 5 * 60 * 1000; }
+      persistSave();
+      G.lastReward = pay;
+      endRoundCommon();
+      var rpW = startReplay(); // the killing shot plays back in slow motion, same as any duel (v2.2)
+      setTimeout(function(){
+        banner(word === 'DEAD' ? 'DEAD — BOUNTY PAID' : 'CAUGHT — BOUNTY PAID');
+        toast('Bounty collected — +$' + pay + '!', true);
+      }, rpW ? 2100 : 480);
+      if (rpW) setTimeout(function(){ showNext('Back to the Board'); }, 2100);
+      else showNext('Back to the Board');
+    }
+    function wantedLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('Foul — too eager! His poster stays up.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('He got away — his poster stays up. It cost you nothing.', true);
+      }
+      showNext('Back to the Board');
+    }
+    /* The tells, played out on the street: driven from the animate
+       loop every frame while a Wanted duel is live. Before the bell
+       the flincher flinches and the early man fires his wild shot
+       (his own iron only — yours stays a foul until DRAW!); after
+       the bell the fan's second iron rises with the first and every
+       shot he makes answers with a fast pair more. */
+    function wantedQuirkTick(now){
+      if (specialKind !== 'wanted' || G.lan) return;
+      var o = opps[0];
+      if (!o || o.dead || !o.cfg || !o.cfg.wb) return;
+      var q = o.cfg.wb;
+      if (G.state === 'standoff'){
+        if (q === 'fake'){
+          if (!o.wbFlinched && now >= G.drawAt - 650){ o.wbFlinched = true; o.wbFlinchUntil = now + 260; sndClick(); }
+          if (o.wbFlinchUntil && now < o.wbFlinchUntil){
+            o.armR.sh.rotation.x = -0.95; o.armR.el.rotation.x = -0.5; o.group.rotation.z = 0.03;
+          } else if (o.wbFlinchUntil){
+            o.armR.sh.rotation.x = 0.1; o.armR.el.rotation.x = -0.32; o.group.rotation.z = 0; o.wbFlinchUntil = 0;
+          }
+        } else if (q === 'early'){
+          if (!o.wbEarlyFired && now >= G.drawAt - 520){
+            o.wbEarlyFired = true;
+            o.armR.sh.rotation.x = -1.52; o.armR.el.rotation.x = -0.06;
+            o.muzzle.getWorldPosition(_v);
+            fireFlash(oppFlash, _v);
+            sndShot(true);
+            spawnPuff(smokePool, _v, new THREE.Vector3(0, 0.4, 0.3), 0.2, 0.9);
+            if (Math.random() < 0.16){
+              toast('His early shot clipped you!', true);
+              playerHit(now);
+            } else {
+              sndRico();
+              spawnPuff(dustPool, new THREE.Vector3((Math.random() < 0.5 ? -1 : 1) * (1 + Math.random()), 0.35, 2.6),
+                new THREE.Vector3(0, 0.4, 0), 0.45, 0.7);
+              toast('He fired BEFORE the bell — wild! Hold your nerve!', true);
+            }
+          }
+        }
+        return;
+      }
+      if (G.state === 'draw' && q === 'fan'){
+        var fp = Math.min((now - o.raiseStart) / effDrawMs(o), 1);
+        var fe = easeOutCubic(fp);
+        o.armL.sh.rotation.x = 0.1 + (-1.52 - 0.1) * fe;
+        o.armL.el.rotation.x = -0.32 + (-0.06 + 0.32) * fe;
+        if (o.wbBurst > 0 && now >= o.wbBurstAt){
+          oppShoot(now, o);
+          o.wbBurst--; o.wbBurstAt = now + 150;
+        }
+      }
+    }
     var bountyCfg = null, dailyCfg = null;
     function dailyCfgForToday(){
       var s = todayStr(), h = 0;
@@ -21944,6 +23200,752 @@ three/build/three.module.js:
       var backTo = dailyReturn; dailyReturn = 'duels';
       $(backTo === 'menu' ? 'titleCard' : 'duelsCard').style.display = 'flex';
     });
+    $('btnWantedBoard').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderWantedBoard();
+      $('titleCard').style.display = 'none';
+      $('duelsCard').style.display = 'none';
+      $('wantedCard').style.display = 'flex';
+      var wi = document.querySelector('#wantedCard .inner'); if (wi) wi.scrollTop = 0;
+    });
+    $('btnBackWanted').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('wantedCard').style.display = 'none';
+      $('wbBestLine').textContent = wbBestText();
+      $('duelsCard').style.display = 'flex'; // the board lives in the Duels hub (v3.11)
+    });
+
+    /* ============================== HIGH NOON TOURNAMENT (v3.12) ==============================
+       An 8-gunslinger single-elimination bracket in the Duels hub.
+       You hold the top seed; the other seven are drawn from every
+       pool the game already keeps — the ladder six, their wingmen
+       and the Wanted Board ten — seeded so your road rises: a fair
+       quarter-final (draws of 1000ms+), a fast semi-final
+       (800–999ms), and the quickest gun left in the final (under
+       800ms), each round's man scaled a touch quicker and truer
+       still. The other quarter-finals settle themselves as you
+       advance; if you fall, the man who beat you rides on and
+       takes the crown. Every fight is a straight duel — bell,
+       DRAW!, vitals, your hide — on the rotation's ground at the
+       picked hour, at Mode Settings difficulty (effDrawMs reads
+       it for every gunman). Win all three and the crown is yours
+       with a $500 purse; lose any round and the run ends. Crowns
+       and the best run live in Stats and on the hub picker. */
+    var TN_ROUNDS = ['QUARTER-FINAL', 'SEMI-FINAL', 'THE FINAL'];
+    var TN_POS = [1, 2, 6]; // bracket positions of your three opponents, round by round
+    var tournCfg = null;
+    function tnPool(){
+      var p = OPPONENTS.slice();
+      EXTRA_OPPONENTS.forEach(function(list){ list.forEach(function(c){ p.push(c); }); });
+      WB_POOL.forEach(function(c){ p.push(c); });
+      return p;
+    }
+    function tnBracketOk(){
+      if (!Array.isArray(SAVE.hnSeeds) || SAVE.hnSeeds.length !== 8 || SAVE.hnSeeds[0] !== -1) return false;
+      var pool = tnPool();
+      for (var i = 1; i < 8; i++){ var s = SAVE.hnSeeds[i]; if (typeof s !== 'number' || s < 0 || s >= pool.length) return false; }
+      return true;
+    }
+    function tnNewBracket(){
+      var pool = tnPool(), used = {};
+      function pick(test){
+        var cands = [];
+        pool.forEach(function(c, i){ if (!used[i] && test(c)) cands.push(i); });
+        if (!cands.length) pool.forEach(function(c, i){ if (!used[i]) cands.push(i); });
+        var i = cands[Math.floor(Math.random() * cands.length)];
+        used[i] = true; return i;
+      }
+      var qf = pick(function(c){ return c.drawMs >= 1000; });
+      var sf = pick(function(c){ return c.drawMs >= 800 && c.drawMs < 1000; });
+      var fin = pick(function(c){ return c.drawMs < 800; });
+      var f1 = pick(function(){ return true; });
+      var f2 = pick(function(){ return true; });
+      var f3 = pick(function(){ return true; });
+      var f4 = pick(function(){ return true; });
+      SAVE.hnSeeds = [-1, qf, sf, f1, f2, f3, fin, f4];
+      SAVE.hnRound = 0; SAVE.hnStatus = 'live'; SAVE.hnSfW = -1; SAVE.hnChampPos = -1;
+      persistSave();
+    }
+    function tnName(pos){
+      var s = SAVE.hnSeeds[pos];
+      return s === -1 ? 'YOU' : tnPool()[s].name;
+    }
+    /* The far quarter-final (seeds 4 v 5): the quicker draw usually
+       comes through. Settled the moment your own quarter is. */
+    function tnSettleFar(){
+      if (SAVE.hnSfW >= 0 || !tnBracketOk()) return;
+      var pool = tnPool();
+      var a = pool[SAVE.hnSeeds[4]], b = pool[SAVE.hnSeeds[5]];
+      SAVE.hnSfW = Math.random() < (a.drawMs <= b.drawMs ? 0.72 : 0.28) ? 4 : 5;
+    }
+    function hnLineText(){
+      if (SAVE.hnStatus === 'live' && tnBracketOk()) return 'in a run — ' + TN_ROUNDS[SAVE.hnRound].toLowerCase() + ' next';
+      if (SAVE.hnWins > 0) return SAVE.hnWins + (SAVE.hnWins === 1 ? ' crown' : ' crowns') + ' · best run ' + SAVE.hnBest + '/3';
+      return SAVE.hnBest > 0 ? 'best run ' + SAVE.hnBest + '/3 · no crown yet' : 'no bracket yet';
+    }
+    function tnRowHtml(name, state, isYou){
+      return '<div class="tnRow' + (isYou ? ' you' : '') + (state ? ' ' + state : '') + '"><span>' + name + '</span>' +
+        (state === 'win' ? '<span class="tnTag">WON</span>' : state === 'out' ? '<span class="tnTag">OUT</span>' : '') + '</div>';
+    }
+    function tnMatchHtml(rows, isNext){
+      return '<div class="tnMatch' + (isNext ? ' next' : '') + '">' + rows + '</div>';
+    }
+    function renderTournBoard(){
+      var board = $('tnBoard'); if (!board) return;
+      var go = $('btnTournGo');
+      if (!tnBracketOk() || !SAVE.hnStatus){
+        board.innerHTML = '<div class="tnMatch"><div class="tnCrown">NO BRACKET DRAWN YET</div></div>';
+        $('tnLine').textContent = SAVE.hnWins > 0 ? ('CROWNS WON · ' + SAVE.hnWins + ' · BEST RUN ' + SAVE.hnBest + '/3') : 'EIGHT GUNS · ONE CROWN · $500 PURSE';
+        go.textContent = 'ENTER THE TOURNAMENT';
+        return;
+      }
+      var live = SAVE.hnStatus === 'live', champ = SAVE.hnStatus === 'champ';
+      var r = SAVE.hnRound; // rounds you have won on this run
+      if (((live && r >= 1) || !live) && SAVE.hnSfW < 0){ tnSettleFar(); persistSave(); }
+      var qfDone = !live || r >= 1;
+      var sfDone = !live || r >= 2;
+      var champPos = champ ? 0 : (SAVE.hnChampPos >= 0 ? SAVE.hnChampPos : TN_POS[Math.min(r, 2)]);
+      // match winners by bracket position; -2 = not decided yet
+      var wM1 = qfDone ? (r >= 1 ? 0 : 1) : -2;
+      var wM2 = qfDone ? 2 : -2;
+      var wM3 = qfDone ? SAVE.hnSfW : -2;
+      var wM4 = qfDone ? 6 : -2;
+      var wS1 = sfDone ? (champ || r >= 2 ? 0 : (r === 1 ? 2 : 1)) : -2;
+      var wS2 = sfDone ? 6 : -2;
+      var wF = champ ? 0 : (!live ? champPos : -2);
+      function prow(pos, winner){
+        return tnRowHtml(tnName(pos), winner === -2 ? '' : (winner === pos ? 'win' : 'out'), pos === 0);
+      }
+      function phRow(txt){ return tnRowHtml(txt, '', false); }
+      var h = '<div><p class="tnColHead">QUARTER-FINAL</p>';
+      h += tnMatchHtml(prow(0, wM1) + prow(1, wM1), live && r === 0);
+      h += tnMatchHtml(prow(2, wM2) + prow(3, wM2), false);
+      h += tnMatchHtml(prow(4, wM3) + prow(5, wM3), false);
+      h += tnMatchHtml(prow(6, wM4) + prow(7, wM4), false);
+      h += '</div><div><p class="tnColHead">SEMI-FINAL</p>';
+      h += tnMatchHtml(qfDone ? prow(wM1, wS1) + prow(2, wS1) : phRow('WINNER OF QF 1') + phRow('WINNER OF QF 2'), live && r === 1);
+      h += tnMatchHtml(qfDone ? prow(SAVE.hnSfW, wS2) + prow(6, wS2) : phRow('WINNER OF QF 3') + phRow('WINNER OF QF 4'), false);
+      h += '</div><div><p class="tnColHead">THE FINAL</p>';
+      h += tnMatchHtml(sfDone ? prow(wS1, wF) + prow(6, wF) : phRow('WINNER OF SEMI 1') + phRow('WINNER OF SEMI 2'), live && r === 2);
+      if (champ) h += '<div class="tnMatch"><div class="tnCrown">★ CHAMPION · +$500 ★</div></div>';
+      else if (!live) h += '<div class="tnMatch"><div class="tnCrown">CROWN · ' + tnName(champPos).toUpperCase() + '</div></div>';
+      h += '</div>';
+      board.innerHTML = h;
+      if (live){
+        $('tnLine').textContent = 'YOUR ROAD · ' + TN_ROUNDS[r] + ' NEXT · ' + tnName(TN_POS[r]).toUpperCase();
+        go.textContent = 'FACE ' + tnName(TN_POS[r]).toUpperCase() + ' · ' + TN_ROUNDS[r];
+      } else if (champ){
+        $('tnLine').textContent = 'CHAMPION OF HIGH NOON · CROWNS ' + SAVE.hnWins + ' · PURSE PAID $500';
+        go.textContent = 'ENTER AGAIN · NEW BRACKET';
+      } else {
+        $('tnLine').textContent = 'OUT IN THE ' + (r === 2 ? 'FINAL' : TN_ROUNDS[r]) + ' · BEST RUN ' + SAVE.hnBest + '/3' + (SAVE.hnWins > 0 ? ' · CROWNS ' + SAVE.hnWins : '');
+        go.textContent = 'ENTER AGAIN · NEW BRACKET';
+      }
+    }
+    function openTournBoard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      renderTournBoard();   // …then the bracket takes the menu's place
+      $('titleCard').style.display = 'none';
+      $('tournCard').style.display = 'flex';
+      var ti = document.querySelector('#tournCard .inner'); if (ti) ti.scrollTop = 0;
+    }
+    /* One tournament fight: a straight duel against the round's
+       seeded man, scaled a step quicker and truer each round. His
+       Wanted tell, if he has one, stays on the Board — the bracket
+       is an honest draw. */
+    function startTournDuel(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'tourn'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      var round = SAVE.hnRound;
+      var base = tnPool()[SAVE.hnSeeds[TN_POS[round]]];
+      var cfg = {};
+      for (var k in base){ if (k !== 'wb') cfg[k] = base[k]; }
+      cfg.drawMs = Math.round(base.drawMs * [1, 0.95, 0.9][round]);
+      cfg.acc = Math.min(0.86, base.acc + [0, 0.03, 0.06][round]);
+      cfg.sub = base.sub + ' · High Noon · ' + TN_ROUNDS[round];
+      tournCfg = cfg;
+      G.duel = [2, 3, 4][round]; // 11, 13.5, then 16 paces — a longer shot each round
+      rotateDuelGround(); // v3.1: a tournament duel rotates like every duel — ground and picked hour apply
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var o = buildGunslinger(cfg);
+      o.slot = 0;
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - dist;
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = cfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = 'HIGH NOON · ' + TN_ROUNDS[round] + ' · ' + dist + ' PACES';
+      $('oppName').textContent = cfg.name;
+      $('oppSub').textContent = cfg.sub;
+      clockEl.textContent = '—';
+      var clblT = document.querySelector('#clockPlate .lbl'); if (clblT) clblT.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 1);
+      updateDuelSwitchUI();
+    }
+    function tournWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var round = SAVE.hnRound;
+      SAVE.hnRound++;
+      if (SAVE.hnRound > SAVE.hnBest) SAVE.hnBest = SAVE.hnRound;
+      tnSettleFar();
+      var final = SAVE.hnRound >= 3;
+      if (final){ SAVE.hnStatus = 'champ'; SAVE.hnChampPos = 0; SAVE.hnWins++; SAVE.money += 500; G.lastReward = 500; }
+      persistSave();
+      endRoundCommon();
+      var rpT = startReplay(); // the killing shot plays back in slow motion, same as any duel (v2.2)
+      setTimeout(function(){
+        if (final){
+          banner('★ HIGH NOON CHAMPION ★');
+          toast('The crown is yours — and the $500 purse!', true);
+        } else {
+          banner(TN_ROUNDS[round] + ' WON');
+          toast((tournCfg ? tournCfg.name : 'He') + ' is down — ' + TN_ROUNDS[SAVE.hnRound].toLowerCase() + ' next.', true);
+        }
+      }, rpT ? 2100 : 480);
+      if (rpT) setTimeout(function(){ showNext('Back to the Bracket'); }, 2100);
+      else showNext('Back to the Bracket');
+    }
+    function tournLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++;
+      SAVE.hnStatus = 'out';
+      SAVE.hnChampPos = TN_POS[SAVE.hnRound]; // the man who beat you rides on and takes the crown
+      if (SAVE.hnRound > SAVE.hnBest) SAVE.hnBest = SAVE.hnRound;
+      tnSettleFar();
+      persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('Foul — too eager! You\'re out of the tournament.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast((tournCfg ? tournCfg.name : 'He') + ' takes the ' + (SAVE.hnRound === 2 ? 'final' : TN_ROUNDS[SAVE.hnRound].toLowerCase()) + ' — tournament over.', true);
+      }
+      showNext('Back to the Bracket');
+    }
+    $('btnTourn').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderTournBoard();
+      $('titleCard').style.display = 'none';
+      $('duelsCard').style.display = 'none';
+      $('tournCard').style.display = 'flex';
+      var ti = document.querySelector('#tournCard .inner'); if (ti) ti.scrollTop = 0;
+    });
+    $('btnBackTourn').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('tournCard').style.display = 'none';
+      $('hnBestLine').textContent = hnLineText();
+      $('duelsCard').style.display = 'flex'; // the bracket lives in the Duels hub (v3.12)
+    });
+    $('btnTournGo').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (SAVE.hnStatus !== 'live' || !tnBracketOk()){ tnNewBracket(); renderTournBoard(); return; }
+      $('tournCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startTournDuel();
+    });
+    /* ============================== THE RIVAL (v3.13) ==============================
+       One recurring nemesis in the Duels hub: Silas Crowe, the man
+       in the black coat with the crimson shirt and the red band on
+       his black hat. He challenges you himself; beat him and he
+       swears revenge and comes back FASTER — five beats to finish
+       him for good. Every rematch he draws quicker and aims truer,
+       and his trick changes: a plain quick draw first, then
+       head-hunter accuracy (dead true, but he takes his beat to
+       line it up — the Wanted Board's head tell, in beginDraw),
+       then a fake-out flinch before the bell (his real shot lands
+       late — don't bite), then fanning two irons, and at last the
+       long street — nineteen paces, his quickest draw of all.
+       Each beat pays cash rising with the round, and the fifth
+       pays the biggest purse of all and ends him — a Rival
+       Defeated mark in Stats. Losing a rematch costs nothing: he
+       stays at that round until you take it. Every fight is a
+       straight duel — bell, DRAW!, vitals, your hide — on the
+       rotation's ground at the picked hour, at Mode Settings
+       difficulty (effDrawMs reads it for every gunman). Progress
+       — beats won, the round you're on — lives in the save and
+       shows on the picker and the card; an old save starts at
+       round 1. */
+    var RV_BASE = { name: 'Silas Crowe',
+      coat: 0x17151a, pants: 0x1c1a1e, shirt: 0x6e1f16, hat: 0x0f0e10, skin: 0xc98d54, band: 0x8a1512 };
+    var RV_BEATS = [
+      { title: 'FIRST MEETING', trick: 'A plain quick draw — nothing up his sleeve but speed.', wb: null,
+        drawMs: 1000, acc: 0.55, duel: 1, pay: 150,
+        taunt: 'You don\'t know me yet, stranger. Name\'s Crowe. Men learn that name once — at the wrong end of my iron.',
+        revenge: 'Dirt tastes fine. I\'ll be back — and next time I aim proper.' },
+      { title: 'HE AIMS HIGHER', trick: 'Head-hunter now — dead true, but he takes his beat to line it up.', wb: 'head',
+        drawMs: 920, acc: 0.78, duel: 2, pay: 250,
+        taunt: 'Still breathing? I left that last one in you as a lesson. This time I take the head.',
+        revenge: 'You ducked a dead man\'s shot. Nobody does it twice.' },
+      { title: 'THE FLINCH', trick: 'A fake-out flinch before the bell — his real shot comes late. Don\'t bite.', wb: 'fake',
+        drawMs: 860, acc: 0.62, duel: 3, pay: 350,
+        taunt: 'Watch my hand, boy. Watch it close. That\'s where men die.',
+        revenge: 'You didn\'t bite. Huh. The next trick won\'t be a trick.' },
+      { title: 'TWO IRONS', trick: 'Two irons, fanned together — his shots come in a rush.', wb: 'fan',
+        drawMs: 800, acc: 0.60, duel: 4, pay: 500,
+        taunt: 'One iron was sport. Two is business.',
+        revenge: 'Both hands — and still you stand. Last time, then. The long street.' },
+      { title: 'THE LONG STREET', trick: 'Nineteen paces, no tricks left — and his quickest draw of all.', wb: null,
+        drawMs: 680, acc: 0.74, duel: 5, pay: 1000,
+        taunt: 'Nineteen paces. No tricks left but the truth. One of us doesn\'t walk off this street.',
+        revenge: '' }
+    ];
+    var rivalCfg = null;
+    function rvBeatIdx(){ return Math.min(Math.max(SAVE.rvBeats || 0, 0), 5); }
+    function rvLineText(){
+      if (SAVE.rvDone) return 'finished for good ★';
+      var b = RV_BEATS[rvBeatIdx()];
+      return 'beat ' + (rvBeatIdx() + 1) + ' of 5 next · pays $' + b.pay;
+    }
+    function renderRivalCard(){
+      var done = !!SAVE.rvDone || rvBeatIdx() >= 5;
+      $('rvFace').innerHTML = wbFaceSVG(RV_BASE); // the Board's face-drawing, in Crowe's own colours
+      $('rvTaunt').textContent = done
+        ? '“Nineteen paces settled it. Silas Crowe is finished — for good.”'
+        : '“' + RV_BEATS[rvBeatIdx()].taunt + '”';
+      var h = '';
+      RV_BEATS.forEach(function(b, i){
+        var state = (done || i < rvBeatIdx()) ? 'beaten' : (i === rvBeatIdx() ? 'next' : '');
+        var tag = state === 'beaten' ? 'BEATEN' : state === 'next' ? 'NEXT' : 'WAITING';
+        h += '<div class="rvBeat ' + state + '"><span>BEAT ' + (i + 1) + ' · ' + b.title + ' — ' + b.trick + '</span>' +
+          '<span class="rvPay">$' + b.pay + '</span><span class="rvState">' + tag + '</span></div>';
+      });
+      $('rvBeats').innerHTML = h;
+      var go = $('btnRivalGo');
+      if (done){
+        $('rvLine').textContent = 'RIVAL DEFEATED ★ · BEATS 5 OF 5 · WON $' + (SAVE.rvEarned || 0);
+        go.textContent = 'CROWE IS FINISHED'; go.disabled = true; go.style.opacity = '.55';
+      } else {
+        $('rvLine').textContent = 'BEAT ' + (rvBeatIdx() + 1) + ' OF 5 · PAYS $' + RV_BEATS[rvBeatIdx()].pay + ' · WON SO FAR $' + (SAVE.rvEarned || 0);
+        go.textContent = 'FACE CROWE · BEAT ' + (rvBeatIdx() + 1); go.disabled = false; go.style.opacity = '';
+      }
+    }
+    function openRivalCard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      renderRivalCard();     // …then Crowe's card takes the menu's place
+      $('titleCard').style.display = 'none';
+      $('rivalCard').style.display = 'flex';
+      var ri = document.querySelector('#rivalCard .inner'); if (ri) ri.scrollTop = 0;
+    }
+    /* One Rival fight: a straight duel against Crowe at this
+       beat's range, draw and aim — his trick rides in cfg.wb, the
+       same field the Wanted Board's tells ride in, so the bell
+       delays in beginDraw and the burst arming in the main loop
+       already know him. */
+    function startRivalDuel(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'rival'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      var beat = rvBeatIdx();
+      var b = RV_BEATS[beat];
+      var cfg = {};
+      for (var k in RV_BASE) cfg[k] = RV_BASE[k];
+      cfg.drawMs = b.drawMs; cfg.acc = b.acc;
+      if (b.wb) cfg.wb = b.wb;
+      cfg.sub = '"Crowe" · The Rival · Beat ' + (beat + 1) + ' of 5';
+      rivalCfg = cfg;
+      G.duel = b.duel; // the street itself lengthens beat by beat: 9, 11, 13.5, 16, then 19 paces
+      rotateDuelGround(); // v3.1: a Rival duel rotates like every duel — ground and picked hour apply
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var o = buildGunslinger(cfg);
+      o.slot = 0;
+      o.group.position.x = 0;
+      o.group.position.z = 4.6 - dist;
+      o.hitboxes.forEach(function(h){ h.userData.owner = o; });
+      opps.push(o);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = cfg.name; G.cineDist = dist;
+      $('duelLabel').textContent = 'THE RIVAL · BEAT ' + (beat + 1) + ' OF 5 · ' + dist + ' PACES';
+      $('oppName').textContent = cfg.name;
+      $('oppSub').textContent = cfg.sub;
+      clockEl.textContent = '—';
+      var clblR = document.querySelector('#clockPlate .lbl'); if (clblR) clblR.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 1);
+      updateDuelSwitchUI();
+    }
+    function rivalWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var beat = rvBeatIdx();
+      var b = RV_BEATS[beat];
+      var pay = b ? b.pay : 0;
+      SAVE.money += pay;
+      SAVE.rvEarned = (SAVE.rvEarned || 0) + pay;
+      SAVE.rvBeats = beat + 1;
+      var final = SAVE.rvBeats >= 5;
+      if (final) SAVE.rvDone = true;
+      persistSave();
+      G.lastReward = pay;
+      endRoundCommon();
+      var rpR = startReplay(); // the killing shot plays back in slow motion, same as any duel (v2.2)
+      setTimeout(function(){
+        if (final){
+          banner('★ THE RIVAL — FINISHED FOR GOOD ★');
+          toast('Crowe is done for good — the final beat pays $' + pay + '!', true);
+        } else {
+          banner('CROWE IS DOWN — BEAT ' + SAVE.rvBeats + ' OF 5');
+          toast('+$' + pay + ' — but he swears revenge: “' + b.revenge + '”', true);
+        }
+      }, rpR ? 2100 : 480);
+      if (rpR) setTimeout(function(){ showNext('Back to The Rival'); }, 2100);
+      else showNext('Back to The Rival');
+    }
+    function rivalLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('Foul — too eager! Crowe laughs it off. Beat ' + (rvBeatIdx() + 1) + ' waits.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('Crowe walks away. Beat ' + (rvBeatIdx() + 1) + ' is still his — it cost you nothing. Come back and take it.', true);
+      }
+      showNext('Back to The Rival');
+    }
+    /* Crowe's tricks, played out on the street — the Wanted Board's
+       own stagecraft in his colours: the fake-out flinch before the
+       bell on beat 3, and the two-iron fan on beat 4 (his burst is
+       armed by the same main-loop line that arms every fan's). */
+    function rivalQuirkTick(now){
+      if (specialKind !== 'rival' || G.lan) return;
+      var o = opps[0];
+      if (!o || o.dead || !o.cfg || !o.cfg.wb) return;
+      var q = o.cfg.wb;
+      if (G.state === 'standoff'){
+        if (q === 'fake'){
+          if (!o.wbFlinched && now >= G.drawAt - 650){ o.wbFlinched = true; o.wbFlinchUntil = now + 260; sndClick(); }
+          if (o.wbFlinchUntil && now < o.wbFlinchUntil){
+            o.armR.sh.rotation.x = -0.95; o.armR.el.rotation.x = -0.5; o.group.rotation.z = 0.03;
+          } else if (o.wbFlinchUntil){
+            o.armR.sh.rotation.x = 0.1; o.armR.el.rotation.x = -0.32; o.group.rotation.z = 0; o.wbFlinchUntil = 0;
+          }
+        }
+        return;
+      }
+      if (G.state === 'draw' && q === 'fan'){
+        var fp = Math.min((now - o.raiseStart) / effDrawMs(o), 1);
+        var fe = easeOutCubic(fp);
+        o.armL.sh.rotation.x = 0.1 + (-1.52 - 0.1) * fe;
+        o.armL.el.rotation.x = -0.32 + (-0.06 + 0.32) * fe;
+        if (o.wbBurst > 0 && now >= o.wbBurstAt){
+          oppShoot(now, o);
+          o.wbBurst--; o.wbBurstAt = now + 150;
+        }
+      }
+    }
+    $('btnRival').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderRivalCard();
+      $('titleCard').style.display = 'none';
+      $('duelsCard').style.display = 'none';
+      $('rivalCard').style.display = 'flex';
+      var ri = document.querySelector('#rivalCard .inner'); if (ri) ri.scrollTop = 0;
+    });
+    $('btnBackRival').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('rivalCard').style.display = 'none';
+      $('rvHubLine').textContent = rvLineText();
+      $('duelsCard').style.display = 'flex'; // Crowe lives in the Duels hub (v3.13)
+    });
+    $('btnRivalGo').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (SAVE.rvDone || rvBeatIdx() >= 5) return; // finished for good — the button says so
+      $('rivalCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startRivalDuel();
+    });
+
+    /* ============================== BACK-TO-BACK 2-ON-1 (v3.14) ==============================
+       One gunslinger in front of you, one behind you, on the
+       rotation's ground at the picked hour, at Mode Settings
+       difficulty. Both draw on the bell like a normal duel —
+       vitals, hide, the lot — but you can only shoot the man you
+       face: every shot is cast through the camera, and the TURN
+       (the plated button on the left edge, a fast sideways swipe,
+       or the ← → keys) swings the whole view round to the other
+       man. The man at your back WAITS his turn — b2bTick holds
+       his iron down — until his patience runs out: then he
+       shouts ("BEHIND YOU!"), his arm comes up in plain sight for
+       anyone turned to see, and a beat later he fires. Turn to
+       face him and he fights as a faced man from there; turn
+       away and the other starts waiting instead. Your hide is
+       one hide across the whole fight — it carries over the
+       turn. Drop both and the pair pays $100; the clear is
+       timed from the bell to the second man down, and the best
+       of it is kept in Stats and on the picker. A loss costs
+       nothing but the walk back. In the Saloon the room is short
+       behind you, so Larkin stands close at your back, against
+       the wall — point-blank, the way a saloon ambush is. */
+    var BB_FRONT = { name: 'Wade Corrigan', sub: '"Wade" Corrigan · Draw: Quick', drawMs: 980, acc: 0.55,
+      coat: 0x7a3b26, pants: 0x2e2a24, shirt: 0xc9b189, hat: 0x4a2f1a, skin: 0xd9a066, scarf: 0x274435 };
+    var BB_BACK = { name: 'Jesse Larkin', sub: '"Jesse" Larkin · Draw: Quick', drawMs: 900, acc: 0.53,
+      coat: 0x2e4038, pants: 0x1f1d1a, shirt: 0x8a7a5c, hat: 0x191716, skin: 0xb57e4e, band: 0x8a1512 };
+    var BB = { face: 0, drawSeen: false, hinted: false };
+    var bbYaw = 0, bbYawT = 0; // the turn's swing, eased in the animate loop's duel camera
+    var btnTurnEl = $('btnTurn'), btnTurnSubEl = $('btnTurnSub');
+    function bbPatience(){ return 2800 + Math.random() * 1500; } // how long the man at your back waits before his shout
+    function bbLineText(){
+      if (!(SAVE.bbWins > 0)) return 'no pair dropped yet';
+      return SAVE.bbWins + (SAVE.bbWins === 1 ? ' pair' : ' pairs') + ' dropped' + (SAVE.bbBest ? ' · best ' + (SAVE.bbBest / 1000).toFixed(2) + 's' : '');
+    }
+    function renderB2BCard(){
+      $('bbFaceF').innerHTML = wbFaceSVG(BB_FRONT); // the Board's face-drawing, in each man's own colours
+      $('bbFaceB').innerHTML = wbFaceSVG(BB_BACK);
+      $('bbLine').textContent = (SAVE.bbWins || 0) > 0
+        ? 'PAIRS DROPPED ' + SAVE.bbWins + ' · BEST CLEAR ' + (SAVE.bbBest ? (SAVE.bbBest / 1000).toFixed(2) + 's' : '—') + ' · WON $' + (SAVE.bbEarned || 0)
+        : 'DROP BOTH · PAYS $100';
+    }
+    function openB2BCard(){
+      $('btnQuit').click(); // the quit path settles the round and lands on the menu…
+      renderB2BCard();     // …then the pair's card takes the menu's place
+      $('titleCard').style.display = 'none';
+      $('b2bCard').style.display = 'flex';
+      var bi2 = document.querySelector('#b2bCard .inner'); if (bi2) bi2.scrollTop = 0;
+    }
+    /* The back man waits: his iron stays down and his clock is
+       wiped every frame b2bTick holds him. The faced man fights
+       on the normal draw loop, untouched. */
+    function bbGate(o, now){
+      o.bbGated = true; o.bbWarned = false;
+      o.bbWarnAt = now + bbPatience();
+      if (G.state === 'draw'){ o.raiseStart = now; o.nextShotAt = Infinity; }
+    }
+    function bbUngate(o, now){
+      var wasWarned = !!o.bbWarned;
+      o.bbGated = false; o.bbWarned = false;
+      if (wasWarned) return; // his shouted shot is already coming — it lands as a faced man's shot
+      if (G.state === 'draw' && !o.dead){
+        // caught with his iron down, he still needs most of his
+        // draw to bring it up — quick, but never instant
+        o.raiseStart = now - effDrawMs(o) * 0.35;
+        o.nextShotAt = now + effDrawMs(o) * 0.65 + 150;
+      }
+    }
+    /* TURN: spin round to the other man. The sights recentre on
+       him, the man you turned from starts his wait, and the man
+       you turned to is armed as a faced man. */
+    function b2bTurn(){
+      if (specialKind !== 'b2b' || G.mode !== 'duel' || G.lan) return;
+      if (G.state !== 'intro' && G.state !== 'standoff' && G.state !== 'draw') return;
+      var now = performance.now();
+      BB.face = 1 - BB.face;
+      bbYawT = BB.face * Math.PI;
+      sndWhoosh(true);
+      centreAim(); // the new man's street opens with the sights dead centre, like every fight
+      var faced = opps[BB.face], back = opps[1 - BB.face];
+      if (back && !back.dead) bbGate(back, now);
+      if (faced && !faced.dead) bbUngate(faced, now);
+      if (faced){
+        $('oppName').textContent = faced.cfg.name;
+        $('oppSub').textContent = faced.cfg.sub + (BB.face === 1 ? ' · Behind you — now face to face' : ' · In front of you');
+      }
+    }
+    function startB2BDuel(){
+      disposeOpps(); disposePractice(); cleanupRideWorld();
+      G.mode = 'duel'; G.lan = false; specialKind = 'b2b'; fanOn = false; updateFanBtn();
+      centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
+      BB.face = 0; BB.drawSeen = false; BB.hinted = false;
+      bbYaw = 0; bbYawT = 0;
+      G.duel = 2; // eleven paces — a fair street for a turning fight
+      var loc = rotateDuelGround(); // v3.1: a Back-to-Back fight rotates like every duel — ground and picked hour apply
+      duelFam = currentWeapon().kind;
+      duelAmmo = freshDuelAmmo();
+      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.camFall = -1; G.shake = 0; G.lastWin = false;
+      var dist = DISTANCES[G.duel];
+      var front = buildGunslinger(BB_FRONT);
+      front.slot = 0;
+      front.group.position.set(0, 0, 4.6 - dist);
+      front.hitboxes.forEach(function(h){ h.userData.owner = front; });
+      opps.push(front);
+      var back = buildGunslinger(BB_BACK);
+      back.slot = 1;
+      // behind you at the same paces — except in the Saloon, whose
+      // back wall stands close: there he waits against it
+      back.group.position.set(0, 0, loc === 'saloon' ? 7.0 : 4.6 + dist);
+      back.group.rotation.y = Math.PI; // he faces you, down the lane at your back
+      back.hitboxes.forEach(function(h){ h.userData.owner = back; });
+      opps.push(back);
+      shadowDirty = true;
+      holding = false; gunDrawn = false; gunV = 0;
+      if (adsTagEl) adsTagEl.className = 'plate';
+      G.cineName = 'Back-to-Back'; G.cineDist = dist;
+      $('duelLabel').textContent = 'BACK-TO-BACK 2-ON-1 · ' + dist + ' PACES';
+      $('oppName').textContent = BB_FRONT.name + ' & ' + BB_BACK.name;
+      $('oppSub').textContent = 'One in front · one behind you — TURN to face the other';
+      clockEl.textContent = '—';
+      var clblB = document.querySelector('#clockPlate .lbl'); if (clblB) clblB.textContent = 'Your Draw';
+      updateHp(); updateChambers(); refreshCylinder(weaponCapacity()); updateStats();
+      $('rideSwitch').className = 'on';
+      updateDuelSwitchUI();
+      hideNext(); toast('');
+      bannerEl.className = ''; bannerEl.textContent = '';
+      steadyEl.className = '';
+      $('xhair').className = '';
+      startCinematic(G.duel, 2);
+      updateDuelSwitchUI();
+    }
+    function b2bWin(zone, now){
+      G.state = 'over'; G.lastWin = true; G.wins++; SAVE.careerWins++;
+      var pay = 100;
+      SAVE.money += pay;
+      SAVE.bbWins = (SAVE.bbWins || 0) + 1;
+      SAVE.bbEarned = (SAVE.bbEarned || 0) + pay;
+      var clearMs = G.drawT0 ? (now - G.drawT0) : 0;
+      if (clearMs > 0 && (SAVE.bbBest === null || SAVE.bbBest === undefined || clearMs < SAVE.bbBest)) SAVE.bbBest = clearMs;
+      persistSave();
+      G.lastReward = pay;
+      endRoundCommon();
+      // the slow-mo replay camera stands behind the fallen man —
+      // in the Saloon that ground is inside the back wall, so a
+      // winning shot on Larkin there settles without the replay
+      var rpB2 = (G.location === 'saloon' && lastKillOpp === opps[1]) ? false : startReplay();
+      setTimeout(function(){
+        banner('★ BOTH DOWN — STREET CLEARED ★');
+        toast('Back-to-back won — +$' + pay + (clearMs > 0 ? ' · cleared in ' + (clearMs / 1000).toFixed(2) + 's' : '') + '!', true);
+      }, rpB2 ? 2100 : 480);
+      if (rpB2) setTimeout(function(){ showNext('Back to Back-to-Back'); }, 2100);
+      else showNext('Back to Back-to-Back');
+    }
+    function b2bLose(kind){
+      G.state = 'over'; G.lastWin = false; G.losses++; SAVE.careerLosses++; persistSave();
+      endRoundCommon();
+      if (kind === 'foul'){
+        banner('TOO EAGER!');
+        toast('Foul — too eager! The pair holster up and wait. It cost you nothing.', true);
+      } else {
+        G.camFall = 0;
+        banner("YOU'RE DONE FOR");
+        toast('Two guns was one too many — this time. The pair waits, and it cost you nothing.', true);
+      }
+      showNext('Back to Back-to-Back');
+    }
+    /* The wait, the shout and the shot — run every frame from the
+       main loop, ahead of the draw loop, so a waiting man's clock
+       is wiped before it can ever fire him. */
+    function b2bTick(now){
+      // the TURN button rides only while a Back-to-Back fight is live
+      var live = specialKind === 'b2b' && G.mode === 'duel' && (G.state === 'intro' || G.state === 'standoff' || G.state === 'draw');
+      if (btnTurnEl){
+        var want = live ? 'block' : 'none';
+        if (btnTurnEl.style.display !== want) btnTurnEl.style.display = want;
+        if (live){
+          var other = opps[1 - BB.face];
+          var lbl = other && !other.dead ? 'FACE ' + other.cfg.name.split(' ')[0].toUpperCase() + (BB.face === 0 ? ' · BEHIND YOU' : ' · IN FRONT') : 'FACE THE OTHER MAN';
+          if (btnTurnSubEl && btnTurnSubEl.textContent !== lbl) btnTurnSubEl.textContent = lbl;
+          var warn = false;
+          opps.forEach(function(o){ if (!o.dead && o.bbWarned) warn = true; });
+          var wc = warn ? 'warn' : '';
+          if (btnTurnEl.className !== wc) btnTurnEl.className = wc;
+        }
+      }
+      if (specialKind !== 'b2b' || G.lan) return;
+      if (G.state !== 'draw'){ BB.drawSeen = false; return; }
+      if (!BB.drawSeen){
+        BB.drawSeen = true;
+        opps.forEach(function(o, i){ if (i !== BB.face && !o.dead) bbGate(o, now); });
+      }
+      opps.forEach(function(o, i){
+        if (o.dead || i === BB.face) return;
+        if (!o.bbGated) bbGate(o, now);
+        if (o.bbWarned){
+          // his shouted shot has gone off (the draw loop fired it) —
+          // he settles back into his wait
+          if (now >= o.bbFireAt + 150){ o.bbWarned = false; o.bbWarnAt = now + bbPatience(); }
+        } else {
+          o.raiseStart = now; o.nextShotAt = Infinity; // waiting: iron down, clock wiped
+          if (now >= o.bbWarnAt){
+            o.bbWarned = true;
+            o.bbFireAt = now + effDrawMs(o) + 250;
+            o.raiseStart = now; o.nextShotAt = o.bbFireAt; // his arm comes up over his full draw, then he fires
+            banner('BEHIND YOU!', 'pop');
+            toast(o.cfg.name + ': “My turn!” — TURN, before his iron clears leather!', true);
+          }
+        }
+      });
+      // the man you face is down and the other still stands — say so once
+      var faced = opps[BB.face], other2 = opps[1 - BB.face];
+      if (faced && faced.dead && other2 && !other2.dead && !BB.hinted){
+        BB.hinted = true;
+        toast('He\'s down — the other one is still standing. TURN!', true);
+      }
+    }
+    $('btnB2B').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderB2BCard();
+      $('titleCard').style.display = 'none';
+      $('duelsCard').style.display = 'none';
+      $('b2bCard').style.display = 'flex';
+      var bi3 = document.querySelector('#b2bCard .inner'); if (bi3) bi3.scrollTop = 0;
+    });
+    $('btnBackB2B').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('b2bCard').style.display = 'none';
+      $('bbHubLine').textContent = bbLineText();
+      $('duelsCard').style.display = 'flex'; // the pair lives in the Duels hub (v3.14)
+    });
+    $('btnB2BGo').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('b2bCard').style.display = 'none';
+      $('hud').className = 'on duel';
+      $('btnReload').style.display = 'block';
+      $('btnQuit').style.display = 'block';
+      startB2BDuel();
+    });
+    // TURN acts on the press itself, like RELOAD, and stops the
+    // press from leaking into the street's hold-to-fire handling
+    $('btnTurn').addEventListener('pointerdown', function(e){
+      e.preventDefault(); e.stopPropagation();
+      initAudio(); b2bTurn();
+    });
+    /* Swipe TURN: a fast sideways flick across the street spins
+       you round — a slow drag still aims, as it always has. */
+    var bbSwipe = null;
+    renderer.domElement.addEventListener('pointerdown', function(e){
+      if (specialKind === 'b2b') bbSwipe = { x: e.clientX, y: e.clientY, t: performance.now(), done: false };
+    });
+    renderer.domElement.addEventListener('pointermove', function(e){
+      if (!bbSwipe || bbSwipe.done || specialKind !== 'b2b') return;
+      var dx = e.clientX - bbSwipe.x, dy = e.clientY - bbSwipe.y;
+      if (performance.now() - bbSwipe.t < 400 && Math.abs(dx) > 110 && Math.abs(dx) > 2 * Math.abs(dy)){ bbSwipe.done = true; b2bTurn(); }
+    });
+
     $('btnStartDaily').addEventListener('click', function(){
       initAudio(); sndClick();
       if (SAVE.dailyLastWin === todayStr()) return; // already won today — the button says so
@@ -22414,6 +24416,9 @@ three/build/three.module.js:
         else if (e.code === 'Digit3') switchRideWeapon('rifle');
         else if (e.code === 'KeyQ') switchRideWeapon(rideFam === 'revolver' ? 'shotgun' : rideFam === 'shotgun' ? 'rifle' : 'revolver');
       }
+      // Back-to-Back 2-on-1 (v3.14): ← / → spin you round to face
+      // the other gunslinger — the keyboard's TURN
+      if (specialKind === 'b2b' && G.mode === 'duel' && !e.repeat && (e.code === 'ArrowLeft' || e.code === 'ArrowRight')){ e.preventDefault(); b2bTurn(); }
       // Duel weapon switch (v1.23): the same 1 / 2 / 3 on the street,
       // Q cycles — live through the cinematic, standoff, draw and the
       // duel's end, so a fresh gun is always one key away
@@ -22530,6 +24535,9 @@ three/build/three.module.js:
         if (G.state === 'wavebreak' && specialKind === 'sheriff' && now >= SHF.waveBreakEnd) startSheriffWave(SHF.wave + 1, false); // Sheriff Shift (v3.7): the breather ends and the next wave comes down the street
         if (G.state === 'intro' && now >= G.introEnd) beginStandoff(now);
         else if (G.state === 'standoff' && now >= G.drawAt) beginDraw(now);
+        wantedQuirkTick(now); // Wanted Board (v3.11): the poster's tell plays out — a flinch or a wild early shot before the bell, two-iron bursts after it
+        rivalQuirkTick(now); // The Rival (v3.13): Crowe's own tricks on the same stagecraft — his fake-out flinch before the bell, his two-iron fan after it
+        b2bTick(now); // Back-to-Back 2-on-1 (v3.14): the man at your back waits his turn, shouts his warning, then fires — and the TURN button rides along
 
         if (G.state === 'draw' && anyAlive()){
           shadowDirty = true; // their gun arms are on the move — keep shadows honest
@@ -22548,6 +24556,9 @@ three/build/three.module.js:
               // phone, arriving as a message
               oppShoot(now, o);
               o.nextShotAt = now + 1450 + o.slot * 200;
+              // Wanted Board (v3.11): the two-iron fan answers every
+              // shot with a fast pair more, and cycles quicker besides
+              if (o.cfg.wb === 'fan'){ o.wbBurst = 2; o.wbBurstAt = now + 150; o.nextShotAt = now + 1150; }
             }
           });
         }
@@ -23275,6 +25286,15 @@ three/build/three.module.js:
         var duelTurnK = 0.35 + 0.65 * e2;
         camera.rotateY(-aimSmX * 0.055 * duelTurnK);
         camera.rotateX(aimSmY * 0.04 * duelTurnK);
+        // Back-to-Back 2-on-1 (v3.14): the turn itself — the whole
+        // view swings round, eased, to face the man behind you (and
+        // back again). The gun rides on the camera and every shot is
+        // cast through the same pointer, so the sights stay true
+        // through the spin: you can only ever hit the man you face.
+        if (specialKind === 'b2b' && G.mode === 'duel'){
+          bbYaw += (bbYawT - bbYaw) * Math.min(dt * 6.5, 1);
+          if (Math.abs(bbYaw) > 0.0005) camera.rotateY(bbYaw);
+        }
         // Pop-Up Targets camera (v2.11 fix): the far pop-up spots sit
         // past the edge of a portrait screen — and far past it through
         // the rifle scope's 2x zoom — so a target out there was left
