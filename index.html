@@ -1869,6 +1869,7 @@
       .mtab#btnGear svg{ color:#ffc93f; }
       .mtab#btnStore svg{ color:#8fe34d; }
       .mtab#btnRide svg{ color:#ff7a4d; }
+      .mtab#btnSaloon svg{ color:#f0b95a; }
       @media (max-width:430px){
         .mtAvatar{ width:34px; height:34px; border-radius:10px; }
         .mtAvatar svg{ width:22px; height:22px; }
@@ -2499,6 +2500,23 @@
       .bjSore p{ font-family:'Special Elite',monospace; font-size:13.5px; line-height:1.45; color:#ffd9c9; margin:0 0 6px; }
       @media (max-width:380px){ .bjCardEl{ width:50px; height:72px; } .bjCardEl .bjRank{ font-size:22px; } .bjCardEl .bjSuit{ font-size:20px; } .bjCards{ min-height:76px; } }
 
+      /* ---------- The Saloon (v3.25): the SALOON tab's walk-in room.
+         One illustrated room on its own card — the blackjack table
+         is the room's one spot now (the drinks shelf, the counter
+         tap and the hide top-up were removed in v3.25). Tap the
+         table in the room itself, or its plain button under the
+         scene, to sit down at Blackjack 21. */
+      #saloonCard{ display:none; }
+      #saloonScene{ border:2px solid #6b4a26; border-radius:10px; overflow:hidden; margin:10px 0 2px; background:#2a1708; box-shadow:inset 0 0 34px rgba(0,0,0,.5), 0 4px 14px rgba(0,0,0,.4); }
+      #saloonScene svg{ display:block; width:100%; height:auto; }
+      .salZone{ fill:rgba(255,217,143,0); cursor:pointer; }
+      .salZone:active{ fill:rgba(255,217,143,.13); }
+      .salPlaque{ fill:#201204; opacity:.9; stroke:rgba(255,217,143,.55); pointer-events:none; }
+      .salPlaqueTxt{ font-family:'Special Elite',monospace; font-size:9px; letter-spacing:.22em; fill:#ffd98f; text-anchor:middle; pointer-events:none; }
+      .salSignTxt{ font-family:'Special Elite',monospace; font-size:9.5px; letter-spacing:.3em; fill:#e8c37a; text-anchor:middle; }
+      .salBtns{ display:flex; gap:7px; margin:8px 0 2px; }
+      .salBtns .bigbtn{ margin-top:0; font-size:14.5px; padding:11px 4px; }
+
       /* ---------- Duel screen tidy (v3.18): the foe's name shrinks to
          a small quiet label, and the wait line leaves the weapon bar.
          From the user's phone screenshot (a Saloon duel vs Dusty Dan):
@@ -2542,6 +2560,125 @@
          scoped banner keeps its own high rule (higher specificity). */
       @media (max-height:600px){
         #banner, #banner.namepop{ top:46%; }
+      }
+
+      /* ---------- Menu never rides over a fight (v3.26): while a
+         fight is live the script hangs the .fighting lock on the
+         body (see enforceMenuFightSeparation), and NO menu piece
+         can show over the fight — not the title card with its top
+         bar (THE STRANGER), its BATTLE! button and BACKGROUND pill,
+         not the bottom tab bar, not any hub card, not the
+         BACKGROUND sheet. The fight HUD — weapon tiles, throwable
+         switcher, RELOAD, TURN, the foe's name and hide — owns the
+         screen alone, so RELOAD's corner is its own and the
+         player's name and the foe's name (in #oppPlate, on its own
+         lines: duel · name · sub) can never sit on top of each
+         other. The lock lifts the moment the fight ends and the
+         menu comes back. This block sits last on purpose. ------ */
+      body.fighting .card{ display:none !important; }
+      body.fighting #bgSheet{ visibility:hidden !important; }
+      /* ---------- Foe-name separation (v3.26): the foe plate is a
+         capped column, never a full-width strip — the duel line, the
+         foe's name and his sub each sit on their OWN line inside the
+         plate, and a long pair of names (Back-to-Back's two men)
+         wraps onto its own lines instead of running across the top
+         of the screen where the menu's THE STRANGER used to land.
+         With the menu gone during fights, no name can sit on
+         another name again. ------ */
+      #oppPlate{ max-width:min(64vw, 360px); }
+      #oppPlate .duel, #oppName, #oppSub{ display:block; clear:both; }
+      #oppName{ overflow-wrap:break-word; }
+      /* ---------- Stray cards closed by default (v3.26): five hub
+         cards — Bounty, Daily, Wanted, Rival and Back-to-Back —
+         never got the display:none rule every other card carries,
+         so the base .card flex showed ALL of them from page load,
+         stacked in DOM order over the menu (Back-to-Back on top,
+         the Rival ghosting through it, the menu's top bar and tab
+         bar behind both). That stack was the "100 tabs" pile-up.
+         They start closed like every other card; their openers set
+         them flex, their Back buttons and the one-card guard keep
+         it that way. ------ */
+      #bountyCard{ display:none; }
+      #dailyCard{ display:none; }
+      #wantedCard{ display:none; }
+      #rivalCard{ display:none; }
+      #b2bCard{ display:none; }
+
+      /* ---------- Chunky western plates (v3.27): the bottom tab bar
+         rebuilt as the player's pick — Option 3, Chunky plates.
+         Six thick metal plates in ONE row — BATTLE · PRACTICE ·
+         GEAR · SHOP · RIDE · SALOON — each a dark-brown plate with
+         a THICK gold outline, a hard drop shadow, corner rivets, a
+         bold gold icon over a short label. The picked plate is
+         RAISED and lit solid gold with dark lettering. No scrolling,
+         no clipping, no wrapped labels: every plate is flex:1 with
+         min-width:0 and the labels stay nowrap, stepping down a size
+         on narrow phones. The bar lives only on the menu — v3.26's
+         fighting lock still hides the whole title card in a fight,
+         so the plates can never cover the fight HUD or the BATTLE!
+         button. This block sits last on purpose: it retires the
+         floating no-bar look (v2.30) for the tab bar only — the
+         rest of the floating menu is untouched. ------ */
+      #titleCard{ padding-bottom:calc(102px + env(safe-area-inset-bottom)); }
+      .menuTabs{
+        position:absolute; left:0; right:0; bottom:0; z-index:3;
+        display:flex; gap:6px; align-items:stretch;
+        padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+        background:linear-gradient(180deg, rgba(26,14,4,.93), rgba(12,6,2,.97));
+        border-top:2px solid rgba(217,164,65,.5);
+        box-shadow:0 -6px 16px rgba(0,0,0,.5);
+        -webkit-backdrop-filter:none; backdrop-filter:none;
+      }
+      .menuTabs .mtab, #titleCard .menuTabs .mtab#btnDuels{
+        position:relative; flex:1 1 0; min-width:0; height:68px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+        padding:6px 2px 5px; border-radius:10px;
+        background:linear-gradient(180deg,#54341a,#2a1607 62%,#1d0e03);
+        border:3px solid #d9a441;
+        box-shadow:inset 0 2px 0 rgba(255,226,160,.35), inset 0 -6px 0 rgba(0,0,0,.35), 0 4px 0 rgba(0,0,0,.9), 0 7px 12px rgba(0,0,0,.45);
+        color:#f0d9a8; font-size:10.5px; letter-spacing:.05em;
+        text-shadow:0 1px 0 rgba(0,0,0,.8);
+      }
+      .menuTabs .mtab::before{
+        content:''; position:absolute; inset:0; border-radius:7px; pointer-events:none;
+        background:
+          radial-gradient(circle at 8px 8px, rgba(255,217,143,.85) 0 2px, rgba(0,0,0,.4) 3px, transparent 3.6px),
+          radial-gradient(circle at calc(100% - 8px) 8px, rgba(255,217,143,.85) 0 2px, rgba(0,0,0,.4) 3px, transparent 3.6px),
+          radial-gradient(circle at 8px calc(100% - 8px), rgba(255,217,143,.85) 0 2px, rgba(0,0,0,.4) 3px, transparent 3.6px),
+          radial-gradient(circle at calc(100% - 8px) calc(100% - 8px), rgba(255,217,143,.85) 0 2px, rgba(0,0,0,.4) 3px, transparent 3.6px);
+      }
+      #titleCard .menuTabs .mtab svg{
+        width:27px; height:27px; color:#ffc93f; position:relative; z-index:1;
+        filter:drop-shadow(0 2px 0 rgba(0,0,0,.55));
+      }
+      .menuTabs .mtab span{ position:relative; z-index:1; display:block; font-size:10.5px; line-height:1.1; letter-spacing:.05em; white-space:nowrap; }
+      .menuTabs .mtab.on, #titleCard .menuTabs .mtab#btnDuels.on{
+        transform:translateY(-5px);
+        background:linear-gradient(180deg,#ffe066,#f5b81f 58%,#dd9410);
+        border-color:#ffecb0; color:#2a1604;
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.65), inset 0 -6px 0 rgba(146,84,4,.45), 0 7px 0 rgba(0,0,0,.9), 0 12px 18px rgba(0,0,0,.5), 0 0 18px rgba(255,180,40,.45);
+        text-shadow:0 1px 0 rgba(255,240,200,.6);
+      }
+      .menuTabs .mtab.on::before{
+        background:
+          radial-gradient(circle at 8px 8px, rgba(90,50,5,.8) 0 2px, rgba(255,240,200,.5) 3px, transparent 3.6px),
+          radial-gradient(circle at calc(100% - 8px) 8px, rgba(90,50,5,.8) 0 2px, rgba(255,240,200,.5) 3px, transparent 3.6px),
+          radial-gradient(circle at 8px calc(100% - 8px), rgba(90,50,5,.8) 0 2px, rgba(255,240,200,.5) 3px, transparent 3.6px),
+          radial-gradient(circle at calc(100% - 8px) calc(100% - 8px), rgba(90,50,5,.8) 0 2px, rgba(255,240,200,.5) 3px, transparent 3.6px);
+      }
+      #titleCard .menuTabs .mtab.on svg{ color:#2a1604; filter:drop-shadow(0 1px 0 rgba(255,240,200,.5)); }
+      #titleCard .menuTabs .mtab.on svg path[fill="#201204"]{ fill:#f5b81f; }
+      .menuTabs .mtab:active, #titleCard .menuTabs .mtab#btnDuels:active{ transform:translateY(2px); }
+      .menuTabs .mtab.on:active, #titleCard .menuTabs .mtab#btnDuels.on:active{ transform:translateY(-2px); }
+      @media (max-width:380px){
+        .menuTabs{ gap:4px; padding-left:6px; padding-right:6px; }
+        .menuTabs .mtab, #titleCard .menuTabs .mtab#btnDuels{ height:62px; border-width:2.5px; }
+        #titleCard .menuTabs .mtab svg{ width:23px; height:23px; }
+        .menuTabs .mtab span{ font-size:9px; letter-spacing:.02em; }
+      }
+      @media (max-height:560px){
+        .menuTabs .mtab, #titleCard .menuTabs .mtab#btnDuels{ height:60px; }
+        #titleCard{ padding-bottom:calc(94px + env(safe-area-inset-bottom)); }
       }
     </style>
   </head>
@@ -2789,22 +2926,24 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
         <button id="btnBgTab" type="button" aria-label="Background — menu scene, hour and next duel map"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="17.2" cy="6.6" r="2.5" fill="currentColor"/><path d="M1.5 19.5 L8.6 9.8 L12.6 14.6 L15.4 11.4 L22.5 19.5 Z" fill="currentColor"/></svg><span>BACKGROUND</span></button>
       </div>
-      <!-- Bottom tab bar (v2.21, Clash Royale layout): five tabs,
-           icon + one word each — these and the BATTLE button are the
-           only ways in. BATTLE opens the Duels hub, GEAR the Gear
-           hub, SHOP the Store, PRACTICE and RIDE their pickers. -->
+      <!-- Bottom tab bar (v3.27, chunky western plates; SALOON added
+           v3.24): six tabs, icon + one word each — these and the
+           BATTLE button are the only ways in. BATTLE opens the Duels
+           hub, GEAR the Gear hub, SHOP the Store, PRACTICE and RIDE
+           their pickers, SALOON the walk-in Saloon. -->
       <nav class="menuTabs" aria-label="Main menu">
         <button class="mtab on" id="btnDuels" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><g transform="rotate(-50 12 12)"><path d="M2.5 9 L13 9 L13.8 6.8 L15.6 6.8 L15.2 9 L20.5 9 L20.5 11.6 L13.2 11.6 L12.6 14.8 L14.8 19.8 L11.6 20.8 L9.2 15.4 L9 11.6 L2.5 11.6 Z"/><circle cx="10.6" cy="10.3" r="1.2" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="1"/></g><g transform="translate(24 0) scale(-1 1) rotate(-50 12 12)"><path d="M2.5 9 L13 9 L13.8 6.8 L15.6 6.8 L15.2 9 L20.5 9 L20.5 11.6 L13.2 11.6 L12.6 14.8 L14.8 19.8 L11.6 20.8 L9.2 15.4 L9 11.6 L2.5 11.6 Z"/><circle cx="10.6" cy="10.3" r="1.2" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="1"/></g></g></svg><span>BATTLE</span></button>
         <button class="mtab" id="btnPractice" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.8" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/></svg><span>PRACTICE</span></button>
         <button class="mtab" id="btnGear" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v3.2 M12 17.8V21 M3 12h3.2 M17.8 12H21 M5.6 5.6l2.3 2.3 M16.1 16.1l2.3 2.3 M18.4 5.6l-2.3 2.3 M7.9 16.1l-2.3 2.3"/></g></svg><span>GEAR</span></button>
         <button class="mtab" id="btnStore" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5 L5.2 4.5 H18.8 L20 9.5 Q18.6 11.2 17.2 10 Q15.9 11.4 14.5 10 Q13.2 11.4 12 10.2 Q10.8 11.4 9.5 10 Q8.1 11.4 6.8 10 Q5.4 11.2 4 9.5 Z" fill="currentColor"/><path d="M5.5 13 V20 H18.5 V13 M9.8 20 V15.8 H14.2 V20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SHOP</span></button>
         <button class="mtab" id="btnRide" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><rect x="1.6" y="8" width="10.5" height="6.6" rx="1.8"/><rect x="3" y="5.4" width="7.4" height="2.6" rx="1.2"/><path d="M12.4 11 L16.2 10.4 L16.2 11.8 L12.4 12.4 Z"/><path d="M16.6 10.2 q2.2-2.6 4.6-2.2 l1.9-1.7 q.5-.4 1 .1 l.5 1 q.2.5-.3.7 l-1.5.6 q-.4 1.7-1.6 2.7 l.7 3 q.1.6-.5.6 h-1.3 l-.7-2.7 q-1.5.4-3-.1 l-.7 2.5 h-1.3 l.5-2.9 q-1.2-.5-1-1.6 Z"/></g><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="4.6" cy="17.2" r="2.1"/><circle cx="9.6" cy="17.2" r="2.1"/></g></svg><span>RIDE</span></button>
+        <button class="mtab" id="btnSaloon" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="currentColor"/><path d="M12 5.5c-1.9 2.9-4.7 4.6-4.7 6.7a2.85 2.85 0 0 0 4.7 2.1c-.3 1.1-.8 2-1.6 2.7h3.2c-.8-.7-1.3-1.6-1.6-2.7a2.85 2.85 0 0 0 4.7-2.1c0-2.1-2.8-3.8-4.7-6.7Z" fill="#201204"/></svg><span>SALOON</span></button>
       </nav>
     </div>
 
@@ -2901,7 +3040,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2918,7 +3057,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2940,7 +3079,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -2967,18 +3106,100 @@
         <p class="small">No bell. They jump you from the rocks. Best ambush: <b id="ambBestLine">no ambush yet</b></p>
         <div class="locLbl" style="margin-top:18px;">★ Stable · Your Horse ★</div>
         <div id="rideStable"></div>
-        <div class="locLbl" style="margin-top:18px;">★ The Saloon ★</div>
-        <button class="bigbtn bjbtn" id="btnBlackjack" type="button">★ Blackjack 21 · The Felt Table</button>
-        <p class="small">Sit down against the dealer and win cash off the town. Biggest win: <b id="bjBestLine">no hand yet</b></p>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
-    <!-- Blackjack 21 (v3.23): the Saloon felt table. Its one home is
-         the Saloon section of the Ride card; the table itself lives
-         here. You play your real duel cash against the dealer —
+    <!-- The Saloon (v3.25): the SALOON tab's walk-in room. You step
+         in through the doors and see the room in first person, with
+         the blackjack table on the right. Tap the table (or its
+         button) to sit down at Blackjack 21. The drinks shelf, the
+         counter tap and the hide top-up were removed in v3.25 —
+         this card is the blackjack room, and the table itself
+         lives on #bjCard. -->
+    <div class="card" id="saloonCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ THE SALOON ★</p>
+        <h1>Step Inside</h1>
+        <div class="rule"></div>
+        <div id="saloonScene">
+          <svg viewBox="0 0 340 196" role="img" aria-label="Inside the Saloon — the blackjack table">
+            <rect width="340" height="152" fill="#41260f"/>
+            <g stroke="#2e1a08" stroke-width="2" opacity=".6"><path d="M28 0 V152 M84 0 V152 M140 0 V152 M196 0 V152 M252 0 V152 M308 0 V152"/></g>
+            <rect y="152" width="340" height="44" fill="#241304"/>
+            <g stroke="#170b02" stroke-width="2" opacity=".7"><path d="M0 168 H340 M0 182 H340"/></g>
+            <path d="M158 0 V7 M182 0 V7" stroke="#170b02" stroke-width="2"/>
+            <rect x="140" y="7" width="60" height="15" fill="#2a1708" stroke="#a97e2f"/>
+            <text x="171" y="18" class="salSignTxt">SALOON</text>
+            <path d="M84 0 V18" stroke="#170b02" stroke-width="2"/>
+            <polygon points="72,30 96,30 88,18 80,18" fill="#6e4525"/>
+            <circle cx="84" cy="34" r="10" fill="#ffb84d" opacity=".28"/>
+            <circle cx="84" cy="33" r="3.4" fill="#ffc873"/>
+            <path d="M256 0 V18" stroke="#170b02" stroke-width="2"/>
+            <polygon points="244,30 268,30 260,18 248,18" fill="#6e4525"/>
+            <circle cx="256" cy="34" r="10" fill="#ffb84d" opacity=".28"/>
+            <circle cx="256" cy="33" r="3.4" fill="#ffc873"/>
+            <rect x="14" y="38" width="140" height="60" fill="#4a2c14"/>
+            <g>
+              <rect x="22" y="47" width="7" height="15" fill="#2e6b34"/><rect x="34" y="49" width="7" height="13" fill="#8a5420"/><rect x="46" y="46" width="7" height="16" fill="#7fb3c8"/><rect x="60" y="48" width="7" height="14" fill="#6e1f16"/><rect x="72" y="47" width="7" height="15" fill="#9a6a24"/><rect x="86" y="49" width="7" height="13" fill="#3f7a4d"/><rect x="98" y="46" width="7" height="16" fill="#8a5420"/><rect x="112" y="48" width="7" height="14" fill="#2e6b34"/><rect x="126" y="47" width="7" height="15" fill="#7fb3c8"/><rect x="138" y="49" width="7" height="13" fill="#6e1f16"/>
+              <rect x="22" y="75" width="7" height="15" fill="#9a6a24"/><rect x="34" y="77" width="7" height="13" fill="#2e6b34"/><rect x="46" y="74" width="7" height="16" fill="#6e1f16"/><rect x="60" y="76" width="7" height="14" fill="#7fb3c8"/><rect x="72" y="75" width="7" height="15" fill="#8a5420"/><rect x="86" y="77" width="7" height="13" fill="#2e6b34"/><rect x="98" y="74" width="7" height="16" fill="#3f7a4d"/><rect x="112" y="76" width="7" height="14" fill="#9a6a24"/><rect x="126" y="75" width="7" height="15" fill="#6e1f16"/><rect x="138" y="77" width="7" height="13" fill="#8a5420"/>
+            </g>
+            <rect x="14" y="62" width="140" height="4" fill="#7a5636"/>
+            <rect x="14" y="90" width="140" height="4" fill="#7a5636"/>
+            <circle cx="128" cy="102" r="7" fill="#d9a066"/>
+            <rect x="119" y="109" width="18" height="12" fill="#e8e0cc"/>
+            <rect x="124" y="109" width="8" height="12" fill="#5e1216"/>
+            <rect x="8" y="118" width="152" height="7" fill="#7a5636"/>
+            <rect x="12" y="125" width="144" height="30" fill="#4a2c14"/>
+            <path d="M48 125 V155 M84 125 V155 M120 125 V155" stroke="#2e1a08" stroke-width="2"/>
+            <g>
+              <rect x="41" y="136" width="6" height="19" fill="#2e2a24"/>
+              <rect x="52" y="136" width="6" height="19" fill="#2e2a24"/>
+              <rect x="39" y="153" width="9" height="3" fill="#170b02"/>
+              <rect x="51" y="153" width="9" height="3" fill="#170b02"/>
+              <rect x="40" y="107" width="19" height="30" fill="#7a3b26"/>
+              <rect x="46" y="107" width="7" height="30" fill="#c9b189"/>
+              <circle cx="49" cy="98" r="7" fill="#d9a066"/>
+              <rect x="38" y="90" width="22" height="3.4" fill="#4a2f1a"/>
+              <rect x="43" y="81" width="13" height="10" fill="#4a2f1a"/>
+              <rect x="55" y="110" width="5" height="17" fill="#7a3b26"/>
+            </g>
+            <circle cx="252" cy="86" r="7.5" fill="#c98d54"/>
+            <rect x="243" y="66" width="18" height="13" fill="#191716"/>
+            <rect x="239" y="78" width="26" height="3.4" fill="#191716"/>
+            <rect x="240" y="94" width="24" height="22" fill="#23211c"/>
+            <polygon points="252,98 248,103 256,103" fill="#8a1512"/>
+            <g fill="#54381e">
+              <rect x="192" y="118" width="4" height="26"/><rect x="192" y="118" width="16" height="4"/><rect x="192" y="132" width="16" height="4"/><rect x="204" y="136" width="4" height="12"/>
+              <rect x="300" y="118" width="4" height="26"/><rect x="292" y="118" width="16" height="4"/><rect x="292" y="132" width="16" height="4"/><rect x="292" y="136" width="4" height="12"/>
+            </g>
+            <rect x="246" y="140" width="12" height="15" fill="#4a2c14"/>
+            <ellipse cx="252" cy="138" rx="64" ry="16" fill="#6b4a26"/>
+            <ellipse cx="252" cy="136" rx="60" ry="14" fill="#1d6b3c"/>
+            <rect x="228" y="128" width="10" height="14" rx="1.5" fill="#fffdf4" transform="rotate(-12 233 135)"/>
+            <rect x="262" y="130" width="10" height="14" rx="1.5" fill="#fffdf4" transform="rotate(9 267 137)"/>
+            <circle cx="238" cy="141" r="3" fill="#b3232a"/><circle cx="243" cy="143" r="3" fill="#e8e0cc"/><circle cx="266" cy="140" r="3" fill="#274435"/>
+            <rect id="salZoneTable" class="salZone" x="172" y="30" width="168" height="166"/>
+            <rect x="204" y="170" width="104" height="17" rx="3" class="salPlaque"/>
+            <text x="256" y="181.5" class="salPlaqueTxt">THE TABLE</text>
+          </svg>
+        </div>
+        <p class="bjMsg" id="salMsg">The piano's playing and the lamps are lit. Take a seat at the table — Dealin' Dan is waiting.</p>
+        <div class="salBtns">
+          <button class="bigbtn bjbtn" id="btnSalTable" type="button" style="flex:1;">The Table · Blackjack 21</button>
+        </div>
+        <p class="small" id="salStats">Biggest blackjack win: <b id="bjBestLine">no hand yet</b></p>
+        <button class="bigbtn" id="btnBackSaloon" type="button">← Back to Menu</button>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Blackjack 21 (v3.23, home moved to the SALOON tab v3.24):
+         the Saloon felt table. Its one home is the walk-in Saloon
+         on #saloonCard; the table itself lives here. You play your
+         real duel cash against the dealer —
          place a bet, two cards each, HIT / STAND / DOUBLE, dealer
          draws to 17, blackjack pays 3:2. Win big and a sore loser
          at the next stool may call you out: a normal duel, winner
@@ -3003,6 +3224,7 @@
           <button type="button" class="segBtn" data-bjbet="50">$50</button>
           <button type="button" class="segBtn" data-bjbet="100">$100</button>
         </div>
+        <p class="bjCash" id="bjPotWin">BET $10 · WIN PAYS $20 · BLACKJACK PAYS $25</p>
         <div class="bjActs">
           <button class="bigbtn bjDeal" id="btnBjDeal" type="button">DEAL</button>
           <button class="bigbtn" id="btnBjHit" type="button" style="display:none;">HIT</button>
@@ -3017,8 +3239,8 @@
           </div>
         </div>
         <p class="small" id="bjCardBest">Biggest win: no hand yet</p>
-        <button class="bigbtn" id="btnBackBj" type="button">← Back to Rides</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <button class="bigbtn" id="btnBackBj" type="button">← Back to the Saloon</button>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3052,7 +3274,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3100,7 +3322,7 @@
         <div class="storeSec" data-store-cat="horse">Your Horse</div>
         <div id="storeStable" data-store-cat="horse"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3133,7 +3355,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3179,7 +3401,7 @@
         </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3269,7 +3491,7 @@
         <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
         <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3308,7 +3530,7 @@
         <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
         <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
         <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3342,7 +3564,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3377,7 +3599,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3416,7 +3638,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3430,7 +3652,11 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
-          <p><b>v3.23</b> — <b>Blackjack 21 in the Saloon.</b> Sit at the <b>felt table</b> (Ride card, under the Stable) and play against the dealer for your <b>real cash</b>: pick a bet, <b>HIT / STAND / DOUBLE</b>, dealer draws to 17, <b>blackjack pays 3:2</b>. Win big and a <b>sore loser</b> may call you out — a <b>duel for the pot</b>. Biggest win kept in <b>Stats</b>.</p>
+          <p><b>v3.27</b> — <b>Chunky plates for the bottom tabs.</b> All six tabs — <b>BATTLE · PRACTICE · GEAR · SHOP · RIDE · SALOON</b> — are now thick gold-outlined western plates, a bold icon over the label, the picked one raised and lit gold. One row, no scrolling, nothing clipped.</p>
+          <p><b>v3.26</b> — <b>The menu stays out of your fights.</b> When any fight starts, the <b>whole menu closes</b> — top bar, <b>BATTLE!</b>, BACKGROUND and the <b>tab bar</b> — and only the fight shows; <b>RELOAD</b> owns its corner again. Cards <b>never stack</b> now: opening one closes any other. And your name and your foe's name can <b>never overlap</b> again.</p>
+          <p><b>v3.25</b> — <b>Drinks are gone from the Saloon.</b> The <b>counter</b>, the <b>drinks shelf</b> and the <b>hide top-up</b> are removed — the SALOON tab is now just the <b>Blackjack 21</b> room: same table, same bets, same <b>what you stand to win</b> shown beside every bet.</p>
+          <p><b>v3.24</b> — <b>The SALOON tab.</b> A sixth menu tab walks you into the Saloon: tap the <b>counter</b> for a cheap drink — beer, whiskey, bourbon, a few dollars each — and every drink banks a little <b>hide for your next fight</b>. Tap the <b>table</b> for Blackjack 21, which lives here now, and the bet shows <b>what you stand to win</b> before you deal.</p>
+          <p><b>v3.23</b> — <b>Blackjack 21 in the Saloon.</b> Sit at the <b>felt table</b> and play against the dealer for your <b>real cash</b>: pick a bet, <b>HIT / STAND / DOUBLE</b>, dealer draws to 17, <b>blackjack pays 3:2</b>. Win big and a <b>sore loser</b> may call you out — a <b>duel for the pot</b>. Biggest win kept in <b>Stats</b>.</p>
           <p><b>v3.22</b> — <b>Your own horse.</b> Buy a horse of your own in the <b>Store</b> (Horse tab) or the <b>Stable</b> on the Ride card: pick its <b>colour</b> — bay, black, chestnut, palomino, grey or paint — and its <b>speed</b>, from a steady trail horse to a fast thoroughbred, and <b>name it</b>. Your horse rides <b>under you on every ride</b> in its own colours with its name on the ride, and a faster horse makes a <b>quicker ride</b>.</p>
           <p><b>v3.21</b> — <b>Outlaw Ambush.</b> A new ride in the RIDE hub: you're on the <b>night trail</b> when the gang jumps you from the <b>rocks</b> — <b>no warning, no bell, just draw</b>. Outlaws pop up from behind rocks and cacti and draw on you while the ride keeps moving; drop them from the saddle with your own iron. <b>Waves</b> come thicker and quicker the deeper you ride. <b>$10 an outlaw</b>, plus <b>$50</b> for clearing the trail <b>untouched</b>. Best ambush kept in <b>Stats</b>.</p>
           <p><b>v3.20</b> — <b>Bank Robbery.</b> The other side of Sheriff Shift, in the Duels hub: <b>you</b> rob the bank. <b>Shoot the strongbox lock</b> or <b>hold your aim steady on it</b> to crack it while the <b>sheriff's posse</b> closes in — the longer you take, the more lawmen ride in. Crack it, then <b>ride out</b>: the box cash plus <b>$25 a lawman dropped</b> is yours — get caught and the <b>take is lost</b>. Best take and fastest crack kept in <b>Stats</b>.</p>
@@ -3552,7 +3778,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.23</div>
+        <div class="ver">VERSION 3.27</div>
       </div>
     </div>
 
@@ -3575,7 +3801,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3597,7 +3823,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3616,7 +3842,7 @@
         <div class="wbWall" id="wbWall"></div>
         <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
         <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3634,7 +3860,7 @@
         <p class="streakPips" id="tnLine">NO BRACKET YET</p>
         <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
         <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3655,7 +3881,7 @@
         <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
         <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
         <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3681,7 +3907,7 @@
         <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
         <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
         <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3692,7 +3918,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.23 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.27 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -11185,6 +11411,8 @@ three/build/three.module.js:
          Saloon table, the hands played, and the cash the table has
          paid you in all. Missing on an old save means no hand yet. */
       bjBestWin: 0, bjHands: 0, bjEarned: 0,
+      /* Saloon drinks were removed in v3.25: any salDrinks /
+         hideBonus values on an old save are simply ignored. */
       /* Your Horse (v3.22): the horse you own — its name, coat colour
          and speed tier, and whether you have bought one at all.
          Missing on an old save means the default unnamed bay trail
@@ -13609,6 +13837,93 @@ three/build/three.module.js:
     var scopeViewEl = $('scopeView'), scopeLensEl = $('scopeLens'), scopeChipEl = $('scopeChip');
     var btnExitScopeEl = $('btnExitScope');
     var btnFanEl = $('btnFan'), replayTagEl = $('replayTag'), boltFxEl = $('boltFx');
+    /* ============================== MENU / FIGHT SEPARATION (v3.26) ==============================
+       From the player's phone screenshot (a Back-to-Back duel in
+       the Saloon): the whole floating menu was standing on top of
+       the fight — the top bar's THE STRANGER laid over the foes'
+       names, the green BATTLE! button and the BACKGROUND pill sat
+       mid-screen, the bottom tab bar ran under the weapon tiles,
+       and RELOAD landed on the SALOON tab. Hub cards could also
+       pile up instead of closing. The fix is one lock, kept here:
+       - enterFight() runs at the top of every fight starter (all
+         duels funnel through startCinematic; practice and each
+         ride call it themselves): every card closes and the
+         .fighting lock goes on the body, so no menu piece — top
+         bar, BATTLE!, BACKGROUND pill, tab bar, hub card, sheet —
+         can show over a fight, ever. Only the fight HUD shows.
+       - enforceMenuFightSeparation() runs every frame in the
+         animate loop as the standing guard: in any fight state it
+         keeps the lock on and closes anything that somehow opened;
+         in the menu states ('title' / 'champion') it lifts the
+         lock and enforces ONE card at a time — if two cards are
+         ever up together, all but the most recently opened close,
+         so panels can never stack or duplicate. */
+    var allCardEls = Array.prototype.slice.call(document.querySelectorAll('.card'));
+    var cardShownAt = {};
+    if (window.MutationObserver){
+      var cardObs = new MutationObserver(function(muts){
+        for (var mi = 0; mi < muts.length; mi++){
+          var t = muts[mi].target;
+          if (t.style && t.style.display && t.style.display !== 'none') cardShownAt[t.id] = Date.now();
+        }
+      });
+      for (var coi = 0; coi < allCardEls.length; coi++) cardObs.observe(allCardEls[coi], { attributes: true, attributeFilter: ['style'] });
+    }
+    function hideAllCards(){
+      for (var hci = 0; hci < allCardEls.length; hci++) allCardEls[hci].style.display = 'none';
+      var bs = $('bgSheet');
+      if (bs && bs.classList.contains('open')){ bs.classList.remove('open'); bs.setAttribute('aria-hidden', 'true'); }
+    }
+    var fightLockOn = false;
+    var prevOpenCardIds = {}; // v3.26: the cards open last frame — a card absent here was just tapped open, so it is the one that stays
+    function enterFight(){
+      hideAllCards();
+      fightLockOn = true;
+      document.body.classList.add('fighting');
+    }
+    function enforceMenuFightSeparation(){
+      var st = G.state;
+      var fighting = st !== 'title' && st !== 'champion';
+      if (fighting !== fightLockOn){
+        fightLockOn = fighting;
+        document.body.classList.toggle('fighting', fighting);
+      }
+      var i, el;
+      if (fighting){
+        for (i = 0; i < allCardEls.length; i++){
+          el = allCardEls[i];
+          if (el.style.display !== 'none') el.style.display = 'none';
+        }
+        var bs2 = $('bgSheet');
+        if (bs2 && bs2.classList.contains('open')){ bs2.classList.remove('open'); bs2.setAttribute('aria-hidden', 'true'); }
+        prevOpenCardIds = {};
+        return;
+      }
+      var open = [];
+      for (i = 0; i < allCardEls.length; i++){
+        el = allCardEls[i];
+        // computed style, not just inline: a card shown by the sheet alone
+        // (no inline display set) still counts as open — the five stray
+        // hub cards were exactly that, visible from load and missed by
+        // an inline-only check
+        if (el.style.display === 'flex' || (el.style.display === '' && window.getComputedStyle(el).display !== 'none')) open.push(el);
+      }
+      if (open.length > 1){
+        var keep = null, keepT = -1;
+        for (i = 0; i < open.length; i++){
+          // a card that was not open last frame is the one just tapped — it wins outright,
+          // so re-tapping the card that is already open changes nothing and nothing stacks
+          if (!prevOpenCardIds[open[i].id]){ keep = open[i]; break; }
+          var tt = cardShownAt[open[i].id] || 0;
+          if (tt >= keepT){ keep = open[i]; keepT = tt; }
+        }
+        if (!keep) keep = open[0];
+        for (i = 0; i < open.length; i++) if (open[i] !== keep) open[i].style.display = 'none';
+        open = [keep];
+      }
+      prevOpenCardIds = {};
+      for (i = 0; i < open.length; i++) prevOpenCardIds[open[i].id] = 1;
+    }
     // Exit Scope latch (v1.19): true once the player taps EXIT SCOPE —
     // the lens and the 2x zoom stay down until the next fresh hold to aim.
     var scopeOut = false;
@@ -15919,8 +16234,7 @@ three/build/three.module.js:
       lockerFinish = gunSkinFor(item.id);
       lockerScope = gunScopeFor(item.id); // v3.10: the bench opens wearing the scope the rifle already carries
       lockerTab = 'skin'; // v3.10.1: the bench opens on SKIN
-      $('storeCard').style.display = 'none';
-      $('inventoryCard').style.display = 'none';
+      hideAllCards(); // v3.26: the bench replaces whatever card was up — never stacks on it
       $('lockerCard').style.display = 'flex';
       var li = document.querySelector('#lockerCard .inner'); if (li) li.scrollTop = 0;
       lockerInitStage();
@@ -16342,6 +16656,7 @@ three/build/three.module.js:
       else if (!G.practiceT0) clockEl.textContent = '0.00s';
     }
     function startPractice(kind){
+      enterFight(); // v3.26: menu layer closes — practice is a fight screen too
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'practice'; G.state = 'practice';
       centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
@@ -18767,6 +19082,7 @@ three/build/three.module.js:
         (G.rideEndless ? ' · Survived ' + fmtSurvive(G.rideTime) : '');
     }
     function startRide(endless){
+      enterFight(); // v3.26: menu layer closes for the ride
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'ride'; G.state = 'ride'; G.lastWin = false;
       centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
@@ -18825,7 +19141,7 @@ three/build/three.module.js:
       // the run's own state: fresh hide, and each gun family carrying
       // its own full load into the ride. In Endless your hide and your
       // loads carry from coach to coach — only a new run resets them.
-      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
       rideFam = currentWeapon().kind;
       rideAmmo = {
         revolver: (equippedGun().cap || 6),
@@ -19767,6 +20083,7 @@ three/build/three.module.js:
       if (G.bullets <= 0 && G.state === 'ride') autoReloadOnEmpty();
     }
     function startTrain(){
+      enterFight(); // v3.26: menu layer closes for the ride
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'ride'; G.train = true; G.state = 'ride'; G.lastWin = false;
       centreAim(); // every fight opens with the gun's aim dead centre
@@ -19793,7 +20110,7 @@ three/build/three.module.js:
       }
       // the run's own state: fresh hide, and each gun family carrying
       // its own full load up the roofs, same as the stagecoach ride
-      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
       rideFam = currentWeapon().kind;
       rideAmmo = {
         revolver: (equippedGun().cap || 6),
@@ -20253,6 +20570,7 @@ three/build/three.module.js:
       if (G.bullets <= 0 && G.state === 'ride') autoReloadOnEmpty();
     }
     function startNightRide(){
+      enterFight(); // v3.26: menu layer closes for the ride
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'ride'; G.night = true; G.state = 'ride'; G.lastWin = false;
       centreAim(); // every fight opens with the gun's aim dead centre
@@ -20306,7 +20624,7 @@ three/build/three.module.js:
       }
       // the ride's own state: fresh hide, each gun family carrying
       // its own full load, and the horse starting out at a trot
-      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
       rideFam = currentWeapon().kind;
       rideAmmo = {
         revolver: (equippedGun().cap || 6),
@@ -20777,6 +21095,7 @@ three/build/three.module.js:
       if (G.bullets <= 0 && G.state === 'ride') autoReloadOnEmpty();
     }
     function startAmbush(){
+      enterFight(); // v3.26: menu layer closes for the ride
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'ride'; G.ambush = true; G.state = 'ride'; G.lastWin = false;
       centreAim(); // every fight opens with the gun's aim dead centre
@@ -20829,7 +21148,7 @@ three/build/three.module.js:
       }
       // the ride's own state: fresh hide, each gun family carrying
       // its own full load into the ambush, same as any ride
-      G.hp = 100; G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.reloading = false; G.camFall = -1; G.shake = 0; G.vig = 0; clearGunReloads(); resetHandFight();
       rideFam = currentWeapon().kind;
       rideAmmo = {
         revolver: (equippedGun().cap || 6),
@@ -20990,7 +21309,7 @@ three/build/three.module.js:
         shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var cfgs = [OPPONENTS[idx]].concat(EXTRA_OPPONENTS[idx]);
       var xs = ENEMY_X[cfgs.length] || ENEMY_X[1];
@@ -21044,6 +21363,7 @@ three/build/three.module.js:
       playerAvatar = null;
     }
     function startCinematic(idx, n){
+      enterFight(); // v3.26: every duel funnels through here — the whole menu layer closes before the fight shows
       disposeAvatar();
       var out = equippedOutfit();
       var hatItem = equippedHat();
@@ -21791,6 +22111,17 @@ three/build/three.module.js:
       renderStable(); // Your Horse (v3.22): the Stable section shows your horse as he stands
       $('rideCard').style.display = 'flex';
     });
+    /* The Saloon (v3.25): the menu's SALOON tab walks you in — the
+       room card with the door to the blackjack table, wired in the
+       Saloon block below. */
+    $('btnSaloon').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      renderSaloon();
+      $('titleCard').style.display = 'none';
+      $('saloonCard').style.display = 'flex';
+      var si = document.querySelector('#saloonCard .inner'); if (si) si.scrollTop = 0;
+    });
     function beginRide(endless){
       initAudio(); sndClick();
       $('rideCard').style.display = 'none';
@@ -22043,7 +22374,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'storeCard', 'inventoryCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'lanCard', 'posterCard', 'bjCard'];
+    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'saloonCard', 'storeCard', 'inventoryCard', 'lockerCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'wantedCard', 'tournCard', 'rivalCard', 'b2bCard', 'lanCard', 'posterCard', 'bjCard', 'updatesCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -22407,12 +22738,7 @@ three/build/three.module.js:
       $('hud').className = '';
       $('btnReload').style.display = 'none';
       $('btnQuit').style.display = 'none';
-      $('learnCard').style.display = 'none';
-      $('lanCard').style.display = 'none';
-      $('settingsCard').style.display = 'none';
-      $('inventoryCard').style.display = 'none';
-      $('statsCard').style.display = 'none';
-      $('updatesCard').style.display = 'none';
+      hideAllCards(); // v3.26: EVERY card closes on the way back to the menu — the old hand-list missed most hub cards, which is how they stacked up
       updatesReturn = null;
       settingsOpen = false;
       $('titleCard').style.display = 'flex';
@@ -22597,7 +22923,7 @@ three/build/three.module.js:
       rotateDuelGround(); // v3.1: a Quick Duel rotates too
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var cfg = pickFrom(QUICK_POOL);
       var dist = DISTANCES[G.duel];
@@ -22687,7 +23013,7 @@ three/build/three.module.js:
       applyLocation(G.location);
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      if (fresh) G.hp = 100; // a run starts whole; later waves keep the hide you're carrying
+      if (fresh) G.hp = fightStartHp(); // a run starts whole; later waves keep the hide you're carrying
       G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
@@ -22979,7 +23305,7 @@ three/build/three.module.js:
       applyLocation('street'); // the bank stands on Main Street, at the picked hour
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      if (fresh) G.hp = 100; // a shift starts whole; later waves keep the hide you're carrying
+      if (fresh) G.hp = fightStartHp(); // a shift starts whole; later waves keep the hide you're carrying
       G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       setupSheriffCover();
@@ -23211,7 +23537,7 @@ three/build/three.module.js:
       rotateDuelGround(); // a robbery rotates like every duel — ground and picked hour apply
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       setupBankBox();
       spawnBankLawman(performance.now(), 0); // the sheriff himself steps out first
@@ -23548,7 +23874,7 @@ three/build/three.module.js:
       rotateDuelGround(); // v3.1: a Wanted duel rotates like every duel — ground and picked hour apply
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
       var o = buildGunslinger(wantedCfg);
@@ -23711,7 +24037,7 @@ three/build/three.module.js:
         shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
       var cfgs = kind === 'bounty' ? [BOUNTY_HENCH, cfg] : [cfg];
@@ -24056,7 +24382,7 @@ three/build/three.module.js:
       rotateDuelGround(); // v3.1: a tournament duel rotates like every duel — ground and picked hour apply
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
       var o = buildGunslinger(cfg);
@@ -24253,7 +24579,7 @@ three/build/three.module.js:
       rotateDuelGround(); // v3.1: a Rival duel rotates like every duel — ground and picked hour apply
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
       var o = buildGunslinger(cfg);
@@ -24377,7 +24703,9 @@ three/build/three.module.js:
     });
 
     /* ============================== BLACKJACK 21 (v3.23) ==============================
-       The Saloon felt table, in the Saloon section of the Ride card.
+       The Saloon felt table — since v3.24 its one home is the
+       SALOON tab's walk-in room; the Saloon block below holds the
+       door to it.
        You play your real duel cash against the dealer, Dealin' Dan:
        pick a bet ($10 / $20 / $50 / $100), two cards each — his hole
        card face down — then HIT, STAND, or DOUBLE (first call only,
@@ -24417,6 +24745,10 @@ three/build/three.module.js:
       $('bjDTot').textContent = BJ.dealer.length ? (BJ.holeHidden ? bjValue([BJ.dealer[0]]) + ' + ?' : '' + bjValue(BJ.dealer)) : '—';
       $('bjPTot').textContent = BJ.player.length ? '' + bjValue(BJ.player) : '—';
       $('bjCash').textContent = 'YOUR CASH · $' + SAVE.money + (BJ.stake > 0 ? ' · ON THE TABLE · $' + BJ.stake : '');
+      /* What you stand to win (v3.24): always beside the bet — a win
+         pays the stake back doubled, blackjack pays 3:2 on top. */
+      var potEl = $('bjPotWin');
+      if (potEl){ var pBase = BJ.phase === 'player' ? BJ.stake : BJ.betSel; potEl.textContent = 'BET $' + pBase + ' · WIN PAYS $' + (pBase * 2) + ' · BLACKJACK PAYS $' + Math.floor(pBase * 2.5); }
       var chips = document.querySelectorAll('#bjBetRow [data-bjbet]');
       for (var ci = 0; ci < chips.length; ci++)
         chips[ci].className = 'segBtn' + (parseInt(chips[ci].getAttribute('data-bjbet'), 10) === BJ.betSel ? ' on' : '');
@@ -24558,7 +24890,7 @@ three/build/three.module.js:
       rotateDuelGround(); // v3.1: the call-out duel rotates like every duel
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var cfg = { name: 'Slim Calloway', sub: '"Slim" Calloway · The Sore Loser · Draw: Quick', drawMs: 980, acc: 0.52,
         coat: 0x274435, pants: 0x23211c, shirt: 0xc9b189, hat: 0x1f2a22, skin: 0xc98d54, band: 0xd9a441 };
@@ -24617,19 +24949,15 @@ three/build/three.module.js:
       }
       showNext('Back to the Table');
     }
-    $('btnBlackjack').addEventListener('click', function(){
-      initAudio(); sndClick();
-      if (performance.now() - splashDismissedAt < 800) return;
-      bjResetTable();
-      $('rideCard').style.display = 'none';
-      $('bjCard').style.display = 'flex';
-      var bi = document.querySelector('#bjCard .inner'); if (bi) bi.scrollTop = 0;
-    });
+    /* The door to this table is the SALOON tab's walk-in room —
+       btnSalTable and the room's table zone, wired in the Saloon
+       block below (the table moved off the Ride card in v3.24). */
     $('btnBackBj').addEventListener('click', function(){
       if (BJ.phase === 'player') return; // a live hand finishes first — it takes seconds
       initAudio(); sndClick();
       $('bjCard').style.display = 'none';
-      $('rideCard').style.display = 'flex'; // the table's home is the Saloon section of the Ride card (v3.23)
+      renderSaloon();
+      $('saloonCard').style.display = 'flex'; // the table's home is the SALOON tab's room (v3.24)
       bjRender(); // the picker line stays honest
     });
     var bjChips = document.querySelectorAll('#bjBetRow [data-bjbet]');
@@ -24664,6 +24992,37 @@ three/build/three.module.js:
       startBjDuel();
     });
     bjRender(); // the table is dressed before its first seat is taken
+
+    /* ============================== THE SALOON (v3.25) ==============================
+       The SALOON tab's walk-in room (#saloonCard): the blackjack
+       table is the room's one spot now — tap it in the room itself
+       or by its button to sit down at Blackjack 21 above. The
+       drinks shelf, the counter tap, the sip and the hide top-up
+       were removed in v3.25; any drink or hide-bonus values on an
+       old save are ignored, so every fight starts at a plain 100
+       hide (fightStartHp). */
+    function fightStartHp(){
+      return 100;
+    }
+    function renderSaloon(){
+      var hub = $('bjBestLine'); if (hub) hub.textContent = SAVE.bjBestWin > 0 ? ('$' + SAVE.bjBestWin) : 'no hand yet';
+    }
+    function openTable(){
+      initAudio(); sndClick();
+      if (performance.now() - splashDismissedAt < 800) return;
+      bjResetTable();
+      $('saloonCard').style.display = 'none';
+      $('bjCard').style.display = 'flex';
+      var bi = document.querySelector('#bjCard .inner'); if (bi) bi.scrollTop = 0;
+    }
+    $('btnSalTable').addEventListener('click', openTable);
+    var zoneTable = $('salZoneTable'); if (zoneTable) zoneTable.addEventListener('click', openTable);
+    $('btnBackSaloon').addEventListener('click', function(){
+      initAudio(); sndClick();
+      $('saloonCard').style.display = 'none';
+      $('titleCard').style.display = 'flex';
+    });
+    renderSaloon();
 
     /* ============================== BACK-TO-BACK 2-ON-1 (v3.14) ==============================
        One gunslinger in front of you, one behind you, on the
@@ -24760,7 +25119,7 @@ three/build/three.module.js:
       var loc = rotateDuelGround(); // v3.1: a Back-to-Back fight rotates like every duel — ground and picked hour apply
       duelFam = currentWeapon().kind;
       duelAmmo = freshDuelAmmo();
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var dist = DISTANCES[G.duel];
       var front = buildGunslinger(BB_FRONT);
@@ -25217,6 +25576,7 @@ three/build/three.module.js:
       LAN.peer = null; LAN.conn = null; LAN.connected = false; LAN.remoteWeapon = null;
     }
     function startLanDuel(distIdx, mid){
+      enterFight(); // v3.26: menu layer closes for the LAN duel (its own starter, no cinematic funnel)
       disposeOpps(); disposePractice(); cleanupRideWorld();
       G.mode = 'duel'; G.lan = true; G.duel = distIdx; fanOn = false; updateFanBtn(); // v3.5: a LAN match starts with fanning off, like every match
       centreAim(); // v2.6: every fight opens with the gun's aim dead centre of the screen
@@ -25232,7 +25592,7 @@ three/build/three.module.js:
         shotgun: rideItemFor('shotgun') ? rideItemFor('shotgun').cap : 2,
         rifle: rideItemFor('rifle') ? rideItemFor('rifle').cap : 10
       };
-      G.hp = 100; G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
+      G.hp = fightStartHp(); G.bullets = duelAmmo[duelFam]; G.reloading = false; G.reloadFrom = G.bullets; G.reloadShown = G.bullets; G.reaction = null; clearGunReloads(); resetHandFight();
       G.camFall = -1; G.shake = 0; G.lastWin = false;
       var rw = LAN.remoteWeapon;
       var item = rw && rw.itemId ? (rw.fam === 'revolver' ? gearById(GUNS, rw.itemId) : gearById(LONGGUNS, rw.itemId)) : null;
@@ -25285,6 +25645,7 @@ three/build/three.module.js:
       $('btnQuit').style.display = 'none';
       $('rideSwitch').className = '';
       var tb10 = $('throwBtn'); if (tb10) tb10.className = '';
+      hideAllCards(); // v3.26: the room replaces whatever card was up — never stacks on it
       $('lanCard').style.display = 'flex';
       lanUpdateLobby();
     }
@@ -26481,6 +26842,7 @@ three/build/three.module.js:
         if (menuUp && !menuWas) applyMenuScene();
         else if (!menuUp && menuWas && G.state === 'title') applyChoiceScene();
         menuWas = menuUp;
+        enforceMenuFightSeparation(); // v3.26: the menu never rides over a fight, and cards never stack
         /* ---- map life (v2.35): every ground breathes like the
            street does — see MAP LIFE for the kits ---- */
         if (!bgFrozen) updateMapLife(dt, t);
