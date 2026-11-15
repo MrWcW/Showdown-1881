@@ -2932,6 +2932,76 @@
         #duelsCard .bigbtn + p.small, #practiceCard .bigbtn + p.small,
         #gearCard .bigbtn + p.small, #rideCard .bigbtn + p.small{ margin-left:38px; }
       }
+      /* ---------- Compact text-only chalk lines (v3.28.1): the
+         player's pick, Option 3 — the chalk sketches are gone and
+         every hub pick is ONE tight text-only chalk line: the name
+         in white chalk on the left, its note — payout and all — in
+         smaller chalk on the right of the same line (the note line
+         is folded up beside its pick by the small script at the
+         end of the body). Rows sit snug with small gaps, the board
+         padding is slimmer, so more picks fit on screen at once.
+         Same picks, same order, same prices and payouts; only the
+         spacing changed. The tab bar, the floating menu, the fight
+         screens, the Store's item rows, guns and saves keep their
+         own look. This block sits last on purpose. ---------- */
+      #duelsCard .inner, #practiceCard .inner, #gearCard .inner,
+      #storeCard .inner, #rideCard .inner, #saloonCard .inner{
+        padding:12px 13px 10px;
+      }
+      #duelsCard h1, #practiceCard h1, #gearCard h1,
+      #storeCard h1, #rideCard h1, #saloonCard h1{
+        font-size:clamp(30px,7vw,38px);
+      }
+      #duelsCard .rule, #practiceCard .rule, #gearCard .rule,
+      #storeCard .rule, #rideCard .rule, #saloonCard .rule{
+        margin:6px auto 7px;
+      }
+      /* No sketches: the chalk-drawing slot is gone from every pick. */
+      #duelsCard .bigbtn::before, #practiceCard .bigbtn::before, #gearCard .bigbtn::before,
+      #storeCard .bigbtn::before, #rideCard .bigbtn::before, #saloonCard .bigbtn::before{
+        display:none;
+      }
+      #duelsCard .bigbtn, #practiceCard .bigbtn, #gearCard .bigbtn,
+      #storeCard .bigbtn, #rideCard .bigbtn, #saloonCard .bigbtn{
+        gap:8px; font-size:20px; line-height:1.15;
+        padding:4px 2px; margin-top:3px;
+      }
+      /* One chalk line per pick: name left, note right. */
+      #duelsCard .chalkRow, #practiceCard .chalkRow, #gearCard .chalkRow,
+      #rideCard .chalkRow, #saloonCard .chalkRow{
+        display:flex; align-items:baseline; gap:10px; margin-top:3px;
+      }
+      #duelsCard .chalkRow .bigbtn, #practiceCard .chalkRow .bigbtn, #gearCard .chalkRow .bigbtn,
+      #rideCard .chalkRow .bigbtn, #saloonCard .chalkRow .bigbtn{
+        flex:1 1 auto; width:auto; min-width:0; margin-top:0; padding-left:0;
+      }
+      #duelsCard .chalkRow p.small, #practiceCard .chalkRow p.small, #gearCard .chalkRow p.small,
+      #rideCard .chalkRow p.small, #saloonCard .chalkRow p.small{
+        flex:0 1 50%; margin:0; text-align:right;
+        font-size:14px; line-height:1.18;
+      }
+      #saloonCard .chalkRow .salBtns{ flex:1 1 auto; min-width:0; margin:0; }
+      /* Back and Mode Settings lines stay quieter, still one snug line. */
+      #duelsCard #btnBackDuels, #duelsCard #btnModeFromDuels,
+      #practiceCard #btnBackPractice, #practiceCard #btnModeFromPractice,
+      #gearCard #btnBackGear,
+      #rideCard #btnBackRide, #rideCard #btnModeFromRide,
+      #storeCard #btnBackStore, #storeCard #btnBackStoreTop,
+      #saloonCard #btnBackSaloon{ font-size:17.5px; }
+      #duelsCard #btnDaily, #duelsCard #btnLan{ font-size:18px; padding-left:2px; padding-right:2px; }
+      #duelsCard .locLbl, #rideCard .locLbl{ margin-top:7px; font-size:17.5px; }
+      #duelsCard .segBtn{ padding:4px 6px; font-size:16px; }
+      #saloonCard .bjMsg{ font-size:17px; }
+      #duelsCard .ver, #practiceCard .ver, #gearCard .ver,
+      #storeCard .ver, #rideCard .ver, #saloonCard .ver{ margin-top:7px; }
+      @media (max-width:380px){
+        #duelsCard .inner, #practiceCard .inner, #gearCard .inner,
+        #storeCard .inner, #rideCard .inner, #saloonCard .inner{ padding:10px 10px 8px; }
+        #duelsCard .bigbtn, #practiceCard .bigbtn, #gearCard .bigbtn,
+        #storeCard .bigbtn, #rideCard .bigbtn, #saloonCard .bigbtn{ font-size:18px; }
+        #duelsCard .chalkRow p.small, #practiceCard .chalkRow p.small, #gearCard .chalkRow p.small,
+        #rideCard .chalkRow p.small, #saloonCard .chalkRow p.small{ font-size:12.5px; flex-basis:52%; }
+      }
     </style>
   </head>
   <body>
@@ -3178,7 +3248,7 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
@@ -3292,7 +3362,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3309,7 +3379,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3331,7 +3401,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3360,7 +3430,7 @@
         <div id="rideStable"></div>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3444,7 +3514,7 @@
         </div>
         <p class="small" id="salStats">Biggest blackjack win: <b id="bjBestLine">no hand yet</b></p>
         <button class="bigbtn" id="btnBackSaloon" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3492,7 +3562,7 @@
         </div>
         <p class="small" id="bjCardBest">Biggest win: no hand yet</p>
         <button class="bigbtn" id="btnBackBj" type="button">← Back to the Saloon</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3526,7 +3596,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3574,7 +3644,7 @@
         <div class="storeSec" data-store-cat="horse">Your Horse</div>
         <div id="storeStable" data-store-cat="horse"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3607,7 +3677,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3653,7 +3723,7 @@
         </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3743,7 +3813,7 @@
         <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
         <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3782,7 +3852,7 @@
         <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
         <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
         <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3816,7 +3886,7 @@
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3851,7 +3921,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3890,7 +3960,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3904,6 +3974,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.28.1</b> — <b>Compact chalkboard hubs.</b> The six hub boards are now tight <b>text-only</b> chalk lines — <b>no sketches</b>, the name on the <b>left</b> and its payout on the <b>right</b> of the same line, rows snug so more fits on screen at once.</p>
           <p><b>v3.28</b> — <b>Saloon chalkboard hubs.</b> All six hub pages — <b>BATTLE · PRACTICE · GEAR · SHOP · RIDE · SALOON</b> — are now chalkboards: dark slate, worn wood frame, every pick in white chalk with its payout chalked at the end of the line.</p>
           <p><b>v3.27</b> — <b>Chunky plates for the bottom tabs.</b> All six tabs — <b>BATTLE · PRACTICE · GEAR · SHOP · RIDE · SALOON</b> — are now thick gold-outlined western plates, a bold icon over the label, the picked one raised and lit gold. One row, no scrolling, nothing clipped.</p>
           <p><b>v3.26</b> — <b>The menu stays out of your fights.</b> When any fight starts, the <b>whole menu closes</b> — top bar, <b>BATTLE!</b>, BACKGROUND and the <b>tab bar</b> — and only the fight shows; <b>RELOAD</b> owns its corner again. Cards <b>never stack</b> now: opening one closes any other. And your name and your foe's name can <b>never overlap</b> again.</p>
@@ -4031,7 +4102,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.28</div>
+        <div class="ver">VERSION 3.28.1</div>
       </div>
     </div>
 
@@ -4054,7 +4125,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4076,7 +4147,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4095,7 +4166,7 @@
         <div class="wbWall" id="wbWall"></div>
         <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
         <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4113,7 +4184,7 @@
         <p class="streakPips" id="tnLine">NO BRACKET YET</p>
         <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
         <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4134,7 +4205,7 @@
         <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
         <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
         <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4160,7 +4231,7 @@
         <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
         <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
         <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4171,7 +4242,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.28 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -27352,6 +27423,37 @@ three/build/three.module.js:
     if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', bootGame);
     else bootGame();
     })();
+</script>
+<script>
+/* v3.28.1 compact chalk lines (Option 3, text only): fold each hub
+   pick's note line up onto the pick's own chalk line — the pick's
+   name stays on the left, its note (payout and all) sits on the
+   right of the same line, in a .chalkRow. Elements are only moved,
+   never rebuilt, so every id, listener and live best-line keeps
+   working exactly as before. */
+(function(){
+  function fold(cardId){
+    var card = document.getElementById(cardId); if (!card) return;
+    var btns = card.querySelectorAll('.bigbtn');
+    for (var i = 0; i < btns.length; i++){
+      var btn = btns[i], note = btn.nextElementSibling;
+      if (!note || note.tagName !== 'P' || !/\bsmall\b/.test(note.className)) continue;
+      var row = document.createElement('div'); row.className = 'chalkRow';
+      btn.parentNode.insertBefore(row, btn);
+      row.appendChild(btn); row.appendChild(note);
+    }
+  }
+  fold('duelsCard'); fold('practiceCard'); fold('gearCard'); fold('rideCard');
+  var sal = document.getElementById('saloonCard');
+  if (sal){
+    var wrap = sal.querySelector('.salBtns'), stats = document.getElementById('salStats');
+    if (wrap && stats){
+      var row = document.createElement('div'); row.className = 'chalkRow';
+      wrap.parentNode.insertBefore(row, wrap);
+      row.appendChild(wrap); row.appendChild(stats);
+    }
+  }
+})();
 </script>
 </body>
 </html>
