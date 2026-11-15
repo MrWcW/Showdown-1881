@@ -3002,6 +3002,18 @@
         #duelsCard .chalkRow p.small, #practiceCard .chalkRow p.small, #gearCard .chalkRow p.small,
         #rideCard .chalkRow p.small, #saloonCard .chalkRow p.small{ font-size:12.5px; flex-basis:52%; }
       }
+      /* ---------- Your Name (v3.29): the first-ride name ask and
+         the Settings rename share one card — a type-in field, a row
+         of tappable suggested names, and one plain error line. The
+         card starts hidden like every other card. ---------- */
+      #nameCard{ display:none; }
+      #nameCard .nameIn{ width:100%; box-sizing:border-box; margin-top:6px; }
+      #nameCard .nameChips{ display:flex; flex-wrap:wrap; gap:7px; justify-content:center; margin:8px 0 4px; }
+      #nameCard .nameChip{ cursor:pointer; font-family:'Special Elite',monospace; font-size:13.5px; letter-spacing:.05em; color:#ffe9bd; background:rgba(0,0,0,.35); border:1px solid var(--plate-line); border-radius:999px; padding:7px 12px; }
+      #nameCard .nameChip:active{ transform:scale(.96); }
+      #nameCard .nameChip.on{ background:linear-gradient(180deg,#b57e24,#77500f); color:#fff3d0; border-color:#ffd98f; }
+      #nameCard #nameError{ color:#ff9d7a; min-height:1.25em; margin:6px 0 0; }
+      #nameCard #btnNameSkip{ margin-top:8px; }
     </style>
   </head>
   <body>
@@ -3146,7 +3158,7 @@
         <div class="ver">SHOWDOWN 1881 · v3.12</div>
       </div>
       <div class="plate" id="selfPlate">
-        <div class="lbl">Your Hide</div>
+        <div class="lbl" id="selfPlateLbl">Your Hide</div>
         <div id="hpBar"><div id="hpFill"></div></div>
         <div id="chambers"><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div id="scopeChip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v6M12 16.5v6M1.5 12h6M16.5 12h6"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>RIFLE SCOPE · 2×</div>
@@ -3234,7 +3246,7 @@
       <div class="menuTop">
         <div class="mtPlayer" id="mtPlayerBtn" role="button" title="Your Wanted Poster — tap to see it">
           <span class="mtAvatar" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="9" ry="2.6" fill="currentColor"/><path d="M7.4 14.8 L8.5 8.6 Q12 7.2 15.5 8.6 L16.6 14.8 Q12 13 7.4 14.8 Z" fill="currentColor"/></svg></span>
-          <span class="mtNameBlock"><span class="mtName">THE STRANGER</span><span class="mtXp"><span class="mtLevel" id="mtLevel">1</span><span class="mtXpTrack"><span class="mtXpFill" id="mtXpFill"></span></span></span></span>
+          <span class="mtNameBlock"><span class="mtName" id="mtName">THE STRANGER</span><span class="mtXp"><span class="mtLevel" id="mtLevel">1</span><span class="mtXpTrack"><span class="mtXpFill" id="mtXpFill"></span></span></span></span>
         </div>
         <div class="mtChip" id="mtTrophies" title="Career duel wins"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10V9a5 5 0 0 1-10 0Z M7 5.5H4a3 3 0 0 0 3.2 3 M17 5.5h3a3 3 0 0 1-3.2 3 M12 14v2.5 M8.5 20.5h7 M12 16.5l-1.6 4h3.2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>0</span></div>
         <div class="mtRight">
@@ -3248,7 +3260,7 @@
              the Ride behind its tab; refreshMenuTop() null-guards the
              old state labels, so nothing misses them. -->
         <button class="bigbtn" id="btnBattle" type="button">BATTLE!</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
         <!-- BACKGROUND tab (v3.3): one small floating gold button on
              the menu itself — backgrounds are changed HERE now, not
              in Settings. Opens the #bgSheet slide-up sheet below. -->
@@ -3362,7 +3374,7 @@
         <button class="bigbtn altbtn" id="btnLan" type="button">★ LAN Duel · 1v1</button>
         <button class="bigbtn learnbtn" id="btnModeFromDuels" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackDuels" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3379,7 +3391,7 @@
         <button class="bigbtn learnbtn" id="btnInventory" type="button">Inventory</button>
         <button class="bigbtn learnbtn" id="btnGearLocker" type="button">Gun Locker</button>
         <button class="bigbtn" id="btnBackGear" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3401,7 +3413,7 @@
         <p class="small">Catch one outlaw in 90 seconds.</p>
         <button class="bigbtn learnbtn" id="btnModeFromPractice" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackPractice" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3430,7 +3442,7 @@
         <div id="rideStable"></div>
         <button class="bigbtn learnbtn" id="btnModeFromRide" type="button">Mode Settings</button>
         <button class="bigbtn" id="btnBackRide" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3514,7 +3526,7 @@
         </div>
         <p class="small" id="salStats">Biggest blackjack win: <b id="bjBestLine">no hand yet</b></p>
         <button class="bigbtn" id="btnBackSaloon" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3562,7 +3574,7 @@
         </div>
         <p class="small" id="bjCardBest">Biggest win: no hand yet</p>
         <button class="bigbtn" id="btnBackBj" type="button">← Back to the Saloon</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3596,7 +3608,7 @@
         <button class="bigbtn" id="btnLanStart" type="button" disabled style="opacity:.55;">Start the Duel</button>
         <p class="small" id="lanStartHint">The host starts the duel once both gunslingers are in the room.</p>
         <button class="bigbtn" id="btnBackLan" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3644,7 +3656,7 @@
         <div class="storeSec" data-store-cat="horse">Your Horse</div>
         <div id="storeStable" data-store-cat="horse"></div>
         <button class="bigbtn" id="btnBackStore" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3677,7 +3689,7 @@
         <div class="invSec">Boots</div>
         <div id="invBoots"></div>
         <button class="bigbtn" id="btnBackInventory" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3723,7 +3735,7 @@
         </div>
         <div id="lockerWallet">WALLET · $0</div>
         <button class="bigbtn" id="btnBackLocker" type="button">← Back</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3813,7 +3825,7 @@
         <div class="statRow"><span class="k">Bounty On Your Head</span><span class="v" id="stPosterBounty">$25</span></div>
         <div class="statRow"><span class="k">Notoriety</span><span class="v" id="stPosterScore">0</span></div>
         <button class="bigbtn" id="btnBackStats" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3834,7 +3846,7 @@
           <p class="mpHead">WANTED</p>
           <p class="mpSub" id="mpSub">DEAD OR ALIVE</p>
           <div class="mpFace" id="mpFace"></div>
-          <p class="mpName">THE STRANGER</p>
+          <p class="mpName" id="mpName">THE STRANGER</p>
           <p class="mpRank" id="mpRank">★ UNKNOWN ★</p>
           <p class="mpCrime" id="mpCrime">For loitering by the water trough, looking suspicious.</p>
           <div class="mpStats">
@@ -3852,7 +3864,27 @@
         <button class="bigbtn posterbtn" id="btnSharePoster" type="button">★ Share Poster</button>
         <p class="small" id="mpShareLine">Sends the poster as a picture — share sheet, saved file, or copied image, whichever your phone allows.</p>
         <button class="bigbtn" id="btnBackPoster" type="button">← Back</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
+      </div>
+    </div>
+
+    <!-- Your Name (v3.29): one card, two jobs. On the first ride in
+         a gunslinger with no name saved yet is asked here — type a
+         name or tap a suggested one, free; Skip keeps THE STRANGER.
+         From Settings the same card renames you for $100. -->
+    <div class="card" id="nameCard">
+      <div class="inner">
+        <p class="small" style="letter-spacing:.34em; margin:0 0 6px;">★ YOUR NAME ★</p>
+        <h1 id="nameTitle">What do they call you?</h1>
+        <div class="rule"></div>
+        <p class="small" id="nameIntro">Every gunslinger rides under a name. Type your own, or pick one the territory already fears.</p>
+        <input class="horseNameIn nameIn" id="nameInput" type="text" maxlength="16" placeholder="TYPE YOUR NAME" autocomplete="off" autocapitalize="words" aria-label="Your gunslinger name">
+        <div class="locLbl">Or pick one</div>
+        <div class="nameChips" id="nameChips"></div>
+        <p class="small" id="nameError"></p>
+        <button class="bigbtn" id="btnNameConfirm" type="button">RIDE WITH THIS NAME</button>
+        <button class="bigbtn altbtn" id="btnNameSkip" type="button">Stay THE STRANGER</button>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3882,11 +3914,14 @@
           <button class="segBtn" id="btnGfxHigh" type="button">High</button>
         </div>
         <p class="small">Every level was rebuilt richer in v2.7 — finer wood and dirt, deeper light, cleaner metal. Low stays smooth. Medium renders sharper, with soft shadows that follow every move and a dressed street. High goes all out — the finest detail your device can draw, deep golden light and full-size soft live shadows.</p>
+        <div class="locLbl">Your Name</div>
+        <p class="small" id="settingsNameLine">You ride as THE STRANGER</p>
+        <button class="bigbtn learnbtn" id="btnChangeName" type="button">Change Name · $100</button>
         <button class="bigbtn learnbtn" id="btnModeSettings" type="button">Mode Settings</button>
         <button class="bigbtn learnbtn" id="btnStats" type="button">Stats</button>
         <button class="bigbtn learnbtn" id="btnLearn2" type="button">How to Play</button>
         <button class="bigbtn" id="btnBackSettings" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3921,7 +3956,7 @@
         </div>
         <p class="small">Long rounds run half as many targets again. Shooting Bottles keeps its street layout either way.</p>
         <button class="bigbtn" id="btnBackMode" type="button">Back</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3960,7 +3995,7 @@
           <p><b>STATS</b> — Your records live in <b>Stats</b>, inside Settings: your <b>average and best draw</b>, your <b>shooting accuracy</b>, and your <b>fastest bottle clear with a revolver, a rifle and a shotgun</b> — each weapon family keeps its own record, and all of them are kept between visits.</p>
         </div>
         <button class="bigbtn" id="btnBackLearn" type="button">Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -3974,6 +4009,7 @@
         <div class="rule"></div>
         <p class="small">Every update, in short — newest first.</p>
         <div class="howto">
+          <p><b>v3.29</b> — <b>Your own name.</b> First ride in, the game asks <b>what they call you</b> — type your own name or pick from <b>Colt, Wade, Jesse, Deadeye, Doc, Ace, Lucky, Ringo, Tex, Buck, Slim, Silas, Gringo</b> — and that name rides on the <b>menu</b>, on your <b>duel plate</b> and on your <b>Wanted Poster</b>. Skip it and you stay <b>THE STRANGER</b>. Later, <b>Settings → Change Name</b> repaints it anytime for <b>$100</b>.</p>
           <p><b>v3.28.1</b> — <b>Compact chalkboard hubs.</b> The six hub boards are now tight <b>text-only</b> chalk lines — <b>no sketches</b>, the name on the <b>left</b> and its payout on the <b>right</b> of the same line, rows snug so more fits on screen at once.</p>
           <p><b>v3.28</b> — <b>Saloon chalkboard hubs.</b> All six hub pages — <b>BATTLE · PRACTICE · GEAR · SHOP · RIDE · SALOON</b> — are now chalkboards: dark slate, worn wood frame, every pick in white chalk with its payout chalked at the end of the line.</p>
           <p><b>v3.27</b> — <b>Chunky plates for the bottom tabs.</b> All six tabs — <b>BATTLE · PRACTICE · GEAR · SHOP · RIDE · SALOON</b> — are now thick gold-outlined western plates, a bold icon over the label, the picked one raised and lit gold. One row, no scrolling, nothing clipped.</p>
@@ -4102,7 +4138,7 @@
           <p><b>v0.1</b> — The first ride: six quick-draw duels on Main Street at golden hour. Wait for the bell — head or heart ends it.</p>
         </div>
         <button class="bigbtn" id="btnBackUpdates" type="button">Back</button>
-        <div class="ver">VERSION 3.28.1</div>
+        <div class="ver">VERSION 3.29</div>
       </div>
     </div>
 
@@ -4125,7 +4161,7 @@
         <button class="bigbtn ridebtn" id="btnStartBounty" type="button">★ Start the Hunt</button>
         <p class="streakPips" id="bountyWinsLine">NO BOUNTIES CAUGHT YET</p>
         <button class="bigbtn" id="btnBackBounty" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4147,7 +4183,7 @@
         <p class="streakPips" id="dailyStreak">STREAK · 0 DAYS · BEST 0</p>
         <button class="bigbtn ridebtn" id="btnStartDaily" type="button">★ Face Him</button>
         <button class="bigbtn" id="btnBackDaily" type="button">← Back to Menu</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4166,7 +4202,7 @@
         <div class="wbWall" id="wbWall"></div>
         <p class="streakPips" id="wbBoardLine">NO BOUNTIES COLLECTED YET</p>
         <button class="bigbtn" id="btnBackWanted" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4184,7 +4220,7 @@
         <p class="streakPips" id="tnLine">NO BRACKET YET</p>
         <button class="bigbtn tournbtn" id="btnTournGo" type="button">ENTER THE TOURNAMENT</button>
         <button class="bigbtn" id="btnBackTourn" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4205,7 +4241,7 @@
         <p class="streakPips" id="rvLine">BEAT 1 OF 5</p>
         <button class="bigbtn rivalbtn" id="btnRivalGo" type="button">FACE CROWE · BEAT 1</button>
         <button class="bigbtn" id="btnBackRival" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4231,7 +4267,7 @@
         <p class="streakPips" id="bbLine">DROP BOTH · PAYS $100</p>
         <button class="bigbtn b2bbtn" id="btnB2BGo" type="button">FACE THEM BOTH · $100</button>
         <button class="bigbtn" id="btnBackB2B" type="button">← Back to Duels</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -4242,7 +4278,7 @@
         <p id="endText">You outdrew every gunslinger on the street.</p>
         <div id="endStats"></div>
         <button class="bigbtn" id="btnAgain" type="button">Ride Again</button>
-        <div class="ver">VERSION 3.28.1 · TAP FOR UPDATES</div>
+        <div class="ver">VERSION 3.29 · TAP FOR UPDATES</div>
       </div>
     </div>
 
@@ -9014,7 +9050,7 @@ three/build/three.module.js:
       var hi = document.getElementById('rideInHi');
       var year = document.getElementById('rideInYear');
       var pres = document.getElementById('rideInPresented');
-      if (!fx || !cv || !word || REDUCED) return;
+      if (!fx || !cv || !word || REDUCED){ setTimeout(function(){ if (window.__wwdMaybeName){ try { window.__wwdMaybeName(); } catch (e) {} } }, 900); return; } // v3.29: no sting to wait for — the first-ride name ask comes straight after the splash (bridged via window: the name system lives inside initGame)
       fx.className = 'on';
       if (window.__wwdRideIn3D){ try { window.__wwdRideIn3D(cv); } catch (e) {} }
       /* the man, the turn, the shot, and the welcome title (v2.8):
@@ -9051,6 +9087,7 @@ three/build/three.module.js:
         document.removeEventListener('keydown', rideKey, true);
         fx.style.display = 'none';
         if (window.__wwdRideIn3DStop){ try { window.__wwdRideIn3DStop(); } catch (e) {} }
+        if (window.__wwdMaybeName){ try { window.__wwdMaybeName(); } catch (e) {} } // v3.29: the sting is over — a nameless gunslinger gets asked here
       }
       function skipRideIn(){ endRideIn(); }
       function rideKey(e){
@@ -11741,6 +11778,13 @@ three/build/three.module.js:
          and speed tier, and whether you have bought one at all.
          Missing on an old save means the default unnamed bay trail
          horse you have always ridden. */
+      /* Your Name (v3.29): the name you ride under — '' until you
+         pick one; the menu top bar, the duel plate and your Wanted
+         Poster all fall back to THE STRANGER while it is ''. nameSeen
+         marks the first-ride name ask as done (picked or skipped),
+         so it is asked once. Missing on an old save means THE
+         STRANGER until changed in Settings. */
+      playerName: '', nameSeen: false,
       horseName: '', horseColor: 'bay', horseTier: 'trail', horseBought: false,
       /* Gun Locker (v1.33): finishes you own, and the finish riding on
          each gun (item id -> skin id). Missing on an old save means
@@ -11835,6 +11879,11 @@ three/build/three.module.js:
         if (parsedSave && typeof parsedSave.ambClears === 'number' && parsedSave.ambClears >= 0) SAVE.ambClears = Math.floor(parsedSave.ambClears);
         if (parsedSave && typeof parsedSave.ambEarned === 'number' && parsedSave.ambEarned >= 0) SAVE.ambEarned = Math.floor(parsedSave.ambEarned);
         if (parsedSave && typeof parsedSave.horseName === 'string') SAVE.horseName = parsedSave.horseName.replace(/[<>&"]/g, '').slice(0, 18);
+        /* Your Name (v3.29): merged with the same rules the picker
+           enforces — letters, numbers, spaces and apostrophes only,
+           trimmed, 16 characters at most. */
+        if (parsedSave && typeof parsedSave.playerName === 'string') SAVE.playerName = parsedSave.playerName.replace(/[^A-Za-z0-9 ']/g, '').replace(/\s+/g, ' ').trim().slice(0, 16).trim();
+        if (parsedSave && typeof parsedSave.nameSeen === 'boolean') SAVE.nameSeen = parsedSave.nameSeen;
         if (parsedSave && ['bay', 'black', 'chestnut', 'palomino', 'grey', 'paint'].indexOf(parsedSave.horseColor) >= 0) SAVE.horseColor = parsedSave.horseColor;
         if (parsedSave && ['trail', 'runner', 'thoroughbred'].indexOf(parsedSave.horseTier) >= 0) SAVE.horseTier = parsedSave.horseTier;
         if (parsedSave && typeof parsedSave.horseBought === 'boolean') SAVE.horseBought = parsedSave.horseBought;
@@ -14202,6 +14251,7 @@ three/build/three.module.js:
     var prevOpenCardIds = {}; // v3.26: the cards open last frame — a card absent here was just tapped open, so it is the one that stays
     function enterFight(){
       hideAllCards();
+      applyPlayerName(); // v3.29: your name rides the duel plate over your hide
       fightLockOn = true;
       document.body.classList.add('fighting');
     }
@@ -14301,7 +14351,150 @@ three/build/three.module.js:
       var cs = $('chestStreakState'); if (cs) cs.textContent = SAVE.dailyStreak + (SAVE.dailyStreak === 1 ? ' DAY' : ' DAYS');
       var cb = $('chestBountyState'); if (cb) cb.textContent = SAVE.bountyWins > 0 ? SAVE.bountyWins + ' CAUGHT' : '$120+';
       var cr = $('chestRideState'); if (cr) cr.textContent = SAVE.bestEndless ? fmtSurvive(SAVE.bestEndless) : '$150 BOX';
+      applyPlayerName();
     }
+    /* ============================== YOUR NAME (v3.29) ==============================
+       One name, everywhere it shows: the menu top bar, the duel
+       plate over your hide, and your Wanted Poster — the sheet, the
+       share picture and the share words. '' in the save reads as
+       THE STRANGER everywhere. The first ride in asks once (free,
+       skippable); after that, Settings → Change Name reopens this
+       same card and a confirmed new name costs $100, charged before
+       it applies, and only when the cash is really there. */
+    var NAME_SUGGESTIONS = ['Colt', 'Wade', 'Jesse', 'Deadeye', 'Doc', 'Ace', 'Lucky', 'Ringo', 'Tex', 'Buck', 'Slim', 'Silas', 'Gringo'];
+    var NAME_CHANGE_COST = 100;
+    function cleanPlayerName(v){
+      return (v || '').replace(/\s+/g, ' ').trim().slice(0, 16).trim();
+    }
+    function playerDisplayName(){ return SAVE.playerName ? SAVE.playerName.toUpperCase() : 'THE STRANGER'; }
+    function playerShareName(){ return SAVE.playerName || 'The Stranger'; }
+    function applyPlayerName(){
+      var mn = $('mtName'); if (mn) mn.textContent = playerDisplayName();
+      var mp = $('mpName'); if (mp) mp.textContent = playerDisplayName();
+      var sp = $('selfPlateLbl'); if (sp) sp.textContent = playerDisplayName() + ' · YOUR HIDE';
+      var sl = $('settingsNameLine'); if (sl) sl.textContent = 'You ride as ' + playerDisplayName();
+    }
+    function nameProblem(raw){
+      var v = (raw || '').replace(/\s+/g, ' ').trim();
+      if (!v) return 'Type a name first — or pick one from the row.';
+      if (v.length > 16) return 'Keep it to 16 characters or less.';
+      if (!/^[A-Za-z0-9 ']+$/.test(v)) return 'Letters, numbers, spaces and apostrophes only.';
+      return '';
+    }
+    var nameCardMode = 'first';
+    function buildNameChips(){
+      var box = $('nameChips'); if (!box) return;
+      if (!box.childNodes.length){
+        NAME_SUGGESTIONS.forEach(function(nm){
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'nameChip'; b.textContent = nm;
+          b.addEventListener('click', function(){
+            initAudio(); sndClick();
+            $('nameInput').value = nm;
+            $('nameError').textContent = '';
+            syncNameChips();
+          });
+          box.appendChild(b);
+        });
+      }
+      syncNameChips();
+    }
+    function syncNameChips(){
+      var box = $('nameChips'); if (!box) return;
+      var cur = (($('nameInput').value || '').replace(/\s+/g, ' ').trim()).toLowerCase();
+      for (var i = 0; i < box.childNodes.length; i++){
+        var b = box.childNodes[i];
+        b.className = 'nameChip' + (b.textContent.toLowerCase() === cur ? ' on' : '');
+      }
+    }
+    function openNameCard(mode){
+      nameCardMode = mode;
+      $('nameInput').value = mode === 'change' ? (SAVE.playerName || '') : '';
+      $('nameError').textContent = '';
+      $('nameTitle').textContent = mode === 'change' ? 'Change your name' : 'What do they call you?';
+      $('nameIntro').textContent = mode === 'change'
+        ? 'A new name costs $100 — the clerk repaints your poster and the whole territory learns it by supper.'
+        : 'Every gunslinger rides under a name. Type your own, or pick one the territory already fears.';
+      $('btnNameConfirm').textContent = mode === 'change' ? 'CHANGE NAME · $100' : 'RIDE WITH THIS NAME';
+      $('btnNameSkip').textContent = mode === 'change' ? 'Cancel' : 'Stay THE STRANGER';
+      buildNameChips();
+      $('titleCard').style.display = 'none';
+      $('settingsCard').style.display = 'none';
+      settingsOpen = false;
+      $('nameCard').style.display = 'flex';
+      var ni = document.querySelector('#nameCard .inner'); if (ni) ni.scrollTop = 0;
+    }
+    function closeNameCard(){
+      $('nameCard').style.display = 'none';
+      if (nameCardMode === 'change'){
+        $('settingsCard').style.display = 'flex';
+        settingsOpen = true;
+        refreshSettingsUI();
+        applyPlayerName();
+      } else {
+        $('titleCard').style.display = 'flex';
+      }
+    }
+    /* The first-ride ask: fired when the ride-in sting ends (or at
+       once when it cannot play) — once only, and only for a
+       gunslinger with no name saved yet. */
+    function maybeShowNameCard(){
+      if (SAVE.nameSeen || SAVE.playerName) return;
+      if (G.state !== 'title' && G.state !== 'champion') return;
+      openNameCard('first');
+    }
+    window.__wwdMaybeName = maybeShowNameCard; // the ride-in sting lives outside initGame — it reaches the name ask through here
+    $('btnNameConfirm').addEventListener('click', function(){
+      initAudio();
+      var prob = nameProblem($('nameInput').value);
+      if (prob){ $('nameError').textContent = prob; sndClick(); return; }
+      var nm = cleanPlayerName($('nameInput').value);
+      if (nameCardMode === 'change'){
+        if (SAVE.playerName && nm.toLowerCase() === SAVE.playerName.toLowerCase()){
+          $('nameError').textContent = 'That is already your name — no charge.';
+          sndClick();
+          return;
+        }
+        if (SAVE.money < NAME_CHANGE_COST){
+          $('nameError').textContent = 'Not enough cash — a new name costs $100 and you have $' + SAVE.money + '.';
+          sndClick();
+          return;
+        }
+        SAVE.money -= NAME_CHANGE_COST;
+        SAVE.playerName = nm;
+        persistSave();
+        updateMoneyUI();
+        applyPlayerName();
+        sndBell();
+        closeNameCard();
+        toast('You ride as ' + nm.toUpperCase() + ' now — $100 to the clerk.', true);
+      } else {
+        SAVE.playerName = nm;
+        SAVE.nameSeen = true;
+        persistSave();
+        applyPlayerName();
+        sndClick();
+        closeNameCard();
+        toast('The territory will know you as ' + nm.toUpperCase() + '.', true);
+      }
+    });
+    $('btnNameSkip').addEventListener('click', function(){
+      initAudio(); sndClick();
+      if (nameCardMode === 'first'){ SAVE.nameSeen = true; persistSave(); }
+      closeNameCard();
+    });
+    $('nameInput').addEventListener('input', function(){
+      $('nameError').textContent = '';
+      syncNameChips();
+    });
+    $('nameInput').addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){ e.preventDefault(); $('btnNameConfirm').click(); }
+    });
+    $('btnChangeName').addEventListener('click', function(){
+      initAudio(); sndClick();
+      openNameCard('change');
+    });
+
     /* ============================== STORE ============================== */
     var storeFilter = 'revolvers'; // four tabs — Short, Medium, Long, Throwable. Medium opens first.
     /* Simple list (v2.32): the showcase is gone for good — the Store
@@ -22698,7 +22891,7 @@ three/build/three.module.js:
        of the list in #updatesCard. Back returns to whichever card (if
        any) was open when the version was tapped. */
     var updatesReturn = null;
-    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'saloonCard', 'storeCard', 'inventoryCard', 'lockerCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'wantedCard', 'tournCard', 'rivalCard', 'b2bCard', 'lanCard', 'posterCard', 'bjCard', 'updatesCard'];
+    var CARD_IDS = ['titleCard', 'duelsCard', 'gearCard', 'practiceCard', 'rideCard', 'saloonCard', 'storeCard', 'inventoryCard', 'lockerCard', 'statsCard', 'settingsCard', 'modeCard', 'learnCard', 'endCard', 'bountyCard', 'dailyCard', 'wantedCard', 'tournCard', 'rivalCard', 'b2bCard', 'lanCard', 'posterCard', 'bjCard', 'updatesCard', 'nameCard'];
     function openUpdates(){
       initAudio(); sndClick();
       updatesReturn = null;
@@ -22876,6 +23069,7 @@ three/build/three.module.js:
     function renderPoster(){
       var d = posterData();
       $('mpFace').innerHTML = wbFaceSVG(playerFaceCfg());
+      $('mpName').textContent = playerDisplayName();
       $('mpSub').textContent = d.sub;
       $('mpRank').textContent = '★ ' + d.rank + ' ★';
       $('mpCrime').textContent = d.crime;
@@ -22948,8 +23142,12 @@ three/build/three.module.js:
       }
       function finish(faceImg){
         if (faceImg) g.drawImage(faceImg, W / 2 - 150, 226, 300, 300);
-        g.fillStyle = '#571d10'; g.font = '58px Rye, Georgia, serif';
-        g.fillText('THE STRANGER', W / 2, 596);
+        g.fillStyle = '#571d10';
+        var pName = playerDisplayName(), pFont = 58;
+        g.font = pFont + 'px Rye, Georgia, serif';
+        var pW = g.measureText(pName).width;
+        if (pW > 780){ pFont = Math.max(30, Math.floor(58 * 780 / pW)); g.font = pFont + 'px Rye, Georgia, serif'; }
+        g.fillText(pName, W / 2, 596);
         g.fillStyle = '#3a2410'; g.font = '26px "Special Elite", monospace';
         g.fillText('★ ' + d.rank + ' ★', W / 2, 640);
         g.fillStyle = '#2a1a08';
@@ -23007,7 +23205,7 @@ three/build/three.module.js:
             try { file = new File([blob], 'showdown-1881-wanted-poster.png', { type: 'image/png' }); } catch (e) {}
             if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })){
               var d2 = posterData();
-              navigator.share({ files: [file], title: 'WANTED — The Stranger', text: 'WANTED — ' + d2.sub + ' · The Stranger · ' + d2.rank + ' · Reward $' + d2.bounty + ' · Showdown 1881' })
+              navigator.share({ files: [file], title: 'WANTED — ' + playerShareName(), text: 'WANTED — ' + d2.sub + ' · ' + playerShareName() + ' · ' + d2.rank + ' · Reward $' + d2.bounty + ' · Showdown 1881' })
                 .then(function(){ posterSetShareLine('Poster shared. The territory has been warned.'); })
                 .catch(function(err){
                   if (err && err.name === 'AbortError') posterSetShareLine('Share sheet closed — the poster is still yours to send.');
